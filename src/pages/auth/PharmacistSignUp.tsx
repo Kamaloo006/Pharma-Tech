@@ -26,14 +26,16 @@ import { useTheme } from "@/context/theme-provider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { setAuthSession } from "@/lib/auth";
 
-const PharmacistLogin = () => {
+const PharmacistSignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -50,6 +52,10 @@ const PharmacistLogin = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (password !== confirmPassword) {
+      return;
+    }
+
     setIsSubmitting(true);
     setAuthSession({
       role: "pharmacist",
@@ -75,11 +81,9 @@ const PharmacistLogin = () => {
               className={clsx(
                 "h-8 rounded-full px-3 transition-all duration-300",
                 {
-                  "bg-primary/30 text-primary font-semibold hover:bg-primary/40":
-                    i18n.language === "en",
-                  "bg-transparent text-muted-foreground hover:bg-muted/50":
-                    i18n.language !== "en",
-                },
+                  "bg-primary/30 text-primary font-semibold hover:bg-primary/40": i18n.language === "en",
+                  "bg-transparent text-muted-foreground hover:bg-muted/50": i18n.language !== "en",
+                }
               )}
               onClick={() => i18n.changeLanguage("en")}
             >
@@ -91,11 +95,9 @@ const PharmacistLogin = () => {
               className={clsx(
                 "h-8 rounded-full px-3 transition-all duration-300",
                 {
-                  "bg-primary/30 text-primary font-semibold hover:bg-primary/40":
-                    i18n.language === "ar",
-                  "bg-transparent text-muted-foreground hover:bg-muted/50":
-                    i18n.language !== "ar",
-                },
+                  "bg-primary/30 text-primary font-semibold hover:bg-primary/40": i18n.language === "ar",
+                  "bg-transparent text-muted-foreground hover:bg-muted/50": i18n.language !== "ar",
+                }
               )}
               onClick={() => i18n.changeLanguage("ar")}
             >
@@ -141,7 +143,7 @@ const PharmacistLogin = () => {
             >
               <div className="inline-flex  w-fit items-center  gap-2 rounded-full border border-badge-border bg-badge-border/10 px-3 py-1 text-xs font-medium text-badge-text transition-all duration-300">
                 <ShieldCheck className="size-4" />
-                {t("pharmacistLogin.badge")}
+                {t("pharmacistSignup.badge")}
               </div>
             </div>
 
@@ -154,7 +156,7 @@ const PharmacistLogin = () => {
                 },
               )}
             >
-              {t("pharmacistLogin.title")}
+              {t("pharmacistSignup.title")}
             </h1>
 
             <p
@@ -166,13 +168,13 @@ const PharmacistLogin = () => {
                 },
               )}
             >
-              {t("pharmacistLogin.description")}
+              {t("pharmacistSignup.description")}
             </p>
 
             <div className="mt-8 overflow-hidden rounded-4xl border border-border bg-card p-3 shadow-2xl transition-all duration-300 shadow-primary/10">
               <img
                 src={pharmaLogin}
-                alt={t("pharmacistLogin.heroAlt")}
+                alt={t("pharmacistSignup.heroAlt")}
                 className="h-88 w-full rounded-3xl object-cover object-center"
               />
             </div>
@@ -213,7 +215,7 @@ const PharmacistLogin = () => {
                           },
                         )}
                       >
-                        {t("pharmacistLogin.cardTitle")}
+                        {t("pharmacistSignup.cardTitle")}
                       </CardTitle>
                       <CardDescription
                         className={clsx(
@@ -224,12 +226,12 @@ const PharmacistLogin = () => {
                           },
                         )}
                       >
-                        {t("pharmacistLogin.cardDescription")}
+                        {t("pharmacistSignup.cardDescription")}
                       </CardDescription>
                     </div>
                     <div className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary transition-all duration-300">
                       <Building2 className="size-3.5" />
-                      {t("pharmacistLogin.roleTag")}
+                      {t("pharmacistSignup.roleTag")}
                     </div>
                   </div>
                 </CardHeader>
@@ -253,7 +255,7 @@ const PharmacistLogin = () => {
                           )}
                           htmlFor="pharmacist-identifier"
                         >
-                          {t("pharmacistLogin.identifierLabel")}
+                          {t("pharmacistSignup.identifierLabel")}
                         </label>
                       </div>
                       <div className="relative">
@@ -272,7 +274,7 @@ const PharmacistLogin = () => {
                           value={identifier}
                           onChange={(e) => setIdentifier(e.target.value)}
                           placeholder={t(
-                            "pharmacistLogin.identifierPlaceholder",
+                            "pharmacistSignup.identifierPlaceholder",
                           )}
                           className={clsx(
                             "mt-2 h-12 flex rounded-2xl border-border bg-input text-foreground placeholder:text-muted-foreground transition-all duration-300",
@@ -306,15 +308,8 @@ const PharmacistLogin = () => {
                           )}
                           htmlFor="pharmacist-password"
                         >
-                          {t("pharmacistLogin.passwordLabel")}
+                          {t("pharmacistSignup.passwordLabel")}
                         </label>
-                        <Button
-                          type="button"
-                          variant="link"
-                          className="h-auto p-0 text-md font-medium text-primary"
-                        >
-                          {t("pharmacistLogin.forgotPassword")}
-                        </Button>
                       </div>
                       <div className="relative">
                         <Lock
@@ -363,6 +358,75 @@ const PharmacistLogin = () => {
                       </div>
                     </div>
 
+                    <div className="space-y-2">
+                      <div
+                        className={clsx("flex ", {
+                          "justify-start": isArabic,
+                          "justify-end": !isArabic,
+                        })}
+                      >
+                        <label
+                          className={clsx(
+                            "text-md font-medium text-foreground transition-all duration-300",
+                            {
+                              "text-right": isArabic,
+                              "text-left": !isArabic,
+                            },
+                          )}
+                          htmlFor="pharmacist-confirm-password"
+                        >
+                          {t("pharmacistSignup.confirmPasswordLabel")}
+                        </label>
+                      </div>
+                      <div className="relative">
+                        <Lock
+                          className={clsx(
+                            "pointer-events-none absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors duration-300",
+                            {
+                              "right-3": isArabic,
+                              "left-3": !isArabic,
+                            },
+                          )}
+                        />
+                        <Input
+                          id="pharmacist-confirm-password"
+                          type={showConfirmPassword ? "text" : "password"}
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          placeholder="••••••••••"
+                          className={clsx(
+                            "mt-2 h-12 rounded-2xl border-border bg-input text-foreground flex placeholder:text-muted-foreground transition-all duration-300",
+                            {
+                              "pr-10 pl-12": isArabic,
+                              "pl-10 pr-12": !isArabic,
+                            },
+                          )}
+                          required
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className={clsx(
+                            "absolute top-1/2 size-10 -translate-y-1/2 rounded-full text-muted-foreground hover:text-foreground",
+                            {
+                              "left-1": isArabic,
+                              "right-1": !isArabic,
+                            },
+                          )}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                        >
+                          {showConfirmPassword ? (
+                            <EyeOff className="size-4" color="#10b981" />
+                          ) : (
+                            <Eye className="size-4" color="#10b981" />
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <Checkbox
@@ -377,7 +441,7 @@ const PharmacistLogin = () => {
                           htmlFor="remember-me"
                           className="text-sm text-muted-foreground"
                         >
-                          {t("pharmacistLogin.rememberMe")}
+                          {t("pharmacistSignup.rememberMe")}
                         </label>
                       </div>
                       <Button
@@ -413,7 +477,7 @@ const PharmacistLogin = () => {
                           />
                         </svg>
 
-                        {t("pharmacistLogin.googleSignIn")}
+                        {t("pharmacistSignup.googleSignIn")}
                       </Button>
                     </div>
                     <Button
@@ -422,7 +486,7 @@ const PharmacistLogin = () => {
                       className="h-14 w-full rounded-2xl bg-primary text-primary-foreground text-lg font-semibold shadow-lg shadow-primary/30 transition-all duration-300 hover:opacity-90 disabled:opacity-50"
                     >
                       <ShieldCheck className="size-5" />
-                      {t("pharmacistLogin.submit")}
+                      {t("pharmacistSignup.submit")}
                     </Button>
                   </form>
 
@@ -436,15 +500,15 @@ const PharmacistLogin = () => {
                     )}
                   >
                     <span className={clsx({ "order-2": !isArabic })}>
-                      {t("pharmacistLogin.noAccount")}
+                      {t("pharmacistSignup.haveAccount")}
                     </span>
                     <Button
                       type="button"
                       variant="link"
                       className="h-auto p-0 mx-1 text-sm font-medium text-primary text-right"
-                      onClick={() => navigate("/signup/pharmacist")}
+                      onClick={() => navigate("/login/pharmacist")}
                     >
-                      {t("pharmacistLogin.createAccount")}
+                      {t("pharmacistSignup.loginNow")}
                     </Button>
                   </div>
                 </CardContent>
@@ -457,4 +521,4 @@ const PharmacistLogin = () => {
   );
 };
 
-export default PharmacistLogin;
+export default PharmacistSignUp;
