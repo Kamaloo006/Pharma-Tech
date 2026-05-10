@@ -38,7 +38,7 @@
   --muted-foreground: #64748b;
   --border: rgba(0, 0, 0, 0.1);
   --input: #f8fafc;
-  --background-alpha: rgba(5, 150, 105, 0.02);
+  --background-alpha: rgba(5, 150, 105, 0.03);
   
   /* Emerald gradient variants */
   --gradient-emerald-primary: radial-gradient(circle, rgba(5, 150, 105, 0.3), rgba(5, 150, 105, 0.1));
@@ -54,7 +54,7 @@
 
 .dark {
   --background: rgb(2, 6, 23); /* slate-950 */
-  --background-alpha: rgba(5, 150, 105, 0.01);
+  --background-alpha: rgba(5, 150, 105, 0.1);
   --foreground: #f8fafc;
   --card: rgba(15, 23, 42, 0.9); /* slate-900 */
   --card-foreground: #f8fafc;
@@ -72,7 +72,7 @@
 
   /* مخصص للدارك مود */
   --header-bg: rgba(15, 23, 42, 0.7);
-  --badge-border: rgba(52, 211, 153, 0.3);
+  --badge-border: rgba(52, 211, 153, 0.5);
   --badge-text: #6ee7b7;
   --hero-bg: #020617;
 }
@@ -85,6 +85,7 @@
   html,
   body {
     direction: rtl;
+    zoom: 93%;
   }
 
   body {

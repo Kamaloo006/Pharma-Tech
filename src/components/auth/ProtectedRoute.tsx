@@ -8,14 +8,17 @@ type ProtectedRouteProps = {
   allowedRole?: AuthRole;
 };
 
-const ProtectedRoute = ({
-  children,
-  allowedRole = "pharmacist",
-}: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, allowedRole }: ProtectedRouteProps) => {
   const location = useLocation();
   const authSession = getAuthSession();
 
-  if (!authSession || authSession.role !== allowedRole) {
+  if (!authSession) {
+    return (
+      <Navigate to="/login/pharmacist" replace state={{ from: location }} />
+    );
+  }
+
+  if (allowedRole && authSession.role !== allowedRole) {
     return (
       <Navigate to="/login/pharmacist" replace state={{ from: location }} />
     );

@@ -1,30 +1,16 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Building2,
-  Eye,
-  EyeOff,
-  Lock,
-  MoonStar,
-  ShieldCheck,
-  Stethoscope,
-  SunMedium,
-} from "lucide-react";
+import { MoonStar, ShieldCheck, Stethoscope, SunMedium } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import pharmaLogin from "../../assets/pharmaLogin.png";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+// Card UI provided by AuthCard
+import AuthForm from "@/components/auth/AuthForm";
 import { useTheme } from "@/context/theme-provider";
-import { Checkbox } from "@/components/ui/checkbox";
+// Checkbox/input moved into AuthForm
 import { setAuthSession } from "@/lib/auth";
+import AuthCard from "@/components/auth/AuthCard";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
@@ -126,12 +112,14 @@ const PharmacistLogin = () => {
           }`}
         >
           <div
-            className={`flex flex-col justify-center transition-all duration-300 bg-background-alpha min-h-full  px-10 ${
+            className={`relative overflow-hidden flex flex-col justify-center transition-all duration-300 bg-background-alpha min-h-full p-10 rounded-4xl ${
               isArabic
                 ? "order-2 lg:order-1 lg:pr-8"
                 : "order-1 lg:order-2 lg:pl-8"
             }`}
           >
+            <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 -translate-x-1/3 -translate-y-1/3 rounded-full bg-[radial-gradient(circle_at_top_left,rgba(5,150,105,0.24),transparent_68%)] blur-3xl dark:bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.22),transparent_68%)]" />
+
             {/* Badge */}
             <div
               className={clsx("flex", {
@@ -171,6 +159,7 @@ const PharmacistLogin = () => {
 
             <div className="mt-8 overflow-hidden rounded-4xl border border-border bg-card p-3 shadow-2xl transition-all duration-300 shadow-primary/10">
               <img
+                loading="lazy"
                 src={pharmaLogin}
                 alt={t("pharmacistLogin.heroAlt")}
                 className="h-88 w-full rounded-3xl object-cover object-center"
@@ -195,260 +184,50 @@ const PharmacistLogin = () => {
                 </h2>
               </div>
 
-              <Card className="rounded-[1.75rem] border-border bg-card shadow-2xl shadow-black/10 backdrop-blur transition-all duration-300">
-                <CardHeader className="  gap-1 border-b border-border pb-5 transition-colors duration-300">
-                  <div
-                    className={clsx("flex items-center justify-between gap-3", {
-                      "flex-row": isArabic,
-                      "flex-row-reverse": !isArabic,
-                    })}
-                  >
-                    <div>
-                      <CardTitle
-                        className={clsx(
-                          "text-2xl font-semibold text-foreground transition-all duration-300",
-                          {
-                            "text-right": isArabic,
-                            "text-left": !isArabic,
-                          },
-                        )}
-                      >
-                        {t("pharmacistLogin.cardTitle")}
-                      </CardTitle>
-                      <CardDescription
-                        className={clsx(
-                          "mt-1 text-sm text-muted-foreground transition-all duration-300",
-                          {
-                            "text-right": isArabic,
-                            "text-left": !isArabic,
-                          },
-                        )}
-                      >
-                        {t("pharmacistLogin.cardDescription")}
-                      </CardDescription>
-                    </div>
-                    <div className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary transition-all duration-300">
-                      <Building2 className="size-3.5" />
-                      {t("pharmacistLogin.roleTag")}
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="space-y-5 pt-6">
-                  <form className="space-y-5" onSubmit={handleSubmit}>
-                    <div className="space-y-2">
-                      <div
-                        className={clsx("flex ", {
-                          "justify-start": isArabic,
-                          "justify-end": !isArabic,
-                        })}
-                      >
-                        <label
-                          className={clsx(
-                            "text-md font-medium text-foreground transition-all duration-300",
-                            {
-                              "text-right": isArabic,
-                              "text-left": !isArabic,
-                            },
-                          )}
-                          htmlFor="pharmacist-identifier"
-                        >
-                          {t("pharmacistLogin.identifierLabel")}
-                        </label>
-                      </div>
-                      <div className="relative">
-                        <Building2
-                          className={clsx(
-                            "pointer-events-none absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors duration-300",
-                            {
-                              "right-3": isArabic,
-                              "left-3": !isArabic,
-                            },
-                          )}
-                        />
-                        <Input
-                          id="pharmacist-identifier"
-                          type="email"
-                          value={identifier}
-                          onChange={(e) => setIdentifier(e.target.value)}
-                          placeholder={t(
-                            "pharmacistLogin.identifierPlaceholder",
-                          )}
-                          className={clsx(
-                            "mt-2 h-12 flex rounded-2xl border-border bg-input text-foreground placeholder:text-muted-foreground transition-all duration-300",
-                            {
-                              "pr-10": isArabic,
-                              "pl-10": !isArabic,
-                            },
-                          )}
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div
-                        className={clsx(
-                          "flex items-center justify-between gap-3",
-                          {
-                            "flex-row": isArabic,
-                            "flex-row-reverse": !isArabic,
-                          },
-                        )}
-                      >
-                        <label
-                          className={clsx(
-                            "text-md font-medium text-foreground transition-all duration-300",
-                            {
-                              "text-right": isArabic,
-                              "text-left": !isArabic,
-                            },
-                          )}
-                          htmlFor="pharmacist-password"
-                        >
-                          {t("pharmacistLogin.passwordLabel")}
-                        </label>
-                        <Button
-                          type="button"
-                          variant="link"
-                          className="h-auto p-0 text-md font-medium text-primary"
-                        >
-                          {t("pharmacistLogin.forgotPassword")}
-                        </Button>
-                      </div>
-                      <div className="relative">
-                        <Lock
-                          className={clsx(
-                            "pointer-events-none absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors duration-300",
-                            {
-                              "right-3": isArabic,
-                              "left-3": !isArabic,
-                            },
-                          )}
-                        />
-                        <Input
-                          id="pharmacist-password"
-                          type={showPassword ? "text" : "password"}
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••••"
-                          className={clsx(
-                            "mt-2 h-12 rounded-2xl border-border bg-input text-foreground flex placeholder:text-muted-foreground transition-all duration-300",
-                            {
-                              "pr-10 pl-12": isArabic,
-                              "pl-10 pr-12": !isArabic,
-                            },
-                          )}
-                          required
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className={clsx(
-                            "absolute top-1/2 size-10 -translate-y-1/2 rounded-full text-muted-foreground hover:text-foreground",
-                            {
-                              "left-1": isArabic,
-                              "right-1": !isArabic,
-                            },
-                          )}
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="size-4" color="#10b981" />
-                          ) : (
-                            <Eye className="size-4" color="#10b981" />
-                          )}
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          id="remember-me"
-                          checked={rememberMe}
-                          className="border-primary"
-                          onCheckedChange={(checked) =>
-                            setRememberMe(checked === true)
-                          }
-                        />
-                        <label
-                          htmlFor="remember-me"
-                          className="text-sm text-muted-foreground"
-                        >
-                          {t("pharmacistLogin.rememberMe")}
-                        </label>
-                      </div>
+              <AuthCard
+                titleKey="pharmacistLogin.cardTitle"
+                descriptionKey="pharmacistLogin.cardDescription"
+                roleTagKey="pharmacistLogin.roleTag"
+              >
+                <AuthForm
+                  prefix="pharmacistLogin"
+                  identifier={identifier}
+                  setIdentifier={setIdentifier}
+                  password={password}
+                  setPassword={setPassword}
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                  isArabic={isArabic}
+                  rememberMe={rememberMe}
+                  setRememberMe={setRememberMe}
+                  isSubmitting={isSubmitting}
+                  onSubmit={handleSubmit}
+                  includeGoogle
+                  footer={
+                    <div
+                      className={clsx(
+                        "pt-2  text-sm text-muted-foreground flex justify-center transition-all duration-300",
+                        {
+                          "text-center": isArabic,
+                          "text-left": !isArabic,
+                        },
+                      )}
+                    >
+                      <span className={clsx({ "order-2": !isArabic })}>
+                        {t("pharmacistLogin.noAccount")}
+                      </span>
                       <Button
                         type="button"
-                        variant="outline"
-                        size="google"
-                        className="flex p-2 items-center gap-2 text-md"
+                        variant="link"
+                        className="h-auto p-0 mx-1 text-sm font-medium text-primary text-right"
+                        onClick={() => navigate("/signup/pharmacist")}
                       >
-                        {/* Visual-only Google button */}
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden
-                        >
-                          <path
-                            d="M17.64 9.2045c0-.638-.057-1.25-.164-1.84H9v3.48h4.844c-.209 1.12-.844 2.07-1.8 2.71v2.26h2.9c1.7-1.57 2.68-3.86 2.68-6.61z"
-                            fill="#4285F4"
-                          />
-                          <path
-                            d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.58-5.05-3.7H1.02v2.32C2.5 15.9 5.52 18 9 18z"
-                            fill="#34A853"
-                          />
-                          <path
-                            d="M3.95 11.7a5.4 5.4 0 010-3.6V5.78H1.02A8.99 8.99 0 000 9c0 1.43.34 2.78.94 3.97l2.99-1.27z"
-                            fill="#FBBC05"
-                          />
-                          <path
-                            d="M9 3.6c1.32 0 2.5.45 3.43 1.33l2.57-2.57C13.47.98 11.43 0 9 0 5.52 0 2.5 2.1 1.02 5.22l2.99 2.32C4.66 5.18 6.65 3.6 9 3.6z"
-                            fill="#EA4335"
-                          />
-                        </svg>
-
-                        {t("pharmacistLogin.googleSignIn")}
+                        {t("pharmacistLogin.createAccount")}
                       </Button>
                     </div>
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="h-14 w-full rounded-2xl bg-primary text-primary-foreground text-lg font-semibold shadow-lg shadow-primary/30 transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-                    >
-                      <ShieldCheck className="size-5" />
-                      {t("pharmacistLogin.submit")}
-                    </Button>
-                  </form>
-
-                  <div
-                    className={clsx(
-                      "pt-2  text-sm text-muted-foreground flex justify-center transition-all duration-300",
-                      {
-                        "text-center": isArabic,
-                        "text-left": !isArabic,
-                      },
-                    )}
-                  >
-                    <span className={clsx({ "order-2": !isArabic })}>
-                      {t("pharmacistLogin.noAccount")}
-                    </span>
-                    <Button
-                      type="button"
-                      variant="link"
-                      className="h-auto p-0 mx-1 text-sm font-medium text-primary text-right"
-                      onClick={() => navigate("/signup/pharmacist")}
-                    >
-                      {t("pharmacistLogin.createAccount")}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  }
+                />
+              </AuthCard>
             </div>
           </div>
         </section>

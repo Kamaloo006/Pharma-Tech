@@ -51,5 +51,20 @@
         "submit": "إنشاء الحساب",
         "haveAccount": "لديك حساب بالفعل",
         "loginNow": "تسجيل الدخول"
+    },
+    "adminLogin": {
+        "badge": "وصول إداري",
+        "title": "تسجيل دخول الأدمن",
+        "description": "ادخل إلى مساحة الإدارة عبر نموذج دخول بسيط وآمن وواضح.",
+        "cardTitle": "تسجيل دخول المسؤول",
+        "cardDescription": "أدخل بيانات المدير للمتابعة",
+        "roleTag": "أدمن",
+        "identifierLabel": "البريد الإلكتروني",
+        "identifierPlaceholder": "admin@example.com",
+        "passwordLabel": "كلمة المرور",
+        "rememberMe": "تذكرني",
+        "forgotPassword": "نسيت كلمة المرور",
+        "submit": "تسجيل الدخول",
+        "switchToPharmacist": "الانتقال إلى تسجيل دخول الصيدلي"
     }
 }

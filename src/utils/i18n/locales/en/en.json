@@ -34,7 +34,7 @@
     },
     "pharmacistSignup": {
         "badge": "Secure Registration",
-        "title": "Create Your Pharmacy Account",
+        "title": "Create Your Account",
         "description": "Set up your pharmacist workspace with a secure onboarding flow and instant access to your portal.",
         "heroAlt": "Pharmacy onboarding dashboard preview",
         "cardTitle": "Pharmacist Sign Up",
@@ -51,5 +51,20 @@
         "submit": "Create Account",
         "haveAccount": "Already have an account",
         "loginNow": "Sign in"
+    },
+    "adminLogin": {
+        "badge": "Administrative Access",
+        "title": "Admin Sign In",
+        "description": "Access the administrative workspace with a clean and secure sign-in flow.",
+        "cardTitle": "Administrator Login",
+        "cardDescription": "Enter your admin credentials to continue",
+        "roleTag": "Admin",
+        "identifierLabel": "Email",
+        "identifierPlaceholder": "admin@example.com",
+        "passwordLabel": "Password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot Password",
+        "submit": "Sign In",
+        "switchToPharmacist": "Go to pharmacist login"
     }
 }
