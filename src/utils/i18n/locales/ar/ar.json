@@ -2,6 +2,33 @@
     "welcomeMessage": "مرحبًا بكم في فارما تيك",
     "switchLanguage": "تبديل اللغة",
     "addMedicine": "إضافة دواء",
+    "common": {
+        "continue": "متابعة",
+        "next": "التالي",
+        "back": "رجوع",
+        "error": "خطأ"
+    },
+    "validation": {
+        "invalidEmail": "البريد الإلكتروني غير صالح",
+        "passwordMinLength": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+        "passwordRequiresLetter": "يجب أن تحتوي كلمة المرور على حرف واحد على الأقل",
+        "passwordRequiresNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+        "passwordConfirmationMinLength": "يجب أن يكون تأكيد كلمة المرور 8 أحرف على الأقل",
+        "firstNameRequired": "الاسم الأول مطلوب",
+        "firstNameTooLong": "الاسم الأول طويل جدًا",
+        "fatherNameTooLong": "اسم الأب طويل جدًا",
+        "lastNameRequired": "الاسم الأخير مطلوب",
+        "lastNameTooLong": "الاسم الأخير طويل جدًا",
+        "phoneNumberRequired": "رقم الهاتف مطلوب",
+        "invalidSyrianPhoneNumber": "رقم الهاتف السوري غير صالح (مثال: 09xxxxxxxx)",
+        "licenseNumberRequired": "رقم الترخيص مطلوب",
+        "licenseNumberTooLong": "رقم الترخيص طويل جدًا",
+        "pharmacyNameRequired": "اسم الصيدلية مطلوب",
+        "pharmacyNameTooLong": "اسم الصيدلية طويل جدًا",
+        "cityRequired": "يرجى اختيار مدينة",
+        "addressTooLong": "العنوان طويل جدًا",
+        "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين"
+    },
     "pharmacistLogin": {
         "badge": "أمان بمستوى عالي",
         "title": "ارتقِ بإدارة الصيدلية",
@@ -30,7 +57,8 @@
         "privacyPolicy": "سياسة الخصوصية",
         "compliance": "الامتثال",
         "googleSignIn": "تسجيل الدخول باستخدام جوجل",
-        "rememberMe": "تذكرني"
+        "rememberMe": "تذكرني",
+        "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
     },
     "pharmacistSignup": {
         "badge": "تسجيل آمن",
@@ -39,18 +67,46 @@
         "heroAlt": "معاينة لوحة إعداد حساب الصيدلية",
         "cardTitle": "إنشاء حساب صيدلي",
         "cardDescription": "إنشاء وصول إلى بوابة الصيدلية",
+        "personalStepDesc": "عرّفنا عليك لبدء عملية التسجيل.",
+        "pharmacyStepDesc": "شاركنا بيانات الصيدلية لإكمال إنشاء الحساب.",
         "roleTag": "صيدلي",
+        "emailLabel": "البريد الإلكتروني",
+        "firstNameLabel": "الاسم الأول",
+        "firstNamePlaceholder": "محمد",
+        "emailPlaceholder": "example@mail.com",
+        "lastNameLabel": "الاسم الأخير",
+        "lastNamePlaceholder": "أحمد",
+        "phoneLabel": "رقم الهاتف",
+        "phonePlaceholder": "09xxxxxxxx",
         "fullNameLabel": "الاسم الكامل",
         "fullNamePlaceholder": "محمد أحمد",
         "identifierLabel": "البريد الإلكتروني",
+        "forgotPassword": "نسيت كلمة المرور",
         "identifierPlaceholder": "user@example.com",
         "passwordLabel": "كلمة المرور",
+        "passwordPlaceholder": "••••••••",
         "confirmPasswordLabel": "تأكيد كلمة المرور",
+        "confirmPasswordPlaceholder": "••••••••",
         "rememberMe": "تذكرني",
         "googleSignIn": "التسجيل باستخدام جوجل",
+        "pharmacyNameLabel": "اسم الصيدلية",
+        "pharmacyPlaceholder": "صيدلية الشفاء",
+        "licenceLabel": "رقم الترخيص",
+        "licencePlaceholder": "LC-12345678",
+        "cityLabel": "المدينة",
+        "selectCity": "اختر مدينة",
+        "loadingCities": "جاري تحميل المدن...",
+        "failedLoadCities": "فشل تحميل المدن",
+        "cityOptionDamascus": "دمشق",
+        "cityOptionAleppo": "حلب",
+        "addressLabel": "العنوان",
+        "addressPlaceholder": "أدخل عنوان الصيدلية",
         "submit": "إنشاء الحساب",
         "haveAccount": "لديك حساب بالفعل",
-        "loginNow": "تسجيل الدخول"
+        "loginNow": "تسجيل الدخول",
+        "registrationSuccess": "تم إنشاء الحساب بنجاح",
+        "checkEmailMessage": "تحقق من بريدك الإلكتروني لتفعيل الحساب.",
+        "registrationFailed": "فشل إنشاء الحساب. يرجى المحاولة مرة أخرى."
     },
     "adminLogin": {
         "badge": "وصول إداري",
@@ -66,5 +122,10 @@
         "forgotPassword": "نسيت كلمة المرور",
         "submit": "تسجيل الدخول",
         "switchToPharmacist": "الانتقال إلى تسجيل دخول الصيدلي"
+    },
+    "auth":{
+        "googleSignIn":"التسجيل باستخدام جوجل",
+        "processing":"جارٍ المعالجة...",
+        "orContinueWith": "أو الاستمرار مع"
     }
 }

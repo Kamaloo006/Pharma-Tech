@@ -1,34 +1,26 @@
-import { type ReactNode } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
-import { type AuthRole, getAuthSession } from "@/lib/auth";
-
-type ProtectedRouteProps = {
-  children?: ReactNode;
-  allowedRole?: AuthRole;
-};
-
-const ProtectedRoute = ({ children, allowedRole }: ProtectedRouteProps) => {
+export default function ProtectedRoute() {
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
-  const authSession = getAuthSession();
 
-  if (!authSession) {
+  // 1. أثناء فحص التوكنات والـ Refresh في البداية، نعرض واجهة انتظار نظيفة
+  if (isLoading) {
     return (
-      <Navigate to="/login/pharmacist" replace state={{ from: location }} />
+      <div className="flex h-screen w-screen items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
     );
   }
 
-  if (allowedRole && authSession.role !== allowedRole) {
+  // 2. إذا لم يكن المستخدم مسجلاً، نوجهه لصفحة اللوجين مع حفظ الرابط الذي كان يحاول دخوله
+  if (!isAuthenticated) {
     return (
-      <Navigate to="/login/pharmacist" replace state={{ from: location }} />
+      <Navigate to="/login/pharmacist" state={{ from: location }} replace />
     );
   }
 
-  if (children) {
-    return <>{children}</>;
-  }
-
+  // 3. إذا كان كل شيء تماماً، اسمح له بالعبور وعرض المسارات الداخلية
   return <Outlet />;
-};
-
-export default ProtectedRoute;
+}

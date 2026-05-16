@@ -6,12 +6,13 @@ import { useTheme } from "./context/theme-provider";
 import { Separator } from "./components/ui/separator";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
-import { clearAuthSession } from "@/lib/auth";
+import { useAuth } from "@/context/AuthContext";
 
 const App = () => {
   const { t, i18n } = useTranslation();
   const { setTheme, theme } = useTheme();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
@@ -23,8 +24,8 @@ const App = () => {
     i18n.changeLanguage(newLang);
   };
 
-  const handleLogout = () => {
-    clearAuthSession();
+  const handleLogout = async () => {
+    await logout();
     navigate("/login/pharmacist", { replace: true });
   };
 
