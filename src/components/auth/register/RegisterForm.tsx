@@ -30,14 +30,13 @@ export default function RegisterForm() {
     mode: "onChange",
   });
 
-  // تهيئة الـ TanStack Query Mutation لمعالجة الطلب باحترافية
   const registerMutation = useMutation({
-    mutationFn: authApi.register, // 🚀 استدعاء مباشر ونظيف جداً!
+    mutationFn: authApi.register,
     onSuccess: (_, variables) => {
       toast.success(t("pharmacistSignup.registrationSuccess"), {
         description: t("pharmacistSignup.checkEmailMessage"),
       });
-      navigate("/login/pharmacist", {
+      navigate("/verify-email-dev", {
         replace: true,
         state: { email: variables.email },
       });
@@ -61,19 +60,19 @@ export default function RegisterForm() {
       "password_confirmation",
     ] as any;
     const isValid = await form.trigger(fieldsToValidate);
-    
+
     if (isValid) {
       // Explicit check for password confirmation equality
       const password = form.getValues("password");
       const passwordConfirmation = form.getValues("password_confirmation");
-      
+
       if (password !== passwordConfirmation) {
         toast.error(t("common.error"), {
           description: t("validation.passwordsDoNotMatch"),
         });
         return;
       }
-      
+
       setCurrentStep(2);
     }
   };

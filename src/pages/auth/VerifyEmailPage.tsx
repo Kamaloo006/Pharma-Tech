@@ -24,6 +24,7 @@ const VerifyEmailPage = () => {
       }
       try {
         const decodedUrl = decodeURIComponent(encodedUrl);
+
         const response = await axios.get(decodedUrl);
 
         if (response.data?.data?.token) {

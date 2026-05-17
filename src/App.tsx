@@ -12,7 +12,7 @@ const App = () => {
   const { t, i18n } = useTranslation();
   const { setTheme, theme } = useTheme();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
@@ -33,9 +33,11 @@ const App = () => {
     <main className="mx-auto flex min-h-screen w-full max-w-5xl items-center justify-center px-4 py-10">
       <section className="relative w-full rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-10">
         <div className="absolute right-6 top-6">
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            تسجيل الخروج
-          </Button>
+          {isAuthenticated && (
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              تسجيل الخروج {user?.first_name}
+            </Button>
+          )}
         </div>
 
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs text-secondary-foreground">

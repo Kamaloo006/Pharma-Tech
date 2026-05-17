@@ -14,7 +14,6 @@ export interface User {
   first_name: string;
   last_name: string;
   email: string;
-  role: string;
 }
 
 interface AuthContextType {
@@ -24,7 +23,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   setAuthData: (accessToken: string, refreshToken: string, user: User) => void;
-  setAccessTokenOnly: (token: string) => void; // سنحتاجها عند تجديد التوكن تلقائياً
+  setAccessTokenOnly: (token: string) => void;
   logout: () => void;
 }
 
@@ -32,7 +31,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null); // يُحفظ في الذاكرة فقط للأمان
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -89,7 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");
 
-    toast.info("تم تسجيل الخروج بنجاح");
+    toast.success("تم تسجيل الخروج بنجاح");
   };
 
   return (

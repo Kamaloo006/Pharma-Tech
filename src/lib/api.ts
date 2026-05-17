@@ -27,7 +27,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
+    
     // إذا انتهى الـ Access Token وأرجع السيرفر 401 ولم نقم بمحاولة التجديد بعد
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // لمنع الدخول في حلقة تكرار لا نهائية لو انتهى الريفريش نفسه
@@ -36,11 +36,12 @@ api.interceptors.response.use(
 
       if (refreshToken) {
         try {
-          // إرسال طلب الـ Refresh الـ Endpoint الخاص بـ لارفيل
-          const res = await axios.post(`${api.defaults.baseURL}/auth/refresh`, {
+          // إرسال طلب الـ Refresh الـ Endpoint الخاص بـ لارفيل  
+          const res = await axios.post(`${api.defaults.baseURL}/refresh`, {
             refresh_token: refreshToken,
           });
 
+          
           if (res.status === 200) {
             const { access_token, refresh_token } = res.data;
 
