@@ -54,7 +54,7 @@
 
 .dark {
   --background: rgb(2, 6, 23); /* slate-950 */
-  --background-alpha: rgba(5, 150, 105, 0.1);
+  --background-alpha: rgba(81, 244, 192, 0.1);
   --foreground: #f8fafc;
   --card: rgba(15, 23, 42, 0.9); /* slate-900 */
   --card-foreground: #f8fafc;

@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Eye,
@@ -14,15 +14,24 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import pharmaLogin from "../../assets/pharmaLogin.png";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 // Card UI provided by AuthCard
 import AuthForm from "@/components/auth/AuthForm";
 import { useTheme } from "@/context/theme-provider";
 import { useAuth } from "@/context/AuthContext";
-// Checkbox/input moved into AuthForm
 import AuthCard from "@/components/auth/AuthCard";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginInput } from "@/types/authValidation";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
@@ -30,13 +39,20 @@ const PharmacistLogin = () => {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   const { login } = useAuth();
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const [rememberMe, setRememberMe] = useState(false);
+  const form = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
   const fromPath =
     (location.state as { from?: { pathname?: string } } | null)?.from
       ?.pathname ?? "/dashboard";
@@ -48,17 +64,12 @@ const PharmacistLogin = () => {
 
   const isArabic = i18n.language === "ar";
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!identifier.trim() || !password.trim()) {
-      return;
-    }
-
+  const handleSubmit = async (values: LoginInput) => {
     setSubmitError(null);
     setIsSubmitting(true);
 
     try {
-      await login(identifier.trim(), password);
+      await login(values.email.trim(), values.password);
       navigate(fromPath, { replace: true });
     } catch (error: any) {
       setSubmitError(
@@ -215,151 +226,185 @@ const PharmacistLogin = () => {
                 descriptionKey="pharmacistLogin.cardDescription"
                 roleTagKey="pharmacistLogin.roleTag"
               >
-                <AuthForm
-                  isSubmitting={isSubmitting}
-                  onSubmit={handleSubmit}
-                  submitLabelKey="pharmacistLogin.submit"
-                  includeGoogle
-                  footer={
-                    <div
-                      className={clsx(
-                        "pt-2  text-sm text-muted-foreground flex justify-center transition-all duration-300",
-                        {
-                          "text-center": isArabic,
-                          "text-left": !isArabic,
-                        },
-                      )}
-                    >
-                      <span className={clsx({ "order-2": !isArabic })}>
-                        {t("pharmacistLogin.noAccount")}
-                      </span>
-                      <Button
-                        type="button"
-                        variant="link"
-                        className="h-auto p-0 mx-1 text-sm font-medium text-primary text-right"
-                        onClick={() => navigate("/signup/pharmacist")}
-                      >
-                        {t("pharmacistLogin.createAccount")}
-                      </Button>
-                    </div>
-                  }
-                >
-                  <div
-                    dir={isArabic ? "rtl" : "ltr"}
-                    className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500"
-                  >
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="pharmacist-login-email"
+                <Form {...form}>
+                  <AuthForm
+                    isSubmitting={isSubmitting}
+                    onSubmit={form.handleSubmit(handleSubmit)}
+                    submitLabelKey="pharmacistLogin.submit"
+                    includeGoogle
+                    footer={
+                      <div
                         className={clsx(
-                          "text-md font-medium",
-                          isArabic ? "text-right" : "text-left",
+                          "pt-2 text-sm text-muted-foreground flex justify-center transition-all duration-300",
+                          {
+                            "text-center": isArabic,
+                            "text-left": !isArabic,
+                          },
                         )}
                       >
-                        {t("pharmacistLogin.identifierLabel")}
-                      </Label>
-                      <div className="relative">
-                        <Mail
-                          className={clsx(
-                            "absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground",
-                            isArabic ? "right-3" : "left-3",
-                          )}
-                        />
-                        <Input
-                          id="pharmacist-login-email"
-                          type="email"
-                          value={identifier}
-                          onChange={(event) =>
-                            setIdentifier(event.target.value)
-                          }
-                          required
-                          className={clsx(
-                            "h-12 rounded-2xl bg-input",
-                            isArabic ? "pr-10" : "pl-10",
-                          )}
-                          placeholder={t(
-                            "pharmacistLogin.identifierPlaceholder",
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="pharmacist-login-password"
-                        className={clsx(
-                          "text-md font-medium",
-                          isArabic ? "text-right" : "text-left",
-                        )}
-                      >
-                        {t("pharmacistLogin.passwordLabel")}
-                      </Label>
-                      <div className="relative">
-                        <Lock
-                          className={clsx(
-                            "absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground",
-                            isArabic ? "right-3" : "left-3",
-                          )}
-                        />
-                        <Input
-                          id="pharmacist-login-password"
-                          type={showPassword ? "text" : "password"}
-                          value={password}
-                          onChange={(event) => setPassword(event.target.value)}
-                          required
-                          className={clsx(
-                            "h-12 rounded-2xl bg-input",
-                            isArabic ? "pr-10 pl-10" : "pl-10 pr-10",
-                          )}
-                          placeholder="••••••••"
-                        />
+                        <span className={clsx({ "order-2": !isArabic })}>
+                          {t("pharmacistLogin.noAccount")}
+                        </span>
                         <Button
                           type="button"
-                          variant="ghost"
-                          size="icon"
-                          className={clsx(
-                            "absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground",
-                            isArabic ? "left-1" : "right-1",
-                          )}
-                          onClick={() => setShowPassword((prev) => !prev)}
+                          variant="link"
+                          className="h-auto p-0 mx-1 text-sm font-medium text-primary text-right"
+                          onClick={() => navigate("/signup/pharmacist")}
                         >
-                          {showPassword ? (
-                            <EyeOff className="size-4" />
-                          ) : (
-                            <Eye className="size-4" />
-                          )}
+                          {t("pharmacistLogin.createAccount")}
                         </Button>
                       </div>
-                    </div>
-
+                    }
+                  >
                     <div
-                      className={clsx(
-                        "flex items-center gap-2",
-                        isArabic ? "justify-end" : "justify-start",
-                      )}
+                      dir={isArabic ? "rtl" : "ltr"}
+                      className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500"
                     >
-                      <Checkbox
-                        id="pharmacist-remember"
-                        checked={rememberMe}
-                        onCheckedChange={(checked) => setRememberMe(!!checked)}
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem className="space-y-2">
+                            <FormLabel
+                              className={clsx(
+                                "text-md font-medium",
+                                isArabic ? "text-right" : "text-left",
+                              )}
+                            >
+                              {t("pharmacistLogin.identifierLabel")}
+                            </FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Mail
+                                  className={clsx(
+                                    "absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground",
+                                    isArabic ? "right-3" : "left-3",
+                                  )}
+                                />
+                                <Input
+                                  {...field}
+                                  type="email"
+                                  className={clsx(
+                                    "h-12 rounded-2xl bg-input",
+                                    isArabic ? "pr-10" : "pl-10",
+                                  )}
+                                  placeholder={t(
+                                    "pharmacistLogin.identifierPlaceholder",
+                                  )}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage
+                              className={clsx(
+                                isArabic ? "text-right" : "text-left",
+                              )}
+                            />
+                          </FormItem>
+                        )}
                       />
-                      <Label htmlFor="pharmacist-remember" className="text-sm">
-                        {t("pharmacistLogin.rememberMe")}
-                      </Label>
-                    </div>
 
-                    {submitError && (
-                      <p
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem className="space-y-2">
+                            <div className="flex justify-between gap-3">
+                              <FormLabel
+                                className={clsx(
+                                  "text-md font-medium",
+                                  isArabic ? "text-right" : "text-left",
+                                )}
+                              >
+                                {t("pharmacistLogin.passwordLabel")}
+                              </FormLabel>
+                              <button
+                                type="button"
+                                onClick={() => navigate("/forgot-password")}
+                                className="text-sm font-medium text-primary hover:underline"
+                              >
+                                {t("pharmacistLogin.forgotPassword")}
+                              </button>
+                            </div>
+                            <FormControl>
+                              <div className="relative">
+                                <Lock
+                                  className={clsx(
+                                    "absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground",
+                                    isArabic ? "right-3" : "left-3",
+                                  )}
+                                />
+                                <Input
+                                  {...field}
+                                  type={showPassword ? "text" : "password"}
+                                  className={clsx(
+                                    "h-12 rounded-2xl bg-input",
+                                    isArabic ? "pr-10 pl-10" : "pl-10 pr-10",
+                                  )}
+                                  placeholder="••••••••"
+                                />
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  className={clsx(
+                                    "absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground",
+                                    isArabic ? "left-1" : "right-1",
+                                  )}
+                                  onClick={() =>
+                                    setShowPassword((prev) => !prev)
+                                  }
+                                >
+                                  {showPassword ? (
+                                    <EyeOff className="size-4" />
+                                  ) : (
+                                    <Eye className="size-4" />
+                                  )}
+                                </Button>
+                              </div>
+                            </FormControl>
+                            <FormMessage
+                              className={clsx(
+                                isArabic ? "text-right" : "text-left",
+                              )}
+                            />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div
                         className={clsx(
-                          "text-sm font-medium text-red-500",
-                          isArabic ? "text-right" : "text-left",
+                          "flex items-center gap-2",
+                          isArabic ? "justify-end" : "justify-start",
                         )}
                       >
-                        {submitError}
-                      </p>
-                    )}
-                  </div>
-                </AuthForm>
+                        <Checkbox
+                          id="pharmacist-remember"
+                          checked={rememberMe}
+                          onCheckedChange={(checked) =>
+                            setRememberMe(!!checked)
+                          }
+                        />
+                        <label
+                          htmlFor="pharmacist-remember"
+                          className="text-sm"
+                        >
+                          {t("pharmacistLogin.rememberMe")}
+                        </label>
+                      </div>
+
+                      {submitError && (
+                        <p
+                          className={clsx(
+                            "text-sm font-medium text-red-500",
+                            isArabic ? "text-right" : "text-left",
+                          )}
+                        >
+                          {submitError}
+                        </p>
+                      )}
+                    </div>
+                  </AuthForm>
+                </Form>
               </AuthCard>
             </div>
           </div>

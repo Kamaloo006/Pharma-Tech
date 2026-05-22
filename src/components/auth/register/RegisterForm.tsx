@@ -15,8 +15,8 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { registerSchema, type RegisterInput } from "@/types/authValidation";
-import { PersonalInfoFields } from "@/components/auth/register/PersonalInfoFields";
-import { PharmacyInfoFields } from "@/components/auth/register/PharmacyInfoFields";
+import { PersonalInfoFields } from "./PersonalInfoFields";
+import { PharmacyInfoFields } from "./PharmacyInfoFields";
 import * as authApi from "@/services/api/auth"; // استيراد دوال الـ API الخاصة بالمصادقة
 
 export default function RegisterForm() {
@@ -36,7 +36,7 @@ export default function RegisterForm() {
       toast.success(t("pharmacistSignup.registrationSuccess"), {
         description: t("pharmacistSignup.checkEmailMessage"),
       });
-      navigate("/verify-email-dev", {
+      navigate("/email-verify", {
         replace: true,
         state: { email: variables.email },
       });

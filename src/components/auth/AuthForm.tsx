@@ -31,7 +31,26 @@ export default function AuthForm({
       {/* 1. الحقول (Inputs) */}
       <div className="space-y-4">{children}</div>
 
-      {/* 2. خيار تسجيل دخول جوجل (اختياري) */}
+      {showSubmitButton && (
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="h-14 w-full rounded-2xl bg-primary text-primary-foreground text-lg font-semibold shadow-lg shadow-primary/30 transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+        >
+          {isSubmitting ? (
+            <div className="flex items-center gap-2">
+              {/* Spinner يمكن إضافته هنا */}
+              <Spinner />
+            </div>
+          ) : (
+            <>
+              <ShieldCheck className="size-5 mx-2" />
+              {t(submitLabelKey)}
+            </>
+          )}
+        </Button>
+      )}
+
       {includeGoogle && (
         <div className="flex flex-col gap-4">
           <div className="relative">
@@ -53,27 +72,6 @@ export default function AuthForm({
             {t("auth.googleSignIn")}
           </Button>
         </div>
-      )}
-
-      {/* 3. زر الإرسال الرئيسي */}
-      {showSubmitButton && (
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="h-14 w-full rounded-2xl bg-primary text-primary-foreground text-lg font-semibold shadow-lg shadow-primary/30 transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-        >
-          {isSubmitting ? (
-            <div className="flex items-center gap-2">
-              {/* Spinner يمكن إضافته هنا */}
-              <Spinner />
-            </div>
-          ) : (
-            <>
-              <ShieldCheck className="size-5 mx-2" />
-              {t(submitLabelKey)}
-            </>
-          )}
-        </Button>
       )}
 
       {/* 4. التذييل (Footer) */}

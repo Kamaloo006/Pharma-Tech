@@ -9,7 +9,6 @@ const localizedString = (messageKey: string) =>
     error: err(messageKey),
   });
 
-// الأساسيات المشتركة
 const authBase = {
   email: localizedString("validation.invalidEmail").email({
     error: err("validation.invalidEmail"),
@@ -23,12 +22,10 @@ const authBase = {
     .regex(/[0-9]/, { error: err("validation.passwordRequiresNumber") }),
 };
 
-// 1. تعديل سكيما تسجيل الدخول (حذف تأكيد كلمة المرور)
 export const loginSchema = z.object({
   ...authBase,
 });
 
-// 2. تعديل وتدقيق سكيما إنشاء الحساب
 export const registerSchema = z.object({
   ...authBase,
 

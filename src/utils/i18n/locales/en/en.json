@@ -44,7 +44,7 @@
         "identifierLabel": "Email",
         "identifierPlaceholder": "user@example.com",
         "passwordLabel": "Password",
-        "forgotPassword": "Forgot Password",
+        "forgotPassword": "Forgot Password ?",
         "shiftLabel": "Shift Access",
         "shiftPlaceholder": "Select your shift",
         "shiftMorning": "Morning Shift (06:00 - 14:00)",
@@ -99,6 +99,8 @@
         "failedLoadCities": "Failed to load cities",
         "cityOptionDamascus": "Damascus",
         "cityOptionAleppo": "Aleppo",
+        "selectGovernorate": "Select a governorate",
+        "selectGovernorateFirst": "Select governorate first",
         "addressLabel": "Address",
         "addressPlaceholder": "Enter pharmacy address",
         "submit": "Create Account",
@@ -127,6 +129,17 @@
     "auth":{
         "googleSignIn":"Sign in with Google",
         "processing":"Processing...",
-        "orContinueWith": "Or continue with"
+        "orContinueWith": "Or continue with",
+        "verifyEmailCardTitle": "Confirm Your Email",
+    "verifyEmailCardDesc": "One last step to secure your workspace",
+    "checkInbox": "Check your inbox",
+    "weSentLinkTo": "We have sent a secure verification link to",
+    "linkExpirationNotice": "The link will expire shortly for your security",
+    "resendEmailBtn": "Resend Verification Email",
+    "sending": "Sending...",
+    "backToLogin": "Back to Login",
+    "resendSuccessTitle": "Email Sent Successfully",
+    "resendSuccessDesc": "Please check your inbox or spam folder for the new link",
+    "resendFailed": "Failed to resend validation link. Please try again"
     }
 }

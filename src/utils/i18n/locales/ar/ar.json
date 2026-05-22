@@ -44,7 +44,7 @@
         "identifierLabel": "البريد الإلكتروني",
         "identifierPlaceholder": "user@example.com",
         "passwordLabel": "كلمة المرور",
-        "forgotPassword": "نسيت كلمة المرور",
+        "forgotPassword": "نسيت كلمة المرور  ؟",
         "shiftLabel": "نوبة العمل",
         "shiftPlaceholder": "اختر النوبة",
         "shiftMorning": "نوبة الصباح (06:00 - 14:00)",
@@ -99,6 +99,8 @@
         "failedLoadCities": "فشل تحميل المدن",
         "cityOptionDamascus": "دمشق",
         "cityOptionAleppo": "حلب",
+        "selectGovernorate": "اختر المحافظة",
+        "selectGovernorateFirst": "اختر المحافظة أولاً",
         "addressLabel": "العنوان",
         "addressPlaceholder": "أدخل عنوان الصيدلية",
         "submit": "إنشاء الحساب",
@@ -126,6 +128,17 @@
     "auth":{
         "googleSignIn":"التسجيل باستخدام جوجل",
         "processing":"جارٍ المعالجة...",
-        "orContinueWith": "أو الاستمرار مع"
+        "orContinueWith": "أو الاستمرار مع",
+        "verifyEmailCardTitle": "تأكيد البريد الإلكتروني",
+        "verifyEmailCardDesc": "خطوة واحدة أخيرة لتأمين حسابك وصيدليتك.",
+        "checkInbox": "تفقد صندوق الوارد الخاص بك",
+        "weSentLinkTo": "لقد أرسلنا رابط تفعيل آمن إلى البريد التالي:",
+        "linkExpirationNotice": "الرابط ينتهي بصلاحية مؤقتة لدواعي الأمان الحرج.",
+        "resendEmailBtn": "إعادة إرسال رابط التفعيل",
+        "sending": "جاري الإرسال...",
+        "backToLogin": "العودة لصفحة تسجيل الدخول",
+        "resendSuccessTitle": "تم إعادة إرسال البريد بنجاح",
+        "resendSuccessDesc": "يرجى تفقد البريد الوارد أو صندوق الرسائل غير المرغوب فيها (Spam).",
+        "resendFailed": "فشل إعادة إرسال الرابط، يرجى المحاولة مرة أخرى لاحقاً."
     }
 }

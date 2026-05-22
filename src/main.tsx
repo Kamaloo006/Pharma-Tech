@@ -25,6 +25,7 @@ import VerifyEmailPage from "./pages/auth/VerifyEmailPage.tsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
 import DevelopmentVerify from "./pages/auth/DevelopmentVerify.tsx";
+import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
 
 // تهيئة الـ TanStack Query Client لجميع طلبات الـ API
 const queryClient = new QueryClient({
@@ -56,17 +57,20 @@ const router = createBrowserRouter([
         element: <PharmacistSignUp />,
       },
       {
-        path: "/verify-email",
+        path: "/email-verify",
         element: <VerifyEmailPage />,
       },
       {
         path: "/verify-email-dev",
         element: <DevelopmentVerify />,
       },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
     ],
   },
 
-  // ================= 2. المسارات المحمية (ممنوع دخول الغرباء إليها) =================
   {
     element: <ProtectedRoute />,
     children: [
@@ -92,16 +96,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {/* 1. طبقة الـ TanStack Query */}
     <QueryClientProvider client={queryClient}>
-      {/* 2. طبقة الـ Auth لإدارة التوكن والـ Refresh */}
       <AuthProvider>
-        {/* 3. طبقة الـ الثيم المتوافقة مع تعديلاتك */}
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          {/* تشغيل الموجه */}
           <RouterProvider router={router} />
-
-          {/* توستر التنبيهات من Shadcn يوضع هنا في الجذر ليعمل بكل الشاشات */}
           <Toaster position="top-center" richColors />
         </ThemeProvider>
       </AuthProvider>

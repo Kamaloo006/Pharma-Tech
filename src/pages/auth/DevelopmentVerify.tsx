@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -41,7 +40,7 @@ const DevelopmentVerify = () => {
       <h2 className="text-xl font-bold">مختبر تفعيل الحسابات (Dev Mode)</h2>
       <input
         type="text"
-        placeholder="الصق رابط pharmatech:// هنا"
+        placeholder="الصق رابط "
         className="w-full p-2 border rounded"
         value={link}
         onChange={(e) => setLink(e.target.value)}

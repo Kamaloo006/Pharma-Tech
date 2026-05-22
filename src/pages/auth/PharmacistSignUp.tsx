@@ -85,13 +85,13 @@ const PharmacistSignUp = () => {
           {/* Hero Content Side */}
           <div
             className={clsx(
-              "relative overflow-hidden flex flex-col justify-center p-10 rounded-4xl min-h-full",
+              "relative overflow-hidden flex flex-col justify-center transition-all duration-300 bg-background-alpha min-h-full p-10 rounded-4xl",
               isArabic
                 ? "order-2 lg:order-1 lg:pr-8"
                 : "order-1 lg:order-2 lg:pl-8",
             )}
           >
-            <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 -translate-x-1/3 -translate-y-1/3 rounded-full bg-[radial-gradient(circle_at_top_left,rgba(5,150,105,0.24),transparent_68%)] blur-3xl" />
+            <div className="pointer-events-none absolute left-0 top-0 h-56 w-56 -translate-x-1/3 -translate-y-1/3 rounded-full bg-[radial-gradient(circle_at_top_left,rgba(5,150,105,0.24),transparent_68%)] blur-3xl dark:bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.22),transparent_68%)]" />
             <div
               className={clsx(
                 "flex",
@@ -148,7 +148,6 @@ const PharmacistSignUp = () => {
                 </h2>
               </div>
 
-              {/* استدعاء الـ RegisterForm النظيف والمحكم بالداخل */}
               <RegisterForm />
             </div>
           </div>
