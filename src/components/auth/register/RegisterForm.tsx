@@ -91,14 +91,13 @@ export default function RegisterForm() {
       }
       roleTagKey="pharmacistSignup.roleTag"
     >
-      {/* مؤشر الخطوات */}
       <Progress value={currentStep === 1 ? 50 : 100} className="mb-4" />
 
       <Form {...form}>
         <AuthForm
           onSubmit={form.handleSubmit(onSubmit)}
           isSubmitting={registerMutation.isPending}
-          showSubmitButton={currentStep === 2} // لا يظهر زر الإرسال النهائي لـ AuthForm إلا بالخطوة الثانية
+          showSubmitButton={currentStep === 2}
           submitLabelKey="pharmacistSignup.submit"
           footer={
             <div className="pt-2 text-sm text-muted-foreground flex justify-center gap-1">
@@ -121,7 +120,6 @@ export default function RegisterForm() {
             <PharmacyInfoFields form={form} />
           )}
 
-          {/* أزرار التحكم بالخطوات */}
           <div className="flex gap-3 pt-2">
             {currentStep === 1 && (
               <Button

@@ -139,6 +139,26 @@
         "backToLogin": "العودة لصفحة تسجيل الدخول",
         "resendSuccessTitle": "تم إعادة إرسال البريد بنجاح",
         "resendSuccessDesc": "يرجى تفقد البريد الوارد أو صندوق الرسائل غير المرغوب فيها (Spam).",
-        "resendFailed": "فشل إعادة إرسال الرابط، يرجى المحاولة مرة أخرى لاحقاً."
+        "resendFailed": "فشل إعادة إرسال الرابط، يرجى المحاولة مرة أخرى لاحقاً.","forgotPasswordTitle": "نسيت كلمة المرور؟",
+        "forgotPasswordDesc": "لا تقلق، أدخل بريدك الإلكتروني وسنرسل لك رابطاً آمناً لإعادة تعيينها.",
+        "emailLabel": "البريد الإلكتروني",
+        "sendResetLinkBtn": "إرسال رابط إعادة التعيين",
+        "forgotPasswordSuccessTitle": "تم إرسال الرابط بنجاح",
+        "forgotPasswordSuccessDesc": "يرجى تفقد بريدك الإلكتروني للحصول على تعليمات استعادة كلمة المرور.",
+        "forgotPasswordFailed": "فشل العثور على حساب مرتبط بهذا البريد الإلكتروني.",
+        "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+        "resetPasswordDesc": "يرجى كتابة كلمة مرورك الجديدة والقوية بالأسفل لتأمين حسابك.",
+        "newPasswordLabel": "كلمة المرور الجديدة",
+        "confirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
+        "resetPasswordBtn": "تحديث كلمة المرور",
+        "resetPasswordSuccessTitle": "تم تحديث كلمة المرور بنجاح",
+        "resetPasswordSuccessDesc": "تم تغيير كلمة المرور بنجاح، جاري تحويلك لصفحة تسجيل الدخول...",
+        "resetPasswordFailed": "الرمز منتهي الصلاحية أو غير صالح، يرجى إعادة طلب رابط جديد.",
+        "saving": "جاري الحفظ..."
+    },
+    "errors": {
+        "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صحيح.",
+        "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+        "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين."
     }
 }

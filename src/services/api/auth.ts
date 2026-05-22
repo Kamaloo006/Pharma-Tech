@@ -34,3 +34,9 @@ export const verifyEmail = async (verificationUrl: string) => {
   const response = await api.get(verificationUrl);
   return response.data;
 };
+
+
+export const forgotPassword = async(email:string) => {
+  const response = await api.post("/password/forgot", { email, platform:"web"});
+  return response.data;
+}

@@ -319,7 +319,11 @@ const PharmacistLogin = () => {
                               </FormLabel>
                               <button
                                 type="button"
-                                onClick={() => navigate("/forgot-password")}
+                                onClick={() =>
+                                  navigate("/forgot-password", {
+                                    state: { email: form.getValues("email") },
+                                  })
+                                }
                                 className="text-sm font-medium text-primary hover:underline"
                               >
                                 {t("pharmacistLogin.forgotPassword")}

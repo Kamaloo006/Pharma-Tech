@@ -24,8 +24,8 @@ import VerifyEmailPage from "./pages/auth/VerifyEmailPage.tsx";
 // الحراس (Guards)
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
-import DevelopmentVerify from "./pages/auth/DevelopmentVerify.tsx";
 import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
+import ResetPassword from "./pages/auth/ResetPassword.tsx";
 
 // تهيئة الـ TanStack Query Client لجميع طلبات الـ API
 const queryClient = new QueryClient({
@@ -61,12 +61,12 @@ const router = createBrowserRouter([
         element: <VerifyEmailPage />,
       },
       {
-        path: "/verify-email-dev",
-        element: <DevelopmentVerify />,
-      },
-      {
         path: "/forgot-password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
     ],
   },
