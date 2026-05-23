@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import {
   Eye,
   EyeOff,
@@ -32,6 +37,7 @@ import AuthCard from "@/components/auth/AuthCard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@/types/authValidation";
+import { toast } from "sonner";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
@@ -42,7 +48,7 @@ const PharmacistLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const [rememberMe, setRememberMe] = useState(false);
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -58,9 +64,20 @@ const PharmacistLogin = () => {
       ?.pathname ?? "/dashboard";
 
   useEffect(() => {
+    const status = searchParams.get("status");
+
+    if (status === "success" || status === "already_verified") {
+      toast.success(t("auth.emailVerifiedSuccessfully"), {
+        description: t("auth.youCanLoginNow"),
+        duration: 5000,
+      });
+
+      searchParams.delete("status");
+      setSearchParams(searchParams, { replace: true });
+    }
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = i18n.language;
-  }, [i18n.language]);
+  }, [i18n.language, searchParams, setSearchParams, t]);
 
   const isArabic = i18n.language === "ar";
 

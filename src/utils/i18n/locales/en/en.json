@@ -156,11 +156,13 @@
         "resetPasswordSuccessTitle": "Password Updated Successfully",
         "resetPasswordSuccessDesc": "Your password has been changed. Redirecting to login...",
         "resetPasswordFailed": "Invalid or expired token. Please request a new link.",
-        "saving": "Saving..."
+        "saving": "Saving...",
+        "emailVerifiedSuccessfully": "Email Verified Successfully!",
+        "youCanLoginNow": "Your account is now secure. You can log in to your workspace now."
     }, 
     "errors": {
-    "invalidEmail": "Please enter a valid email address",
-    "passwordMinLength": "Password must be at least 8 characters long.",
-    "passwordsDoNotMatch": "The password confirmation does not match."
+        "invalidEmail": "Please enter a valid email address",
+        "passwordMinLength": "Password must be at least 8 characters long.",
+        "passwordsDoNotMatch": "The password confirmation does not match."
   }
 }

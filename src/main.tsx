@@ -52,6 +52,7 @@ const router = createBrowserRouter([
         path: "/login/pharmacist",
         element: <PharmacistLogin />,
       },
+
       {
         path: "/signup/pharmacist",
         element: <PharmacistSignUp />,
