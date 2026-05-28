@@ -166,7 +166,8 @@
         "invalidCredentials": "Email or password is incorrect. Please try again.",
         "passwordMismatch": "Passwords do not match.",
         "passwordMismatchToast": "Passwords do not match. Please verify and try again.",
-        "tokenInvalid": "This password reset token is invalid or expired."
+        "tokenInvalid": "This password reset token is invalid or expired.",
+        "emailNotVerified": "Please verify your email first. A new verification link has been sent to your email."
     }, 
     "errors": {
         "invalidEmail": "Please enter a valid email address",

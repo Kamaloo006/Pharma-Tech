@@ -82,6 +82,7 @@ const  LARAVEL_ERROR_MAP: Record<string, string> ={
   'invalid email or password': 'auth.invalidCredentials', 
   'invalidEmail':'auth.emailInvalid',
   'Too Many Attempts.': 'auth.tooManyAttempts',
+  'Please verify your email first. A new verification link has been sent to your email.': 'auth.emailNotVerified'
 }
 
 function mapRawError(message:string) : string {
@@ -124,7 +125,13 @@ export function getErrorMessage(error: unknown, fallbackMessage: string): string
         if (data?.message) {
           return mapRawError(data.message);
         }
-        return "pharmacistLogin.invalidCredentials"; 
+        return "auth.invalidCredentials"; 
+      }
+
+      if(status === 403) {
+        if(data?.message === 'Please verify your email first. A new verification link has been sent to your email.') {
+          return "auth.emailNotVerified";
+        }
       }
 
       // server error 500

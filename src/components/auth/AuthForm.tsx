@@ -4,22 +4,21 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../ui/spinner";
 
-// جعلنا الـ Props مرنة لاستقبال أي محتوى
 type Props = {
-  children: ReactNode; // هنا سنضع حقول الـ Inputs (Email, Name, Pharmacy Info...)
-  onSubmit: FormEventHandler<HTMLFormElement>; // دالة الإرسال القادمة من react-hook-form
-  isSubmitting: boolean; // حالة التحميل لتعطيل الزر
-  submitLabelKey?: string; // مفتاح الترجمة لزر الإرسال
-  showSubmitButton?: boolean; // إظهار زر الإرسال الرئيسي
-  footer?: ReactNode; // الروابط السفلية (مثل "لديك حساب؟ سجل دخول")
-  includeGoogle?: boolean; // خيار عرض زر جوجل
+  children: ReactNode;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  isSubmitting: boolean;
+  submitLabelKey?: string;
+  showSubmitButton?: boolean;
+  footer?: ReactNode;
+  includeGoogle?: boolean;
 };
 
 export default function AuthForm({
   children,
   onSubmit,
   isSubmitting,
-  submitLabelKey = "submit", // قيمة افتراضية
+  submitLabelKey = "submit",
   showSubmitButton = true,
   footer,
   includeGoogle = false,
@@ -28,7 +27,6 @@ export default function AuthForm({
 
   return (
     <form className="space-y-5" onSubmit={onSubmit}>
-      {/* 1. الحقول (Inputs) */}
       <div className="space-y-4">{children}</div>
 
       {showSubmitButton && (
@@ -39,7 +37,6 @@ export default function AuthForm({
         >
           {isSubmitting ? (
             <div className="flex items-center gap-2">
-              {/* Spinner يمكن إضافته هنا */}
               <Spinner />
             </div>
           ) : (

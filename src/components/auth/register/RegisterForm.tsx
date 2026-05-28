@@ -43,7 +43,10 @@ export default function RegisterForm() {
       });
     },
     onError: (error: unknown) => {
-      const errMsg = getErrorMessage(error, t("pharmacistSignup.registrationFailed"));
+      const errMsg = getErrorMessage(
+        error,
+        t("pharmacistSignup.registrationFailed"),
+      );
       toast.error(t("common.error"), {
         description: errMsg === "auth.tooManyAttempts" ? t(errMsg) : errMsg,
       });
@@ -102,11 +105,16 @@ export default function RegisterForm() {
           submitLabelKey="pharmacistSignup.submit"
           footer={
             <div className="pt-2 text-sm text-muted-foreground flex justify-center gap-1">
-              <span>{t("pharmacistSignup.haveAccount")}</span>
+              <span className={clsx(isArabic ? "order-2" : "order-1")}>
+                {t("pharmacistSignup.haveAccount")}
+              </span>
               <Button
                 type="button"
                 variant="link"
-                className="h-auto p-0 font-medium text-primary"
+                className={clsx(
+                  "h-auto p-0 font-medium text-primary",
+                  isArabic && "order-2",
+                )}
                 onClick={() => navigate("/login/pharmacist")}
               >
                 {t("pharmacistSignup.loginNow")}

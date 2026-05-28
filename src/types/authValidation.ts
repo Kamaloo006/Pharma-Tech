@@ -12,7 +12,7 @@ const localizedString = (messageKey: string) =>
 const authBase = {
   email: localizedString("validation.invalidEmail").email({
     error: err("validation.invalidEmail"),
-  }),
+  }).toLowerCase().trim(),
   password: z
     .string({
       error: err("validation.passwordMinLength"),
