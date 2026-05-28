@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +15,6 @@ import {
   EyeOff,
   Save,
 } from "lucide-react";
-import { useState } from "react";
 
 // Components & UI
 import { Button } from "@/components/ui/button";
@@ -27,7 +26,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
@@ -36,7 +34,7 @@ import {
   resetPasswordSchema,
   type ResetPasswordInput,
 } from "@/types/authValidation";
-import api from "@/lib/api";
+import api, { getErrorMessage } from "@/lib/api";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -46,15 +44,12 @@ const ResetPassword = () => {
 
   const isArabic = i18n.language === "ar";
 
-  // حالات إظهار وإخفاء كلمة المرور
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // 1. قراءة الـ token والـ email القادمين من رابط البريد الإلكتروني
   const tokenFromUrl = searchParams.get("token") || "";
   const emailFromUrl = searchParams.get("email") || "";
 
-  // 2. تهيئة الـ Form وحقن القيم القادمة من الرابط تلقائياً
   const form = useForm<ResetPasswordInput>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
@@ -65,36 +60,54 @@ const ResetPassword = () => {
     },
   });
 
-  // تحديث القيم في حال تأخرت قراءتها من الـ URL params
   useEffect(() => {
     if (emailFromUrl) form.setValue("email", emailFromUrl);
     if (tokenFromUrl) form.setValue("token", tokenFromUrl);
   }, [emailFromUrl, tokenFromUrl, form]);
 
-  // 3. إعداد الـ Mutation لإرسال الطلب لـ لارفيل
   const resetPasswordMutation = useMutation({
     mutationFn: async (data: ResetPasswordInput) => {
-      const response = await api.post("/password/reset", data);
+      const response = await api.post("/password/reset", {
+        ...data,
+        platform: "web",
+      });
       return response.data;
     },
     onSuccess: () => {
       toast.success(t("auth.resetPasswordSuccessTitle"), {
         description: t("auth.resetPasswordSuccessDesc"),
       });
-      // توجيه الصيدلي لصفحة تسجيل الدخول فوراً ليدخل بكلمة المرور الجديدة
       setTimeout(() => {
         navigate("/login/pharmacist", { replace: true });
       }, 2000);
     },
-    onError: (error: any) => {
-      const errMsg =
-        error?.response?.data?.message || t("auth.resetPasswordFailed");
-      toast.error(t("common.error"), { description: errMsg });
+    onError: (error: unknown) => {
+      const errMsg = getErrorMessage(error, t("auth.resetPasswordFailed"));
+
+      const needsTranslation =
+        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
+      const finalMessage = needsTranslation ? t(errMsg) : errMsg;
+
+      toast.error(t("common.error"), {
+        description: finalMessage,
+      });
     },
   });
 
   const onSubmit = (data: ResetPasswordInput) => {
     resetPasswordMutation.mutate(data);
+  };
+
+  const onInvalid = (errors: any) => {
+    if (errors.password_confirmation?.message === "auth.passwordMismatch") {
+      toast.error(t("common.error"), {
+        description: t("auth.passwordMismatchToast", {
+          defaultValue: isArabic
+            ? "كلمتا المرور غير متطابقتين، يرجى التأكد وإعادة المحاولة."
+            : "Passwords do not match. Please verify and try again.",
+        }),
+      });
+    }
   };
 
   useEffect(() => {
@@ -156,7 +169,6 @@ const ResetPassword = () => {
           </Button>
         </header>
 
-        {/* الكارد ممركز في منتصف الشاشة */}
         <section className="flex flex-1 items-center justify-center relative overflow-hidden py-10">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(5,150,105,0.15),transparent_68%)] blur-3xl" />
 
@@ -175,7 +187,6 @@ const ResetPassword = () => {
               descriptionKey="auth.resetPasswordDesc"
               roleTagKey="pharmacistSignup.roleTag"
             >
-              {/* أيقونة القفل الفخمة والمتحركة */}
               <div className="flex flex-col items-center text-center py-4">
                 <div className="relative inline-flex size-16 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 hover:scale-105">
                   <Lock className="size-7" />
@@ -184,11 +195,11 @@ const ResetPassword = () => {
 
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(onSubmit)}
+                  onSubmit={form.handleSubmit(onSubmit, onInvalid)}
                   className="space-y-4"
                 >
                   {/* حقل الإيميل المحمي غير القابل للتعديل */}
-                  <FormItem className="space-y-1.5 text-right">
+                  <FormItem className="space-y-1.5">
                     <FormLabel
                       className={clsx(
                         "text-sm font-medium",
@@ -250,12 +261,6 @@ const ResetPassword = () => {
                             )}
                           </button>
                         </div>
-                        <FormMessage
-                          className={clsx(
-                            "text-xs font-medium text-destructive",
-                            isArabic ? "text-right block" : "text-left block",
-                          )}
-                        />
                       </FormItem>
                     )}
                   />
@@ -302,12 +307,6 @@ const ResetPassword = () => {
                             )}
                           </button>
                         </div>
-                        <FormMessage
-                          className={clsx(
-                            "text-xs font-medium text-destructive",
-                            isArabic ? "text-right block" : "text-left block",
-                          )}
-                        />
                       </FormItem>
                     )}
                   />

@@ -6,7 +6,9 @@
         "continue": "Continue",
         "next": "Next",
         "back": "Back",
-        "error": "Error"
+        "error": "Error",
+        "networkError": "No internet connection. Please check your network.",
+        "serverError": "We are facing server issues, please try again later."
     },
     "validation": {
         "invalidEmail": "Invalid email address",
@@ -57,8 +59,8 @@
         "privacyPolicy": "Privacy Policy",
         "compliance": "Compliance",
         "googleSignIn": "Sign in with Google",
-        "rememberMe": "Remember me",
-        "invalidCredentials": "Invalid email or password"
+        "rememberMe": "Remember me"
+        
     },
     "pharmacistSignup": {
         "badge": "Secure Registration",
@@ -136,14 +138,16 @@
         "weSentLinkTo": "We have sent a secure verification link to",
         "linkExpirationNotice": "The link will expire shortly for your security",
         "resendEmailBtn": "Resend Verification Email",
-        "sending": "Sending...",
+        "sending": "Sending",
+        "tooManyAttempts":"Too many attempts. Please wait before trying again.",
         "backToLogin": "Back to Login",
         "resendSuccessTitle": "Email Sent Successfully",
         "resendSuccessDesc": "Please check your inbox or spam folder for the new link",
-        "resendFailed": "Failed to resend validation link. Please try again",
+        "resendFailed": "Too Many Attempts. Please wait before trying again.",
         "forgotPasswordTitle": "Forgot Password",
         "forgotPasswordDesc": "No worries, enter your email and we will send you a secure link to reset it",
         "emailLabel": "Email Address",
+        "emailInvalid":"The email you entered is incorrect or not registered.",
         "sendResetLinkBtn": "Send Reset Link",
         "forgotPasswordSuccessTitle": "Reset Link Sent",
         "forgotPasswordSuccessDesc": "Please check your inbox for instructions to reset your password",
@@ -156,9 +160,13 @@
         "resetPasswordSuccessTitle": "Password Updated Successfully",
         "resetPasswordSuccessDesc": "Your password has been changed. Redirecting to login...",
         "resetPasswordFailed": "Invalid or expired token. Please request a new link.",
-        "saving": "Saving...",
+        "saving": "Saving",
         "emailVerifiedSuccessfully": "Email Verified Successfully!",
-        "youCanLoginNow": "Your account is now secure. You can log in to your workspace now."
+        "youCanLoginNow": "Your account is now secure. You can log in to your workspace now.",
+        "invalidCredentials": "Email or password is incorrect. Please try again.",
+        "passwordMismatch": "Passwords do not match.",
+        "passwordMismatchToast": "Passwords do not match. Please verify and try again.",
+        "tokenInvalid": "This password reset token is invalid or expired."
     }, 
     "errors": {
         "invalidEmail": "Please enter a valid email address",

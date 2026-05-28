@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import {
   Eye,
   EyeOff,
@@ -29,7 +25,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// Card UI provided by AuthCard
 import AuthForm from "@/components/auth/AuthForm";
 import { useTheme } from "@/context/theme-provider";
 import { useAuth } from "@/context/AuthContext";
@@ -37,19 +32,20 @@ import AuthCard from "@/components/auth/AuthCard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@/types/authValidation";
+import * as authApi from "@/services/api/auth";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/api";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
-  const { login } = useAuth();
+  const { setAuthData } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [rememberMe, setRememberMe] = useState(false);
+
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     mode: "onSubmit",
@@ -81,21 +77,49 @@ const PharmacistLogin = () => {
 
   const isArabic = i18n.language === "ar";
 
-  const handleSubmit = async (values: LoginInput) => {
-    setSubmitError(null);
-    setIsSubmitting(true);
+  const loginMutation = useMutation({
+    mutationFn: async (values: LoginInput) =>
+      authApi.login({
+        email: values.email.trim(),
+        password: values.password,
+      }),
+    onSuccess: (response) => {
+      const payload = response?.data?.data ?? response?.data ?? response;
+      const userData = payload?.user;
+      const accessTokenValue =
+        userData?.access_token ?? payload?.access_token ?? payload?.token;
+      const refreshTokenValue =
+        userData?.refresh_token ?? payload?.refresh_token;
 
-    try {
-      await login(values.email.trim(), values.password);
+      if (!userData || !accessTokenValue || !refreshTokenValue) {
+        toast.error(t("common.error"), {
+          description: t("auth.invalidCredentials"),
+        });
+        return;
+      }
+
+      setAuthData(accessTokenValue, refreshTokenValue, userData);
       navigate(fromPath, { replace: true });
-    } catch (error: any) {
-      setSubmitError(
-        error?.response?.data?.message ??
-          t("pharmacistLogin.invalidCredentials"),
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+    },
+    onError: (error: unknown) => {
+      const errMsg = getErrorMessage(error, "auth.invalidCredentials");
+
+      const needsTranslation =
+        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
+
+      const finalMessage = needsTranslation ? t(errMsg) : errMsg;
+
+      toast.error(t("common.error"), {
+        description: finalMessage,
+        duration: 5000,
+      });
+
+      form.reset({ email: "", password: "" });
+    },
+  });
+
+  const handleSubmit = (values: LoginInput) => {
+    loginMutation.mutate(values);
   };
 
   return (
@@ -245,7 +269,7 @@ const PharmacistLogin = () => {
               >
                 <Form {...form}>
                   <AuthForm
-                    isSubmitting={isSubmitting}
+                    isSubmitting={loginMutation.isPending}
                     onSubmit={form.handleSubmit(handleSubmit)}
                     submitLabelKey="pharmacistLogin.submit"
                     includeGoogle
@@ -313,6 +337,7 @@ const PharmacistLogin = () => {
                             </FormControl>
                             <FormMessage
                               className={clsx(
+                                "text-right",
                                 isArabic ? "text-right" : "text-left",
                               )}
                             />
@@ -385,6 +410,7 @@ const PharmacistLogin = () => {
                             </FormControl>
                             <FormMessage
                               className={clsx(
+                                "text-right",
                                 isArabic ? "text-right" : "text-left",
                               )}
                             />
@@ -412,17 +438,6 @@ const PharmacistLogin = () => {
                           {t("pharmacistLogin.rememberMe")}
                         </label>
                       </div>
-
-                      {submitError && (
-                        <p
-                          className={clsx(
-                            "text-sm font-medium text-red-500",
-                            isArabic ? "text-right" : "text-left",
-                          )}
-                        >
-                          {submitError}
-                        </p>
-                      )}
                     </div>
                   </AuthForm>
                 </Form>

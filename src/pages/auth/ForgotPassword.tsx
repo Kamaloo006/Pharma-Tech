@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +26,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
@@ -35,7 +34,7 @@ import {
   forgotPasswordSchema,
   type ForgotPasswordInput,
 } from "@/types/authValidation";
-import api from "@/lib/api";
+import api, { getErrorMessage } from "@/lib/api";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -44,32 +43,65 @@ const ForgotPassword = () => {
 
   const isArabic = i18n.language === "ar";
 
-  // 1. تهيئة حقول الـ Form بواسطة React Hook Form و Zod
+  const [countdown, setCountdown] = useState<number>(0);
+
   const form = useForm<ForgotPasswordInput>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email: "" },
   });
 
-  // 2. إعداد الـ Mutation لإرسال الطلب لـ Laravel
+  useEffect(() => {
+    const targetTime = localStorage.getItem("reset_password_timeout");
+
+    if (targetTime) {
+      const calculateRemaining = () => {
+        const remaining = Math.ceil((parseInt(targetTime) - Date.now()) / 1000);
+        if (remaining > 0) {
+          setCountdown(remaining);
+        } else {
+          setCountdown(0);
+          localStorage.removeItem("reset_password_timeout");
+        }
+      };
+
+      calculateRemaining();
+
+      const interval = setInterval(calculateRemaining, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [countdown]);
+
   const forgotPasswordMutation = useMutation({
     mutationFn: async (data: ForgotPasswordInput) => {
-      const response = await api.post("/password/forgot", data);
+      const response = await api.post("/password/forgot", {
+        ...data,
+        platform: "web",
+      });
       return response.data;
     },
     onSuccess: () => {
       toast.success(t("auth.forgotPasswordSuccessTitle"), {
         description: t("auth.forgotPasswordSuccessDesc"),
       });
-      form.reset();
+
+      const expiryTime = Date.now() + 60 * 1000;
+      localStorage.setItem("reset_password_timeout", expiryTime.toString());
+      setCountdown(60);
     },
-    onError: (error: any) => {
-      const errMsg =
-        error?.response?.data?.message || t("auth.forgotPasswordFailed");
-      toast.error(t("common.error"), { description: errMsg });
+    onError: (error: unknown) => {
+      const errMsg = getErrorMessage(error, t("auth.emailInvalid"));
+      const needsTranslation =
+        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
+
+      const finalMessage = needsTranslation ? t(errMsg) : errMsg;
+      toast.error(t("common.error"), {
+        description: finalMessage,
+      });
     },
   });
 
   const onSubmit = (data: ForgotPasswordInput) => {
+    if (countdown > 0) return;
     forgotPasswordMutation.mutate(data);
   };
 
@@ -152,11 +184,9 @@ const ForgotPassword = () => {
             >
               <div className="flex flex-col items-center text-center ">
                 <div className="relative mb-5 flex items-center justify-center">
-                  {/* حلقات النبض الخلفية (Radar/Pulse Waves) */}
                   <div className="absolute inset-0 animate-ping rounded-full bg-primary/20 duration-1000 opacity-75" />
                   <div className="absolute size-24 rounded-full bg-primary/5 animate-pulse" />
 
-                  {/* الحاوية الأساسية للمفتاح مع حركة مرنة عند التحويم (Hover) */}
                   <div className="relative inline-flex size-20 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-500 hover:scale-110 hover:rotate-12 shadow-inner">
                     <KeyRound className="size-10 " />
                   </div>
@@ -193,21 +223,16 @@ const ForgotPassword = () => {
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage
-                          className={clsx(
-                            "text-xs font-medium text-destructive",
-                            isArabic ? "text-right block" : "text-left block",
-                          )}
-                        />
                       </FormItem>
                     )}
                   />
 
-                  {/* أزرار التحكم والإرسال */}
                   <div className="flex flex-col gap-3 pt-2">
                     <Button
                       type="submit"
-                      disabled={forgotPasswordMutation.isPending}
+                      disabled={
+                        forgotPasswordMutation.isPending || countdown > 0
+                      }
                       className="w-full h-12 rounded-2xl bg-primary text-[16px] font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-primary/10"
                     >
                       <Send
@@ -218,7 +243,9 @@ const ForgotPassword = () => {
                       />
                       {forgotPasswordMutation.isPending
                         ? t("auth.sending")
-                        : t("auth.sendResetLinkBtn")}
+                        : countdown > 0
+                          ? `${t("auth.sendResetLinkBtn")} (${countdown}s)`
+                          : t("auth.sendResetLinkBtn")}
                     </Button>
 
                     <Button

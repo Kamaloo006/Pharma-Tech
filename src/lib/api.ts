@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api",
@@ -65,8 +65,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// ربط بسيط لمشاركة الـ Access Token بين الـ Context والـ Axios
 declare global {
   interface Window {
     __ACCESS_TOKEN__?: string | null;
@@ -76,5 +74,79 @@ declare global {
 export const setGlobalAccessToken = (token: string | null) => {
   window.__ACCESS_TOKEN__ = token;
 };
+
+
+
+const  LARAVEL_ERROR_MAP: Record<string, string> ={
+  'the selected email is invalid': 'auth.emailInvalid',
+  'invalid email or password': 'auth.invalidCredentials', 
+  'invalidEmail':'auth.emailInvalid',
+  'Too Many Attempts.': 'auth.tooManyAttempts',
+}
+
+function mapRawError(message:string) : string {
+  if(!message) return message;
+  const cleanMessage = message.trim().toLowerCase().replace(/\.$/, '');
+  return LARAVEL_ERROR_MAP[cleanMessage] || message;
+}
+
+export function getErrorMessage(error: unknown, fallbackMessage: string): string {
+
+  if (error && typeof error === 'object' && 'isAxiosError' in error) {
+    const axiosError = error as AxiosError<any>;
+    
+    // network error
+    if (axiosError.code === 'ERR_NETWORK') {
+      return "common.networkError";
+    }
+
+    if (axiosError.response) {
+      const status = axiosError.response.status;
+      const data = axiosError.response.data;
+
+    // too many attempts error
+      if (status === 429) {
+         return "auth.tooManyAttempts"; 
+      }
+
+    // form validation errors from laravel
+      if (status === 422 && data?.errors) {
+        const errors = data.errors;
+        if (typeof errors === 'object') {
+          const firstErrorKey = Object.keys(errors)[0];
+          const rawLaravelMessage = errors[firstErrorKey][0];
+          
+          return mapRawError(rawLaravelMessage);
+        }
+      }
+
+      if (status === 401) {
+        if (data?.message) {
+          return mapRawError(data.message);
+        }
+        return "pharmacistLogin.invalidCredentials"; 
+      }
+
+      // server error 500
+      if (status === 500) {
+        return "common.serverError";
+      }
+
+      // remaining errors
+      if (data?.message) {
+        return mapRawError(data.message);
+      }
+    }
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+
+  return fallbackMessage;
+}
+
+export const ensureError = getErrorMessage;
 
 export default api;

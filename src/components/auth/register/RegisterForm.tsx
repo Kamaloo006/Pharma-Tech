@@ -18,6 +18,7 @@ import { registerSchema, type RegisterInput } from "@/types/authValidation";
 import { PersonalInfoFields } from "./PersonalInfoFields";
 import { PharmacyInfoFields } from "./PharmacyInfoFields";
 import * as authApi from "@/services/api/auth"; // استيراد دوال الـ API الخاصة بالمصادقة
+import { getErrorMessage } from "@/lib/api";
 
 export default function RegisterForm() {
   const { t, i18n } = useTranslation();
@@ -41,11 +42,11 @@ export default function RegisterForm() {
         state: { email: variables.email },
       });
     },
-    onError: (error: any) => {
-      const errMsg =
-        error?.response?.data?.message ||
-        t("pharmacistSignup.registrationFailed");
-      toast.error(t("common.error"), { description: errMsg });
+    onError: (error: unknown) => {
+      const errMsg = getErrorMessage(error, t("pharmacistSignup.registrationFailed"));
+      toast.error(t("common.error"), {
+        description: errMsg === "auth.tooManyAttempts" ? t(errMsg) : errMsg,
+      });
     },
   });
 

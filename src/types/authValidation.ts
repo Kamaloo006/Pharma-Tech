@@ -115,9 +115,9 @@ export const resetPasswordSchema = z.object({
   password: z.string().min(8, { message: "passwordMinLength" }),
   password_confirmation: z.string().min(8),
 }).refine((data) => data.password === data.password_confirmation, {
-  message: "passwordsDoNotMatch",
-  path: ["password_confirmation"],
-});
+    message: "auth.passwordMismatch",
+    path: ["password_confirmation"],
+  });
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;

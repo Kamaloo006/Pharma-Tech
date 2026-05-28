@@ -26,7 +26,6 @@ export const login = async (data: LoginRequest) => {
 
 export const resendVerificationEmail =async (email:string) => {
     const response = await api.post("/email/resend", { email, platform:"web" });
-    console.log(email)
     return response.data;
 }
 
