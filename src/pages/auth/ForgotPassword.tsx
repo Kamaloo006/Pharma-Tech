@@ -173,7 +173,7 @@ const ForgotPassword = () => {
                 <Stethoscope className="size-7" />
               </div>
               <h2 className="mt-4 text-3xl font-semibold text-foreground tracking-tight">
-                PharmaTech
+                {t("common.appName")}
               </h2>
             </div>
 
@@ -213,7 +213,7 @@ const ForgotPassword = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="name@example.com"
+                            placeholder={t("auth.emailPlaceholder")}
                             type="email"
                             autoComplete="email"
                             className={clsx(

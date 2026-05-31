@@ -39,3 +39,8 @@ export const forgotPassword = async(email:string) => {
   const response = await api.post("/password/forgot", { email, platform:"web"});
   return response.data;
 }
+
+export const googleLogin = async(idToken:string) => {
+  const response = await api.post("/auth/google", { id_token: idToken, platform:"web" });
+  return response.data;
+}

@@ -178,7 +178,7 @@ const ResetPassword = () => {
                 <Stethoscope className="size-7" />
               </div>
               <h2 className="mt-4 text-3xl font-semibold text-foreground tracking-tight">
-                PharmaTech
+                {t("common.appName")}
               </h2>
             </div>
 

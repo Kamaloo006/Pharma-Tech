@@ -7,6 +7,7 @@
         "next": "التالي",
         "back": "رجوع",
         "error": "خطأ",
+        "appName": "PharmaTech",
         "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
         "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً."
     },
@@ -130,6 +131,8 @@
     "auth":{
         "googleSignIn":"التسجيل باستخدام جوجل",
         "processing":"جارٍ المعالجة...",
+        "emailPlaceholder": "name@example.com",
+        "passwordPlaceholder": "••••••••",
         "orContinueWith": "أو الاستمرار مع",
         "verifyEmailCardTitle": "تأكيد البريد الإلكتروني",
         "verifyEmailCardDesc": "خطوة واحدة أخيرة لتأمين حسابك وصيدليتك.",

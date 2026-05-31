@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import {
   Navigate,
@@ -27,6 +27,9 @@ import PublicRoute from "./components/auth/PublicRoute";
 import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
 import ResetPassword from "./pages/auth/ResetPassword.tsx";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useTranslation } from "react-i18next";
+
 // تهيئة الـ TanStack Query Client لجميع طلبات الـ API
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,13 +41,12 @@ const queryClient = new QueryClient({
 });
 
 const router = createBrowserRouter([
-  // تحويل جذر الموقع تلقائياً للـ Dashboard (والحارس سيتولى الباقي)
   {
     path: "/",
     element: <Navigate to="/dashboard" replace />,
   },
 
-  // ================= 1. مسارات الضيوف (ممنوع دخول المسجلين إليها) =================
+  // public route not requiring authentication
   {
     element: <PublicRoute />,
     children: [
@@ -77,33 +79,45 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <App />, // تطبيقك الأساسي أو الـ Layout للوحة التحكم
+        element: <App />,
       },
     ],
   },
 
-  // مسار الـ App القديم الخاص بك (تحويل احتياطي)
   {
     path: "/app",
     element: <Navigate to="/dashboard" replace />,
   },
 
-  // ================= 3. حارس الروابط العشوائية والخاطئة =================
   {
     path: "*",
     element: <Navigate to="/dashboard" replace />,
   },
 ]);
+const GOOGLE_CLIENT_ID =
+  "1057821413443-q895i6hfp24qgfrk384v58p36dl8bpd2.apps.googleusercontent.com";
+
+function GoogleAuthProvider({ children }: { children: ReactNode }) {
+  const { i18n } = useTranslation();
+
+  return (
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID} locale={i18n.language}>
+      {children}
+    </GoogleOAuthProvider>
+  );
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <RouterProvider router={router} />
-          <Toaster position="top-center" richColors />
-        </ThemeProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <GoogleAuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <RouterProvider router={router} />
+            <Toaster position="top-center" richColors />
+          </ThemeProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </GoogleAuthProvider>
   </StrictMode>,
 );

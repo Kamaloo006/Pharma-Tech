@@ -7,6 +7,7 @@ import { Separator } from "./components/ui/separator";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { googleLogout } from "@react-oauth/google";
 
 const App = () => {
   const { t, i18n } = useTranslation();
@@ -26,6 +27,7 @@ const App = () => {
 
   const handleLogout = async () => {
     await logout();
+    googleLogout();
     navigate("/login/pharmacist", { replace: true });
   };
 

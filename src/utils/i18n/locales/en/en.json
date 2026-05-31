@@ -7,6 +7,7 @@
         "next": "Next",
         "back": "Back",
         "error": "Error",
+        "appName": "PharmaTech",
         "networkError": "No internet connection. Please check your network.",
         "serverError": "We are facing server issues, please try again later."
     },
@@ -130,7 +131,9 @@
     ,
     "auth":{
         "googleSignIn":"Sign in with Google",
-        "processing":"Processing...",
+        "processing":"Processing",
+        "emailPlaceholder": "name@example.com",
+        "passwordPlaceholder": "••••••••",
         "orContinueWith": "Or continue with",
         "verifyEmailCardTitle": "Confirm Your Email",
         "verifyEmailCardDesc": "One last step to secure your workspace",

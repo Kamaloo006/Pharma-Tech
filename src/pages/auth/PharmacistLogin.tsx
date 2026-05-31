@@ -258,7 +258,7 @@ const PharmacistLogin = () => {
                   <Stethoscope className="size-7" />
                 </div>
                 <h2 className="mt-4 text-3xl font-semibold text-foreground text-center transition-all duration-300">
-                  PharmaTech
+                  {t("common.appName")}
                 </h2>
               </div>
 
@@ -329,9 +329,7 @@ const PharmacistLogin = () => {
                                     "h-12 rounded-2xl bg-input",
                                     isArabic ? "pr-10" : "pl-10",
                                   )}
-                                  placeholder={t(
-                                    "pharmacistLogin.identifierPlaceholder",
-                                  )}
+                                  placeholder={t("auth.emailPlaceholder")}
                                 />
                               </div>
                             </FormControl>
@@ -386,7 +384,7 @@ const PharmacistLogin = () => {
                                     "h-12 rounded-2xl bg-input",
                                     isArabic ? "pr-10 pl-10" : "pl-10 pr-10",
                                   )}
-                                  placeholder="••••••••"
+                                  placeholder={t("auth.passwordPlaceholder")}
                                 />
                                 <Button
                                   type="button"
