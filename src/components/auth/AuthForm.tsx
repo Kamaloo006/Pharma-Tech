@@ -99,7 +99,7 @@ export default function AuthForm({
         </div>
       )}
 
-      {footer && !isSubmitting && <div className="pt-2">{footer}</div>}
+      {footer && !isAuthLoading && <div className="pt-2">{footer}</div>}
     </form>
   );
 }

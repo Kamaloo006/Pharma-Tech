@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { forgotPasswordSchema, type ForgotPasswordInput } from "@/types/authValidation";
-import api, { getErrorMessage } from "@/lib/api";
-
+import  { getErrorMessage } from "@/lib/api";
+import * as authApi from "@/services/api/auth";
 export const useForgotPassword = () => {
   const { t } = useTranslation();
   const [countdown, setCountdown] = useState<number>(0);
@@ -38,11 +38,7 @@ export const useForgotPassword = () => {
 
   const forgotPasswordMutation = useMutation({
     mutationFn: async (data: ForgotPasswordInput) => {
-      const response = await api.post("/password/forgot", {
-        ...data,
-        platform: "web",
-      });
-      return response.data;
+      return await authApi.forgotPassword(data.email);
     },
     onSuccess: () => {
       toast.success(t("auth.forgotPasswordSuccessTitle"), {

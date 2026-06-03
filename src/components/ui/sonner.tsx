@@ -4,12 +4,12 @@ import {
   Loader2Icon,
   OctagonXIcon,
   TriangleAlertIcon,
-} from "lucide-react"
-import { useTheme } from "next-themes"
-import { Toaster as Sonner, type ToasterProps } from "sonner"
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme = "system" } = useTheme();
 
   return (
     <Sonner
@@ -22,17 +22,31 @@ const Toaster = ({ ...props }: ToasterProps) => {
         error: <OctagonXIcon className="size-4" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
+      toastOptions={{
+        style: {
+          fontSize: "0.875rem",
+          borderRadius: "var(--radius)",
+        },
+      }}
       style={
         {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)",
+          "--success-bg": "var(--toast-success-bg)",
+          "--success-text": "var(--toast-success-text)",
+          "--success-border": "var(--toast-success-border)",
+          "--error-bg": "var(--toast-error-bg)",
+          "--error-text": "var(--toast-error-text)",
+          "--error-border": "var(--toast-error-border)",
+          "--warning-bg": "var(--toast-warning-bg)",
+          "--warning-text": "var(--toast-warning-text)",
+          "--warning-border": "var(--toast-warning-border)",
+          "--info-bg": "var(--toast-info-bg)",
+          "--info-text": "var(--toast-info-text)",
+          "--info-border": "var(--toast-info-border)",
         } as React.CSSProperties
       }
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+export { Toaster };

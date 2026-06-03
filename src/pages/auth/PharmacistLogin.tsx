@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Eye,
   EyeOff,
@@ -40,10 +40,18 @@ const PharmacistLogin = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const { form, onSubmit, isLoading: isLoggingIn } = useLogin();
+  const location = useLocation();
+
+  const emailFromState = (location.state as { email?: string })?.email || "";
 
   useEffect(() => {
-    const status = searchParams.get("status");
+    form.setValue("email", emailFromState);
+    const emailFromUrl = searchParams.get("email");
+    if (emailFromUrl) {
+      form.setValue("email", emailFromUrl);
+    }
 
+    const status = searchParams.get("status");
     if (status === "success" || status === "already_verified") {
       toast.success(t("auth.emailVerifiedSuccessfully"), {
         description: t("auth.youCanLoginNow"),

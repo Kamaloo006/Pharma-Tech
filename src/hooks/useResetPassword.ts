@@ -51,7 +51,7 @@ export const useResetPassword = () => {
         description: t("auth.resetPasswordSuccessDesc"),
       });
       setTimeout(() => {
-        navigate("/login/pharmacist", { replace: true });
+        navigate("/login/pharmacist", { replace: true, state:{email:emailFromUrl} });
       }, 2000);
     },
     onError: (error: unknown) => {
