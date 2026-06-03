@@ -8,7 +8,7 @@ import pharmaLogin from "../../assets/pharmaLogin.png";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/context/theme-provider";
 
-import RegisterForm from "@/components/auth/register/RegisterForm"; // الفورم المفصل
+import RegisterForm from "@/components/auth/register/RegisterForm";
 
 const PharmacistSignUp = () => {
   const { t, i18n } = useTranslation();

@@ -1,37 +1,44 @@
+import { getErrorMessage } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
+import * as authApi from "@/services/api/auth";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
-import { getErrorMessage } from "@/lib/api";
-import * as authApi from "@/services/api/auth";
+import { loginSchema, type LoginInput } from "@/types/authValidation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-
-export const useGoogleLogin = () => {
+export const useLogin = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const { setAuthData } = useAuth();
+  const { t } = useTranslation();
 
-  return useMutation({
-    mutationFn: async (credential: string) => {
-      if (!credential.trim()) {
-        throw new Error("Missing Google credential");
-      }
-
-      return authApi.googleLogin(credential);
+  const form = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
     },
+  });
+
+  const loginMutation = useMutation({
+    mutationFn: async (values: LoginInput) =>
+      authApi.login({
+        email: values.email.trim(),
+        password: values.password,
+      }),
     onSuccess: (response) => {
       const payload = response?.data?.data ?? response?.data ?? response;
       const userData = payload?.user;
       const accessTokenValue =
         userData?.access_token ?? payload?.access_token ?? payload?.token;
-      const refreshTokenValue = userData?.refresh_token ?? payload?.refresh_token;
+      const refreshTokenValue =
+        userData?.refresh_token ?? payload?.refresh_token;
 
       if (!userData || !accessTokenValue || !refreshTokenValue) {
         toast.error(t("common.error"), {
           description: t("auth.invalidCredentials"),
-          className:"bg-destructive text-destructive-foreground",
-          duration: 5000,
         });
         return;
       }
@@ -39,18 +46,24 @@ export const useGoogleLogin = () => {
       setAuthData(accessTokenValue, refreshTokenValue, userData);
       navigate("/dashboard", { replace: true });
     },
-    onError: (error) => {
+    onError: (error: unknown) => {
       const errMsg = getErrorMessage(error, "auth.invalidCredentials");
-
-      const needsTranslation =
-        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
-
+      const needsTranslation = errMsg.startsWith("auth.") || errMsg.startsWith("common.");
       const finalMessage = needsTranslation ? t(errMsg) : errMsg;
 
       toast.error(t("common.error"), {
         description: finalMessage,
         duration: 5000,
       });
+
+      form.reset({ email: "", password: "" });
     },
   });
+
+  return {
+    form,
+    loginMutation,
+    onSubmit: form.handleSubmit((values) => loginMutation.mutate(values)),
+    isLoading: loginMutation.isPending,
+  };
 };

@@ -30,7 +30,6 @@ import ResetPassword from "./pages/auth/ResetPassword.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useTranslation } from "react-i18next";
 
-// تهيئة الـ TanStack Query Client لجميع طلبات الـ API
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -46,7 +45,6 @@ const router = createBrowserRouter([
     element: <Navigate to="/dashboard" replace />,
   },
 
-  // public route not requiring authentication
   {
     element: <PublicRoute />,
     children: [
@@ -114,7 +112,7 @@ createRoot(document.getElementById("root")!).render(
         <AuthProvider>
           <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <RouterProvider router={router} />
-            <Toaster position="top-center" richColors />
+            <Toaster position="top-center" />
           </ThemeProvider>
         </AuthProvider>
       </QueryClientProvider>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Eye,
   EyeOff,
@@ -27,37 +26,20 @@ import {
 import { Input } from "@/components/ui/input";
 import AuthForm from "@/components/auth/AuthForm";
 import { useTheme } from "@/context/theme-provider";
-import { useAuth } from "@/context/AuthContext";
 import AuthCard from "@/components/auth/AuthCard";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginInput } from "@/types/authValidation";
-import * as authApi from "@/services/api/auth";
+
 import { toast } from "sonner";
-import { getErrorMessage } from "@/lib/api";
+import { useLogin } from "@/hooks/useLogin";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
-  const { setAuthData } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [rememberMe, setRememberMe] = useState(false);
 
-  const form = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
-    mode: "onSubmit",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const fromPath =
-    (location.state as { from?: { pathname?: string } } | null)?.from
-      ?.pathname ?? "/dashboard";
+  const { form, onSubmit, isLoading: isLoggingIn } = useLogin();
 
   useEffect(() => {
     const status = searchParams.get("status");
@@ -76,51 +58,6 @@ const PharmacistLogin = () => {
   }, [i18n.language, searchParams, setSearchParams, t]);
 
   const isArabic = i18n.language === "ar";
-
-  const loginMutation = useMutation({
-    mutationFn: async (values: LoginInput) =>
-      authApi.login({
-        email: values.email.trim(),
-        password: values.password,
-      }),
-    onSuccess: (response) => {
-      const payload = response?.data?.data ?? response?.data ?? response;
-      const userData = payload?.user;
-      const accessTokenValue =
-        userData?.access_token ?? payload?.access_token ?? payload?.token;
-      const refreshTokenValue =
-        userData?.refresh_token ?? payload?.refresh_token;
-
-      if (!userData || !accessTokenValue || !refreshTokenValue) {
-        toast.error(t("common.error"), {
-          description: t("auth.invalidCredentials"),
-        });
-        return;
-      }
-
-      setAuthData(accessTokenValue, refreshTokenValue, userData);
-      navigate(fromPath, { replace: true });
-    },
-    onError: (error: unknown) => {
-      const errMsg = getErrorMessage(error, "auth.invalidCredentials");
-
-      const needsTranslation =
-        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
-
-      const finalMessage = needsTranslation ? t(errMsg) : errMsg;
-
-      toast.error(t("common.error"), {
-        description: finalMessage,
-        duration: 5000,
-      });
-
-      form.reset({ email: "", password: "" });
-    },
-  });
-
-  const handleSubmit = (values: LoginInput) => {
-    loginMutation.mutate(values);
-  };
 
   return (
     <main className="min-h-screen transition-all duration-300 bg-background text-foreground">
@@ -269,8 +206,8 @@ const PharmacistLogin = () => {
               >
                 <Form {...form}>
                   <AuthForm
-                    isSubmitting={loginMutation.isPending}
-                    onSubmit={form.handleSubmit(handleSubmit)}
+                    isSubmitting={isLoggingIn}
+                    onSubmit={onSubmit}
                     submitLabelKey="pharmacistLogin.submit"
                     includeGoogle
                     footer={
@@ -325,6 +262,7 @@ const PharmacistLogin = () => {
                                 <Input
                                   {...field}
                                   type="email"
+                                  disabled={isLoggingIn}
                                   className={clsx(
                                     "h-12 rounded-2xl bg-input",
                                     isArabic ? "pr-10" : "pl-10",
@@ -359,12 +297,13 @@ const PharmacistLogin = () => {
                               </FormLabel>
                               <button
                                 type="button"
+                                disabled={isLoggingIn}
                                 onClick={() =>
                                   navigate("/forgot-password", {
                                     state: { email: form.getValues("email") },
                                   })
                                 }
-                                className="text-sm font-medium text-primary hover:underline"
+                                className="text-sm font-medium text-primary hover:underline disabled:opacity-50"
                               >
                                 {t("pharmacistLogin.forgotPassword")}
                               </button>
@@ -380,6 +319,7 @@ const PharmacistLogin = () => {
                                 <Input
                                   {...field}
                                   type={showPassword ? "text" : "password"}
+                                  disabled={isLoggingIn}
                                   className={clsx(
                                     "h-12 rounded-2xl bg-input",
                                     isArabic ? "pr-10 pl-10" : "pl-10 pr-10",
@@ -424,6 +364,7 @@ const PharmacistLogin = () => {
                       >
                         <Checkbox
                           id="pharmacist-remember"
+                          disabled={isLoggingIn}
                           checked={rememberMe}
                           onCheckedChange={(checked) =>
                             setRememberMe(!!checked)
@@ -431,7 +372,7 @@ const PharmacistLogin = () => {
                         />
                         <label
                           htmlFor="pharmacist-remember"
-                          className="text-sm"
+                          className="text-sm select-none"
                         >
                           {t("pharmacistLogin.rememberMe")}
                         </label>

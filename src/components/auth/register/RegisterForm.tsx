@@ -1,89 +1,32 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner"; // استخدام الـ Sonner Toaster الخاص بـ Shadcn
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 
-// الـ Logic والـ Components
+// components & UI
 import AuthCard from "@/components/auth/AuthCard";
 import AuthForm from "@/components/auth/AuthForm";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { registerSchema, type RegisterInput } from "@/types/authValidation";
 import { PersonalInfoFields } from "./PersonalInfoFields";
 import { PharmacyInfoFields } from "./PharmacyInfoFields";
-import * as authApi from "@/services/api/auth"; // استيراد دوال الـ API الخاصة بالمصادقة
-import { getErrorMessage } from "@/lib/api";
+// hooks
+import { useRegisterForm } from "@/hooks/useRegisterForm";
 
 export default function RegisterForm() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
   const isArabic = i18n.language === "ar";
 
-  const form = useForm<RegisterInput>({
-    resolver: zodResolver(registerSchema),
-    mode: "onChange",
-  });
-
-  const registerMutation = useMutation({
-    mutationFn: authApi.register,
-    onSuccess: (_, variables) => {
-      toast.success(t("pharmacistSignup.registrationSuccess"), {
-        description: t("pharmacistSignup.checkEmailMessage"),
-      });
-      navigate("/email-verify", {
-        replace: true,
-        state: { email: variables.email },
-      });
-    },
-    onError: (error: unknown) => {
-      const errMsg = getErrorMessage(
-        error,
-        t("pharmacistSignup.registrationFailed"),
-      );
-      toast.error(t("common.error"), {
-        description: errMsg === "auth.tooManyAttempts" ? t(errMsg) : errMsg,
-      });
-    },
-  });
-
-  // فحص حقول الخطوة الأولى قبل الانتقال
-  const handleNextStep = async () => {
-    const fieldsToValidate = [
-      "email",
-      "first_name",
-      "last_name",
-      "phone_number",
-      "password",
-      "password_confirmation",
-    ] as any;
-    const isValid = await form.trigger(fieldsToValidate);
-
-    if (isValid) {
-      // Explicit check for password confirmation equality
-      const password = form.getValues("password");
-      const passwordConfirmation = form.getValues("password_confirmation");
-
-      if (password !== passwordConfirmation) {
-        toast.error(t("common.error"), {
-          description: t("validation.passwordsDoNotMatch"),
-        });
-        return;
-      }
-
-      setCurrentStep(2);
-    }
-  };
-
-  const onSubmit = (data: RegisterInput) => {
-    registerMutation.mutate(data); // تشغيل الـ Mutation النظيف لشحن الـ JSON
-  };
+  const {
+    form,
+    currentStep,
+    onSubmit,
+    handleNextStep,
+    handleBackStep,
+    isPending,
+  } = useRegisterForm();
 
   return (
     <AuthCard
@@ -99,8 +42,8 @@ export default function RegisterForm() {
 
       <Form {...form}>
         <AuthForm
-          onSubmit={form.handleSubmit(onSubmit)}
-          isSubmitting={registerMutation.isPending}
+          onSubmit={onSubmit}
+          isSubmitting={isPending}
           showSubmitButton={currentStep === 2}
           submitLabelKey="pharmacistSignup.submit"
           footer={
@@ -122,7 +65,6 @@ export default function RegisterForm() {
             </div>
           }
         >
-          {/* تبديل حقول الإدخال الذكية */}
           {currentStep === 1 ? (
             <PersonalInfoFields form={form} />
           ) : (
@@ -152,12 +94,12 @@ export default function RegisterForm() {
               <Button
                 type="button"
                 variant="outline"
-                disabled={registerMutation.isPending}
+                disabled={isPending}
                 className={clsx(
                   "w-full h-12 rounded-2xl text-[18px] font-semibold flex items-center justify-center gap-2",
                   isArabic ? "flex-row-reverse" : "flex-row",
                 )}
-                onClick={() => setCurrentStep(1)}
+                onClick={handleBackStep}
               >
                 {isArabic ? (
                   <ChevronRight className="size-5" />

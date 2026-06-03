@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 import clsx from "clsx";
 import {
   MoonStar,
@@ -29,12 +25,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-// Validation & API
-import {
-  forgotPasswordSchema,
-  type ForgotPasswordInput,
-} from "@/types/authValidation";
-import api, { getErrorMessage } from "@/lib/api";
+// Hooks
+import { useForgotPassword } from "@/hooks/useForgotPassword";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -43,67 +35,7 @@ const ForgotPassword = () => {
 
   const isArabic = i18n.language === "ar";
 
-  const [countdown, setCountdown] = useState<number>(0);
-
-  const form = useForm<ForgotPasswordInput>({
-    resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: { email: "" },
-  });
-
-  useEffect(() => {
-    const targetTime = localStorage.getItem("reset_password_timeout");
-
-    if (targetTime) {
-      const calculateRemaining = () => {
-        const remaining = Math.ceil((parseInt(targetTime) - Date.now()) / 1000);
-        if (remaining > 0) {
-          setCountdown(remaining);
-        } else {
-          setCountdown(0);
-          localStorage.removeItem("reset_password_timeout");
-        }
-      };
-
-      calculateRemaining();
-
-      const interval = setInterval(calculateRemaining, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [countdown]);
-
-  const forgotPasswordMutation = useMutation({
-    mutationFn: async (data: ForgotPasswordInput) => {
-      const response = await api.post("/password/forgot", {
-        ...data,
-        platform: "web",
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      toast.success(t("auth.forgotPasswordSuccessTitle"), {
-        description: t("auth.forgotPasswordSuccessDesc"),
-      });
-
-      const expiryTime = Date.now() + 60 * 1000;
-      localStorage.setItem("reset_password_timeout", expiryTime.toString());
-      setCountdown(60);
-    },
-    onError: (error: unknown) => {
-      const errMsg = getErrorMessage(error, t("auth.emailInvalid"));
-      const needsTranslation =
-        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
-
-      const finalMessage = needsTranslation ? t(errMsg) : errMsg;
-      toast.error(t("common.error"), {
-        description: finalMessage,
-      });
-    },
-  });
-
-  const onSubmit = (data: ForgotPasswordInput) => {
-    if (countdown > 0) return;
-    forgotPasswordMutation.mutate(data);
-  };
+  const { form, onSubmit, countdown, isPending } = useForgotPassword();
 
   useEffect(() => {
     document.documentElement.dir = isArabic ? "rtl" : "ltr";
@@ -113,7 +45,6 @@ const ForgotPassword = () => {
   return (
     <main className="min-h-screen transition-all duration-300 bg-background text-foreground flex flex-col">
       <div className="mx-auto flex w-full max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8 flex-1">
-        {/* Header - Language & Theme Toggle */}
         <header
           className={clsx(
             "flex items-center gap-3 pb-4",
@@ -194,10 +125,7 @@ const ForgotPassword = () => {
               </div>
 
               <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-                >
+                <form onSubmit={onSubmit} className="space-y-4">
                   <FormField
                     control={form.control}
                     name="email"
@@ -216,6 +144,7 @@ const ForgotPassword = () => {
                             placeholder={t("auth.emailPlaceholder")}
                             type="email"
                             autoComplete="email"
+                            disabled={isPending}
                             className={clsx(
                               "h-12 rounded-xl border-border bg-background focus-visible:ring-primary",
                               isArabic ? "text-right" : "text-left",
@@ -230,18 +159,13 @@ const ForgotPassword = () => {
                   <div className="flex flex-col gap-3 pt-2">
                     <Button
                       type="submit"
-                      disabled={
-                        forgotPasswordMutation.isPending || countdown > 0
-                      }
+                      disabled={isPending || countdown > 0}
                       className="w-full h-12 rounded-2xl bg-primary text-[16px] font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-primary/10"
                     >
                       <Send
-                        className={clsx(
-                          "size-4",
-                          forgotPasswordMutation.isPending && "animate-spin",
-                        )}
+                        className={clsx("size-4", isPending && "animate-spin")}
                       />
-                      {forgotPasswordMutation.isPending
+                      {isPending
                         ? t("auth.sending")
                         : countdown > 0
                           ? `${t("auth.sendResetLinkBtn")} (${countdown}s)`

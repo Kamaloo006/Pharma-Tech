@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 import clsx from "clsx";
 import {
   MoonStar,
@@ -18,77 +16,18 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "@/context/theme-provider";
 import AuthCard from "@/components/auth/AuthCard";
 
-import * as authApi from "@/services/api/auth";
-import { getErrorMessage } from "@/lib/api";
-
-const RESEND_COOLDOWN_SECONDS = 60;
+// Hooks
+import { useVerifyEmail } from "@/hooks/useVerifyEmail";
 
 const VerifyEmailPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
-  const [resendCooldown, setResendCooldown] = useState(0);
 
   const isArabic = i18n.language === "ar";
-  const userEmail = (location.state as any)?.email || "";
 
-  useEffect(() => {
-    const targetTime = localStorage.getItem("email_verification_timeout");
-
-    if (targetTime) {
-      const calculateRemaining = () => {
-        const remaining = Math.ceil((parseInt(targetTime) - Date.now()) / 1000);
-        if (remaining > 0) {
-          setResendCooldown(remaining);
-        } else {
-          setResendCooldown(0);
-          localStorage.removeItem("email_verification_timeout");
-        }
-      };
-
-      calculateRemaining();
-
-      const interval = setInterval(calculateRemaining, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [resendCooldown]);
-
-  const resendMutation = useMutation({
-    mutationFn: async () => {
-      if (!userEmail) throw new Error("Email not found");
-      return await authApi.resendVerificationEmail(userEmail);
-    },
-    onSuccess: () => {
-      const expiryTime = Date.now() + RESEND_COOLDOWN_SECONDS * 1000;
-      localStorage.setItem("email_verification_timeout", expiryTime.toString());
-      setResendCooldown(RESEND_COOLDOWN_SECONDS);
-
-      toast.success(t("auth.resendSuccessTitle"), {
-        description: t("auth.resendSuccessDesc"),
-      });
-    },
-    onError: (error: unknown) => {
-      const errMsg = getErrorMessage(error, t("auth.resendFailed"));
-
-      if (errMsg === "auth.tooManyAttempts") {
-        const expiryTime = Date.now() + RESEND_COOLDOWN_SECONDS * 1000;
-        localStorage.setItem(
-          "email_verification_timeout",
-          expiryTime.toString(),
-        );
-        setResendCooldown(RESEND_COOLDOWN_SECONDS);
-      }
-
-      const needsTranslation =
-        errMsg.startsWith("auth.") || errMsg.startsWith("common.");
-      const finalMessage = needsTranslation ? t(errMsg) : errMsg;
-
-      toast.error(t("common.error"), {
-        description: finalMessage,
-      });
-    },
-  });
+  const { userEmail, resendCooldown, handleResend, isPending } =
+    useVerifyEmail();
 
   useEffect(() => {
     document.documentElement.dir = isArabic ? "rtl" : "ltr";
@@ -194,17 +133,14 @@ const VerifyEmailPage = () => {
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 <Button
                   type="button"
-                  disabled={resendMutation.isPending || resendCooldown > 0}
+                  disabled={isPending || resendCooldown > 0}
                   className="w-full h-12 rounded-2xl bg-primary text-[16px] font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-primary/10"
-                  onClick={() => resendMutation.mutate()}
+                  onClick={handleResend}
                 >
                   <RefreshCw
-                    className={clsx(
-                      "size-4",
-                      resendMutation.isPending && "animate-spin",
-                    )}
+                    className={clsx("size-4", isPending && "animate-spin")}
                   />
-                  {resendMutation.isPending
+                  {isPending
                     ? t("auth.sending")
                     : resendCooldown > 0
                       ? `${t("auth.resendEmailBtn")} (${resendCooldown}s)`
