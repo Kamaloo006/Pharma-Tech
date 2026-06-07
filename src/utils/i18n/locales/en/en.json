@@ -200,7 +200,12 @@
         "passwordMismatch": "Passwords do not match.",
         "passwordMismatchToast": "Passwords do not match. Please verify and try again.",
         "tokenInvalid": "This password reset token is invalid or expired.",
-        "emailNotVerified": "Please verify your email first. A new verification link has been sent to your email."
+        "emailNotVerified": "Please verify your email first. A new verification link has been sent to your email.",
+        "emailAlreadyVerified": "Email is already verified",
+        "invalidResetToken": "This password reset link is invalid or expired.",
+        "invalidVerificationLink": "Invalid link",
+        "invalidVerificationLinkDescription": "The link you used is invalid or expired.",
+        "linkExpiredPleaseRequestNewOne": "The link has expired, please request a new one."
     }, 
     "errors": {
         "invalidEmail": "Please enter a valid email address",

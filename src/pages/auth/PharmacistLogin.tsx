@@ -33,37 +33,75 @@ import { useLogin } from "@/hooks/useLogin";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
   const [rememberMe, setRememberMe] = useState(false);
 
   const { form, onSubmit, isLoading: isLoggingIn } = useLogin();
   const location = useLocation();
-
-  const emailFromState = (location.state as { email?: string })?.email || "";
+  const { t, i18n } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    form.setValue("email", emailFromState);
+    const emailFromState = (location.state as { email?: string })?.email || "";
     const emailFromUrl = searchParams.get("email");
-    if (emailFromUrl) {
-      form.setValue("email", emailFromUrl);
-    }
 
+    const targetEmail = emailFromUrl || emailFromState;
+
+    if (targetEmail) {
+      form.setValue("email", targetEmail);
+    }
+  }, []);
+
+  useEffect(() => {
     const status = searchParams.get("status");
-    if (status === "success" || status === "already_verified") {
+    const timestamp = searchParams.get("t");
+
+    if (status === "success") {
       toast.success(t("auth.emailVerifiedSuccessfully"), {
         description: t("auth.youCanLoginNow"),
         duration: 5000,
       });
 
       searchParams.delete("status");
+      searchParams.delete("email");
+      setSearchParams(searchParams, { replace: true });
+    } else if (status === "already_verified") {
+      toast.info(t("auth.emailAlreadyVerified"), {
+        description: t("auth.youCanLoginNow"),
+        duration: 5000,
+      });
+
+      searchParams.delete("status");
+      searchParams.delete("email");
       setSearchParams(searchParams, { replace: true });
     }
+
+    if (status === "invalid_link") {
+      let descriptionMessage = t("auth.invalidVerificationLink");
+
+      if (timestamp) {
+        const linkTime = new Date(Number(timestamp)).getTime();
+        const currentTime = new Date().getTime();
+        const differenceInMinutes = (currentTime - linkTime) / (1000 * 60);
+
+        if (differenceInMinutes > 60) {
+          descriptionMessage = t("auth.linkExpiredPleaseRequestNewOne");
+        }
+      }
+
+      toast.error(t("common.error"), {
+        description: descriptionMessage,
+        duration: 6000,
+      });
+      searchParams.delete("status");
+      searchParams.delete("t");
+      setSearchParams(searchParams, { replace: true });
+    }
+
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = i18n.language;
-  }, [i18n.language, searchParams, setSearchParams, t]);
+  }, [searchParams, setSearchParams, t, i18n.language]);
 
   const isArabic = i18n.language === "ar";
 

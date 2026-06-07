@@ -106,6 +106,12 @@ export function getErrorMessage(error: unknown, fallbackMessage: string): string
       const data = axiosError.response.data;
 
 
+      if(status === 400)
+      {
+        if(data?.message === 'This password reset token is invalid.') {
+          return "auth.invalidResetToken";
+        }
+      }
 
     // too many attempts error
       if (status === 429) {
