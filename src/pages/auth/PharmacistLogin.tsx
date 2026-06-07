@@ -35,9 +35,15 @@ const PharmacistLogin = () => {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const { form, onSubmit, isLoading: isLoggingIn } = useLogin();
+  const {
+    form,
+    onSubmit,
+    isLoading: isLoggingIn,
+    rememberMe,
+    setRememberMe,
+  } = useLogin();
+
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -220,7 +226,6 @@ const PharmacistLogin = () => {
 
             <div className="mt-8 overflow-hidden rounded-4xl border border-border bg-card p-3 shadow-2xl transition-all duration-300 shadow-primary/10">
               <img
-                loading="lazy"
                 src={pharmaLogin}
                 alt={t("pharmacistLogin.heroAlt")}
                 className="h-88 w-full rounded-3xl object-cover object-center"
@@ -419,7 +424,7 @@ const PharmacistLogin = () => {
                         />
                         <label
                           htmlFor="pharmacist-remember"
-                          className="text-md select-none"
+                          className="text-md select-none cursor-pointer"
                         >
                           {t("pharmacistLogin.rememberMe")}
                         </label>

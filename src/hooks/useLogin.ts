@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import { loginSchema, type LoginInput } from "@/types/authValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export const useLogin = () => {
       password: "",
     },
   });
+  const [rememberMe, setRememberMe] = useState(false);
 
   const loginMutation = useMutation({
     mutationFn: async (values: LoginInput) =>
@@ -31,23 +33,19 @@ export const useLogin = () => {
     onSuccess: (response) => {
       const payload = response?.data?.data ?? response?.data ?? response;
       const userData = payload?.user;
-      const accessTokenValue =
-        userData?.access_token ?? payload?.access_token ?? payload?.token;
-      const refreshTokenValue =
-        userData?.refresh_token ?? payload?.refresh_token;
       const pharmacyData = payload?.pharmacy ?? null;
+      const accessTokenValue = userData?.access_token ?? payload?.access_token ?? payload?.token;
+      const refreshTokenValue = userData?.refresh_token ?? payload?.refresh_token;
 
       if (!userData || !accessTokenValue || !refreshTokenValue) {
-        toast.error(t("common.error"), {
-          description: t("auth.invalidCredentials"),
-        });
+        toast.error(t("common.error"), { description: t("auth.invalidCredentials") });
         return;
       }
 
-      setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData);
+      setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData, rememberMe);
 
       if (!pharmacyData) {
-        navigate("/complete-profile", { replace: true });
+        navigate("/complete-setup", { replace: true });
       } else {
         navigate("/dashboard", { replace: true });
       }
@@ -69,6 +67,8 @@ export const useLogin = () => {
   return {
     form,
     loginMutation,
+    rememberMe,
+    setRememberMe,
     onSubmit: form.handleSubmit((values) => loginMutation.mutate(values)),
     isLoading: loginMutation.isPending,
   };

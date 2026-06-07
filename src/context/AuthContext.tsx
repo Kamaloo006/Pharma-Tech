@@ -1,5 +1,4 @@
 import { setGlobalAccessToken } from "@/lib/api";
-import * as authApi from "@/services/api/auth";
 import type { Pharmacy } from "@/types/Pharmacy";
 import type { User } from "@/types/User";
 import {
@@ -24,7 +23,8 @@ interface AuthContextType {
     refreshToken: string,
     user: User,
     pharmacy: Pharmacy | null,
-  ) => void; // 👈 أضفنا الصيدلية هنا
+    remember: boolean,
+  ) => void;
   setAccessTokenOnly: (token: string) => void;
   logout: () => void;
 }
@@ -40,12 +40,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const initializeAuth = () => {
-      const storedUser = localStorage.getItem("user");
-      const storedPharmacy = localStorage.getItem("pharmacy");
-      const storedRefreshToken = localStorage.getItem("refresh_token");
+      const storedUser =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
+      const storedPharmacy =
+        localStorage.getItem("pharmacy") || sessionStorage.getItem("pharmacy");
+      const storedRefreshToken =
+        localStorage.getItem("refresh_token") ||
+        sessionStorage.getItem("refresh_token");
+      const storedAccessToken =
+        localStorage.getItem("access_token") ||
+        sessionStorage.getItem("access_token");
 
-      if (storedUser && storedRefreshToken) {
+      if (storedUser && storedRefreshToken && storedAccessToken) {
         setUser(JSON.parse(storedUser));
+        setAccessToken(storedAccessToken);
+        setGlobalAccessToken(storedAccessToken);
 
         if (storedPharmacy) {
           setPharmacy(JSON.parse(storedPharmacy));
@@ -57,60 +66,67 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initializeAuth();
   }, []);
 
-  // 2. تحديث دالة ضخ البيانات لتستقبل وتخزن الـ pharmacy
   const setAuthData = (
-    accessToken: string,
+    accessTokenValue: string,
     refreshToken: string,
     newUser: User,
-    newPharmacy: Pharmacy | null, // 👈 استقبال الصيدلية قادمة من الـ Login أو الـ Setup
+    newPharmacy: Pharmacy | null,
+    remember: boolean,
   ) => {
-    setAccessToken(accessToken);
+    setAccessToken(accessTokenValue);
     setUser(newUser);
-    setPharmacy(newPharmacy); // 👈 تحديث الـ State
+    setPharmacy(newPharmacy);
 
-    localStorage.setItem("refresh_token", refreshToken);
-    localStorage.setItem("user", JSON.stringify(newUser));
+    const storage = remember ? localStorage : sessionStorage;
 
-    // حفظ الصيدلية محلياً أو مسحها إذا كانت null
+    storage.setItem("access_token", accessTokenValue);
+    storage.setItem("refresh_token", refreshToken);
+    storage.setItem("user", JSON.stringify(newUser));
+
     if (newPharmacy) {
-      localStorage.setItem("pharmacy", JSON.stringify(newPharmacy));
+      storage.setItem("pharmacy", JSON.stringify(newPharmacy));
     } else {
-      localStorage.removeItem("pharmacy");
+      storage.removeItem("pharmacy");
     }
 
-    setGlobalAccessToken(accessToken);
+    const alternativeStorage = remember ? sessionStorage : localStorage;
+    alternativeStorage.removeItem("access_token");
+    alternativeStorage.removeItem("refresh_token");
+    alternativeStorage.removeItem("user");
+    alternativeStorage.removeItem("pharmacy");
+
+    setGlobalAccessToken(accessTokenValue);
   };
 
-  const login = async (email: string, password: string) => {
-    const response = await authApi.login({ email, password });
-    const payload = response?.data?.data ?? response?.data ?? response;
-
-    const userData = payload.user;
-    const pharmacyData = payload.pharmacy ?? null; // 👈 استخراج الصيدلية من نفس مستوى الـ user كما يرسلها الباكيند
-    const accessTokenValue =
-      userData?.access_token ?? payload?.access_token ?? payload?.token;
-    const refreshTokenValue = userData?.refresh_token ?? payload?.refresh_token;
-
-    if (!userData || !accessTokenValue || !refreshTokenValue) {
-      throw new Error("Invalid login response");
-    }
-
-    // تمرير الصيدلية للدالة المخزِنة
-    setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData);
-  };
+  const login = async (email: string, password: string) => {};
 
   const setAccessTokenOnly = (token: string) => {
     setAccessToken(token);
     setGlobalAccessToken(token);
+
+    // تحديث التوكن في المكان المخزن فيه حالياً
+    if (localStorage.getItem("access_token")) {
+      localStorage.setItem("access_token", token);
+    } else if (sessionStorage.getItem("access_token")) {
+      sessionStorage.setItem("access_token", token);
+    }
   };
 
   const logout = () => {
     setAccessToken(null);
     setUser(null);
-    setPharmacy(null); // 👈 تصفير الصيدلية عند الخروج
+    setPharmacy(null);
+
+    // مسح تصفير شامل وكامل لكل الجلسات المؤقتة والدائمة
+    localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");
-    localStorage.removeItem("pharmacy"); // 👈 مسح كاش الصيدلية
+    localStorage.removeItem("pharmacy");
+
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("refresh_token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("pharmacy");
 
     toast.success(t("auth.logoutSuccessful"), {
       description: t("auth.logoutSuccessDesc"),
@@ -122,8 +138,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         user,
         accessToken,
-        pharmacy, // 👈 تمرير الـ State النظيفة والآمنة بدون كاستنج عشوائي
-        isAuthenticated: !!localStorage.getItem("refresh_token"),
+        pharmacy,
+        // التحقق ديناميكياً من وجود الـ token في أي من مخازن المتصفح المتاحة
+        isAuthenticated: !!(
+          localStorage.getItem("access_token") ||
+          sessionStorage.getItem("access_token")
+        ),
         isLoading,
         login,
         setAuthData,
