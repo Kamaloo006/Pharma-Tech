@@ -1,8 +1,12 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 
 export default function PublicRoute() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, pharmacy } = useAuth();
+  const location = useLocation();
+  const isCompleteProfileRoute =
+    location.pathname === "/complete-profile" ||
+    location.pathname === "/complete-setup";
 
   if (isLoading) {
     return (
@@ -12,6 +16,23 @@ export default function PublicRoute() {
     );
   }
 
-  // إذا كان مسجلاً بالفعل، نمنعه من دخول صفحات الـ Auth ونطرده للداشبورد
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Outlet />;
+  if (!isAuthenticated && isCompleteProfileRoute) {
+    return <Navigate to="/login/pharmacist" replace />;
+  }
+
+  if (isAuthenticated) {
+    const hasNoPharmacy = !pharmacy;
+
+    if (hasNoPharmacy) {
+      if (!isCompleteProfileRoute) {
+        return <Navigate to="/complete-profile" replace />;
+      }
+
+      return <Outlet />;
+    }
+
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <Outlet />;
 }

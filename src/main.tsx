@@ -19,13 +19,13 @@ import App from "./App.tsx";
 import PharmacistLogin from "./pages/auth/PharmacistLogin.tsx";
 import PharmacistSignUp from "./pages/auth/PharmacistSignUp.tsx";
 import VerifyEmailPage from "./pages/auth/VerifyEmailPage.tsx";
-// import RegisterSuccess from "./pages/auth/RegisterSuccess.tsx"; // شاشة نجاح التسجيل (انتظار التفعيل)
-
-// الحراس (Guards)
-import ProtectedRoute from "./components/auth/ProtectedRoute";
-import PublicRoute from "./components/auth/PublicRoute";
 import ForgotPassword from "./pages/auth/ForgotPassword.tsx";
 import ResetPassword from "./pages/auth/ResetPassword.tsx";
+import CompleteProfile from "./pages/auth/CompleteProfile.tsx";
+
+//  (Guards)
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import PublicRoute from "./components/auth/PublicRoute";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useTranslation } from "react-i18next";
@@ -68,6 +68,14 @@ const router = createBrowserRouter([
       {
         path: "/reset-password",
         element: <ResetPassword />,
+      },
+      {
+        path: "/complete-profile",
+        element: <CompleteProfile />,
+      },
+      {
+        path: "/complete-setup",
+        element: <Navigate to="/complete-profile" replace />,
       },
     ],
   },

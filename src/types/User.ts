@@ -1,14 +1,11 @@
-export interface User {
-    first_name: string;
-    father_name?: string | null;
-    last_name: string;
-    email: string;
-    phone_number: string;
-}
+import z from "zod";
 
-export interface Pharmacy {
-    name: string;
-    governorate_id?: number;
-    city_id: number;
-    address?: string | null;
-}
+const userSchema = z.object({
+    first_name: z.string(),
+    father_name: z.string().optional().nullable(),
+    last_name: z.string(),
+    email: z.string(),
+    phone_number: z.string(),
+});
+
+export type User = z.infer<typeof userSchema>;

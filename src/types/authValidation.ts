@@ -103,6 +103,59 @@ export const registerSchema = z.object({
   }
 });
 
+export const completeProfileSchema = z.object({
+  first_name: z
+    .string({
+      error: err("validation.firstNameRequired"),
+    })
+    .min(1, { error: err("validation.firstNameRequired") })
+    .max(255, { error: err("validation.firstNameTooLong") }),
+
+  last_name: z
+    .string({
+      error: err("validation.lastNameRequired"),
+    })
+    .min(1, { error: err("validation.lastNameRequired") })
+    .max(255, { error: err("validation.lastNameTooLong") }),
+
+  phone_number: z
+    .string({
+      error: err("validation.phoneNumberRequired"),
+    })
+    .min(1, { error: err("validation.phoneNumberRequired") })
+    .regex(/^(?:\+9639|09|009639)\d{8}$/, {
+      error: err("validation.invalidSyrianPhoneNumber"),
+    }),
+
+  licence_number: z
+    .string({
+      error: err("validation.licenseNumberRequired"),
+    })
+    .min(1, { error: err("validation.licenseNumberRequired") })
+    .max(255, { error: err("validation.licenseNumberTooLong") }),
+
+  pharmacy_name: z
+    .string({
+      error: err("validation.pharmacyNameRequired"),
+    })
+    .min(1, { error: err("validation.pharmacyNameRequired") })
+    .max(255, { error: err("validation.pharmacyNameTooLong") }),
+
+  city_id: z
+    .string({
+      error: err("validation.cityRequired"),
+    })
+    .min(1, { error: err("validation.cityRequired") }),
+
+  address: z
+    .string({
+      error: err("validation.addressTooLong"),
+    })
+    .max(255, { error: err("validation.addressTooLong") })
+    .optional()
+    .or(z.literal("")),
+});
+
 
 export const forgotPasswordSchema = z.object({
   email: z.string().email({ message: "invalidEmail" }), 
@@ -121,5 +174,6 @@ export const resetPasswordSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+export type CompleteProfileInput = z.infer<typeof completeProfileSchema>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;

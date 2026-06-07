@@ -1,5 +1,9 @@
 import api from "@/lib/api";
-import type {  RegisterInput, LoginInput } from "@/types/authValidation";
+import type {
+  CompleteProfileInput,
+  RegisterInput,
+  LoginInput,
+} from "@/types/authValidation";
 
 
 export const register = async (data:RegisterInput) => {
@@ -44,3 +48,8 @@ export const googleLogin = async(idToken:string) => {
   const response = await api.post("/auth/google", { id_token: idToken, platform:"web" });
   return response.data;
 }
+
+export const completeGoogleProfile = async (data: CompleteProfileInput) => {
+  const response = await api.post("/auth/google/complete-profile", data);
+  return response.data;
+};

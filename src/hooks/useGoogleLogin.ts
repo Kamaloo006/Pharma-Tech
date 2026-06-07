@@ -23,6 +23,7 @@ export const useGoogleLogin = () => {
     onSuccess: (response) => {
       const payload = response?.data?.data ?? response?.data ?? response;
       const userData = payload?.user;
+      const pharmacyData = payload?.pharmacy ?? null;
       const accessTokenValue =
         userData?.access_token ?? payload?.access_token ?? payload?.token;
       const refreshTokenValue = userData?.refresh_token ?? payload?.refresh_token;
@@ -36,7 +37,13 @@ export const useGoogleLogin = () => {
         return;
       }
 
-      setAuthData(accessTokenValue, refreshTokenValue, userData);
+      setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData);
+
+      if (!pharmacyData) {
+        navigate("/complete-profile", { replace: true });
+        return;
+      }
+
       navigate("/dashboard", { replace: true });
     },
     onError: (error) => {

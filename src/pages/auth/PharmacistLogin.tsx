@@ -371,6 +371,7 @@ const PharmacistLogin = () => {
                         )}
                       >
                         <Checkbox
+                          className="border-muted-foreground"
                           id="pharmacist-remember"
                           disabled={isLoggingIn}
                           checked={rememberMe}
@@ -380,7 +381,7 @@ const PharmacistLogin = () => {
                         />
                         <label
                           htmlFor="pharmacist-remember"
-                          className="text-sm select-none"
+                          className="text-md select-none"
                         >
                           {t("pharmacistLogin.rememberMe")}
                         </label>

@@ -35,6 +35,7 @@ export const useLogin = () => {
         userData?.access_token ?? payload?.access_token ?? payload?.token;
       const refreshTokenValue =
         userData?.refresh_token ?? payload?.refresh_token;
+      const pharmacyData = payload?.pharmacy ?? null;
 
       if (!userData || !accessTokenValue || !refreshTokenValue) {
         toast.error(t("common.error"), {
@@ -43,8 +44,13 @@ export const useLogin = () => {
         return;
       }
 
-      setAuthData(accessTokenValue, refreshTokenValue, userData);
-      navigate("/dashboard", { replace: true });
+      setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData);
+
+      if (!pharmacyData) {
+        navigate("/complete-profile", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
     },
     onError: (error: unknown) => {
       const errMsg = getErrorMessage(error, "auth.invalidCredentials");
