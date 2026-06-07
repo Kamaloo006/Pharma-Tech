@@ -5,10 +5,8 @@ import {
   EyeOff,
   Lock,
   Mail,
-  MoonStar,
   ShieldCheck,
   Stethoscope,
-  SunMedium,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
@@ -25,15 +23,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import AuthForm from "@/components/auth/AuthForm";
-import { useTheme } from "@/context/theme-provider";
 import AuthCard from "@/components/auth/AuthCard";
+import AuthHeader from "@/components/auth/AuthHeader";
 
 import { toast } from "sonner";
 import { useLogin } from "@/hooks/useLogin";
 
 const PharmacistLogin = () => {
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -114,62 +111,7 @@ const PharmacistLogin = () => {
   return (
     <main className="min-h-screen transition-all duration-300 bg-background text-foreground">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
-        {/* Header - Language & Theme Toggle */}
-        <header
-          className={clsx("flex items-center gap-3 pb-4", {
-            "justify-start": !isArabic,
-            "justify-end": isArabic,
-          })}
-        >
-          <div className="flex items-center gap-1 rounded-full border border-border bg-header-bg p-1 shadow-sm backdrop-blur transition-all duration-300">
-            <Button
-              type="button"
-              size="sm"
-              className={clsx(
-                "h-8 rounded-full px-3 transition-all duration-300",
-                {
-                  "bg-primary/30 text-primary font-semibold hover:bg-primary/40":
-                    i18n.language === "en",
-                  "bg-transparent text-muted-foreground hover:bg-muted/50":
-                    i18n.language !== "en",
-                },
-              )}
-              onClick={() => i18n.changeLanguage("en")}
-            >
-              EN
-            </Button>
-            <Button
-              type="button"
-              size="sm"
-              className={clsx(
-                "h-8 rounded-full px-3 transition-all duration-300",
-                {
-                  "bg-primary/30 text-primary font-semibold hover:bg-primary/40":
-                    i18n.language === "ar",
-                  "bg-transparent text-muted-foreground hover:bg-muted/50":
-                    i18n.language !== "ar",
-                },
-              )}
-              onClick={() => i18n.changeLanguage("ar")}
-            >
-              AR
-            </Button>
-          </div>
-
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="size-10 rounded-full border border-border bg-header-bg shadow-sm backdrop-blur transition-all duration-300"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? (
-              <SunMedium className="size-4" />
-            ) : (
-              <MoonStar className="size-4" />
-            )}
-          </Button>
-        </header>
+        <AuthHeader />
 
         <section
           className={`grid flex-1 items-center gap-10 transition-all duration-300 bg ${

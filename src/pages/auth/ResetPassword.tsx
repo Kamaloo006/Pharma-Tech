@@ -1,19 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
-import {
-  MoonStar,
-  Stethoscope,
-  SunMedium,
-  Lock,
-  Eye,
-  EyeOff,
-  Save,
-} from "lucide-react";
+import { Stethoscope, Lock, Eye, EyeOff, Save } from "lucide-react";
 
 // Components & UI
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/context/theme-provider";
 import AuthCard from "@/components/auth/AuthCard";
 import {
   Form,
@@ -26,10 +17,10 @@ import { Input } from "@/components/ui/input";
 
 // Custom Hooks
 import { useResetPassword } from "@/hooks/useResetPassword";
+import AuthHeader from "@/components/auth/AuthHeader";
 
 const ResetPassword = () => {
   const { t, i18n } = useTranslation();
-  const { theme, setTheme } = useTheme();
   const isArabic = i18n.language === "ar";
 
   const {
@@ -51,56 +42,7 @@ const ResetPassword = () => {
   return (
     <main className="min-h-screen transition-all duration-300 bg-background text-foreground flex flex-col">
       <div className="mx-auto flex w-full max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8 flex-1">
-        {/* Header - Language & Theme Toggle */}
-        <header
-          className={clsx(
-            "flex items-center gap-3 pb-4",
-            isArabic ? "justify-end" : "justify-start",
-          )}
-        >
-          <div className="flex items-center gap-1 rounded-full border border-border bg-card/50 p-1 shadow-sm backdrop-blur transition-all duration-300">
-            <Button
-              type="button"
-              size="sm"
-              className={clsx(
-                "h-8 rounded-full px-3 transition-all duration-300",
-                i18n.language === "en"
-                  ? "bg-primary/30 text-primary font-semibold"
-                  : "bg-transparent text-muted-foreground",
-              )}
-              onClick={() => i18n.changeLanguage("en")}
-            >
-              EN
-            </Button>
-            <Button
-              type="button"
-              size="sm"
-              className={clsx(
-                "h-8 rounded-full px-3 transition-all duration-300",
-                i18n.language === "ar"
-                  ? "bg-primary/30 text-primary font-semibold"
-                  : "bg-transparent text-muted-foreground",
-              )}
-              onClick={() => i18n.changeLanguage("ar")}
-            >
-              AR
-            </Button>
-          </div>
-
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="size-10 rounded-full border border-border shadow-sm backdrop-blur transition-all duration-300"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? (
-              <SunMedium className="size-4" />
-            ) : (
-              <MoonStar className="size-4" />
-            )}
-          </Button>
-        </header>
+        <AuthHeader />
 
         <section className="flex flex-1 items-center justify-center relative overflow-hidden py-10">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(5,150,105,0.15),transparent_68%)] blur-3xl" />

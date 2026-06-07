@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
-import { MoonStar, ShieldCheck, Stethoscope, SunMedium } from "lucide-react";
+import { ShieldCheck, Stethoscope } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import AuthCard from "@/components/auth/AuthCard";
 import AuthForm from "@/components/auth/AuthForm";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,14 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import AuthHeader from "@/components/auth/AuthHeader";
 import { useAuth } from "@/context/AuthContext";
 import { useGetCities } from "@/hooks/useGetCities";
 import { useCompleteProfile } from "@/hooks/useCompleteProfile";
-import { useTheme } from "@/context/theme-provider";
 
 const CompleteProfile = () => {
   const { t, i18n } = useTranslation();
-  const { theme, setTheme } = useTheme();
   const { user } = useAuth();
   const { data: governorates = [] } = useGetCities();
   const { form, onSubmit, isPending } = useCompleteProfile();
@@ -64,55 +62,7 @@ const CompleteProfile = () => {
   return (
     <main className="min-h-screen bg-background text-foreground transition-all duration-300">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
-        <header
-          className={clsx(
-            "flex items-center gap-3 pb-4",
-            isArabic ? "justify-end" : "justify-start",
-          )}
-        >
-          <div className="flex items-center gap-1 rounded-full border border-border bg-card/50 p-1 shadow-sm backdrop-blur">
-            <Button
-              type="button"
-              size="sm"
-              className={clsx(
-                "h-8 rounded-full px-3 transition-all",
-                i18n.language === "en"
-                  ? "bg-primary/30 font-semibold text-primary"
-                  : "bg-transparent text-muted-foreground",
-              )}
-              onClick={() => i18n.changeLanguage("en")}
-            >
-              EN
-            </Button>
-            <Button
-              type="button"
-              size="sm"
-              className={clsx(
-                "h-8 rounded-full px-3 transition-all",
-                i18n.language === "ar"
-                  ? "bg-primary/30 font-semibold text-primary"
-                  : "bg-transparent text-muted-foreground",
-              )}
-              onClick={() => i18n.changeLanguage("ar")}
-            >
-              AR
-            </Button>
-          </div>
-
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="size-10 rounded-full border border-border shadow-sm backdrop-blur"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? (
-              <SunMedium className="size-4" />
-            ) : (
-              <MoonStar className="size-4" />
-            )}
-          </Button>
-        </header>
+        <AuthHeader />
 
         <section className="flex flex-1 items-center justify-center py-8">
           <div className="w-full max-w-3xl">

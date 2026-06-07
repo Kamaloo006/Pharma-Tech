@@ -5,7 +5,6 @@ export default function ProtectedRoute() {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
-  // 1. أثناء فحص التوكنات والـ Refresh في البداية، نعرض واجهة انتظار نظيفة
   if (isLoading) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-background">
@@ -14,13 +13,11 @@ export default function ProtectedRoute() {
     );
   }
 
-  // 2. إذا لم يكن المستخدم مسجلاً، نوجهه لصفحة اللوجين مع حفظ الرابط الذي كان يحاول دخوله
   if (!isAuthenticated) {
     return (
       <Navigate to="/login/pharmacist" state={{ from: location }} replace />
     );
   }
 
-  // 3. إذا كان كل شيء تماماً، اسمح له بالعبور وعرض المسارات الداخلية
   return <Outlet />;
 }
