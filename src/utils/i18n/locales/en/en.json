@@ -211,5 +211,8 @@
         "invalidEmail": "Please enter a valid email address",
         "passwordMinLength": "Password must be at least 8 characters long.",
         "passwordsDoNotMatch": "The password confirmation does not match."
-  }
+  },
+  "dashboard":{
+        "addProduct": "Add Product"
+    }
 }
