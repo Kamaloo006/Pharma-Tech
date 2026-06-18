@@ -1,14 +1,8 @@
-import { Moon, Pill, ShieldCheck, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
-import { useTheme } from "./context/theme-provider";
-import { Separator } from "./components/ui/separator";
-import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { googleLogout } from "@react-oauth/google";
-import DashboardHeader from "./components/dashboard/DashboardHeader";
+import Dashboard from "./pages/dashboard/DashboardLayout";
 
 const App = () => {
   // const { setTheme, theme } = useTheme();
@@ -23,7 +17,7 @@ const App = () => {
 
   return (
     <main>
-      <DashboardHeader />
+      <Dashboard />
     </main>
   );
 };

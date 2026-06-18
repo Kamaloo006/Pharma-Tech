@@ -29,6 +29,7 @@ import PublicRoute from "./components/auth/PublicRoute";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useTranslation } from "react-i18next";
+import Inventory from "./pages/dashboard/Inventory.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <App />,
+      },
+      {
+        path: "dashboard/inventory",
+        element: <Inventory />,
       },
     ],
   },

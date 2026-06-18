@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import AuthHeader from "../auth/AuthHeader";
 import { Bell, Search, Plus } from "lucide-react";
 import clsx from "clsx";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const DashboardHeader = () => {
   const { t, i18n } = useTranslation();
@@ -21,9 +22,7 @@ const DashboardHeader = () => {
           "flex-row-reverse": isArabic,
         })}
       >
-        <h2 className="text-xl font-bold tracking-wide text-foreground sm:text-2xl">
-          {t("common.appName")}
-        </h2>
+        <SidebarTrigger className="md:hidden size-10 rounded-full border border-border/60 bg-muted/20 text-foreground shadow-sm hover:bg-muted/40" />
 
         <div className="relative w-full max-w-md hidden md:block">
           <span
@@ -37,9 +36,7 @@ const DashboardHeader = () => {
           <input
             dir={isArabic ? "rtl" : "ltr"}
             type="text"
-            placeholder={
-              isArabic ? "ابحث عن أي شيء..." : "Search for anything..."
-            }
+            placeholder={t("header.searchPlaceholder")}
             className={clsx(
               "w-full h-10 rounded-full border border-border/60 bg-muted/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all duration-300 shadow-inner",
               isArabic ? "pr-11 pl-4" : "pl-11 pr-4",

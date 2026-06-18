@@ -212,7 +212,25 @@
         "passwordMinLength": "Password must be at least 8 characters long.",
         "passwordsDoNotMatch": "The password confirmation does not match."
   },
+    "sidebar": {
+        "mainMenu": "Main Menu",
+        "dashboard": "Dashboard",
+        "inventory": "Inventory",
+        "catalog": "Product Catalog",
+        "management": "Management",
+        "suppliers": "Suppliers",
+        "enterprise": "Enterprise",
+        "profileSettings": "Profile Settings",
+        "logOut": "Log out"
+    },
   "dashboard":{
-        "addProduct": "Add Product"
+        "addProduct": "Add Product",
+        "searchPlaceholder": "Search for anything..."
+    },
+    "header": {
+        "closeSidebar": "Close sidebar",
+        "collapseSidebar": "Collapse sidebar",
+        "expandSidebar": "Expand sidebar",
+        "searchPlaceholder": "Search for anything..."
     }
 }

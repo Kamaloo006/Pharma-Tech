@@ -211,7 +211,25 @@
         "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
         "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين."
     },
+    "sidebar": {
+        "mainMenu": "القائمة الرئيسية",
+        "dashboard": "لوحة التحكم",
+        "inventory": "المخزون",
+        "catalog": "كتالوج المنتجات",
+        "management": "الإدارة",
+        "suppliers": "الموردون",
+        "enterprise": "مؤسسة",
+        "profileSettings": "إعدادات الملف الشخصي",
+        "logOut": "تسجيل الخروج"
+    },
     "dashboard":{
-        "addProduct": "إضافة منتج"
+        "addProduct": "إضافة منتج",
+        "searchPlaceholder": "ابحث عن أي شيء..."
+    },
+    "header": {
+        "closeSidebar": "إغلاق الشريط الجانبي",
+        "collapseSidebar": "طي الشريط الجانبي",
+        "expandSidebar": "توسيع الشريط الجانبي",
+        "searchPlaceholder": "ابحث عن أي شيء..."
     }
 }
