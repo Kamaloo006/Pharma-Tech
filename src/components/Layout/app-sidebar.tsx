@@ -8,8 +8,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronsUpDown,
+  LogOut, // 🟢 إضافة أيقونة تسجيل الخروج للمظهر الجمالي
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -32,13 +33,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import clsx from "clsx";
 import { useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AppSidebar() {
   const { t, i18n } = useTranslation();
   const { toggleSidebar, open, isMobile } = useSidebar();
   const location = useLocation();
   const isArabic = i18n.language === "ar";
-
+  const navigate = useNavigate();
+  const { user, logout, pharmacy } = useAuth();
   const navigationGroups = [
     {
       label: t("sidebar.mainMenu"),
@@ -73,8 +76,14 @@ export default function AppSidebar() {
   ];
 
   useEffect(() => {
+    console.log(pharmacy);
     open && !isMobile && toggleSidebar();
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login/pharmacist");
+  };
 
   return (
     <>
@@ -99,14 +108,16 @@ export default function AppSidebar() {
               className="flex w-full items-center gap-2 rounded-full border border-sidebar-border/70 bg-background/5 px-2 py-2 backdrop-blur-sm"
             >
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/20">
-                <span className="text-md font-semibold">P</span>
+                <span className="text-md font-semibold">
+                  {pharmacy?.name?.charAt(0)}
+                </span>
               </div>
               <div className="min-w-0 flex-1 leading-tight">
                 <div className="truncate text-base font-semibold text-sidebar-foreground">
-                  {t("common.appName")}
+                  {pharmacy?.name}
                 </div>
                 <div className="truncate text-xs text-sidebar-foreground/65">
-                  {t("sidebar.enterprise")}
+                  Pharmacy
                 </div>
               </div>
               <button
@@ -130,7 +141,9 @@ export default function AppSidebar() {
                 className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity"
                 aria-label={t("header.expandSidebar")}
               >
-                <span className="text-md font-semibold">P</span>
+                <span className="text-md font-semibold">
+                  {pharmacy?.name?.charAt(0)}
+                </span>
               </button>
             </div>
           )}
@@ -204,15 +217,19 @@ export default function AppSidebar() {
                           src="https://github.com/shadcn.png"
                           alt="Pharmacist"
                         />
-                        <AvatarFallback>PM</AvatarFallback>
+                        <AvatarFallback>
+                          {user?.first_name
+                            ? user.first_name.substring(0, 2).toUpperCase()
+                            : "PM"}
+                        </AvatarFallback>
                       </Avatar>
                       {open && (
                         <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                           <span className="truncate text-sm font-semibold text-sidebar-foreground">
-                            كمال أحمد
+                            {user?.first_name}
                           </span>
                           <span className="truncate text-xs text-sidebar-foreground/60">
-                            kamal@pharmatech.com
+                            {user?.email}
                           </span>
                         </div>
                       )}
@@ -233,10 +250,14 @@ export default function AppSidebar() {
                     <Settings className="size-4" />
                     <span>{t("sidebar.profileSettings")}</span>
                   </DropdownMenuItem>
+
+                  {/* 🟢 تعديل زر تسجيل الخروج ليكون متوافقاً مع shadcn/ui وتجربة الاستخدام */}
                   <DropdownMenuItem
                     dir={isArabic ? "rtl" : "ltr"}
+                    onClick={handleLogout} // 👈 تم نقل الاستدعاء إلى الحاوية الرئيسية مباشرة لمساحة ضغط كاملة
                     className="cursor-pointer gap-2 rounded-xl text-red-500 focus:bg-red-500/10 focus:text-red-500"
                   >
+                    <LogOut className="size-4" /> {/* 👈 إضافة الأيقونة */}
                     <span>{t("sidebar.logOut")}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
