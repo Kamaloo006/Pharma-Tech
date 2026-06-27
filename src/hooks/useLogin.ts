@@ -45,7 +45,7 @@ export const useLogin = () => {
       setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData, rememberMe);
 
       if (!pharmacyData) {
-        navigate("/complete-setup", { replace: true });
+        navigate("/complete-profile", { replace: true });
       } else {
         navigate("/dashboard", { replace: true });
       }

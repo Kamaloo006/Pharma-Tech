@@ -37,7 +37,7 @@ export const useGoogleLogin = () => {
         return;
       }
 
-      setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData);
+      setAuthData(accessTokenValue, refreshTokenValue, userData, pharmacyData, false);
 
       if (!pharmacyData) {
         navigate("/complete-profile", { replace: true });

@@ -12,11 +12,14 @@ import {
   completeProfileSchema,
   type CompleteProfileInput,
 } from "@/types/authValidation";
+import { useState } from "react";
 
 export const useCompleteProfile = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { accessToken, user, setAuthData } = useAuth();
+    const [rememberMe, setRememberMe] = useState(false);
+  
 
   const form = useForm<CompleteProfileInput>({
     resolver: zodResolver(completeProfileSchema),
@@ -46,7 +49,7 @@ export const useCompleteProfile = () => {
         localStorage.getItem("refresh_token");
 
       if (updatedUser && nextAccessToken && nextRefreshToken) {
-        setAuthData(nextAccessToken, nextRefreshToken, updatedUser, updatedPharmacy);
+        setAuthData(nextAccessToken, nextRefreshToken, updatedUser, updatedPharmacy, rememberMe);
       } else if (updatedPharmacy) {
         localStorage.setItem("pharmacy", JSON.stringify(updatedPharmacy));
       }

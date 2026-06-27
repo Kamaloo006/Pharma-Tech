@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       const storedUser =
         localStorage.getItem("user") || sessionStorage.getItem("user");
       const storedPharmacy =
@@ -52,13 +52,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         sessionStorage.getItem("access_token");
 
       if (storedUser && storedRefreshToken && storedAccessToken) {
-        setUser(JSON.parse(storedUser));
-        setAccessToken(storedAccessToken);
-        setGlobalAccessToken(storedAccessToken);
+        try {
+          // 1. شحن البيانات المبدئية في الـ State فوراً لتقليل الـ Flicker
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+          setAccessToken(storedAccessToken);
+          setGlobalAccessToken(storedAccessToken);
 
-        if (storedPharmacy) {
-          setPharmacy(JSON.parse(storedPharmacy));
+          if (storedPharmacy) {
+            setPharmacy(JSON.parse(storedPharmacy));
+          }
+        } catch (error) {
+          console.error("Auth initialization failed:", error);
+          // إذا كانت البيانات تالفة في الـ Storage، نقوم بالتنظيف
+          logout();
         }
+      } else {
+        // إذا لم يجد توكنز، يتأكد من تصفير الـ States
+        setUser(null);
+        setAccessToken(null);
+        setPharmacy(null);
       }
       setIsLoading(false);
     };
@@ -104,7 +117,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setAccessToken(token);
     setGlobalAccessToken(token);
 
-    // تحديث التوكن في المكان المخزن فيه حالياً
     if (localStorage.getItem("access_token")) {
       localStorage.setItem("access_token", token);
     } else if (sessionStorage.getItem("access_token")) {
@@ -117,7 +129,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setPharmacy(null);
 
-    // مسح تصفير شامل وكامل لكل الجلسات المؤقتة والدائمة
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");
@@ -139,11 +150,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         accessToken,
         pharmacy,
-        // التحقق ديناميكياً من وجود الـ token في أي من مخازن المتصفح المتاحة
-        isAuthenticated: !!(
-          localStorage.getItem("access_token") ||
-          sessionStorage.getItem("access_token")
-        ),
+        // ✨ التصحيح الجوهري: نعتمد على وجود كائن المستخدم والتوكن الفعليين في الذاكرة الحية للتطبيق
+        isAuthenticated: !!accessToken && !!user,
         isLoading,
         login,
         setAuthData,

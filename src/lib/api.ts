@@ -1,5 +1,19 @@
 import axios, { AxiosError } from "axios";
 
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api",
   headers: {
@@ -8,12 +22,10 @@ const api = axios.create({
   },
 });
 
-// Interceptor لحقن الـ Access Token القصير في رأس كل طلب
+// Request Interceptor: حقن الـ Access Token الحالي
 api.interceptors.request.use(
   (config) => {
-    // جلب التوكن من الـ State أو من متغير مخصص يتم تحديثه من الـ AuthContext
-    // سنعتمد هنا على تمريره برمجياً أو استخدام دالة مساعدة
-    const token = window.__ACCESS_TOKEN__ || null; 
+    const token = window.__ACCESS_TOKEN__ || localStorage.getItem("access_token") || sessionStorage.getItem("access_token"); 
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -22,49 +34,101 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Interceptor صائد خطأ 401 لعمل Refresh التوكن تلقائياً
+// Response Interceptor: التعامل مع انتهاء الصلاحية 401
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
     
-    // إذا انتهى الـ Access Token وأرجع السيرفر 401 ولم نقم بمحاولة التجديد بعد
+    // إذا كان الخطأ 401 والطلب لم يتم إعادته سابقاً لتجنب حلقة مفرغة
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // لمنع الدخول في حلقة تكرار لا نهائية لو انتهى الريفريش نفسه
       
-      const refreshToken = localStorage.getItem("refresh_token");
+      // إذا كان الطلب الفاشل هو نفسه طلب الـ refresh، نقوم بعمل logout فوراً لمنع التكرار
+      if (originalRequest.url?.includes('/refresh')) {
+        handleForcedLogout();
+        return Promise.reject(error);
+      }
+
+      if (isRefreshing) {
+        // إذا كانت هناك عملية تجديد قيد التنفيذ حالياً، ضع هذا الطلب في الانتظار
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return api(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      const refreshToken = localStorage.getItem("refresh_token") || sessionStorage.getItem("refresh_token");
 
       if (refreshToken) {
         try {
-          // إرسال طلب الـ Refresh الـ Endpoint الخاص بـ لارفيل  
+          // 🟢 إرسال طلب الـ Refresh بالمحددات المطلوبة تماماً من لارفيل
           const res = await axios.post(`${api.defaults.baseURL}/refresh`, {
             refresh_token: refreshToken,
+            device_name: "WebApp_Pharmacist", // ممرر اختيارياً كما يطلب الباك إند
+          }, {
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            }
           });
 
-          
           if (res.status === 200) {
             const { access_token, refresh_token } = res.data;
 
-            // 1. حفظ التوكنات الجديدة
+            // 1. التخزين العام وفي الـ Storage النشط حالياً
             window.__ACCESS_TOKEN__ = access_token;
-            localStorage.setItem("refresh_token", refresh_token);
+            
+            const isRemembered = !!localStorage.getItem("refresh_token");
+            const storage = isRemembered ? localStorage : sessionStorage;
+            
+            storage.setItem("access_token", access_token);
+            if (refresh_token) {
+              storage.setItem("refresh_token", refresh_token);
+            }
 
-            // 2. تحديث الـ Header في الطلب الحالي المكسور وإعادة تشغيله
+            // 2. تسيير كافة الطلبات التي كانت تنتظر في الطابور بالتوكن الجديد
+            processQueue(null, access_token);
+
+            // 3. تحديث هيدر الطلب الحالي المكسور وإعادة إطلاقه
             originalRequest.headers.Authorization = `Bearer ${access_token}`;
+            isRefreshing = false;
             return api(originalRequest);
           }
         } catch (refreshError) {
-          // لو فشل الـ Refresh أيضاً (مثلاً انتهت الـ 14 يوم)، سجل خروج المستخدم إجبارياً
-          localStorage.removeItem("refresh_token");
-          localStorage.removeItem("user");
-          window.location.href = "/login/pharmacist";
+          isRefreshing = false;
+          processQueue(refreshError, null);
+          handleForcedLogout();
           return Promise.reject(refreshError);
         }
+      } else {
+        handleForcedLogout();
       }
     }
     return Promise.reject(error);
   }
 );
+
+// دالة تنظيف الجلسة والتحويل الإجباري في حال تلف التوكنات
+function handleForcedLogout() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("user");
+  localStorage.removeItem("pharmacy");
+  sessionStorage.clear();
+  window.__ACCESS_TOKEN__ = null;
+  
+  if (window.location.pathname !== "/login/pharmacist") {
+    window.location.href = "/login/pharmacist";
+  }
+}
+
 declare global {
   interface Window {
     __ACCESS_TOKEN__?: string | null;
@@ -75,28 +139,25 @@ export const setGlobalAccessToken = (token: string | null) => {
   window.__ACCESS_TOKEN__ = token;
 };
 
-
-
-const  LARAVEL_ERROR_MAP: Record<string, string> ={
+// --- منطق ترجمة الأخطاء من Laravel كما هو ---
+const LARAVEL_ERROR_MAP: Record<string, string> = {
   'the selected email is invalid': 'auth.emailInvalid',
   'invalid email or password': 'auth.invalidCredentials', 
-  'invalidEmail':'auth.emailInvalid',
-  'Too Many Attempts.': 'auth.tooManyAttempts',
-  'Please verify your email first. A new verification link has been sent to your email.': 'auth.emailNotVerified'
-}
+  'invalidemail':'auth.emailInvalid',
+  'too many attempts.': 'auth.tooManyAttempts',
+  'please verify your email first. a new verification link has been sent to your email.': 'auth.emailNotVerified'
+};
 
-function mapRawError(message:string) : string {
-  if(!message) return message;
+function mapRawError(message: string): string {
+  if (!message) return message;
   const cleanMessage = message.trim().toLowerCase().replace(/\.$/, '');
   return LARAVEL_ERROR_MAP[cleanMessage] || message;
 }
 
 export function getErrorMessage(error: unknown, fallbackMessage: string): string {
-
   if (error && typeof error === 'object' && 'isAxiosError' in error) {
     const axiosError = error as AxiosError<any>;
     
-    // network error
     if (axiosError.code === 'ERR_NETWORK') {
       return "common.networkError";
     }
@@ -105,26 +166,19 @@ export function getErrorMessage(error: unknown, fallbackMessage: string): string
       const status = axiosError.response.status;
       const data = axiosError.response.data;
 
-
-      if(status === 400)
-      {
-        if(data?.message === 'This password reset token is invalid.') {
-          return "auth.invalidResetToken";
-        }
+      if (status === 400 && data?.message === 'This password reset token is invalid.') {
+        return "auth.invalidResetToken";
       }
 
-    // too many attempts error
       if (status === 429) {
-         return "auth.tooManyAttempts"; 
+        return "auth.tooManyAttempts"; 
       }
 
-    // form validation errors from laravel
       if (status === 422 && data?.errors) {
         const errors = data.errors;
         if (typeof errors === 'object') {
           const firstErrorKey = Object.keys(errors)[0];
           const rawLaravelMessage = errors[firstErrorKey][0];
-          
           return mapRawError(rawLaravelMessage);
         }
       }
@@ -136,18 +190,14 @@ export function getErrorMessage(error: unknown, fallbackMessage: string): string
         return "auth.invalidCredentials"; 
       }
 
-      if(status === 403) {
-        if(data?.message === 'Please verify your email first. A new verification link has been sent to your email.') {
-          return "auth.emailNotVerified";
-        }
+      if (status === 403 && data?.message?.includes('verify your email')) {
+        return "auth.emailNotVerified";
       }
 
-      // server error 500
       if (status === 500) {
         return "common.serverError";
       }
 
-      // remaining errors
       if (data?.message) {
         return mapRawError(data.message);
       }
@@ -158,10 +208,8 @@ export function getErrorMessage(error: unknown, fallbackMessage: string): string
     return error.message;
   }
 
-
   return fallbackMessage;
 }
 
 export const ensureError = getErrorMessage;
-
 export default api;

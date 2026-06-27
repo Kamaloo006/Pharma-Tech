@@ -1,4 +1,3 @@
-// PublicRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 
@@ -14,11 +13,10 @@ export default function PublicRoute() {
   }
 
   if (isAuthenticated) {
-    return !pharmacy ? (
-      <Navigate to="/complete-setup" replace />
-    ) : (
-      <Navigate to="/dashboard" replace />
-    );
+    if (!pharmacy) {
+      return <Navigate to="/complete-profile" replace />;
+    }
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;
