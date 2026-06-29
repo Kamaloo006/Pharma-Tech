@@ -231,5 +231,33 @@
         "collapseSidebar": "طي الشريط الجانبي",
         "expandSidebar": "توسيع الشريط الجانبي",
         "searchPlaceholder": "ابحث عن أي شيء..."
-    }
+    },
+    "inventory": {
+    "title": "إدارة المستودع",
+    "registered_products": "منتج مسجل",
+    "export_report": "تصدير تقرير",
+    "add_product": "إضافة منتج",
+    "search_placeholder": "ابحث باسم المنتج، الاسم العلمي أو الباركود...",
+    "all_categories": "كل الفئات",
+    "include_deleted": "تضمين المنتجات المحذوفة / المؤرشفة",
+    "no_products": "لم يتم العثور على منتجات تطابق فلاتر البحث الحالية.",
+        "table": {
+            "medicine_name": "اسم الدواء",
+            "category": "الفئة",
+            "stock_level": "مستوى المخزون",
+            "selling_price": "سعر البيع",
+            "nearest_expiry": "أقرب صلاحية",
+            "status": "الحالة"
+        },
+        "stock_status": {
+            "all": "المخزون: الكل",
+            "available": "متوفر",
+            "low": "مخزون منخفض",
+            "out": "نفد من المخزون"
+        },
+        "expiry": {
+            "no_data": "لا يوجد بيانات صلاحية",
+            "days_left": "يوم متبقي"
+        }
+}
 }

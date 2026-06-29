@@ -44,7 +44,9 @@ export default function Inventory() {
       <div className="flex h-[60vh] w-full flex-col items-center justify-center gap-3 text-muted-foreground animate-pulse">
         <Loader2 className="size-7 animate-spin text-primary" />
         <span className="text-xs font-medium">
-          Fetching live inventory from server...
+          {isArabic
+            ? "جاري جلب بيانات المستودع الحية من السيرفر..."
+            : "Fetching live inventory from server..."}
         </span>
       </div>
     );
@@ -54,7 +56,9 @@ export default function Inventory() {
     return (
       <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-8 text-center text-rose-500 max-w-xl mx-auto mt-12">
         <AlertTriangle className="size-8 mx-auto mb-3 opacity-90" />
-        <p className="font-semibold text-sm">Server Connection Error</p>
+        <p className="font-semibold text-sm">
+          {isArabic ? "خطأ في الاتصال بالسيرفر" : "Server Connection Error"}
+        </p>
         <p className="text-xs opacity-80 mt-1.5 font-mono">{errorMessage}</p>
       </div>
     );
@@ -62,14 +66,17 @@ export default function Inventory() {
 
   return (
     <div className="space-y-6" dir={isArabic ? "rtl" : "ltr"}>
+      {/* الهيدر الرئيسي */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-foreground">
-            {t("sidebar.inventory")}
+            {t("inventory.title")}
           </h2>
           <p className="text-xs text-muted-foreground flex items-center gap-2 mt-1">
             <span className="inline-flex size-2 rounded-full bg-emerald-500" />
-            <span>{meta?.total || 0} Products Registered</span>
+            <span>
+              {meta?.total || 0} {t("inventory.registered_products")}
+            </span>
             {isFetching && (
               <Loader2 className="size-3 animate-spin text-primary ml-1" />
             )}
@@ -77,10 +84,10 @@ export default function Inventory() {
         </div>
         <div className="flex items-center gap-2.5">
           <button className="flex h-9 items-center justify-center gap-2 rounded-xl border border-border/80 bg-card px-4 text-xs font-medium hover:bg-muted shadow-sm">
-            Export Report
+            {t("inventory.export_report")}
           </button>
           <button className="flex h-9 items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-medium text-primary-foreground shadow-md hover:opacity-90">
-            <Plus className="size-3.5" /> Add Product
+            <Plus className="size-3.5" /> {t("inventory.add_product")}
           </button>
         </div>
       </div>
@@ -97,7 +104,7 @@ export default function Inventory() {
             />
             <input
               type="text"
-              placeholder="Search by brand name..."
+              placeholder={t("inventory.search_placeholder")}
               {...register("search")}
               onFocus={handleFilterFocus}
               className={cn(
@@ -108,6 +115,7 @@ export default function Inventory() {
           </div>
 
           <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
+            {/* فلتر الفئات */}
             <div className="relative">
               <select
                 {...register("category_id")}
@@ -117,7 +125,7 @@ export default function Inventory() {
                   isArabic ? "pl-8 pr-3" : "pr-8 pl-3",
                 )}
               >
-                <option value="all">All Categories</option>
+                <option value="all">{t("inventory.all_categories")}</option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id.toString()}>
                     {category.name}
@@ -132,6 +140,7 @@ export default function Inventory() {
               />
             </div>
 
+            {/* فلتر حالة المخزون المعرب بالكامل */}
             <div className="relative col-span-2 sm:col-span-1">
               <select
                 {...register("stock_status")}
@@ -141,10 +150,12 @@ export default function Inventory() {
                   isArabic ? "pl-8 pr-3" : "pr-8 pl-3",
                 )}
               >
-                <option value="all">Stock: All</option>
-                <option value="available">Available</option>
-                <option value="low">Low Stock</option>
-                <option value="out">Out of Stock</option>
+                <option value="all">{t("inventory.stock_status.all")}</option>
+                <option value="available">
+                  {t("inventory.stock_status.available")}
+                </option>
+                <option value="low">{t("inventory.stock_status.low")}</option>
+                <option value="out">{t("inventory.stock_status.out")}</option>
               </select>
               <ChevronDown
                 className={cn(
@@ -163,11 +174,12 @@ export default function Inventory() {
               {...register("with_trashed")}
               className="size-3.5 rounded border-border/80 accent-primary text-primary-foreground focus:ring-primary cursor-pointer"
             />
-            <span>Include Deleted / Archived Products</span>
+            <span>{t("inventory.include_deleted")}</span>
           </label>
         </div>
       </div>
 
+      {/* جدول البيانات */}
       <div className="rounded-2xl border border-border/60 bg-card/20 overflow-hidden shadow-sm backdrop-blur-sm">
         <Table>
           <TableHeader className="bg-muted/40">
@@ -178,7 +190,7 @@ export default function Inventory() {
                   isArabic && "text-right",
                 )}
               >
-                MEDICINE NAME
+                {t("inventory.table.medicine_name")}
               </TableHead>
               <TableHead
                 className={cn(
@@ -186,7 +198,7 @@ export default function Inventory() {
                   isArabic && "text-right",
                 )}
               >
-                CATEGORY
+                {t("inventory.table.category")}
               </TableHead>
               <TableHead
                 className={cn(
@@ -194,7 +206,7 @@ export default function Inventory() {
                   isArabic && "text-right",
                 )}
               >
-                STOCK LEVEL
+                {t("inventory.table.stock_level")}
               </TableHead>
               <TableHead
                 className={cn(
@@ -202,7 +214,7 @@ export default function Inventory() {
                   isArabic && "text-right",
                 )}
               >
-                SELLING PRICE
+                {t("inventory.table.selling_price")}
               </TableHead>
               <TableHead
                 className={cn(
@@ -210,7 +222,7 @@ export default function Inventory() {
                   isArabic && "text-right",
                 )}
               >
-                NEAREST EXPIRY
+                {t("inventory.table.nearest_expiry")}
               </TableHead>
               <TableHead
                 className={cn(
@@ -218,7 +230,7 @@ export default function Inventory() {
                   isArabic && "text-right",
                 )}
               >
-                STATUS
+                {t("inventory.table.status")}
               </TableHead>
               <TableHead className="w-10"></TableHead>
             </TableRow>
@@ -226,16 +238,16 @@ export default function Inventory() {
           <TableBody>
             {products.length > 0 ? (
               products.map((med) => {
-                let statusLabel = "AVAILABLE";
+                let statusLabel = t("inventory.stock_status.available");
                 let statusClass =
                   "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
 
                 if (med.stock_status === "out") {
-                  statusLabel = "OUT OF STOCK";
+                  statusLabel = t("inventory.stock_status.out");
                   statusClass =
                     "bg-rose-500/10 text-rose-500 border-rose-500/20";
                 } else if (med.stock_status === "low") {
-                  statusLabel = `LOW STOCK (${med.stock_alert_severity.toUpperCase()})`;
+                  statusLabel = `${t("inventory.stock_status.low")} (${med.stock_alert_severity.toUpperCase()})`;
                   statusClass =
                     med.stock_alert_severity === "high"
                       ? "bg-orange-500/10 text-orange-500 border-orange-500/20 font-bold"
@@ -248,7 +260,7 @@ export default function Inventory() {
                 const isNearExpiry =
                   expiryDate &&
                   expiryDate.getTime() - new Date().getTime() <
-                    1000 * 60 * 60 * 24 * 90; // أقل من 90 يوم
+                    1000 * 60 * 60 * 24 * 90;
 
                 return (
                   <TableRow
@@ -276,27 +288,28 @@ export default function Inventory() {
                         className="rounded-full border border-border/60 bg-background/30 px-2 py-0.5 text-[10px] text-muted-foreground font-medium"
                         title={med.category?.description}
                       >
-                        {med.category?.name || "Uncategorized"}
+                        {med.category?.name ||
+                          (isArabic ? "غير مصنف" : "Uncategorized")}
                       </span>
                     </TableCell>
 
                     <TableCell className="p-3.5">
                       <div className="flex flex-col gap-0.5">
                         <span className="font-semibold text-foreground text-xs">
-                          {med.total_quantity} {med.base_unit}(s)
+                          {med.total_quantity} {med.base_unit}
                         </span>
                         <span className="text-[9px] text-muted-foreground font-mono">
-                          Min Alert: {med.min_stock}
+                          {isArabic ? "حد التنبيه:" : "Min Alert:"}{" "}
+                          {med.min_stock}
                         </span>
                       </div>
                     </TableCell>
 
-                    {/* السعر المالي لبلد الصيدلية */}
                     <TableCell className="p-3.5 font-semibold text-xs text-foreground/90">
-                      {med.selling_price.toLocaleString()} SYP
+                      {med.selling_price.toLocaleString()}{" "}
+                      {isArabic ? "ل.س" : "SYP"}
                     </TableCell>
 
-                    {/* 🟢 الحقل الجديد الحرج: أقرب تاريخ صلاحية */}
                     <TableCell className="p-3.5">
                       {med.nearest_expiry ? (
                         <div
@@ -313,12 +326,11 @@ export default function Inventory() {
                         </div>
                       ) : (
                         <span className="text-[10px] text-muted-foreground/60 italic">
-                          No Expiry Data
+                          {t("inventory.expiry.no_data")}
                         </span>
                       )}
                     </TableCell>
 
-                    {/* حالة المنتج المعتمدة تماماً على السيرفر */}
                     <TableCell className="p-3.5">
                       <span
                         className={cn(
@@ -331,7 +343,6 @@ export default function Inventory() {
                       </span>
                     </TableCell>
 
-                    {/* الأزرار الجانبية */}
                     <TableCell className="p-3.5 text-right">
                       <button className="p-1 text-muted-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity rounded-md hover:bg-muted">
                         <MoreVertical className="size-3.5" />
@@ -346,28 +357,43 @@ export default function Inventory() {
                   colSpan={7}
                   className="p-10 text-center text-xs text-muted-foreground font-medium"
                 >
-                  No products matched your server filter criteria.
+                  {t("inventory.no_products")}
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
 
-        {/* الصفحات */}
+        {/* أزرار التنقل والصفحات */}
         {totalPages > 1 && (
           <div
             className="flex items-center justify-between border-t border-border/60 bg-muted/5 p-3 text-xs"
-            dir="ltr"
+            dir={isArabic ? "rtl" : "ltr"}
           >
             <span className="text-muted-foreground text-[11px]">
-              Showing page{" "}
-              <span className="font-semibold text-foreground">
-                {meta?.current_page}
-              </span>{" "}
-              of{" "}
-              <span className="font-semibold text-foreground">
-                {totalPages}
-              </span>
+              {isArabic ? (
+                <>
+                  عرض الصفحة{" "}
+                  <span className="font-semibold text-foreground">
+                    {meta?.current_page}
+                  </span>{" "}
+                  من{" "}
+                  <span className="font-semibold text-foreground">
+                    {totalPages}
+                  </span>
+                </>
+              ) : (
+                <>
+                  Showing page{" "}
+                  <span className="font-semibold text-foreground">
+                    {meta?.current_page}
+                  </span>{" "}
+                  of{" "}
+                  <span className="font-semibold text-foreground">
+                    {totalPages}
+                  </span>
+                </>
+              )}
             </span>
             <div className="flex items-center gap-1.5">
               <button
