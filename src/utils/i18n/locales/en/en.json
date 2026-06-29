@@ -232,5 +232,33 @@
         "collapseSidebar": "Collapse sidebar",
         "expandSidebar": "Expand sidebar",
         "searchPlaceholder": "Search for anything..."
+    },
+    "inventory": {
+    "title": "Inventory Management",
+    "registered_products": "Products Registered",
+    "export_report": "Export Report",
+    "add_product": "Add Product",
+    "search_placeholder": "Search by brand name, scientific name or barcode...",
+    "all_categories": "All Categories",
+    "include_deleted": "Include Deleted / Archived Products",
+    "no_products": "No products matched your server filter criteria.",
+        "table": {
+            "medicine_name": "MEDICINE NAME",
+            "category": "CATEGORY",
+            "stock_level": "STOCK LEVEL",
+            "selling_price": "SELLING PRICE",
+            "nearest_expiry": "NEAREST EXPIRY",
+            "status": "STATUS"
+        },
+        "stock_status": {
+            "all": "Stock: All",
+            "available": "Available",
+            "low": "Low Stock",
+            "out": "Out of Stock"
+        },
+        "expiry": {
+            "no_data": "No Expiry Data",
+            "days_left": "days left"
+        }
     }
 }
