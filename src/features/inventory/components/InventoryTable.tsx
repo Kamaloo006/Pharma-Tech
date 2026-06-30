@@ -25,6 +25,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface InventoryTableProps {
   products: Product[];
@@ -36,6 +47,7 @@ interface InventoryTableProps {
   handleNextPage: () => void;
   handlePreviousPage: () => void;
   onEdit: (product: Product) => void;
+  onDelete: (product: Product) => void;
 }
 
 export default function InventoryTable({
@@ -48,6 +60,7 @@ export default function InventoryTable({
   handleNextPage,
   handlePreviousPage,
   onEdit,
+  onDelete,
 }: InventoryTableProps) {
   return (
     <div className="rounded-2xl border border-border/60 bg-card/20 overflow-hidden shadow-sm backdrop-blur-sm">
@@ -164,7 +177,6 @@ export default function InventoryTable({
                   <TableCell className="p-3.5">
                     <div className="flex flex-col gap-0.5">
                       <span className="font-semibold text-foreground text-xs">
-                        {/* التعديل هنا: إضافة .name واستخدام التصفح الآمن ؟ */}
                         {med.total_quantity}{" "}
                         {typeof med.base_unit === "object"
                           ? med.base_unit?.name
@@ -230,7 +242,7 @@ export default function InventoryTable({
 
                         <DropdownMenuItem
                           className="cursor-pointer gap-2"
-                          onClick={() => onEdit(med)} // 🟢 استدعاء دالة التعديل وتمرير كائن الـ product الحالي لها
+                          onClick={() => onEdit(med)}
                         >
                           <Pencil className="size-3.5 text-muted-foreground" />
                           <span>تعديل</span>
@@ -238,10 +250,42 @@ export default function InventoryTable({
 
                         <DropdownMenuSeparator />
 
-                        <DropdownMenuItem className="cursor-pointer gap-2 text-destructive focus:text-destructive focus:bg-destructive/10">
-                          <Trash2 className="size-3.5" />
-                          <span>حذف المنتج</span>
-                        </DropdownMenuItem>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <DropdownMenuItem
+                              className="cursor-pointer gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <Trash2 className="size-3.5" />
+                              <span>{t("inventory.delete_modal.delete")}</span>
+                            </DropdownMenuItem>
+                          </AlertDialogTrigger>
+
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                {t("inventory.delete_modal.title")}
+                              </AlertDialogTitle>
+
+                              <AlertDialogDescription>
+                                {t("inventory.delete_modal.description")}
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>
+                                {t("inventory.delete_modal.cancel_btn")}
+                              </AlertDialogCancel>
+
+                              <AlertDialogAction
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                onClick={() => onDelete(med)}
+                              >
+                                {t("inventory.delete_modal.confirm_btn")}
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

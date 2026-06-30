@@ -11,6 +11,8 @@ import AddProductModal from "@/features/inventory/components/AddProductModal";
 import InventoryTable from "@/features/inventory/components/InventoryTable";
 import { useState } from "react";
 import type { Product } from "@/features/inventory/types/Product";
+import { useDeleteProduct } from "@/features/inventory/hooks/UseProducts";
+import { toast } from "sonner";
 
 export default function Inventory() {
   const {
@@ -34,6 +36,8 @@ export default function Inventory() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
+  const { mutate: deleteProduct } = useDeleteProduct();
+
   // open modal for adding new product
   const handleOpenAddModal = () => {
     setSelectedProduct(null);
@@ -44,6 +48,18 @@ export default function Inventory() {
   const handleOpenEditModal = (product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
+  };
+
+  // handle product deletion
+  const handleDeleteProduct = (product: Product) => {
+    deleteProduct(product.id, {
+      onSuccess: () => {
+        toast.success(t("inventory.delete_modal.success"));
+      },
+      onError: () => {
+        toast.error(t("inventory.delete_modal.error"));
+      },
+    });
   };
 
   if (isLoading) {
@@ -200,6 +216,7 @@ export default function Inventory() {
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
         onEdit={handleOpenEditModal}
+        onDelete={handleDeleteProduct}
       />
 
       {/* الـ Modal المشترك */}
