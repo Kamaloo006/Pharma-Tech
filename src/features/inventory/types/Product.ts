@@ -1,3 +1,5 @@
+import z from "zod";
+
 export interface Category {
   id: number;
   name: string;
@@ -10,8 +12,10 @@ export interface Category {
 export interface Product {
   id: number;
   brand_name: string;
+  ar_name:string;
   selling_price: number;
-  base_unit: string;
+  base_unit: string | { id: number; name: string; type: string }; 
+  selling_unit?: string | { id: number; name: string; type: string }; 
   min_stock: number;
   total_quantity: number;
   nearest_expiry: string | null; 
@@ -49,3 +53,34 @@ export interface ProductFilters {
   page: number;
   per_page: number;
 }
+
+export const addProductSchema = z.object({
+  category_id: z.string().min(1, { message: "Category is required" }),
+  barcode: z.string().min(1, { message: "Barcode is required" }).max(255),
+  brand_name: z.string().min(1, { message: "Brand name is required" }).max(255),
+  ar_name: z.string().min(1, { message: "Arabic name is required" }).max(255),
+  scientific_name: z.string().max(255).optional().nullable(),
+  
+  prescription_required: z.boolean().default(false),
+  
+  buying_price: z.coerce
+    .number({ message: "Buying price must be a number" })
+    .min(0, { message: "Buying price must be 0 or greater" }),
+    
+  selling_price: z.coerce
+    .number({ message: "Selling price must be a number" })
+    .min(0, { message: "Selling price must be 0 or greater" }),
+    
+  tax_rate: z.coerce.number().min(0).max(100).default(0),
+  discount_rate: z.coerce.number().min(0).max(100).default(0),
+  min_stock: z.coerce.number().int().min(0).default(10),
+  
+  base_unit: z.string().max(50).optional().nullable(),
+  selling_unit: z.string().max(50).optional().nullable(),
+  units_per_base: z.coerce.number().int().min(1).default(1),
+  allow_partial_selling: z.boolean().default(false),
+  image_path: z.string().max(255).optional().nullable(),
+});
+
+export type AddProductInput = z.input<typeof addProductSchema>;   
+export type AddProductOutput = z.output<typeof addProductSchema>; 

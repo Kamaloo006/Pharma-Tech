@@ -1,24 +1,16 @@
 import {
-  Boxes,
   Search,
   ChevronDown,
-  MoreVertical,
-  ChevronLeft,
-  ChevronRight,
   Plus,
   Loader2,
   AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useInventoryController } from "@/features/inventory/hooks/useInventoryContoller";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import AddProductModal from "@/features/inventory/components/AddProductModal";
+import InventoryTable from "@/features/inventory/components/InventoryTable";
+import { useState } from "react";
+import type { Product } from "@/features/inventory/types/Product";
 
 export default function Inventory() {
   const {
@@ -38,6 +30,21 @@ export default function Inventory() {
     handleNextPage,
     handlePreviousPage,
   } = useInventoryController();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  // open modal for adding new product
+  const handleOpenAddModal = () => {
+    setSelectedProduct(null);
+    setIsModalOpen(true);
+  };
+
+  // open modal for editing product
+  const handleOpenEditModal = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
 
   if (isLoading) {
     return (
@@ -86,7 +93,10 @@ export default function Inventory() {
           <button className="flex h-9 items-center justify-center gap-2 rounded-xl border border-border/80 bg-card px-4 text-xs font-medium hover:bg-muted shadow-sm">
             {t("inventory.export_report")}
           </button>
-          <button className="flex h-9 items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-medium text-primary-foreground shadow-md hover:opacity-90">
+          <button
+            onClick={handleOpenAddModal}
+            className="flex h-9 items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-medium text-primary-foreground shadow-md hover:opacity-90"
+          >
             <Plus className="size-3.5" /> {t("inventory.add_product")}
           </button>
         </div>
@@ -140,7 +150,7 @@ export default function Inventory() {
               />
             </div>
 
-            {/* فلتر حالة المخزون المعرب بالكامل */}
+            {/* فلتر حالة المخزون */}
             <div className="relative col-span-2 sm:col-span-1">
               <select
                 {...register("stock_status")}
@@ -179,249 +189,28 @@ export default function Inventory() {
         </div>
       </div>
 
-      {/* جدول البيانات */}
-      <div className="rounded-2xl border border-border/60 bg-card/20 overflow-hidden shadow-sm backdrop-blur-sm">
-        <Table>
-          <TableHeader className="bg-muted/40">
-            <TableRow>
-              <TableHead
-                className={cn(
-                  "p-3.5 text-xs font-semibold text-muted-foreground/90",
-                  isArabic && "text-right",
-                )}
-              >
-                {t("inventory.table.medicine_name")}
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "p-3.5 text-xs font-semibold text-muted-foreground/90",
-                  isArabic && "text-right",
-                )}
-              >
-                {t("inventory.table.category")}
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "p-3.5 text-xs font-semibold text-muted-foreground/90",
-                  isArabic && "text-right",
-                )}
-              >
-                {t("inventory.table.stock_level")}
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "p-3.5 text-xs font-semibold text-muted-foreground/90",
-                  isArabic && "text-right",
-                )}
-              >
-                {t("inventory.table.selling_price")}
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "p-3.5 text-xs font-semibold text-muted-foreground/90",
-                  isArabic && "text-right",
-                )}
-              >
-                {t("inventory.table.nearest_expiry")}
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "p-3.5 text-xs font-semibold text-muted-foreground/90",
-                  isArabic && "text-right",
-                )}
-              >
-                {t("inventory.table.status")}
-              </TableHead>
-              <TableHead className="w-10"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {products.length > 0 ? (
-              products.map((med) => {
-                let statusLabel = t("inventory.stock_status.available");
-                let statusClass =
-                  "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
+      {/* جدول المنتجات */}
+      <InventoryTable
+        products={products}
+        meta={meta}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        isArabic={isArabic}
+        t={t}
+        handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+        onEdit={handleOpenEditModal}
+      />
 
-                if (med.stock_status === "out") {
-                  statusLabel = t("inventory.stock_status.out");
-                  statusClass =
-                    "bg-rose-500/10 text-rose-500 border-rose-500/20";
-                } else if (med.stock_status === "low") {
-                  statusLabel = `${t("inventory.stock_status.low")} (${med.stock_alert_severity.toUpperCase()})`;
-                  statusClass =
-                    med.stock_alert_severity === "high"
-                      ? "bg-orange-500/10 text-orange-500 border-orange-500/20 font-bold"
-                      : "bg-amber-500/10 text-amber-500 border-amber-500/20";
-                }
-
-                const expiryDate = med.nearest_expiry
-                  ? new Date(med.nearest_expiry)
-                  : null;
-                const isNearExpiry =
-                  expiryDate &&
-                  expiryDate.getTime() - new Date().getTime() <
-                    1000 * 60 * 60 * 24 * 90;
-
-                return (
-                  <TableRow
-                    key={med.id}
-                    className="hover:bg-muted/10 transition-colors group"
-                  >
-                    <TableCell className="p-3.5">
-                      <div className="flex items-center gap-2.5">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-background/50 text-muted-foreground group-hover:border-primary/30 group-hover:text-primary transition-colors">
-                          <Boxes className="size-3.5" />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-foreground text-xs">
-                            {med.brand_name}
-                          </div>
-                          <div className="text-[10px] text-muted-foreground mt-0.5 font-mono">
-                            ID: #{med.id}
-                          </div>
-                        </div>
-                      </div>
-                    </TableCell>
-
-                    <TableCell className="p-3.5">
-                      <span
-                        className="rounded-full border border-border/60 bg-background/30 px-2 py-0.5 text-[10px] text-muted-foreground font-medium"
-                        title={med.category?.description}
-                      >
-                        {med.category?.name ||
-                          (isArabic ? "غير مصنف" : "Uncategorized")}
-                      </span>
-                    </TableCell>
-
-                    <TableCell className="p-3.5">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="font-semibold text-foreground text-xs">
-                          {med.total_quantity} {med.base_unit}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground font-mono">
-                          {isArabic ? "حد التنبيه:" : "Min Alert:"}{" "}
-                          {med.min_stock}
-                        </span>
-                      </div>
-                    </TableCell>
-
-                    <TableCell className="p-3.5 font-semibold text-xs text-foreground/90">
-                      {med.selling_price.toLocaleString()}{" "}
-                      {isArabic ? "ل.س" : "SYP"}
-                    </TableCell>
-
-                    <TableCell className="p-3.5">
-                      {med.nearest_expiry ? (
-                        <div
-                          className={cn(
-                            "flex items-center gap-1.5 text-xs font-mono",
-                            isNearExpiry
-                              ? "text-rose-500 font-bold animate-pulse"
-                              : "text-muted-foreground",
-                          )}
-                        >
-                          <span className="text-[11px]">
-                            {med.nearest_expiry}
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="text-[10px] text-muted-foreground/60 italic">
-                          {t("inventory.expiry.no_data")}
-                        </span>
-                      )}
-                    </TableCell>
-
-                    <TableCell className="p-3.5">
-                      <span
-                        className={cn(
-                          "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-bold text-[9px] tracking-wide",
-                          statusClass,
-                        )}
-                      >
-                        <span className="size-1 rounded-full bg-current" />
-                        {statusLabel}
-                      </span>
-                    </TableCell>
-
-                    <TableCell className="p-3.5 text-right">
-                      <button className="p-1 text-muted-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity rounded-md hover:bg-muted">
-                        <MoreVertical className="size-3.5" />
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={7}
-                  className="p-10 text-center text-xs text-muted-foreground font-medium"
-                >
-                  {t("inventory.no_products")}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-
-        {/* أزرار التنقل والصفحات */}
-        {totalPages > 1 && (
-          <div
-            className="flex items-center justify-between border-t border-border/60 bg-muted/5 p-3 text-xs"
-            dir={isArabic ? "rtl" : "ltr"}
-          >
-            <span className="text-muted-foreground text-[11px]">
-              {isArabic ? (
-                <>
-                  عرض الصفحة{" "}
-                  <span className="font-semibold text-foreground">
-                    {meta?.current_page}
-                  </span>{" "}
-                  من{" "}
-                  <span className="font-semibold text-foreground">
-                    {totalPages}
-                  </span>
-                </>
-              ) : (
-                <>
-                  Showing page{" "}
-                  <span className="font-semibold text-foreground">
-                    {meta?.current_page}
-                  </span>{" "}
-                  of{" "}
-                  <span className="font-semibold text-foreground">
-                    {totalPages}
-                  </span>
-                </>
-              )}
-            </span>
-            <div className="flex items-center gap-1.5">
-              <button
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1}
-                className="p-1.5 rounded-lg border border-border bg-background hover:bg-muted disabled:opacity-40 shadow-sm cursor-pointer"
-              >
-                {isArabic ? (
-                  <ChevronRight className="size-3.5" />
-                ) : (
-                  <ChevronLeft className="size-3.5" />
-                )}
-              </button>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-                className="p-1.5 rounded-lg border border-border bg-background hover:bg-muted disabled:opacity-40 shadow-sm cursor-pointer"
-              >
-                {isArabic ? (
-                  <ChevronLeft className="size-3.5" />
-                ) : (
-                  <ChevronRight className="size-3.5" />
-                )}
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+      {/* الـ Modal المشترك */}
+      <AddProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        categories={categories}
+        t={t}
+        isArabic={isArabic}
+        productToEdit={selectedProduct}
+      />
     </div>
   );
 }

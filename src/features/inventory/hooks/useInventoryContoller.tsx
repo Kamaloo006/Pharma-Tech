@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
+import { useCategories } from "./UseCategories";
 import { useInventoryFilters } from "./useInventoryFilters";
-import { useCategories } from "@/features/inventory/hooks/UseCategories";
-import { useProducts, usePrefetchProducts } from "./UseProducts";
+import { usePrefetchProducts, useProducts } from "./UseProducts";
 
 export const useInventoryController = () => {
   const { t, i18n } = useTranslation();
@@ -19,10 +19,16 @@ export const useInventoryController = () => {
     withTrashedFilter,
   } = useInventoryFilters();
 
-  const { data: categoriesData } = useCategories();
-  const categories = categoriesData?.data || [];
+  const { data: categoriesResponse } = useCategories();
+  const categories = categoriesResponse?.data || [];
 
-  const { data, isLoading, isError, error, isFetching } = useProducts({
+  const {
+    data: ProductResponse,
+    isLoading,
+    isError,
+    error,
+    isFetching,
+  } = useProducts({
     search: debouncedSearch,
     category_id: selectedCategory,
     prescription_required: prescriptionFilter,
@@ -32,8 +38,8 @@ export const useInventoryController = () => {
     per_page: itemsPerPage,
   });
 
-  const products = data?.data || [];
-  const meta = data?.meta;
+  const products = ProductResponse?.data || [];
+  const meta = ProductResponse?.meta;
   const totalPages = meta?.last_page || 1;
   const prefetchProducts = usePrefetchProducts();
 

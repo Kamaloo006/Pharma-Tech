@@ -1,11 +1,11 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";  
-import type { ProductFilters, ProductsResponse } from "../types/Product";
+import type { AddProductInput, ProductFilters, ProductsResponse } from "../types/Product";
 
 
 
 export const getProducts = async (filters: ProductFilters): Promise<ProductsResponse> => {
-  const params: Record<string, any> = {
+  const params: Record<string, number | string> = {
     page: filters.page,
     per_page: filters.per_page,
   };
@@ -23,6 +23,7 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
   if (filters.with_trashed) params.with_trashed = 1;
 
   const { data } = await api.get<ProductsResponse>("/products", { params });
+  console.log(data)
   return data;
 };
 
@@ -44,4 +45,34 @@ export const usePrefetchProducts = () => {
       staleTime: 1000 * 30,
     });
   };
+};
+
+export const createProduct = async (payload: AddProductInput) => {
+  const { data } = await api.post("/products", payload);
+  return data.data;
+};
+
+export const useCreateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+};
+
+export const updateProduct = async ({ id, payload }: { id: number; payload: AddProductInput }) => {
+  const { data } = await api.put(`/products/${id}`, payload);
+  return data.data;
+};
+
+export const useUpdateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
 };
