@@ -242,13 +242,17 @@
     "all_categories": "All Categories",
     "include_deleted": "Include Deleted / Archived Products",
     "no_products": "No products matched your server filter criteria.",
+    "select_company": "Select a company",
+    "company": "Product Company",
+    "all_companies": "All Companies",
         "table": {
             "medicine_name": "MEDICINE NAME",
             "category": "CATEGORY",
             "stock_level": "STOCK LEVEL",
             "selling_price": "SELLING PRICE",
             "nearest_expiry": "NEAREST EXPIRY",
-            "status": "STATUS"
+            "status": "STATUS",
+            "company":"COMPANY"
         },
         "stock_status": {
             "all": "Stock: All",

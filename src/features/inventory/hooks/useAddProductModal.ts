@@ -52,6 +52,13 @@ export function useAddProductModal({ isOpen, onClose, productToEdit }: UseAddPro
             : fullProduct.category?.id
               ? String(fullProduct.category.id)
               : "",
+
+          company_id: fullProduct.company_id
+        ? String(fullProduct.company_id)
+        : fullProduct.company?.id
+            ? String(fullProduct.company.id)
+            : "",
+
           buying_price: Number(fullProduct.buying_price) || 0, 
           selling_price: Number(fullProduct.selling_price) || 0,
           min_stock: Number(fullProduct.min_stock) || 0,
@@ -70,6 +77,7 @@ export function useAddProductModal({ isOpen, onClose, productToEdit }: UseAddPro
           scientific_name: "",
           barcode: "",
           category_id: "",
+          company_id: "",
           buying_price: 0,
           selling_price: 0,
           min_stock: 10,

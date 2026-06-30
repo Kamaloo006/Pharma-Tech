@@ -9,6 +9,7 @@ const filterSchema = z.object({
   prescription_required: z.string().default("all"),
   stock_status: z.enum(["all", "available", "low", "out"]).default("all"), 
   with_trashed: z.boolean().default(false),
+  company_id: z.string().default("all"),
 });
 
 type InventoryFilterInput = z.input<typeof filterSchema>;
@@ -27,14 +28,16 @@ export const useInventoryFilters = () => {
       prescription_required: "all",
       stock_status: "all",
       with_trashed: false,
+      company_id:"all",
     },
   });
 
   const searchValues = watch("search") ?? "";
   const selectedCategory = watch("category_id") ?? "all";
   const prescriptionFilter = watch("prescription_required") ?? "all";
-const stockStatusFilter = watch("stock_status") ?? "all";
+  const stockStatusFilter = watch("stock_status") ?? "all";
   const withTrashedFilter = watch("with_trashed") ?? false;
+  const selectedCompany = watch("company_id") ?? "all";
 
   // the first useEffect for the debounced search
   useEffect(() => {
@@ -49,7 +52,7 @@ const stockStatusFilter = watch("stock_status") ?? "all";
   // Reset pagination when any filter changes 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, prescriptionFilter, stockStatusFilter, withTrashedFilter]);
+  }, [selectedCategory, prescriptionFilter, stockStatusFilter, withTrashedFilter, selectedCompany]);
 
   return {
     register,
@@ -61,5 +64,6 @@ const stockStatusFilter = watch("stock_status") ?? "all";
     prescriptionFilter,
     stockStatusFilter,
     withTrashedFilter,
+    selectedCompany
   };
 };

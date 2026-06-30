@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useCategories } from "./UseCategories";
 import { useInventoryFilters } from "./useInventoryFilters";
 import { usePrefetchProducts, useProducts } from "./UseProducts";
+import { useCompanies } from "./useCompanies";
 
 export const useInventoryController = () => {
   const { t, i18n } = useTranslation();
@@ -14,11 +15,13 @@ export const useInventoryController = () => {
     setCurrentPage,
     itemsPerPage,
     selectedCategory,
+    selectedCompany,
     prescriptionFilter,
     stockStatusFilter,
     withTrashedFilter,
   } = useInventoryFilters();
 
+  const { data: companies = [] } = useCompanies();
   const { data: categoriesResponse } = useCategories();
   const categories = categoriesResponse?.data || [];
 
@@ -31,6 +34,7 @@ export const useInventoryController = () => {
   } = useProducts({
     search: debouncedSearch,
     category_id: selectedCategory,
+    company_id: selectedCompany,
     prescription_required: prescriptionFilter,
     stock_status: stockStatusFilter,
     with_trashed: withTrashedFilter,
@@ -47,6 +51,7 @@ export const useInventoryController = () => {
     prefetchProducts({
       search: debouncedSearch,
       category_id: selectedCategory,
+      company_id: selectedCompany,
       prescription_required: prescriptionFilter,
       stock_status: stockStatusFilter,
       with_trashed: withTrashedFilter,
@@ -64,6 +69,7 @@ export const useInventoryController = () => {
     isArabic,
     register,
     categories,
+    companies,
     products,
     meta,
     currentPage,
