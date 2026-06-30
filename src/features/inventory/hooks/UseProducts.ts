@@ -4,6 +4,7 @@ import type { AddProductInput, ProductFilters, ProductsResponse } from "../types
 
 
 
+
 export const getProducts = async (filters: ProductFilters): Promise<ProductsResponse> => {
   const params: Record<string, number | string> = {
     page: filters.page,
@@ -23,7 +24,7 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
   if (filters.with_trashed) params.with_trashed = 1;
 
   const { data } = await api.get<ProductsResponse>("/products", { params });
-  console.log(data)
+  // console.log(data)
   return data;
 };
 
@@ -74,5 +75,26 @@ export const useUpdateProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+  });
+};
+
+export const deleteProduct = async (id: number) => {
+  const response = await api.delete(`/products/${id}`);
+
+  return response.data;
+};
+
+export const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteProduct,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["products"],
+      });
+},
+
   });
 };
