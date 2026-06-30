@@ -259,6 +259,37 @@
         "expiry": {
             "no_data": "No Expiry Data",
             "days_left": "days left"
+        },
+        "add_modal": {
+            "title": "Add New Product",
+            "description": "Enter the details of the new pharmaceutical medicine to register it in the inventory.",
+            "submit": "Save Product",
+            "canceling": "Cancel",
+            "saving": "Saving Product..."
+        },
+        "edit_modal": {
+            "title": "Edit Product Details",
+            "description": "Update the details of the selected pharmaceutical product here, then save.",
+            "submit_btn": "Save Changes"
+        },
+        "fields": {
+            "brand_name": "Brand Name",
+            "ar_name": "Brand Name (AR)",
+            "scientific_name": "Scientific Name (Optional)",
+            "barcode": "Barcode / SKU",
+            "category": "Product Category",
+            "select_category": "Select a category",
+            "buying_price": "Buying Price",
+            "selling_price": "Selling Price",
+            "min_stock": "Min Alert Stock",
+            "tax_rate": "Tax Rate (%)",
+            "discount_rate": "Discount Rate (%)",
+            "base_unit": "Base Unit (e.g., Box)",
+            "selling_unit": "Selling Unit (e.g., Tablet)",
+            "units_per_base": "Units Per Base",
+            "prescription": "Prescription Required",
+            "partial_selling": "Allow Partial Selling (Break Pack)"
         }
+        
     }
 }
