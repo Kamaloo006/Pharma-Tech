@@ -20,6 +20,7 @@ export default function Inventory() {
     isArabic,
     register,
     categories,
+    companies,
     products,
     meta,
     currentPage,
@@ -166,6 +167,30 @@ export default function Inventory() {
               />
             </div>
 
+            <div className="relative">
+              <select
+                {...register("company_id")}
+                onFocus={handleFilterFocus}
+                className={cn(
+                  "h-9 w-full appearance-none rounded-xl border border-border/80 bg-background/50 text-xs focus:outline-none min-w-40 capitalize cursor-pointer",
+                  isArabic ? "pl-8 pr-3" : "pr-8 pl-3",
+                )}
+              >
+                <option value="all">{t("inventory.all_companies")}</option>
+                {companies.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className={cn(
+                  "absolute top-1/2 size-3 -translate-y-1/2 pointer-events-none text-muted-foreground/80",
+                  isArabic ? "left-2.5" : "right-2.5",
+                )}
+              />
+            </div>
+
             {/* فلتر حالة المخزون */}
             <div className="relative col-span-2 sm:col-span-1">
               <select
@@ -224,6 +249,7 @@ export default function Inventory() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         categories={categories}
+        companies={companies}
         t={t}
         isArabic={isArabic}
         productToEdit={selectedProduct}

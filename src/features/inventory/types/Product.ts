@@ -17,6 +17,10 @@ export interface Product {
   base_unit: string | { id: number; name: string; type: string }; 
   selling_unit?: string | { id: number; name: string; type: string }; 
   min_stock: number;
+  company:{
+    id: number;
+    name: string;
+  }
   total_quantity: number;
   nearest_expiry: string | null; 
   stock_status: "available" | "low" | "out";
@@ -52,6 +56,7 @@ export interface ProductFilters {
   with_trashed?: boolean;
   page: number;
   per_page: number;
+  company_id?: string;
 }
 
 export const addProductSchema = z.object({
@@ -61,6 +66,10 @@ export const addProductSchema = z.object({
   ar_name: z.string().min(1, { message: "Arabic name is required" }).max(255),
   scientific_name: z.string().max(255).optional().nullable(),
   
+  company_id: z.coerce.number({
+    message: "Company is required",
+}),
+
   prescription_required: z.boolean().default(false),
   
   buying_price: z.coerce

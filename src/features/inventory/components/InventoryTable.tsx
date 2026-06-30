@@ -83,6 +83,16 @@ export default function InventoryTable({
             >
               {t("inventory.table.category")}
             </TableHead>
+
+            <TableHead
+              className={cn(
+                "p-3.5 text-xs font-semibold text-muted-foreground/90",
+                isArabic && "text-right",
+              )}
+            >
+              {t("inventory.table.company")}
+            </TableHead>
+
             <TableHead
               className={cn(
                 "p-3.5 text-xs font-semibold text-muted-foreground/90",
@@ -171,6 +181,11 @@ export default function InventoryTable({
                     <span className="rounded-full border border-border/60 bg-background/30 px-2 py-0.5 text-[10px] text-muted-foreground font-medium">
                       {med.category?.name ||
                         (isArabic ? "غير مصنف" : "Uncategorized")}
+                    </span>
+                  </TableCell>
+                  <TableCell className="p-3.5">
+                    <span className="font-semibold text-foreground text-xs">
+                      {med.company?.name ?? "-"}
                     </span>
                   </TableCell>
 

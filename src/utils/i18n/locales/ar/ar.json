@@ -241,13 +241,17 @@
     "all_categories": "كل الفئات",
     "include_deleted": "تضمين المنتجات المحذوفة / المؤرشفة",
     "no_products": "لم يتم العثور على منتجات تطابق فلاتر البحث الحالية.",
+    "select_company": "اختر الشركة",
+    "company": "شركة المنتج",
+    "all_companies": "كل الشركات",
         "table": {
             "medicine_name": "اسم الدواء",
             "category": "الفئة",
             "stock_level": "مستوى المخزون",
             "selling_price": "سعر البيع",
             "nearest_expiry": "أقرب صلاحية",
-            "status": "الحالة"
+            "status": "الحالة",
+            "company":"شركة المنتج"
         },
         "stock_status": {
             "all": "المخزون: الكل",

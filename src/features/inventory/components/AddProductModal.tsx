@@ -1,5 +1,5 @@
 // AddProductModal.tsx
-import { Loader2 } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { useAddProductModal } from "../hooks/useAddProductModal";
 import {
   Dialog,
@@ -11,6 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { Company } from "../hooks/useCompanies";
+// import type { Product } from "../types/Product";
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -19,12 +21,14 @@ interface AddProductModalProps {
   t: (key: string) => string;
   isArabic: boolean;
   productToEdit?: any;
+  companies: Company[];
 }
 
 export default function AddProductModal({
   isOpen,
   onClose,
   categories,
+  companies,
   t,
   isArabic,
   productToEdit,
@@ -137,8 +141,34 @@ export default function AddProductModal({
               </div>
             </div>
 
-            {/* الفئات والأسعار */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* company */}
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-muted-foreground">
+                  {t("inventory.company")}
+                </label>
+
+                <div className="relative">
+                  <select
+                    {...register("company_id")}
+                    className={cn(
+                      "flex h-9 w-full rounded-xl border border-input bg-background px-3 py-1 text-xs shadow-sm transition-colors focus-visible:outline-none appearance-none",
+                      errors.category_id &&
+                        "border-rose-500 focus:ring-rose-500",
+                    )}
+                  >
+                    <option value="">{t("inventory.select_company")}</option>
+
+                    {companies.map((company) => (
+                      <option key={company.id} value={company.id}>
+                        {company.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* category */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-muted-foreground">
                   {t("inventory.fields.category")} *
@@ -160,7 +190,10 @@ export default function AddProductModal({
                   ))}
                 </select>
               </div>
+            </div>
 
+            {/* والأسعار */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-muted-foreground">
                   {t("inventory.fields.buying_price")} *

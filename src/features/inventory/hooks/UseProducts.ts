@@ -21,10 +21,15 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
     params.stock_status = filters.stock_status; 
   }
 
+  if (filters.company_id && filters.company_id !== "all") {
+    params.company_id = filters.company_id;
+  }
+
   if (filters.with_trashed) params.with_trashed = 1;
 
   const { data } = await api.get<ProductsResponse>("/products", { params });
-  // console.log(data)
+  console.log(filters)
+  console.log(params)
   return data;
 };
 
