@@ -14,8 +14,8 @@ export interface Product {
   brand_name: string;
   ar_name:string;
   selling_price: number;
-  base_unit: string | { id: number; name: string; type: string }; 
-  selling_unit?: string | { id: number; name: string; type: string }; 
+  base_unit: { id: number; name: string; type: string }; 
+  selling_unit?: { id: number; name: string; type: string }; 
   min_stock: number;
   company:{
     id: number;
@@ -84,8 +84,8 @@ export const addProductSchema = z.object({
   discount_rate: z.coerce.number().min(0).max(100).default(0),
   min_stock: z.coerce.number().int().min(0).default(10),
   
-  base_unit: z.string().max(50).optional().nullable(),
-  selling_unit: z.string().max(50).optional().nullable(),
+  base_unit_id: z.coerce.number().nullable().optional(),
+selling_unit_id: z.coerce.number().nullable().optional(),
   units_per_base: z.coerce.number().int().min(1).default(1),
   allow_partial_selling: z.boolean().default(false),
   image_path: z.string().max(255).optional().nullable(),

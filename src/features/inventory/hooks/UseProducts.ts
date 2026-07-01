@@ -28,8 +28,7 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
   if (filters.with_trashed) params.with_trashed = 1;
 
   const { data } = await api.get<ProductsResponse>("/products", { params });
-  console.log(filters)
-  console.log(params)
+  console.log(data)
   return data;
 };
 
@@ -69,16 +68,26 @@ export const useCreateProduct = () => {
 };
 
 export const updateProduct = async ({ id, payload }: { id: number; payload: AddProductInput }) => {
+  console.log(payload);  
   const { data } = await api.put(`/products/${id}`, payload);
+  
   return data.data;
 };
 
 export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["products"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["product-details", variables.id],
+      });
     },
   });
 };

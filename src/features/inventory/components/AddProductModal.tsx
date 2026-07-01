@@ -1,6 +1,7 @@
 // AddProductModal.tsx
-import { ChevronDown, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useAddProductModal } from "../hooks/useAddProductModal";
+import { useUnits } from "../hooks/useUnits"; // استيراد هوك الوحدات الجديد
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Company } from "../hooks/useCompanies";
-// import type { Product } from "../types/Product";
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -41,7 +41,11 @@ export default function AddProductModal({
     isEditMode,
     isPending,
     isLoadingDetails,
+    selectedBaseUnit,
+    filteredSubUnits,
   } = useAddProductModal({ isOpen, onClose, productToEdit });
+
+  const { data: unitsData } = useUnits();
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -271,27 +275,61 @@ export default function AddProductModal({
               </div>
             </div>
 
-            {/* الوحدات الأساسية والمجزأة */}
+            {/* 🟢 الوحدات الأساسية والمجزأة كـ Dropdowns ديناميكية */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* الوحدة الأساسية - (صندوق، علبة، ...) */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-muted-foreground">
                   {t("inventory.fields.base_unit")}
                 </label>
-                <Input
-                  type="text"
-                  {...register("base_unit")}
-                  className="h-9 rounded-xl text-xs"
-                />
+                <select
+                  {...register("base_unit_id")}
+                  className="flex h-9 w-full rounded-xl border border-input bg-background px-3 py-1 text-xs shadow-sm focus-visible:outline-none appearance-none"
+                >
+                  <option value="">
+                    {isArabic
+                      ? "اختر الوحدة الأساسية (مثل: Syringe، Box)"
+                      : "Select base unit"}
+                  </option>
+                  {/* عرض الـ packagingUnits الثابتة */}
+                  {unitsData?.packagingUnits.map((u) => (
+                    <option key={u.id} value={String(u.id)}>
+                      {" "}
+                      {/* 🟢 تحويل الـ value إلى نص ليتطابق مع الـ Form */}
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
               </div>
+
+              {/* الوحدة المجزأة - (حبة، كبسولة، ...) */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-muted-foreground">
                   {t("inventory.fields.selling_unit")}
                 </label>
-                <Input
-                  type="text"
-                  {...register("selling_unit")}
-                  className="h-9 rounded-xl text-xs"
-                />
+                <select
+                  {...register("selling_unit_id")}
+                  disabled={!selectedBaseUnit && !isEditMode} // الحقل مفتوح دائماً بالتعديل طالما توفرت داتا سابقة
+                  className="flex h-9 w-full rounded-xl border border-input bg-background px-3 py-1 text-xs shadow-sm focus-visible:outline-none appearance-none disabled:opacity-60"
+                >
+                  <option value="">
+                    {!selectedBaseUnit && !isEditMode
+                      ? isArabic
+                        ? "يرجى اختيار الوحدة الأساسية أولاً"
+                        : "Please select base unit first"
+                      : isArabic
+                        ? "اختر الوحدة الداخلية المتوافقة"
+                        : "Select compatible sub-unit"}
+                  </option>
+                  {/* استخدام الداتا المفلترة الذكية القادمة من الهوك */}
+                  {filteredSubUnits.map((u) => (
+                    <option key={u.id} value={String(u.id)}>
+                      {" "}
+                      {/* 🟢 تحويل الـ value إلى نص ليتطابق مع الـ Form */}
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
