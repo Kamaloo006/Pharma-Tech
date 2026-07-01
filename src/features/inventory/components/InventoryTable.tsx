@@ -36,6 +36,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Link } from "react-router-dom";
 
 interface InventoryTableProps {
   products: Product[];
@@ -250,10 +251,12 @@ export default function InventoryTable({
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-40">
-                        <DropdownMenuItem className="cursor-pointer gap-2">
-                          <Eye className="size-3.5 text-muted-foreground" />
-                          <span>عرض التفاصيل</span>
-                        </DropdownMenuItem>
+                        <Link to={`/dashboard/product-details/${med.id}`}>
+                          <DropdownMenuItem className="cursor-pointer gap-2">
+                            <Eye className="size-3.5 text-muted-foreground" />
+                            <span>عرض التفاصيل</span>
+                          </DropdownMenuItem>
+                        </Link>
 
                         <DropdownMenuItem
                           className="cursor-pointer gap-2"
