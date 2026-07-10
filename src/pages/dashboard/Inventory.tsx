@@ -13,6 +13,14 @@ import { useState } from "react";
 import type { Product } from "@/features/inventory/types/Product";
 import { useDeleteProduct } from "@/features/inventory/hooks/UseProducts";
 import { toast } from "sonner";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function Inventory() {
   const {
@@ -32,6 +40,8 @@ export default function Inventory() {
     handleFilterFocus,
     handleNextPage,
     handlePreviousPage,
+    resetMoreFilters,
+    applyMoreFilters,
   } = useInventoryController();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,7 +109,7 @@ export default function Inventory() {
           <p className="text-xs text-muted-foreground flex items-center gap-2 mt-1">
             <span className="inline-flex size-2 rounded-full bg-emerald-500" />
             <span>
-              {meta?.total || 0} {t("inventory.registered_products")}
+              {meta?.total || 0} {t("inventory.products")}
             </span>
             {isFetching && (
               <Loader2 className="size-3 animate-spin text-primary ml-1" />
@@ -107,9 +117,6 @@ export default function Inventory() {
           </p>
         </div>
         <div className="flex items-center gap-2.5">
-          <button className="flex h-9 items-center justify-center gap-2 rounded-xl border border-border/80 bg-card px-4 text-xs font-medium hover:bg-muted shadow-sm">
-            {t("inventory.export_report")}
-          </button>
           <button
             onClick={handleOpenAddModal}
             className="flex h-9 items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-medium text-primary-foreground shadow-md hover:opacity-90"
@@ -215,18 +222,188 @@ export default function Inventory() {
                 )}
               />
             </div>
-          </div>
-        </div>
 
-        <div className="flex items-center gap-2 pt-2 border-t border-border/40">
-          <label className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground cursor-pointer select-none hover:text-foreground">
-            <input
-              type="checkbox"
-              {...register("with_trashed")}
-              className="size-3.5 rounded border-border/80 accent-primary text-primary-foreground focus:ring-primary cursor-pointer"
-            />
-            <span>{t("inventory.include_deleted")}</span>
-          </label>
+            <div className="relative col-span-2 sm:col-span-1">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-9 rounded-xl text-xs border-border/80"
+                  >
+                    {t("inventory.more_filters")}
+                  </Button>
+                </PopoverTrigger>
+
+                <PopoverContent
+                  align={isArabic ? "start" : "end"}
+                  className="w-85 rounded-xl p-5 space-y-5 bg-background"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  {/* نطاق السعر */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold">
+                      {t("inventory.price_range")}
+                    </Label>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="number"
+                        placeholder={t("inventory.min_price")}
+                        {...register("min_price")}
+                        className="h-8 text-xs"
+                      />
+
+                      <Input
+                        type="number"
+                        placeholder={t("inventory.max_price")}
+                        {...register("max_price")}
+                        className="h-8 text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  {/* الوصفة الطبية */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold">
+                      {t("inventory.prescription")}
+                    </Label>
+
+                    <select
+                      {...register("prescription_required")}
+                      className="h-9 w-full rounded-lg border bg-background px-3 text-xs"
+                    >
+                      <option value="all">
+                        {t("inventory.prescription_status.all")}
+                      </option>
+                      <option value="true">
+                        {t("inventory.prescription_status.required")}
+                      </option>
+                      <option value="false">
+                        {t("inventory.prescription_status.not_required")}
+                      </option>
+                    </select>
+                  </div>
+
+                  {/* الصلاحية */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold">
+                      {t("inventory.expiry_title")}
+                    </Label>
+
+                    <select
+                      {...register("expiry_filter")}
+                      className="h-9 w-full rounded-lg border bg-background px-3 text-xs"
+                    >
+                      <option value="">
+                        {t("inventory.expiry_options.all")}
+                      </option>
+                      <option value="expired">
+                        {t("inventory.expiry_options.expired")}
+                      </option>
+                      <option value="30days">
+                        {t("inventory.expiry_options.days_30")}
+                      </option>
+                      <option value="60days">
+                        {t("inventory.expiry_options.days_60")}
+                      </option>
+                      <option value="90days">
+                        {t("inventory.expiry_options.days_90")}
+                      </option>
+                      <option value="6months">
+                        {t("inventory.expiry_options.months_6")}
+                      </option>
+                    </select>
+                  </div>
+
+                  {/* الكمية */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold">
+                      {t("inventory.quantity_title")}
+                    </Label>
+
+                    <select
+                      {...register("stock_range")}
+                      className="h-9 w-full rounded-lg border bg-background px-3 text-xs"
+                    >
+                      <option value="">
+                        {t("inventory.quantity_options.all")}
+                      </option>
+                      <option value="out">
+                        {t("inventory.quantity_options.out")}
+                      </option>
+                      <option value="very_low">
+                        {t("inventory.quantity_options.very_low")}
+                      </option>
+                      <option value="low">
+                        {t("inventory.quantity_options.low")}
+                      </option>
+                      <option value="medium">
+                        {t("inventory.quantity_options.medium")}
+                      </option>
+                      <option value="plenty">
+                        {t("inventory.quantity_options.plenty")}
+                      </option>
+                    </select>
+                  </div>
+
+                  {/* الترتيب */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold">
+                      {t("inventory.sort_title")}
+                    </Label>
+
+                    <select
+                      {...register("sort_by")}
+                      className="h-9 w-full rounded-lg border bg-background px-3 text-xs"
+                    >
+                      <option value="">
+                        {t("inventory.sort_options.default")}
+                      </option>
+                      <option value="name_asc">
+                        {t("inventory.sort_options.name_asc")}
+                      </option>
+                      <option value="name_desc">
+                        {t("inventory.sort_options.name_desc")}
+                      </option>
+                      <option value="price_asc">
+                        {t("inventory.sort_options.price_asc")}
+                      </option>
+                      <option value="price_desc">
+                        {t("inventory.sort_options.price_desc")}
+                      </option>
+                      <option value="stock_desc">
+                        {t("inventory.sort_options.stock_desc")}
+                      </option>
+                      <option value="stock_asc">
+                        {t("inventory.sort_options.stock_asc")}
+                      </option>
+                      <option value="expiry_asc">
+                        {t("inventory.sort_options.expiry_asc")}
+                      </option>
+                      <option value="expiry_desc">
+                        {t("inventory.sort_options.expiry_desc")}
+                      </option>
+                    </select>
+                  </div>
+
+                  {/* أزرار الحفظ والإلغاء */}
+                  <div className="flex justify-end gap-2 pt-2">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      type="button"
+                      onClick={resetMoreFilters}
+                    >
+                      {t("inventory.reset_filters")}
+                    </Button>
+                    <Button size="sm" type="button" onClick={applyMoreFilters}>
+                      {t("inventory.apply_filters")}
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+          </div>
         </div>
       </div>
 

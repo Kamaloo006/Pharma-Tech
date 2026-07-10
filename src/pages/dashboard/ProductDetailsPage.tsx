@@ -1,351 +1,348 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
-  Layers,
-  DollarSign,
-  Tag,
-  Building2,
-  AlertCircle,
-  Calendar,
-  FileText,
+  Edit2,
+  Plus,
+  UploadCloud,
+  ShieldCheck,
+  MoreVertical,
+  AlertTriangle,
 } from "lucide-react";
-import api from "@/lib/api";
 
-// واجهات البيانات المتوافقة مع الـ JSON الخاص بك
-interface Unit {
-  id: number;
-  name: string;
-  type: string;
-}
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-interface ProductDetails {
-  id: number;
-  barcode: string;
-  brand_name: string;
-  scientific_name: string | null;
-  ar_name: string;
-  strength: string | null;
-  prescription_required: boolean;
-  buying_price: number;
-  selling_price: number;
-  total_quantity: number;
-  tax_rate: number;
-  discount_rate: number;
-  min_stock: number;
-  max_stock: number | null;
-  units_per_base: number;
-  allow_partial_selling: boolean;
-  nearest_expiry: string | null;
-  shelf: string | null;
-  image_path: string | null;
-  base_unit: Unit | null;
-  selling_unit: Unit | null;
-  category: { id: number; name: string } | null;
-  company: { id: number; name: string; address?: string } | null;
-  medical_info: any | null;
-}
+import AddProductModal from "@/features/inventory/components/AddProductModal";
+import { useProductDetails } from "@/features/inventory/hooks/useProductDetails";
 
 export default function ProductDetailsPage() {
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const isArabic = true;
+
+  // استخراج كافة البيانات والحالات من الـ Hook
   const {
-    data: product,
+    product,
+    batches,
+    categories,
+    companies,
     isLoading,
-    error,
-  } = useQuery<ProductDetails>({
-    queryKey: ["product-details", id],
-    queryFn: async () => {
-      const { data } = await api.get(`/products/${id}`);
-      return data.data;
-    },
-    enabled: !!id,
-  });
+    isError,
+    t,
+    isArabic,
+    isEditModalOpen,
+    setIsEditModalOpen,
+  } = useProductDetails();
+
+  // فحص حالة اقتراب انتهاء الصلاحية
+  const isExpiringSoon = (expiryDate: string | null) => {
+    if (!expiryDate) return false;
+    const expiry = new Date(expiryDate);
+    const sixMonthsFromNow = new Date();
+    sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
+    return expiry <= sixMonthsFromNow;
+  };
 
   if (isLoading) {
     return (
-      <div className="flex h-[60vh] items-center justify-center">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-500 border-t-transparent" />
       </div>
     );
   }
 
-  if (error || !product) {
+  if (isError || !product) {
     return (
-      <div className="flex h-[50vh] flex-col items-center justify-center gap-2 text-muted-foreground">
-        <AlertCircle className="h-8 w-8 text-destructive" />
+      <div className="flex h-[60vh] flex-col items-center justify-center gap-2 bg-background text-muted-foreground">
+        <AlertTriangle className="h-8 w-8 text-destructive" />
         <p>
           {isArabic
-            ? "حدث خطأ أثناء تحميل بيانات المنتج"
-            : "Error loading product details"}
+            ? "عذراً، تعذر العثور على بيانات هذا المنتج"
+            : "Sorry, product details could not be found"}
         </p>
       </div>
     );
   }
 
-  // حساب حالة المخزون ديناميكياً للعرض المرئي مرئياً
+  const isLowStock = product.total_quantity < product.min_stock;
   const isOut = product.total_quantity === 0;
-  const isLow = product.total_quantity < product.min_stock;
 
   return (
     <div
-      className="space-y-6 p-6 max-w-6xl mx-auto"
+      className="min-h-screen bg-background text-foreground p-6 space-y-6"
       dir={isArabic ? "rtl" : "ltr"}
     >
-      {/* الرأس وزر العودة */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b pb-5">
-        <div className="flex items-center gap-3">
+      {/* الرأس (Header Area) */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b border-border pb-6">
+        <div className="flex items-start gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 hover:bg-muted rounded-xl border transition-colors"
+            className="p-2.5 bg-card hover:bg-accent text-muted-foreground hover:text-foreground rounded-xl border border-border transition-colors mt-1"
           >
             <ArrowLeft className={`h-4 w-4 ${isArabic ? "rotate-180" : ""}`} />
           </button>
           <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-xl font-bold tracking-tight text-foreground">
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold tracking-tight text-card-foreground">
                 {isArabic ? product.ar_name : product.brand_name}
               </h1>
-              {product.prescription_required && (
-                <span className="text-[10px] font-medium bg-red-50 text-red-600 px-2 py-0.5 rounded-full border border-red-200">
-                  {isArabic ? "وصفة طبية" : "Rx Required"}
-                </span>
-              )}
+              <span
+                className={`text-[10px] font-bold px-2 py-0.5 rounded-full border tracking-wide uppercase ${
+                  isOut
+                    ? "border-red-500/30 bg-red-500/10 text-red-400"
+                    : isLowStock
+                      ? "border-amber-500/30 bg-amber-500/10 text-amber-400"
+                      : "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
+                }`}
+              >
+                {isOut ? "OUT OF STOCK" : isLowStock ? "LOW STOCK" : "IN STOCK"}
+              </span>
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {product.scientific_name ||
-                (isArabic ? "لا يوجد اسم علمي" : "No scientific name")}
-              {product.strength && ` • ${product.strength}`}
+            <p className="text-xs text-muted-foreground mt-1 font-medium">
+              {product.scientific_name || "—"}{" "}
+              <span className="text-border mx-2">|</span>{" "}
+              {product.company?.name || "—"}
             </p>
           </div>
         </div>
 
-        {/* عرض سريع لحالة المخزون الحالي */}
+        {/* أزرار التحكم العلوية */}
         <div className="flex items-center gap-2">
-          <div
-            className={`flex flex-col items-end px-3 py-1.5 rounded-xl border ${
-              isOut
-                ? "bg-red-50/50 border-red-200 text-red-700"
-                : isLow
-                  ? "bg-amber-50/50 border-amber-200 text-amber-700"
-                  : "bg-green-50/50 border-green-200 text-green-700"
-            }`}
+          <button
+            onClick={() => setIsEditModalOpen(true)}
+            className="flex items-center gap-2 bg-card hover:bg-accent border border-border text-muted-foreground hover:text-foreground text-xs font-semibold px-4 py-2.5 rounded-xl transition-all"
           >
-            <span className="text-[10px] text-muted-foreground font-medium">
-              {isArabic ? "المخزون الحالي" : "Current Stock"}
-            </span>
-            <span className="text-sm font-bold">
-              {product.total_quantity} {product.base_unit?.name}
-            </span>
-          </div>
+            <Edit2 className="h-3.5 w-3.5" />
+            <span>Edit Product</span>
+          </button>
+
+          <button
+            onClick={() => console.log("فتح مودال إضافة شحنة")}
+            className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-zinc-950 text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all"
+          >
+            <Plus className="h-4 w-4" />
+            <span>New Stock</span>
+          </button>
         </div>
       </div>
 
-      {/* شبكة البيانات الأساسية */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {/* الكارت الأول: الأسعار والمخزون */}
-        <div className="rounded-2xl border bg-card p-5 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 border-b pb-3">
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-            <h2 className="text-xs font-bold text-foreground">
-              {isArabic ? "التسعير والحدود المخزنية" : "Pricing & Stock Limits"}
-            </h2>
+      {/* شبكة توزيع العناصر (Grid Layout) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* العمود الأيسر: الصورة والأسعار */}
+        <div className="lg:col-span-4 space-y-4">
+          <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
+            <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+              PRODUCT VISUAL
+            </h3>
+            <div className="border border-dashed border-border hover:border-muted bg-muted/20 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer group transition-colors">
+              <div className="p-3 bg-card group-hover:bg-accent rounded-full border border-border mb-4 transition-colors">
+                <UploadCloud className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
+              </div>
+              <p className="text-xs font-medium text-foreground">
+                Choose a file or drag & drop it here
+              </p>
+              <button className="mt-4 bg-card hover:bg-accent border border-border text-foreground text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors">
+                Browse File
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-0.5">
-              <span className="text-[10px] text-muted-foreground">
-                {isArabic ? "سعر الشراء" : "Buying Price"}
+            <div className="rounded-2xl border border-emerald-500/30 bg-card p-5 space-y-1.5 ring-1 ring-emerald-500/20">
+              <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase block">
+                SELLING PRICE
               </span>
-              <p className="text-sm font-semibold">
-                {product.buying_price.toLocaleString()} s.p
+              <p className="text-2xl font-bold tracking-tight text-emerald-400">
+                {product.selling_price.toLocaleString()}{" "}
+                <span className="text-xs">s.p</span>
               </p>
             </div>
-            <div className="space-y-0.5">
-              <span className="text-[10px] text-muted-foreground">
-                {isArabic ? "سعر البيع" : "Selling Price"}
-              </span>
-              <p className="text-sm font-semibold text-primary">
-                {product.selling_price.toLocaleString()} s.p
-              </p>
-            </div>
-            <div className="space-y-0.5">
-              <span className="text-[10px] text-muted-foreground">
-                {isArabic ? "الحد الأدنى" : "Min Stock"}
-              </span>
-              <p className="text-sm font-medium">{product.min_stock}</p>
-            </div>
-            <div className="space-y-0.5">
-              <span className="text-[10px] text-muted-foreground">
-                {isArabic ? "الحد الأعلى" : "Max Stock"}
-              </span>
-              <p className="text-sm font-medium">{product.max_stock || "—"}</p>
-            </div>
-          </div>
 
-          <div className="border-t pt-3 grid grid-cols-2 gap-2 text-[11px] text-muted-foreground">
-            <div>
-              {isArabic ? "الضرائب:" : "Tax:"}{" "}
-              <span className="font-medium text-foreground">
-                {product.tax_rate}%
+            <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5">
+              <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase block">
+                BUYING PRICE
               </span>
-            </div>
-            <div>
-              {isArabic ? "الخصم المتاح:" : "Discount:"}{" "}
-              <span className="font-medium text-foreground">
-                {product.discount_rate}%
-              </span>
+              <p className="text-2xl font-bold tracking-tight text-foreground">
+                {product.buying_price?.toLocaleString() || 0}{" "}
+                <span className="text-xs">s.p</span>
+              </p>
             </div>
           </div>
         </div>
 
-        {/* الكارت الثاني: التعبئة وتركيبة الوحدات */}
-        <div className="rounded-2xl border bg-card p-5 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 border-b pb-3">
-            <Layers className="h-4 w-4 text-muted-foreground" />
-            <h2 className="text-xs font-bold text-foreground">
-              {isArabic ? "التعبئة والوحدات الداخلية" : "Packaging & Fractions"}
-            </h2>
-          </div>
+        {/* العمود الأيمن: الخصائص وجدول الباتشات */}
+        <div className="lg:col-span-8 space-y-6">
+          <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
+            <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase border-b border-border pb-3">
+              DETAILED PROPERTIES
+            </h3>
 
-          <div className="space-y-3">
-            <div className="flex justify-between items-center bg-muted/50 px-3 py-2 rounded-xl">
-              <span className="text-xs text-muted-foreground">
-                {isArabic ? "الوحدة الأساسية (الغلاف)" : "Base Unit"}
-              </span>
-              <span className="text-xs font-bold text-foreground">
-                {product.base_unit?.name || "—"}
-              </span>
-            </div>
-
-            <div className="flex justify-between items-center bg-muted/50 px-3 py-2 rounded-xl">
-              <span className="text-xs text-muted-foreground">
-                {isArabic ? "الوحدة المجزأة (الداخلية)" : "Selling Unit"}
-              </span>
-              <span className="text-xs font-bold text-foreground">
-                {product.selling_unit?.name || "—"}
-              </span>
-            </div>
-
-            <div className="pt-1 flex flex-col gap-1.5">
-              <div className="text-xs text-muted-foreground">
-                {isArabic ? "معامل التجزئة:" : "Packing Factor:"}
-                <span className="font-bold text-foreground mx-1">
-                  1 {product.base_unit?.name}
-                </span>
-                {isArabic ? "يحتوي على" : "contains"}
-                <span className="font-bold text-primary mx-1">
-                  {product.units_per_base} {product.selling_unit?.name}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 mt-1">
-                <div
-                  className={`h-2 w-2 rounded-full ${product.allow_partial_selling ? "bg-green-500" : "bg-gray-300"}`}
-                />
-                <span className="text-[11px] text-muted-foreground">
-                  {product.allow_partial_selling
-                    ? isArabic
-                      ? "مسموح بيع أجزاء (شرائط/حبوب منفصلة)"
-                      : "Partial selling allowed"
-                    : isArabic
-                      ? "غير مسموح بالتجزئة (بيع العبوة كاملة فقط)"
-                      : "Full pack selling only"}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* الكارت الثالث: التصنيف واللوجستيات */}
-        <div className="rounded-2xl border bg-card p-5 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 border-b pb-3">
-            <Building2 className="h-4 w-4 text-muted-foreground" />
-            <h2 className="text-xs font-bold text-foreground">
-              {isArabic ? "التصنيف وبيانات الشركة" : "Category & Supplier"}
-            </h2>
-          </div>
-
-          <div className="space-y-3.5">
-            <div className="flex items-start gap-2.5">
-              <Tag className="h-3.5 w-3.5 text-muted-foreground mt-0.5" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8">
               <div>
-                <span className="block text-[10px] text-muted-foreground">
-                  {isArabic ? "العائلة الدوائية / الفئة" : "Category"}
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                  Barcode
+                </span>
+                <p className="text-xs font-mono font-bold text-foreground tracking-wider bg-muted px-2 py-1.5 rounded-lg border border-border inline-block">
+                  {product.barcode}
+                </p>
+              </div>
+
+              <div>
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                  Category
                 </span>
                 <p className="text-xs font-semibold text-foreground">
                   {product.category?.name || "—"}
                 </p>
               </div>
-            </div>
 
-            <div className="flex items-start gap-2.5">
-              <Building2 className="h-3.5 w-3.5 text-muted-foreground mt-0.5" />
               <div>
-                <span className="block text-[10px] text-muted-foreground">
-                  {isArabic ? "الشركة المصنعة" : "Manufacturer"}
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                  Current Stock
                 </span>
-                <p className="text-xs font-semibold text-foreground">
-                  {product.company?.name || "—"}
-                </p>
-                {product.company?.address && (
-                  <span className="text-[10px] text-muted-foreground block mt-0.5">
-                    {product.company.address}
+                <div className="flex items-center gap-2.5">
+                  <span className="text-base font-bold text-foreground">
+                    {product.total_quantity.toLocaleString()}{" "}
+                    {product.base_unit?.name || "Units"}
                   </span>
-                )}
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-start gap-2.5 border-t pt-2.5">
-              <Calendar className="h-3.5 w-3.5 text-muted-foreground mt-0.5" />
               <div>
-                <span className="block text-[10px] text-muted-foreground">
-                  {isArabic ? "أقرب تاريخ صلاحية ينتهي" : "Nearest Expiry Date"}
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                  Nearest Expiry
                 </span>
                 <p
-                  className={`text-xs font-semibold ${product.nearest_expiry ? "text-amber-600" : "text-foreground"}`}
+                  className={`text-xs font-semibold ${product.nearest_expiry ? "text-amber-500" : "text-muted-foreground"}`}
                 >
-                  {product.nearest_expiry ||
-                    (isArabic ? "لا يوجد تشغيلات بعد" : "No batches available")}
+                  📅 {product.nearest_expiry || "—"}
+                </p>
+              </div>
+
+              <div>
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                  Minimum Stock Alert
+                </span>
+                <p className="text-xs font-medium text-amber-500">
+                  ⚠️{" "}
+                  <span className="font-bold text-foreground mx-0.5">
+                    {product.min_stock}
+                  </span>{" "}
+                  Units
+                </p>
+              </div>
+
+              <div>
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase block mb-1">
+                  Regulatory Class
+                </span>
+                <p className="text-xs font-semibold text-foreground flex items-center gap-1">
+                  <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                  <span>
+                    {product.prescription_required ? "Rx Required" : "OTC"}
+                  </span>
                 </p>
               </div>
             </div>
           </div>
+
+          {/* إدارة الباتشات الحية */}
+          <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+                BATCH MANAGEMENT
+              </h3>
+              <div className="flex items-center gap-3 text-[11px] font-medium">
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />{" "}
+                  Healthy
+                </div>
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <span className="h-2 w-2 rounded-full bg-amber-500" />{" "}
+                  Expiring Soon
+                </div>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="text-muted-foreground border-b border-border">
+                    <th className="pb-3 font-medium">ID</th>
+                    <th className="pb-3 font-medium">AVAILABLE STOCK</th>
+                    <th className="pb-3 font-medium">EXPIRY DATE</th>
+                    <th className="pb-3 font-medium text-right">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/40">
+                  {batches.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={4}
+                        className="py-4 text-center text-muted-foreground"
+                      >
+                        {isArabic
+                          ? "لا يوجد تشغيلات متاحة حالياً"
+                          : "No active batches available"}
+                      </td>
+                    </tr>
+                  ) : (
+                    batches.map((batch: any) => (
+                      <tr
+                        key={batch.id}
+                        className="text-foreground hover:bg-muted/30 transition-colors"
+                      >
+                        <td className="py-3.5 font-medium">
+                          {batch.batch_number || `Batch-${batch.id}`}
+                        </td>
+                        <td className="py-3.5 text-muted-foreground">
+                          {batch.quantity_on_hand} {product.base_unit?.name}
+                        </td>
+                        <td
+                          className={`py-3.5 font-medium ${isExpiringSoon(batch.expiry_date) ? "text-amber-500" : "text-muted-foreground"}`}
+                        >
+                          {batch.expiry_date || "—"}
+                        </td>
+                        <td className="py-3.5 text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger className="p-1 hover:bg-muted rounded-lg text-muted-foreground transition-colors">
+                              <MoreVertical className="h-3.5 w-3.5" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                              align="end"
+                              className="text-xs"
+                            >
+                              <DropdownMenuItem className="cursor-pointer">
+                                {isArabic ? "تعديل الباتش" : "Edit Batch"}
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <button className="w-full flex items-center justify-center gap-2 border border-dashed border-border hover:border-muted-foreground/40 bg-muted/10 hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-medium py-3 rounded-xl transition-all">
+              <Plus className="h-3.5 w-3.5" />
+              <span>[Add Stock]</span>
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* الـ Barcode والرف السفلي */}
-      <div className="rounded-2xl border bg-muted/30 p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <div className="text-xs text-muted-foreground">
-          {isArabic ? "الباركود الدولي:" : "International Barcode:"}{" "}
-          <span className="font-mono bg-background px-2 py-1 rounded-lg border text-foreground font-semibold mx-1">
-            {product.barcode}
-          </span>
-        </div>
-        <div className="text-xs text-muted-foreground">
-          {isArabic ? "موقع الرف المخزني:" : "Shelf Location:"}{" "}
-          <span className="font-medium text-foreground">
-            {product.shelf || (isArabic ? "غير محدد" : "Not Assigned")}
-          </span>
-        </div>
-      </div>
-
-      {/* كارت المعلومات الطبية الإضافية (يظهر فقط إذا توفرت الداتا) */}
-      {product.medical_info && (
-        <div className="rounded-2xl border bg-card p-5 shadow-sm space-y-3">
-          <div className="flex items-center gap-2 border-b pb-3">
-            <FileText className="h-4 w-4 text-muted-foreground" />
-            <h2 className="text-xs font-bold text-foreground">
-              {isArabic ? "التعليمات والمعلومات الطبية" : "Medical Information"}
-            </h2>
-          </div>
-          <div className="text-xs text-muted-foreground leading-relaxed">
-            {typeof product.medical_info === "object"
-              ? JSON.stringify(product.medical_info)
-              : product.medical_info}
-          </div>
-        </div>
-      )}
+      <AddProductModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        categories={categories}
+        companies={companies}
+        t={t}
+        isArabic={isArabic}
+        productToEdit={product}
+      />
     </div>
   );
 }

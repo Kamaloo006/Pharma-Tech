@@ -244,8 +244,51 @@
     "select_company": "اختر الشركة",
     "company": "شركة المنتج",
     "all_companies": "كل الشركات",
-        "table": {
-            "medicine_name": "اسم الدواء",
+    "products":"منتجات",
+    "more_filters": "المزيد من الفلاتر",
+    "apply_filters": "تطبيق الفلاتر",
+    "reset_filters": "إعادة تعيين",
+    "price_range": "نطاق السعر",
+    "min_price": "الأقل",
+    "max_price": "الأعلى",
+    "prescription": "الوصفة الطبية",
+    "prescription_status": {
+      "all": "الكل",
+      "required": "مطلوبة",
+      "not_required": "غير مطلوبة"
+    },
+    "expiry_title": "تاريخ الصلاحية",
+    "expiry_options": {
+      "all": "الكل",
+      "expired": "منتهي الصلاحية",
+      "days_30": "خلال 30 يوم",
+      "days_60": "خلال 60 يوم",
+      "days_90": "خلال 90 يوم",
+      "months_6": "خلال 6 أشهر"
+    },
+    "quantity_title": "الكمية بالمخزن",
+    "quantity_options": {
+      "all": "الكل",
+      "out": "نافذ من المخزن",
+      "very_low": "1 - 10",
+      "low": "11 - 30",
+      "medium": "31 - 100",
+      "plenty": "+100"
+    },
+    "sort_title": "ترتيب حسب",
+    "sort_options": {
+      "default": "الافتراضي",
+      "name_asc": "الاسم (أ-ي)",
+      "name_desc": "الاسم (ي-أ)",
+      "price_asc": "السعر من الأقل للأعلى ↑",
+      "price_desc": "السعر من الأعلى للأقل ↓",
+      "stock_desc": "الكمية تنازلي ↓",
+      "stock_asc": "الكمية تصاعدي ↑",
+      "expiry_asc": "الأقرب لانتهاء الصلاحية",
+      "expiry_desc": "الأبعد لانتهاء الصلاحية"
+    },
+    "table": {
+        "medicine_name": "اسم الدواء",
             "category": "الفئة",
             "stock_level": "مستوى المخزون",
             "selling_price": "سعر البيع",
@@ -302,5 +345,5 @@
             "prescription": "يتطلب وصفة طبية صرفة",
             "partial_selling": "السماح بالبيع الجزئي (فرط العلبة)"
         }
-}
+    }
 }

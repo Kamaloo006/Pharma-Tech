@@ -234,17 +234,60 @@
         "searchPlaceholder": "Search for anything..."
     },
     "inventory": {
-    "title": "Inventory Management",
-    "registered_products": "Products Registered",
-    "export_report": "Export Report",
-    "add_product": "Add Product",
-    "search_placeholder": "Search by brand name, scientific name or barcode...",
-    "all_categories": "All Categories",
-    "include_deleted": "Include Deleted / Archived Products",
-    "no_products": "No products matched your server filter criteria.",
-    "select_company": "Select a company",
-    "company": "Product Company",
-    "all_companies": "All Companies",
+        "title": "Inventory Management",
+        "registered_products": "Products Registered",
+        "export_report": "Export Report",
+        "add_product": "Add Product",
+        "search_placeholder": "Search by brand name, scientific name or barcode...",
+        "all_categories": "All Categories",
+        "include_deleted": "Include Deleted / Archived Products",
+        "no_products": "No products matched your server filter criteria.",
+        "select_company": "Select a company",
+        "company": "Product Company",
+        "all_companies": "All Companies",
+        "products":"Products",
+        "more_filters": "More Filters",
+        "apply_filters": "Apply Filters",
+        "reset_filters": "Reset Filters",
+        "price_range": "Price Range",
+        "min_price": "Min",
+        "max_price": "Max",
+        "prescription": "Prescription",
+        "prescription_status": {
+            "all": "All",
+            "required": "Required",
+            "not_required": "Not Required"
+            },
+        "expiry_title": "Expiry",
+        "expiry_options": {
+            "all": "All",
+            "expired": "Expired",
+            "days_30": "30 Days",
+            "days_60": "60 Days",
+            "days_90": "90 Days",
+            "months_6": "6 Months"
+        },
+        "quantity_title": "Quantity",
+        "quantity_options": {
+            "all": "All",
+            "out": "Out of Stock",
+            "very_low": "1 - 10",
+            "low": "11 - 30",
+            "medium": "31 - 100",
+            "plenty": "100+"
+        },
+        "sort_title": "Sort By",
+        "sort_options": {
+            "default": "Default",
+            "name_asc": "Name (A-Z)",
+            "name_desc": "Name (Z-A)",
+            "price_asc": "Price ↑",
+            "price_desc": "Price ↓",
+            "stock_desc": "Quantity ↓",
+            "stock_asc": "Quantity ↑",
+            "expiry_asc": "Nearest Expiry",
+            "expiry_desc": "Farthest Expiry"
+        },
         "table": {
             "medicine_name": "MEDICINE NAME",
             "category": "CATEGORY",
@@ -303,6 +346,6 @@
             "prescription": "Prescription Required",
             "partial_selling": "Allow Partial Selling (Break Pack)"
         }
+    }
         
     }
-}

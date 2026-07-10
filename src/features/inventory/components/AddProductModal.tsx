@@ -163,7 +163,7 @@ export default function AddProductModal({
                   >
                     <option value="">{t("inventory.select_company")}</option>
 
-                    {companies.map((company) => (
+                    {(companies || []).map((company) => (
                       <option key={company.id} value={company.id}>
                         {company.name}
                       </option>
@@ -187,7 +187,7 @@ export default function AddProductModal({
                   <option value="">
                     {t("inventory.fields.select_category")}
                   </option>
-                  {categories.map((c) => (
+                  {(categories || []).map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
