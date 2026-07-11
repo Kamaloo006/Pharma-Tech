@@ -9,6 +9,14 @@ export interface Category {
   updated_at: string;
 }
 
+export interface Batch {
+  id: number;
+  batch_number: string;
+  quantity_on_hand: number;
+  expiry_date: string | null;
+  status: string;
+}
+
 export interface Product {
   id: number;
   brand_name: string;
@@ -17,10 +25,13 @@ export interface Product {
   base_unit: { id: number; name: string; type: string }; 
   selling_unit?: { id: number; name: string; type: string }; 
   min_stock: number;
+  prescription_required:boolean;
+  strength:string;
   company:{
     id: number;
     name: string;
   }
+  barcode: string;
   total_quantity: number;
   nearest_expiry: string | null; 
   stock_status: "available" | "low" | "out";
@@ -50,13 +61,30 @@ export interface ProductsResponse {
 
 export interface ProductFilters {
   search?: string;
+
   category_id?: string;
-  prescription_required?: string;
-  stock_status?: "all" | "available" | "low" | "out";
-  with_trashed?: boolean;
-  page: number;
-  per_page: number;
+
   company_id?: string;
+
+  prescription_required?: string;
+
+  stock_status?: "all" | "available" | "low" | "out";
+
+  with_trashed?: boolean;
+
+  min_price?: string;
+
+  max_price?: string;
+
+  expiry_filter?: string;
+
+  stock_range?: string;
+
+  sort_by?: string;
+
+  page: number;
+
+  per_page: number;
 }
 
 export const addProductSchema = z.object({
@@ -85,7 +113,7 @@ export const addProductSchema = z.object({
   min_stock: z.coerce.number().int().min(0).default(10),
   
   base_unit_id: z.coerce.number().nullable().optional(),
-selling_unit_id: z.coerce.number().nullable().optional(),
+  selling_unit_id: z.coerce.number().nullable().optional(),
   units_per_base: z.coerce.number().int().min(1).default(1),
   allow_partial_selling: z.boolean().default(false),
   image_path: z.string().max(255).optional().nullable(),

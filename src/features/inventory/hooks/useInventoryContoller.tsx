@@ -16,14 +16,35 @@ export const useInventoryController = () => {
     itemsPerPage,
     selectedCategory,
     selectedCompany,
-    prescriptionFilter,
     stockStatusFilter,
     withTrashedFilter,
+
+    appliedMoreFilters,
+    applyMoreFilters,
+    resetMoreFilters,
   } = useInventoryFilters();
 
   const { data: companies = [] } = useCompanies();
   const { data: categoriesResponse } = useCategories();
   const categories = categoriesResponse?.data || [];
+
+  const currentFilters = {
+    search: debouncedSearch,
+    category_id: selectedCategory,
+    company_id: selectedCompany,
+    stock_status: stockStatusFilter,
+    with_trashed: withTrashedFilter,
+
+    prescription_required: appliedMoreFilters.prescription_required,
+    min_price: appliedMoreFilters.min_price,
+    max_price: appliedMoreFilters.max_price,
+    expiry_filter: appliedMoreFilters.expiry_filter,
+    stock_range: appliedMoreFilters.stock_range,
+    sort_by: appliedMoreFilters.sort_by,
+
+    page: currentPage,
+    per_page: itemsPerPage,
+  };
 
   const {
     data: ProductResponse,
@@ -31,16 +52,7 @@ export const useInventoryController = () => {
     isError,
     error,
     isFetching,
-  } = useProducts({
-    search: debouncedSearch,
-    category_id: selectedCategory,
-    company_id: selectedCompany,
-    prescription_required: prescriptionFilter,
-    stock_status: stockStatusFilter,
-    with_trashed: withTrashedFilter,
-    page: currentPage,
-    per_page: itemsPerPage,
-  });
+  } = useProducts(currentFilters);
 
   const products = ProductResponse?.data || [];
   const meta = ProductResponse?.meta;
@@ -48,16 +60,7 @@ export const useInventoryController = () => {
   const prefetchProducts = usePrefetchProducts();
 
   const handleFilterFocus = () => {
-    prefetchProducts({
-      search: debouncedSearch,
-      category_id: selectedCategory,
-      company_id: selectedCompany,
-      prescription_required: prescriptionFilter,
-      stock_status: stockStatusFilter,
-      with_trashed: withTrashedFilter,
-      page: currentPage,
-      per_page: itemsPerPage,
-    });
+    prefetchProducts(currentFilters);
   };
 
   const handleNextPage = () =>
@@ -81,5 +84,9 @@ export const useInventoryController = () => {
     handleFilterFocus,
     handleNextPage,
     handlePreviousPage,
+
+    // تصدير الوظائف الجديدة لاستعمالها في الـ UI
+    applyMoreFilters,
+    resetMoreFilters,
   };
 };
