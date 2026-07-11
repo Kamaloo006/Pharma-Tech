@@ -253,6 +253,8 @@
         "min_price": "Min",
         "max_price": "Max",
         "prescription": "Prescription",
+        "showDetails":"Show Details",
+        "manageBatches":"Manage Batches",
         "prescription_status": {
             "all": "All",
             "required": "Required",
@@ -315,7 +317,7 @@
             "saving": "Saving Product..."
         },
         "edit_modal": {
-            "title": "Edit Product Details",
+            "title": "Edit Product",
             "description": "Update the details of the selected pharmaceutical product here, then save.",
             "submit_btn": "Save Changes"
         },

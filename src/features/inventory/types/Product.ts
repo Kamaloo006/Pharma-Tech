@@ -25,10 +25,13 @@ export interface Product {
   base_unit: { id: number; name: string; type: string }; 
   selling_unit?: { id: number; name: string; type: string }; 
   min_stock: number;
+  prescription_required:boolean;
+  strength:string;
   company:{
     id: number;
     name: string;
   }
+  barcode: string;
   total_quantity: number;
   nearest_expiry: string | null; 
   stock_status: "available" | "low" | "out";

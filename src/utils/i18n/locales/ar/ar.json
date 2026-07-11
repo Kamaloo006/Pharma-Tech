@@ -252,6 +252,8 @@
     "min_price": "الأقل",
     "max_price": "الأعلى",
     "prescription": "الوصفة الطبية",
+    "showDetails":"عرض التفاصيل",
+    "manageBatches":"إدارة الدفعات",
     "prescription_status": {
       "all": "الكل",
       "required": "مطلوبة",
@@ -314,7 +316,7 @@
             "saving": "جاري الحفظ..."
         },
         "edit_modal": {
-            "title": "تعديل بيانات المنتج",
+            "title": "تعديل المنتج",
             "description": "قم بتحديث تفاصيل الصنف الطبي المختار هنا، ثم اضغط حفظ.",
             "submit_btn": "حفظ التعديلات"
         },

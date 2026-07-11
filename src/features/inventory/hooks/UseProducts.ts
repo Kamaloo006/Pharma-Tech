@@ -11,7 +11,7 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
     per_page: filters.per_page,
   };
 
-  console.log(filters)
+  // console.log(filters)
 
   if (filters.search) params.search = filters.search;
   if (filters.category_id && filters.category_id !== "all") params.category_id = filters.category_id;
@@ -39,6 +39,7 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
   if (filters.sort_by && filters.sort_by !== "") params.sort_by = filters.sort_by;
 
   const { data } = await api.get<ProductsResponse>("/products", { params });
+  console.log(data)
   return data;
 };
 

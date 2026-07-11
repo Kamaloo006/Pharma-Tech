@@ -6,6 +6,7 @@ import {
   Pencil,
   Trash2,
   Eye,
+  Package,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -132,8 +133,8 @@ export default function InventoryTable({
         <TableBody>
           {products.length > 0 ? (
             products.map((med) => {
-              const displayName =
-                isArabic && med.ar_name ? med.ar_name : med.brand_name;
+              // const displayName =
+              //   isArabic && med.ar_name ? med.ar_name : med.brand_name;
               let statusLabel = t("inventory.stock_status.available");
               let statusClass =
                 "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
@@ -167,47 +168,94 @@ export default function InventoryTable({
                       <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-background/50 text-muted-foreground group-hover:border-primary/30 group-hover:text-primary transition-colors">
                         <Boxes className="size-3.5" />
                       </div>
-                      <div>
+                      <div className="space-y-1">
                         <div className="font-semibold text-foreground text-xs">
-                          {displayName}
+                          {med.brand_name}
                         </div>
-                        <div className="text-[10px] text-muted-foreground mt-0.5 font-mono">
-                          ID: #{med.id}
+
+                        {med.ar_name && (
+                          <div className="text-[10px] text-muted-foreground">
+                            {med.ar_name}
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-1 flex-wrap">
+                          {med.strength && (
+                            <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[9px] text-primary font-medium">
+                              {med.strength}
+                            </span>
+                          )}
+
+                          {med.selling_unit && (
+                            <span className="rounded bg-muted px-1.5 py-0.5 text-[9px]">
+                              {med.selling_unit.name}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
                   </TableCell>
 
                   <TableCell className="p-3.5">
-                    <span className="rounded-full border border-border/60 bg-background/30 px-2 py-0.5 text-[10px] text-muted-foreground font-medium">
-                      {med.category?.name ||
-                        (isArabic ? "غير مصنف" : "Uncategorized")}
+                    <span className="rounded-full border border-border/60 bg-background/30 px-2 py-1 text-[10px] font-medium">
+                      {med.category?.name ?? "-"}
                     </span>
                   </TableCell>
                   <TableCell className="p-3.5">
-                    <span className="font-semibold text-foreground text-xs">
-                      {med.company?.name ?? "-"}
-                    </span>
+                    <div className="space-y-1">
+                      <div className="font-semibold text-xs">
+                        {med.company?.name}
+                      </div>
+
+                      <div className="text-[10px] text-muted-foreground">
+                        {med.base_unit?.name}
+                      </div>
+                    </div>
                   </TableCell>
 
                   <TableCell className="p-3.5">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="font-semibold text-foreground text-xs">
-                        {med.total_quantity}{" "}
-                        {typeof med.base_unit === "object"
-                          ? med.base_unit?.name
-                          : med.base_unit}
-                      </span>
-                      <span className="text-[9px] text-muted-foreground font-mono">
-                        {isArabic ? "حد التنبيه:" : "Min Alert:"}{" "}
-                        {med.min_stock}
-                      </span>
+                    <div className="space-y-1">
+                      <div className="font-semibold text-xs">
+                        {med.total_quantity} {med.base_unit?.name}
+                      </div>
+
+                      <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                        <div
+                          className={cn(
+                            "h-full rounded-full",
+                            med.stock_status === "available"
+                              ? "bg-emerald-500"
+                              : med.stock_status === "low"
+                                ? "bg-amber-500"
+                                : "bg-rose-500",
+                          )}
+                          style={{
+                            width: `${Math.min(
+                              (med.total_quantity /
+                                Math.max(med.min_stock * 2, 1)) *
+                                100,
+                              100,
+                            )}%`,
+                          }}
+                        />
+                      </div>
+
+                      <div className="text-[10px] text-muted-foreground">
+                        Min {med.min_stock}
+                      </div>
                     </div>
                   </TableCell>
 
                   <TableCell className="p-3.5 font-semibold text-xs text-foreground/90">
-                    {med.selling_price.toLocaleString()}{" "}
-                    {isArabic ? "ل.س" : "SYP"}
+                    <div className="space-y-1">
+                      <div className="font-semibold text-xs">
+                        {med.selling_price.toLocaleString()}
+                      </div>
+
+                      <div className="text-[10px] text-muted-foreground">
+                        {isArabic ? "ليرة سورية" : "SYP"}
+                      </div>
+                    </div>
                   </TableCell>
 
                   <TableCell className="p-3.5">
@@ -240,6 +288,12 @@ export default function InventoryTable({
                     >
                       <span className="size-1 rounded-full bg-current" />
                       {statusLabel}
+
+                      {/* {med.stock_alert_severity !== "none" && (
+                        <span className="ml-1 rounded bg-background/70 px-1 py-0.5 text-[8px] uppercase">
+                          {med.stock_alert_severity}
+                        </span>
+                      )} */}
                     </span>
                   </TableCell>
 
@@ -254,7 +308,13 @@ export default function InventoryTable({
                         <Link to={`/dashboard/product-details/${med.id}`}>
                           <DropdownMenuItem className="cursor-pointer gap-2">
                             <Eye className="size-3.5 text-muted-foreground" />
-                            <span>عرض التفاصيل</span>
+                            <span>{t("inventory.showDetails")}</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link to={`/dashboard/products/${med.id}/batches`}>
+                          <DropdownMenuItem className="cursor-pointer gap-2">
+                            <Package className="size-3.5 text-muted-foreground" />
+                            <span>{t("inventory.manageBatches")}</span>
                           </DropdownMenuItem>
                         </Link>
 
@@ -263,7 +323,7 @@ export default function InventoryTable({
                           onClick={() => onEdit(med)}
                         >
                           <Pencil className="size-3.5 text-muted-foreground" />
-                          <span>تعديل</span>
+                          <span>{t("inventory.edit_modal.title")}</span>
                         </DropdownMenuItem>
 
                         <DropdownMenuSeparator />
@@ -313,7 +373,7 @@ export default function InventoryTable({
           ) : (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="p-10 text-center text-xs text-muted-foreground font-medium"
               >
                 {t("inventory.no_products")}
