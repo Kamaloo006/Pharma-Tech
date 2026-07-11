@@ -111,13 +111,16 @@ export const addProductSchema = z.object({
   tax_rate: z.coerce.number().min(0).max(100).default(0),
   discount_rate: z.coerce.number().min(0).max(100).default(0),
   min_stock: z.coerce.number().int().min(0).default(10),
-  
+  strength: z.string().max(50).optional().nullable(), 
   base_unit_id: z.coerce.number().nullable().optional(),
   selling_unit_id: z.coerce.number().nullable().optional(),
   units_per_base: z.coerce.number().int().min(1).default(1),
   allow_partial_selling: z.boolean().default(false),
   image_path: z.string().max(255).optional().nullable(),
-});
+}).refine((data) => data.selling_price >= data.buying_price, {
+    message: "Selling price must be greater than or equal to buying price",
+    path: ["selling_price"], 
+  });
 
 export type AddProductInput = z.input<typeof addProductSchema>;   
 export type AddProductOutput = z.output<typeof addProductSchema>; 
