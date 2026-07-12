@@ -79,7 +79,6 @@ export const useCreateProduct = () => {
 };
 
 export const updateProduct = async ({ id, payload }: { id: number; payload: AddProductInput }) => {
-  console.log(payload);  
   const { data } = await api.put(`/products/${id}`, payload);
   
   return data.data;

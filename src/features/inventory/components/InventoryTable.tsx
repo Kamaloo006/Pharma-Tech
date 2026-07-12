@@ -288,12 +288,6 @@ export default function InventoryTable({
                     >
                       <span className="size-1 rounded-full bg-current" />
                       {statusLabel}
-
-                      {/* {med.stock_alert_severity !== "none" && (
-                        <span className="ml-1 rounded bg-background/70 px-1 py-0.5 text-[8px] uppercase">
-                          {med.stock_alert_severity}
-                        </span>
-                      )} */}
                     </span>
                   </TableCell>
 
