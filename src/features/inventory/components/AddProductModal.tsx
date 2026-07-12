@@ -136,7 +136,6 @@ export default function AddProductModal({
                       />
                     </div>
 
-                    {/* أولاً وثانياً: حقل Strength المضاف تحت الاسم العلمي مباشرة */}
                     <div className="space-y-1.5">
                       <Label className="text-xs font-semibold text-muted-foreground">
                         {isArabic ? "القوة / العيار (Strength)" : "Strength"}
@@ -155,7 +154,6 @@ export default function AddProductModal({
                     </div>
                   </div>
 
-                  {/* حقل الباركود المحدث بزر التوليد التلقائي وفحص التكرار التلقائي */}
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold text-muted-foreground">
                       {t("inventory.fields.barcode")} *
@@ -195,7 +193,6 @@ export default function AddProductModal({
               </Card>
             </div>
 
-            {/* 🟦 Section 2: Classification */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold text-primary uppercase tracking-wider">
                 {isArabic ? "التصنيف" : "Classification"}

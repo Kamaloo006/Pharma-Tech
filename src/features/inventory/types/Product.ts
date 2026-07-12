@@ -9,13 +9,7 @@ export interface Category {
   updated_at: string;
 }
 
-export interface Batch {
-  id: number;
-  batch_number: string;
-  quantity_on_hand: number;
-  expiry_date: string | null;
-  status: string;
-}
+
 
 export interface Product {
   id: number;
@@ -86,6 +80,44 @@ export interface ProductFilters {
 
   per_page: number;
 }
+
+
+
+export interface ProductDetails {
+  id: number;
+  barcode: string;
+  brand_name: string;
+  scientific_name: string;
+  ar_name: string;
+  strength: string;
+  prescription_required: boolean;
+  buying_price: number;
+  selling_price: number;
+  total_quantity: number;
+  tax_rate: number;
+  discount_rate: number;
+  min_stock: number;
+  units_per_base: number;
+  allow_partial_selling: boolean;
+  nearest_expiry: string | null;
+  shelf: string | null;
+  base_unit: { id: number; name: string; type: string } | null;
+  selling_unit: { id: number; name: string; type: string } | null;
+  category: { id: number; name: string; description: string } | null;
+  company: { id: number; name: string; address: string } | null;
+  medical_info: {
+    dosage?: string;
+    contraindications?: string;
+    pregnancy?: string;
+    interactions?: string;
+    side_effects?: string;
+    storage?: string;
+  } | null;
+  created_at: string;
+  updated_at: string;
+}
+
+
 
 export const addProductSchema = z.object({
   category_id: z.string().min(1, { message: "Category is required" }),
