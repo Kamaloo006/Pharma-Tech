@@ -1,6 +1,14 @@
-// components/productDetails/StockMovementsCard.tsx
 import { History, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import { type StockMovement } from "../../types/StockMovement";
+import { useTranslation } from "react-i18next";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface StockMovementsCardProps {
   movements: StockMovement[];
@@ -11,30 +19,32 @@ export default function StockMovementsCard({
   movements,
   isArabic,
 }: StockMovementsCardProps) {
-  // دالة لتنسيق نوع الحركة
+  const { t } = useTranslation();
+
   const getMovementBadge = (type: StockMovement["movement_type"]) => {
-    const config = {
+    const config: Record<string, { label: string; styles: string }> = {
       purchase_in: {
-        label: isArabic ? "شراء (وارد)" : "Purchase In",
+        label: t("inventory.movementsLog.types.purchase_in"),
         styles: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
       },
       sale_out: {
-        label: isArabic ? "بيع (صادر)" : "Sale Out",
+        label: t("inventory.movementsLog.types.sale_out"),
         styles: "bg-red-500/10 text-red-400 border-red-500/20",
       },
       adjustment_in: {
-        label: isArabic ? "تسوية (+) وارد" : "Adjustment In",
+        label: t("inventory.movementsLog.types.adjustment_in"),
         styles: "bg-blue-500/10 text-blue-400 border-blue-500/20",
       },
       adjustment_out: {
-        label: isArabic ? "تسوية (-) صادر" : "Adjustment Out",
+        label: t("inventory.movementsLog.types.adjustment_out"),
         styles: "bg-amber-500/10 text-amber-400 border-amber-500/20",
       },
       expiry_out: {
-        label: isArabic ? "إتلاف منتهي" : "Expiry Out",
+        label: t("inventory.movementsLog.types.expiry_out"),
         styles: "bg-rose-950/40 text-rose-300 border-rose-900/30",
       },
     };
+
     return (
       config[type] || { label: type, styles: "bg-muted text-muted-foreground" }
     );
@@ -45,41 +55,48 @@ export default function StockMovementsCard({
       <div className="flex items-center gap-2 border-b border-border pb-3">
         <History className="h-4 w-4 text-emerald-500" />
         <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          {isArabic ? "سجل حركة المخزون (Log)" : "STOCK MOVEMENTS LOG"}
+          {t("inventory.movementsLog.title")}
         </h3>
       </div>
 
-      <div className="overflow-x-auto">
-        <table
-          className="w-full text-left border-collapse"
-          dir={isArabic ? "rtl" : "ltr"}
-        >
-          <thead>
-            <tr className="border-b border-border/60 text-[10px] uppercase font-bold text-muted-foreground bg-muted/30">
-              <th className="py-2 px-3 text-center">
-                {isArabic ? "التاريخ" : "Date"}
-              </th>
-              <th className="py-2 px-3">{isArabic ? "النوع" : "Type"}</th>
-              <th className="py-2 px-3 text-center">
-                {isArabic ? "الكمية" : "Quantity"}
-              </th>
-              <th className="py-2 px-3">{isArabic ? "التشغيلة" : "Batch"}</th>
-              <th className="py-2 px-3">{isArabic ? "المرجع" : "Reference"}</th>
-              <th className="py-2 px-3">{isArabic ? "بواسطة" : "User"}</th>
-            </tr>
-          </thead>
-          <tbody className="text-xs divide-y divide-border/40">
+      <div
+        className="rounded-xl border border-border/50 overflow-hidden"
+        dir={isArabic ? "rtl" : "ltr"}
+      >
+        <Table>
+          <TableHeader className="bg-muted/30">
+            <TableRow className="text-[10px] uppercase font-bold text-muted-foreground hover:bg-transparent">
+              <TableHead className="text-center">
+                {t("inventory.movementsLog.tableHeaders.date")}
+              </TableHead>
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("inventory.movementsLog.tableHeaders.type")}
+              </TableHead>
+              <TableHead className="text-center">
+                {t("inventory.movementsLog.tableHeaders.quantity")}
+              </TableHead>
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("inventory.movementsLog.tableHeaders.batch")}
+              </TableHead>
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("inventory.movementsLog.tableHeaders.reference")}
+              </TableHead>
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("inventory.movementsLog.tableHeaders.user")}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody className="text-xs">
             {movements.length === 0 ? (
-              <tr>
-                <td
+              <TableRow>
+                <TableCell
                   colSpan={6}
-                  className="text-center py-6 text-muted-foreground italic"
+                  className="text-center h-24 text-muted-foreground italic"
                 >
-                  {isArabic
-                    ? "لا توجد حركات مخزنية مسجلة"
-                    : "No stock movements recorded yet."}
-                </td>
-              </tr>
+                  {t("inventory.movementsLog.noMovements")}
+                </TableCell>
+              </TableRow>
             ) : (
               movements.map((move) => {
                 const badge = getMovementBadge(move.movement_type);
@@ -92,24 +109,33 @@ export default function StockMovementsCard({
                   day: "2-digit",
                 });
 
+                const refTypeLabel = move.reference_type
+                  ? t(
+                      `inventory.movementsLog.references.${move.reference_type}`,
+                      {
+                        defaultValue: move.reference_type.replace("_", " "),
+                      },
+                    )
+                  : "—";
+
                 return (
-                  <tr
+                  <TableRow
                     key={move.id}
-                    className="hover:bg-muted/10 transition-colors"
+                    className="hover:bg-muted/40 transition-colors"
                   >
-                    <td className="py-2.5 px-3 text-center font-mono text-muted-foreground whitespace-nowrap">
+                    <TableCell className="text-center font-mono text-muted-foreground whitespace-nowrap">
                       {formattedDate}
-                    </td>
-                    <td className="py-2.5 px-3">
+                    </TableCell>
+
+                    <TableCell>
                       <span
                         className={`px-2 py-0.5 rounded-md border text-[10px] font-medium ${badge.styles}`}
                       >
                         {badge.label}
                       </span>
-                    </td>
-                    <td
-                      className={`py-2.5 px-3 text-center font-bold font-mono whitespace-nowrap`}
-                    >
+                    </TableCell>
+
+                    <TableCell className="text-center font-bold font-mono whitespace-nowrap">
                       <span className="flex items-center justify-center gap-0.5">
                         {isPositive ? (
                           <ArrowUpRight className="h-3 w-3 text-emerald-400 inline" />
@@ -126,27 +152,28 @@ export default function StockMovementsCard({
                             : move.quantity_change}
                         </span>
                       </span>
-                    </td>
-                    <td className="py-2.5 px-3 font-mono text-foreground font-semibold">
+                    </TableCell>
+
+                    <TableCell className="font-mono text-foreground font-semibold">
                       {move.batch?.batch_number || "—"}
-                    </td>
-                    <td className="py-2.5 px-3 text-muted-foreground font-medium">
-                      <span className="capitalize">
-                        {move.reference_type?.replace("_", " ")}
-                      </span>{" "}
-                      #{move.reference_id}
-                    </td>
-                    <td className="py-2.5 px-3 text-foreground font-medium">
+                    </TableCell>
+
+                    <TableCell className="text-muted-foreground font-medium">
+                      <span className="capitalize">{refTypeLabel}</span> #
+                      {move.reference_id}
+                    </TableCell>
+
+                    <TableCell className="text-foreground font-medium">
                       {move.created_by
                         ? `${move.created_by.first_name} ${move.created_by.last_name}`
                         : "—"}
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 );
               })
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

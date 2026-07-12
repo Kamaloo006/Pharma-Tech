@@ -290,6 +290,140 @@
             "expiry_asc": "Nearest Expiry",
             "expiry_desc": "Farthest Expiry"
         },
+        "productDetails": {
+            "generalInformation": "GENERAL INFORMATION",
+            "availableBatches": "AVAILABLE BATCHES",
+            "batchesLoadError": "Couldn't load stock batches.",
+            "movementLog": "MOVEMENT LOG",
+            "movementsLoadError": "Unable to load stock movement log.",
+            "retry": "Retry"
+        },
+        "productHeader": {
+            "status": {
+                "outOfStock": "Out of stock",
+                "lowStock": "Low Stock",
+                "available": "Available"
+            },
+            "editProduct": "Edit Product",
+            "delete": "Delete",
+            "deleteModal": {
+                "title": "Are you absolutely sure?",
+                "description": "This action cannot be undone. This will permanently delete the product \"{{brand_name}}\" from the system.",
+                "cancel": "Cancel",
+                "deleting": "Deleting...",
+                "confirm": "Delete"
+            }
+        },
+        "medicalInfo": {
+            "title": "MEDICAL INFORMATION",
+            "addBtn": "Add Medical Info",
+            "noData": "No clinical medical information setup for this product yet.",
+            "fields": {
+                "dosage": "Dosage",
+                "contraindications": "Contraindications",
+                "pregnancy": "Pregnancy & Lactation",
+                "storage": "Storage Conditions"
+            }
+        },
+        "productImage": {
+            "title": "PRODUCT IMAGE",
+            "noImage": "No Image",
+            "uploadBtn": "Upload"
+        },
+        "productInfo": {
+        "title": "GENERAL INFORMATION",
+        "labels": {
+            "brandName": "Brand Name",
+            "arabicName": "Arabic Name",
+            "scientificName": "Scientific Name",
+            "strength": "Strength",
+            "barcode": "Barcode",
+            "category": "Category",
+            "company": "Company",
+            "baseUnit": "Base Unit",
+            "sellingUnit": "Selling Unit",
+            "unitsPerBase": "Units / Box",
+            "minStock": "Min Stock",
+            "taxRate": "Tax",
+            "discountRate": "Discount",
+            "prescription": "Prescription",
+            "allowPartialSelling": "Allow Partial Selling"
+      },
+        "values": {
+            "yes": "Yes",
+            "no": "No"
+        }
+        },
+        "inventoryCard": {
+            "title": "INVENTORY STATUS",
+            "current": "Current",
+            "minimum": "Minimum",
+            "statusLabel": "Status:",
+            "status": {
+                "outOfStock": "Out of Stock",
+                "lowStock": "Low Stock Alert",
+                "available": "Available"
+            },
+            "outOfStockWarning": "This product is currently out of stock. You can create a purchase invoice to replenish it, or use manual adjustment for exceptional cases only.",
+            "createInvoice": "Create Purchase Invoice",
+            "manualAdjustment": "Manual Adjustment",
+            "receivePurchase": "Receive New Purchase"
+        },
+        "summaryCards": {
+            "sellingPrice": "SELLING PRICE",
+            "buyingPrice": "BUYING PRICE",
+            "currentStock": "CURRENT STOCK",
+            "nearestExpiry": "NEAREST EXPIRY",
+            "currency": "SYP",
+            "defaultUnit": "Box"
+        },
+        "batchesCard": {
+            "title": "AVAILABLE STOCK BATCHES",
+            "confirmExpired": "Are you sure you want to mark this batch as expired?",
+            "noBatches": "No available batches found.",
+            "currency": "SYP",
+            "tableHeaders": {
+                "batchNo": "Batch No.",
+                "qtyHand": "Qty Hand",
+                "purchase": "Purchase",
+                "selling": "Selling",
+                "expiryDate": "Expiry Date",
+                "status": "Status"
+            },
+            "statusValues": {
+                "active": "Active",
+                "expired": "Expired"
+            },
+            "actions": {
+                "markExpired": "Mark Expired"
+            }
+        },
+
+        "movementsLog": {
+            "title": "STOCK MOVEMENTS LOG",
+            "noMovements": "No stock movements recorded yet.",
+            "tableHeaders": {
+                "date": "Date",
+                "type": "Type",
+                "quantity": "Quantity",
+                "batch": "Batch",
+                "reference": "Reference",
+                "user": "User"
+            },
+            "types": {
+                "purchase_in": "Purchase In",
+                "sale_out": "Sale Out",
+                "adjustment_in": "Adjustment In",
+                "adjustment_out": "Adjustment Out",
+                "expiry_out": "Expiry Out"
+            },
+            "references": {
+                "purchase_item": "Purchase Item",
+                "sale_item": "Sale Item",
+                "stock_adjustment": "Stock Adjustment",
+                "batch_expiry": "Batch Expiry"
+            }
+        },
         "table": {
             "medicine_name": "MEDICINE NAME",
             "category": "CATEGORY",
@@ -349,5 +483,4 @@
             "partial_selling": "Allow Partial Selling (Break Pack)"
         }
     }
-        
     }
