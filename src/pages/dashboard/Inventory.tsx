@@ -430,6 +430,7 @@ export default function Inventory() {
         t={t}
         isArabic={isArabic}
         productToEdit={selectedProduct}
+        onSuccess={() => {}}
       />
     </div>
   );

@@ -13,6 +13,8 @@ import MedicalInformationCard from "@/features/inventory/components/productDetai
 import ProductSummaryCards from "@/features/inventory/components/productDetails/ProductSummaryCards";
 import ProductInformationCard from "@/features/inventory/components/productDetails/ProductInformationCard";
 
+import AddProductModal from "@/features/inventory/components/AddProductModal";
+
 export default function ProductDetailsPage() {
   const {
     product,
@@ -27,7 +29,10 @@ export default function ProductDetailsPage() {
     movementsError,
     refetchMovements,
     isArabic,
+    isEditModalOpen,
+    refetchProduct,
     setIsEditModalOpen,
+    t = (key: string) => key,
   } = useProductDetails();
 
   if (productError) {
@@ -59,7 +64,6 @@ export default function ProductDetailsPage() {
           isOut={isOut}
           isLowStock={isLowStock}
           onEditClick={() => setIsEditModalOpen(true)}
-          onNewStockClick={() => {}}
         />
       ) : null}
 
@@ -150,6 +154,21 @@ export default function ProductDetailsPage() {
           )}
         </div>
       </div>
+
+      {/* 🛠️ تضمين الـ Modal هنا وتمرير الـ Props المطلوبة له */}
+      <AddProductModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        productToEdit={product}
+        categories={product?.category ? [product?.category] : []}
+        companies={product?.company ? [product?.company] : []}
+        isArabic={isArabic}
+        t={t}
+        onSuccess={() => {
+          refetchProduct(); // سيقوم بتحديث البيانات في الخلفية فوراً
+          setIsEditModalOpen(false); // إغلاق المودال
+        }}
+      />
     </div>
   );
 }

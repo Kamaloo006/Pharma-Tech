@@ -19,7 +19,7 @@ export function useProductDetails() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   
-  const productQuery = useQuery<ProductDetails, any>({
+  const {data: ProductData, isLoading, error, refetch:refetchProduct} = useQuery<ProductDetails, any>({
     queryKey: ["product-details", id],
     queryFn: async () => {
       const { data } = await api.get(`/products/${id}`);
@@ -34,7 +34,7 @@ export function useProductDetails() {
   });
 
   
-  const isProductLoaded = !!productQuery.data;
+  const isProductLoaded = !!ProductData;
 
   
   const batchesQuery = useQuery<Batch[], any>({
@@ -58,10 +58,10 @@ export function useProductDetails() {
 
   return {
     id,
-    product: productQuery.data,
-    productLoading: productQuery.isLoading,
-    productError: productQuery.error,
-    
+    product: ProductData,
+    productLoading: isLoading,
+    productError: error,
+    refetchProduct,
     batches: batchesQuery.data || [],
     batchesLoading: batchesQuery.isLoading,
     batchesError: batchesQuery.isError,

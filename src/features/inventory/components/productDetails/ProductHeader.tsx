@@ -1,5 +1,21 @@
-import { ArrowLeft, Edit2, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Edit2, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDeleteProduct } from "../../hooks/UseProducts";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface ProductHeaderProps {
   product: any;
@@ -16,9 +32,24 @@ export default function ProductHeader({
   isOut,
   isLowStock,
   onEditClick,
-  onNewStockClick,
 }: ProductHeaderProps) {
   const navigate = useNavigate();
+  const { mutate: deleteProduct, isPending } = useDeleteProduct();
+  const { t } = useTranslation();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDeleteProduct = () => {
+    deleteProduct(product.id, {
+      onSuccess: () => {
+        toast.success(t("inventory.delete_modal.success"));
+        setIsOpen(false);
+      },
+      onError: () => {
+        toast.error(t("inventory.delete_modal.error"));
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b border-border pb-6">
@@ -36,7 +67,7 @@ export default function ProductHeader({
             </h1>
             <span className="text-lg font-medium text-muted-foreground">/</span>
             <h2 className="text-xl font-semibold text-muted-foreground">
-              {product.ar_name || "أموكسيل 500 مغ"}
+              {product.ar_name}
             </h2>
 
             <span
@@ -50,7 +81,7 @@ export default function ProductHeader({
             >
               {isOut
                 ? isArabic
-                  ? "نافد"
+                  ? "نفد"
                   : "Out of stock"
                 : isLowStock
                   ? isArabic
@@ -81,21 +112,49 @@ export default function ProductHeader({
           <span>{isArabic ? "تعديل المنتج" : "Edit Product"}</span>
         </button>
 
-        <button
-          onClick={onNewStockClick}
-          className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-zinc-950 text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all"
-        >
-          <Plus className="h-4 w-4" />
-          <span>{isArabic ? "مخزون جديد" : "New Stock"}</span>
-        </button>
+        {/* تطبيق الـ Alert Dialog هنا */}
+        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+          <AlertDialogTrigger asChild>
+            <button className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
+              <Trash2 className="h-3.5 w-3.5" />
+              <span>{isArabic ? "حذف" : "Delete"}</span>
+            </button>
+          </AlertDialogTrigger>
 
-        <button
-          onClick={() => console.log("Delete product")}
-          className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all"
-        >
-          <Trash2 className="h-3.5 w-3.5" />
-          <span>{isArabic ? "حذف" : "Delete"}</span>
-        </button>
+          <AlertDialogContent dir={isArabic ? "rtl" : "ltr"}>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {isArabic ? "هل أنت متأكد تماماً؟" : "Are you absolutely sure?"}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                {isArabic
+                  ? `سيتم حذف المنتج "${product.brand_name}" نهائياً من النظام ولا يمكن التراجع عن هذا الإجراء.`
+                  : `This action cannot be undone. This will permanently delete the product "${product.brand_name}" from the system.`}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="gap-2">
+              <AlertDialogCancel className="cursor-pointer">
+                {isArabic ? "إلغاء" : "Cancel"}
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDeleteProduct();
+                }}
+                disabled={isPending}
+                className="bg-primary-600 hover:bg-primary-700 cursor-pointer text-white"
+              >
+                {isPending
+                  ? isArabic
+                    ? "جاري الحذف..."
+                    : "Deleting..."
+                  : isArabic
+                    ? "تأكيد الحذف"
+                    : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

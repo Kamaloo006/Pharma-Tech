@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useCreateProduct, useUpdateProduct } from "../hooks/UseProducts"; 
 import { useUnits } from "../hooks/useUnits"; 
@@ -26,11 +26,14 @@ interface UseAddProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   productToEdit?: Product | null;
+  onSuccess: () => void;
 }
 
-export function useAddProductModal({ isOpen, onClose, productToEdit }: UseAddProductModalProps) {
+export function useAddProductModal({ isOpen, onClose, productToEdit, onSuccess }: UseAddProductModalProps) {
   const isEditMode = !!productToEdit; 
   const [barcodeError, setBarcodeError] = useState<string | null>(null);
+
+  const queryClient = useQueryClient();
 
   const { data: fullProduct, isLoading: isLoadingDetails } = useQuery({
     queryKey: ["product-details", productToEdit?.id],
@@ -200,9 +203,8 @@ export function useAddProductModal({ isOpen, onClose, productToEdit }: UseAddPro
     }
   }, [isOpen, isEditMode, fullProduct, reset]);
 
-  // سابعاً: تجهيز الـ Payload وتطهير الحقول المرسلة (Sanitized Data)
   const onSubmit = (data: AddProductInput) => {
-    if (barcodeError) return; // منع الإرسال إذا كان الباركود مكررًا
+    if (barcodeError) return; 
 
     const sanitizedData = {
       ...data,
@@ -218,8 +220,16 @@ export function useAddProductModal({ isOpen, onClose, productToEdit }: UseAddPro
         { id: productToEdit?.id, payload: sanitizedData as any }, 
         {
           onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: ["product-details", productToEdit?.id]
+            });
+            if (onSuccess) onSuccess();
+            
+            // (اختياري) إذا كانت الصفحة تعتمد أيضاً على كاش عام للمنتجات:
+            queryClient.invalidateQueries({ queryKey: ["products"] });
+
             reset();
-            onClose();
+            onClose(); // إغلاق المودال
           },
           onError: (err: any) => {
             alert(err?.response?.data?.message || "Error updating product");

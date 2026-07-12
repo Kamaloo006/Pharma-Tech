@@ -1,5 +1,7 @@
+import type { ProductDetails } from "../../types/Product";
+
 interface ProductInformationCardProps {
-  product: any;
+  product: ProductDetails;
   isArabic: boolean;
 }
 

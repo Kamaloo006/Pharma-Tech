@@ -26,6 +26,7 @@ interface AddProductModalProps {
   isArabic: boolean;
   productToEdit?: any;
   companies: Company[];
+  onSuccess: () => void;
 }
 
 export default function AddProductModal({
@@ -36,6 +37,7 @@ export default function AddProductModal({
   t,
   isArabic,
   productToEdit,
+  onSuccess,
 }: AddProductModalProps) {
   const {
     register,
@@ -50,7 +52,7 @@ export default function AddProductModal({
     selectedBaseUnit,
     filteredSubUnits,
     control,
-  } = useAddProductModal({ isOpen, onClose, productToEdit });
+  } = useAddProductModal({ isOpen, onClose, productToEdit, onSuccess });
 
   const { data: unitsData } = useUnits();
 
