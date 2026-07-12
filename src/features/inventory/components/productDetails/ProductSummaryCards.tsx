@@ -1,3 +1,6 @@
+// components/productDetails/ProductSummaryCards.tsx
+import { useTranslation } from "react-i18next";
+
 interface ProductSummaryCardsProps {
   product: any;
   isArabic: boolean;
@@ -7,41 +10,56 @@ export default function ProductSummaryCards({
   product,
   isArabic,
 }: ProductSummaryCardsProps) {
+  const { t } = useTranslation();
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div className="rounded-2xl border border-emerald-500/20 bg-card p-5 space-y-1.5 shadow-sm">
+    <div
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
+      {/* Selling Price Card */}
+      <div className="rounded-2xl border border-emerald-500/20 bg-card p-5 space-y-1.5 shadow-sm text-start">
         <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase block">
-          {isArabic ? "سعر المبيع" : "SELLING PRICE"}
+          {t("inventory.summaryCards.sellingPrice")}
         </span>
         <p className="text-2xl font-bold tracking-tight text-emerald-400">
           {product.selling_price?.toLocaleString()}{" "}
-          <span className="text-xs">SYP</span>
+          <span className="text-xs">
+            {t("inventory.summaryCards.currency")}
+          </span>
         </p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5 shadow-sm">
+      {/* Buying Price Card */}
+      <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5 shadow-sm text-start">
         <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase block">
-          {isArabic ? "سعر الشراء" : "BUYING PRICE"}
+          {t("inventory.summaryCards.buyingPrice")}
         </span>
         <p className="text-2xl font-bold tracking-tight text-foreground">
           {(product.buying_price || 0).toLocaleString()}{" "}
-          <span className="text-xs">SYP</span>
+          <span className="text-xs">
+            {t("inventory.summaryCards.currency")}
+          </span>
         </p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5 shadow-sm">
+      {/* Current Stock Card */}
+      <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5 shadow-sm text-start">
         <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase block">
-          {isArabic ? "المخزون الحالي" : "CURRENT STOCK"}
+          {t("inventory.summaryCards.currentStock")}
         </span>
         <p className="text-2xl font-bold tracking-tight text-foreground">
           {product.total_quantity}{" "}
-          <span className="text-xs">{product.base_unit?.name || "Box"}</span>
+          <span className="text-xs">
+            {product.base_unit?.name || t("inventory.summaryCards.defaultUnit")}
+          </span>
         </p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5 shadow-sm">
+      {/* Nearest Expiry Card */}
+      <div className="rounded-2xl border border-border bg-card p-5 space-y-1.5 shadow-sm text-start">
         <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase block">
-          {isArabic ? "أقرب صلاحية" : "NEAREST EXPIRY"}
+          {t("inventory.summaryCards.nearestExpiry")}
         </span>
         <p className="text-2xl font-bold tracking-tight text-amber-500 font-mono">
           {product.nearest_expiry || "—"}

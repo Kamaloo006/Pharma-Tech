@@ -1,6 +1,7 @@
 // components/productDetails/MedicalInformationCard.tsx
 import { File, Plus } from "lucide-react";
 import { type ProductDetails } from "../../types/Product";
+import { useTranslation } from "react-i18next";
 
 interface MedicalInformationCardProps {
   product: ProductDetails;
@@ -9,8 +10,8 @@ interface MedicalInformationCardProps {
 
 export default function MedicalInformationCard({
   product,
-  isArabic,
 }: MedicalInformationCardProps) {
+  const { t } = useTranslation();
   const hasMedicalInfo = product.medical_info !== null;
 
   return (
@@ -18,7 +19,7 @@ export default function MedicalInformationCard({
       <div className="flex items-center justify-between border-b border-border pb-3">
         <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase flex items-center gap-2">
           <File className="h-4 w-4 text-emerald-500" />
-          {isArabic ? "المعلومات الطبية والسريرية" : "MEDICAL INFORMATION"}
+          {t("inventory.medicalInfo.title")}
         </h3>
         {!hasMedicalInfo && (
           <button
@@ -26,7 +27,7 @@ export default function MedicalInformationCard({
             className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 hover:text-emerald-500 transition-colors"
           >
             <Plus className="h-3 w-3" />
-            {isArabic ? "إضافة بيانات طبية" : "Add Medical Info"}
+            {t("inventory.medicalInfo.addBtn")}
           </button>
         )}
       </div>
@@ -34,16 +35,14 @@ export default function MedicalInformationCard({
       {!hasMedicalInfo ? (
         <div className="flex flex-col items-center justify-center py-6 text-center bg-muted/10 rounded-xl border border-dashed border-border/60">
           <p className="text-xs text-muted-foreground max-w-sm leading-relaxed">
-            {isArabic
-              ? "لا توجد معلومات طبية (جرعات، موانع استعمال، تفاعلات) مسجلة لهذا المنتج حالياً."
-              : "No clinical medical information setup for this product yet."}
+            {t("inventory.medicalInfo.noData")}
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/40">
             <span className="font-bold text-muted-foreground">
-              {isArabic ? "الجرعة الدوائية" : "Dosage"}
+              {t("inventory.medicalInfo.fields.dosage")}
             </span>
             <p className="text-foreground">
               {product.medical_info?.dosage || "—"}
@@ -51,7 +50,7 @@ export default function MedicalInformationCard({
           </div>
           <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/40">
             <span className="font-bold text-red-400">
-              {isArabic ? "موانع الاستعمال" : "Contraindications"}
+              {t("inventory.medicalInfo.fields.contraindications")}
             </span>
             <p className="text-foreground">
               {product.medical_info?.contraindications || "—"}
@@ -59,7 +58,7 @@ export default function MedicalInformationCard({
           </div>
           <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/40">
             <span className="font-bold text-amber-500">
-              {isArabic ? "الحمل والرضاعة" : "Pregnancy & Lactation"}
+              {t("inventory.medicalInfo.fields.pregnancy")}
             </span>
             <p className="text-foreground">
               {product.medical_info?.pregnancy || "—"}
@@ -67,7 +66,7 @@ export default function MedicalInformationCard({
           </div>
           <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/40">
             <span className="font-bold text-emerald-400">
-              {isArabic ? "ظروف التخزين" : "Storage Conditions"}
+              {t("inventory.medicalInfo.fields.storage")}
             </span>
             <p className="text-foreground">
               {product.medical_info?.storage || "—"}

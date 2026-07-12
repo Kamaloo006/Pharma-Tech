@@ -233,64 +233,197 @@
         "searchPlaceholder": "ابحث عن أي شيء..."
     },
     "inventory": {
-    "title": "إدارة المستودع",
-    "registered_products": "منتج مسجل",
-    "export_report": "تصدير تقرير",
-    "add_product": "إضافة منتج",
-    "search_placeholder": "ابحث باسم المنتج، الاسم العلمي أو الباركود...",
-    "all_categories": "كل الفئات",
-    "include_deleted": "تضمين المنتجات المحذوفة / المؤرشفة",
-    "no_products": "لم يتم العثور على منتجات تطابق فلاتر البحث الحالية.",
-    "select_company": "اختر الشركة",
-    "company": "شركة المنتج",
-    "all_companies": "كل الشركات",
-    "products":"منتجات",
-    "more_filters": "المزيد من الفلاتر",
-    "apply_filters": "تطبيق الفلاتر",
-    "reset_filters": "إعادة تعيين",
-    "price_range": "نطاق السعر",
-    "min_price": "الأقل",
-    "max_price": "الأعلى",
-    "prescription": "الوصفة الطبية",
-    "showDetails":"عرض التفاصيل",
-    "manageBatches":"إدارة الدفعات",
-    "prescription_status": {
-      "all": "الكل",
-      "required": "مطلوبة",
-      "not_required": "غير مطلوبة"
+        "title": "إدارة المستودع",
+        "registered_products": "منتج مسجل",
+        "export_report": "تصدير تقرير",
+        "add_product": "إضافة منتج",
+        "search_placeholder": "ابحث باسم المنتج، الاسم العلمي أو الباركود...",
+        "all_categories": "كل الفئات",
+        "include_deleted": "تضمين المنتجات المحذوفة / المؤرشفة",
+        "no_products": "لم يتم العثور على منتجات تطابق فلاتر البحث الحالية.",
+        "select_company": "اختر الشركة",
+        "company": "شركة المنتج",
+        "all_companies": "كل الشركات",
+        "products":"منتجات",
+        "more_filters": "المزيد من الفلاتر",
+        "apply_filters": "تطبيق الفلاتر",
+        "reset_filters": "إعادة تعيين",
+        "price_range": "نطاق السعر",
+        "min_price": "الأقل",
+        "max_price": "الأعلى",
+        "prescription": "الوصفة الطبية",
+        "showDetails":"عرض التفاصيل",
+        "manageBatches":"إدارة الدفعات",
+        "prescription_status": {
+            "all": "الكل",
+            "required": "مطلوبة",
+            "not_required": "غير مطلوبة"
+        },
+        "expiry_title": "تاريخ الصلاحية",
+        "expiry_options": {
+            "all": "الكل",
+            "expired": "منتهي الصلاحية",
+            "days_30": "خلال 30 يوم",
+            "days_60": "خلال 60 يوم",
+            "days_90": "خلال 90 يوم",
+            "months_6": "خلال 6 أشهر"
+        },
+        "quantity_title": "الكمية بالمخزن",
+        "quantity_options": {
+            "all": "الكل",
+            "out": "نافذ من المخزن",
+            "very_low": "1 - 10",
+            "low": "11 - 30",
+            "medium": "31 - 100",
+            "plenty": "+100"
+        },
+        "sort_title": "ترتيب حسب",
+        "sort_options": {
+            "default": "الافتراضي",
+            "name_asc": "الاسم (أ-ي)",
+            "name_desc": "الاسم (ي-أ)",
+            "price_asc": "السعر من الأقل للأعلى ↑",
+            "price_desc": "السعر من الأعلى للأقل ↓",
+            "stock_desc": "الكمية تنازلي ↓",
+            "stock_asc": "الكمية تصاعدي ↑",
+            "expiry_asc": "الأقرب لانتهاء الصلاحية",
+            "expiry_desc": "الأبعد لانتهاء الصلاحية"
+        },
+        "productDetails": {
+            "generalInformation": "المعلومات العامة للمنتج",
+            "availableBatches": "التشغيلات المتاحة",
+            "batchesLoadError": "تعذر تحميل التشغيلات المخزنية.",
+            "movementLog": "سجل الحركات",
+            "movementsLoadError": "تعذر تحميل سجل حركات المخزن.",
+            "retry": "إعادة"
+        },
+        "productHeader": {
+            "status": {
+                "outOfStock": "نفد",
+                "lowStock": "مخزون منخفض",
+                "available": "متوفر"
+            },
+            "editProduct": "تعديل المنتج",
+            "delete": "حذف",
+            "deleteModal": {
+                "title": "هل أنت متأكد تماماً؟",
+                "description": "سيتم حذف المنتج \"{{brand_name}}\" نهائياً من النظام ولا يمكن التراجع عن هذا الإجراء.",
+                "cancel": "إلغاء",
+                "deleting": "جاري الحذف...",
+                "confirm": "تأكيد الحذف"
+            }
+        },
+        "medicalInfo": {
+            "title": "المعلومات الطبية والسريرية",
+            "addBtn": "إضافة بيانات طبية",
+            "noData": "لا توجد معلومات طبية (جرعات، موانع استعمال، تفاعلات) مسجلة لهذا المنتج حالياً.",
+            "fields": {
+                "dosage": "الجرعة الدوائية",
+                "contraindications": "موانع الاستعمال",
+                "pregnancy": "الحمل والرضاعة",
+                "storage": "ظروف التخزين"
+            }
+        },
+        "productImage": {
+            "title": "صورة المنتج",
+            "noImage": "لا توجد صورة للمنتج",
+            "uploadBtn": "رفع صورة"
+        },
+        "productInfo": {
+      "title": "المعلومات العامة للمنتج",
+      "labels": {
+        "brandName": "الاسم التجاري",
+        "arabicName": "الاسم العربي",
+        "scientificName": "الاسم العلمي",
+        "strength": "العيار",
+        "barcode": "الباركود",
+        "category": "الفئة الدوائية",
+        "company": "الشركة المصنعة",
+        "baseUnit": "الوحدة الأساسية",
+        "sellingUnit": "وحدة المبيع تجزئة",
+        "unitsPerBase": "عدد الوحدات داخل العبوة",
+        "minStock": "الحد الأدنى للأمان",
+        "taxRate": "النسبة الضريبية",
+        "discountRate": "الخصم المسموح",
+        "prescription": "نوع الوصفة",
+        "allowPartialSelling": "السماح بالبيع الجزئي"
+      },
+      "values": {
+        "yes": "نعم",
+        "no": "لا"
+      }
     },
-    "expiry_title": "تاريخ الصلاحية",
-    "expiry_options": {
-      "all": "الكل",
-      "expired": "منتهي الصلاحية",
-      "days_30": "خلال 30 يوم",
-      "days_60": "خلال 60 يوم",
-      "days_90": "خلال 90 يوم",
-      "months_6": "خلال 6 أشهر"
+    "inventoryCard": {
+      "title": "حالة المخزون المستودعي",
+      "current": "الحالي",
+      "minimum": "الأدنى",
+      "statusLabel": "الحالة الحالية:",
+      "status": {
+        "outOfStock": "نفد المخزون",
+        "lowStock": "مخزون حرج",
+        "available": "مستقر ومتاح"
+      },
+      "outOfStockWarning": "هذا المنتج غير متوفر حالياً. يمكنك إنشاء فاتورة شراء لإعادة تعبئة المخزون، أو استخدام التعديل اليدوي فقط في الحالات الاستثنائية.",
+      "createInvoice": "إنشاء فاتورة شراء",
+      "manualAdjustment": "تعديل يدوي استثنائي",
+      "receivePurchase": "استلام توريد جديد"
     },
-    "quantity_title": "الكمية بالمخزن",
-    "quantity_options": {
-      "all": "الكل",
-      "out": "نافذ من المخزن",
-      "very_low": "1 - 10",
-      "low": "11 - 30",
-      "medium": "31 - 100",
-      "plenty": "+100"
+    "summaryCards": {
+      "sellingPrice": "سعر المبيع",
+      "buyingPrice": "سعر الشراء",
+      "currentStock": "المخزون الحالي",
+      "nearestExpiry": "أقرب صلاحية",
+      "currency": "ل.س",
+      "defaultUnit": "عبوة"
     },
-    "sort_title": "ترتيب حسب",
-    "sort_options": {
-      "default": "الافتراضي",
-      "name_asc": "الاسم (أ-ي)",
-      "name_desc": "الاسم (ي-أ)",
-      "price_asc": "السعر من الأقل للأعلى ↑",
-      "price_desc": "السعر من الأعلى للأقل ↓",
-      "stock_desc": "الكمية تنازلي ↓",
-      "stock_asc": "الكمية تصاعدي ↑",
-      "expiry_asc": "الأقرب لانتهاء الصلاحية",
-      "expiry_desc": "الأبعد لانتهاء الصلاحية"
+    "batchesCard": {
+        "title": "التشغيلات المخزنية المتاحة (Batches)",
+        "confirmExpired": "هل أنت متأكد من تعيين هذه التشغيلة كمنتهية الصلاحية؟",
+        "noBatches": "لا توجد تشغيلات متاحة حالياً",
+        "currency": "ل.س",
+        "tableHeaders": {
+            "batchNo": "رقم التشغيلة",
+            "qtyHand": "الكمية المتاحة",
+            "purchase": "سعر الشراء",
+            "selling": "سعر البيع",
+            "expiryDate": "تاريخ الصلاحية",
+            "status": "الحالة"
+        },
+        "statusValues": {
+            "active": "نشط",
+            "expired": "منتهي"
+        },
+        "actions": {
+            "markExpired": "إدراج كمنتهي"
+        }
     },
-    "table": {
-        "medicine_name": "اسم الدواء",
+    "movementsLog": {
+      "title": "سجل حركة المخزون (Log)",
+      "noMovements": "لا توجد حركات مخزنية مسجلة",
+      "tableHeaders": {
+        "date": "التاريخ",
+        "type": "النوع",
+        "quantity": "الكمية",
+        "batch": "التشغيلة",
+        "reference": "المرجع",
+        "user": "بواسطة"
+      },
+      "types": {
+        "purchase_in": "شراء (وارد)",
+        "sale_out": "بيع (صادر)",
+        "adjustment_in": "تسوية (+) وارد",
+        "adjustment_out": "تسوية (-) صادر",
+        "expiry_out": "إتلاف منتهي"
+      },
+      "references": {
+        "purchase_item": "بند شراء",
+        "sale_item": "بند بيع",
+        "stock_adjustment": "تسوية مخزنية",
+        "batch_expiry": "إتلاف صلاحية"
+      }
+    },
+        "table": {
+            "medicine_name": "اسم الدواء",
             "category": "الفئة",
             "stock_level": "مستوى المخزون",
             "selling_price": "سعر البيع",

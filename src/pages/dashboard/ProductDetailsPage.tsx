@@ -32,7 +32,7 @@ export default function ProductDetailsPage() {
     isEditModalOpen,
     refetchProduct,
     setIsEditModalOpen,
-    t = (key: string) => key,
+    t,
   } = useProductDetails();
 
   if (productError) {
@@ -101,9 +101,7 @@ export default function ProductDetailsPage() {
         <div className="space-y-6 lg:col-span-2">
           {productLoading ? (
             <TableCardSkeleton
-              title={
-                isArabic ? "المعلومات العامة للمنتج" : "GENERAL INFORMATION"
-              }
+              title={t("inventory.productDetails.generalInformation")}
             />
           ) : product ? (
             <ProductInformationCard product={product} isArabic={isArabic} />
@@ -111,18 +109,16 @@ export default function ProductDetailsPage() {
 
           {batchesLoading ? (
             <TableCardSkeleton
-              title={isArabic ? "التشغيلات المتاحة" : "AVAILABLE BATCHES"}
+              title={t("inventory.productDetails.availableBatches")}
             />
           ) : batchesError ? (
             <div className="p-6 text-center border rounded-2xl bg-destructive/5 border-destructive/10 text-xs text-muted-foreground">
-              {isArabic
-                ? "تعذر تحميل التشغيلات المخزنية."
-                : "Couldn't load stock batches."}
+              {t("inventory.productDetails.batchesLoadError")}
               <button
                 onClick={() => refetchBatches()}
                 className="text-emerald-500 font-bold underline ms-2"
               >
-                {isArabic ? "إعادة" : "Retry"}
+                {t("inventory.productDetails.retry")}
               </button>
             </div>
           ) : (
@@ -135,18 +131,16 @@ export default function ProductDetailsPage() {
 
           {movementsLoading ? (
             <TableCardSkeleton
-              title={isArabic ? "سجل الحركات" : "MOVEMENT LOG"}
+              title={t("inventory.productDetails.movementLog")}
             />
           ) : movementsError ? (
             <div className="p-6 text-center border rounded-2xl bg-destructive/5 border-destructive/10 text-xs text-muted-foreground">
-              {isArabic
-                ? "تعذر تحميل سجل حركات المخزن."
-                : "Unable to load stock movement log."}
+              {t("inventory.productDetails.movementsLoadError")}
               <button
                 onClick={() => refetchMovements()}
                 className="text-emerald-500 font-bold underline ms-2"
               >
-                {isArabic ? "إعادة" : "Retry"}
+                {t("inventory.productDetails.retry")}
               </button>
             </div>
           ) : (
@@ -155,7 +149,6 @@ export default function ProductDetailsPage() {
         </div>
       </div>
 
-      {/* 🛠️ تضمين الـ Modal هنا وتمرير الـ Props المطلوبة له */}
       <AddProductModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
@@ -165,8 +158,8 @@ export default function ProductDetailsPage() {
         isArabic={isArabic}
         t={t}
         onSuccess={() => {
-          refetchProduct(); // سيقوم بتحديث البيانات في الخلفية فوراً
-          setIsEditModalOpen(false); // إغلاق المودال
+          refetchProduct();
+          setIsEditModalOpen(false);
         }}
       />
     </div>

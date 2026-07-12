@@ -1,3 +1,4 @@
+// components/productDetails/StockBatchesCard.tsx
 import { Layers, MoreHorizontal, ShieldAlert } from "lucide-react";
 import { type Batch } from "../../types/Batch";
 import {
@@ -15,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface StockBatchesCardProps {
   batches: Batch[];
@@ -27,10 +29,10 @@ export default function StockBatchesCard({
   baseUnitName,
   isArabic,
 }: StockBatchesCardProps) {
+  const { t } = useTranslation();
+
   const handleMarkExpired = (batchId: number) => {
-    const message = isArabic
-      ? "هل أنت متأكد من تعيين هذه التشغيلة كمنتهية الصلاحية؟"
-      : "Are you sure you want to mark this batch as expired?";
+    const message = t("inventory.batchesCard.confirmExpired");
 
     if (confirm(message)) {
       console.log(`API Call: PATCH /batches/${batchId}/mark-expired`);
@@ -43,9 +45,7 @@ export default function StockBatchesCard({
         <div className="flex items-center gap-2">
           <Layers className="h-4 w-4 text-emerald-500" />
           <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-            {isArabic
-              ? "التشغيلات المخزنية المتاحة (Batches)"
-              : "AVAILABLE STOCK BATCHES"}
+            {t("inventory.batchesCard.title")}
           </h3>
         </div>
       </div>
@@ -58,22 +58,22 @@ export default function StockBatchesCard({
           <TableHeader className="bg-muted/30">
             <TableRow className="text-[10px] uppercase font-bold text-muted-foreground hover:bg-transparent">
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {isArabic ? "رقم التشغيلة" : "Batch No."}
+                {t("inventory.batchesCard.tableHeaders.batchNo")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "الكمية المتاحة" : "Qty Hand"}
+                {t("inventory.batchesCard.tableHeaders.qtyHand")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "سعر الشراء" : "Purchase"}
+                {t("inventory.batchesCard.tableHeaders.purchase")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "سعر البيع" : "Selling"}
+                {t("inventory.batchesCard.tableHeaders.selling")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "تاريخ الصلاحية" : "Expiry Date"}
+                {t("inventory.batchesCard.tableHeaders.expiryDate")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "الحالة" : "Status"}
+                {t("inventory.batchesCard.tableHeaders.status")}
               </TableHead>
               <TableHead className="w-12.5"></TableHead>
             </TableRow>
@@ -86,9 +86,7 @@ export default function StockBatchesCard({
                   colSpan={7}
                   className="text-center h-24 text-muted-foreground italic"
                 >
-                  {isArabic
-                    ? "لا توجد تشغيلات متاحة حالياً"
-                    : "No available batches found."}
+                  {t("inventory.batchesCard.noBatches")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -114,11 +112,13 @@ export default function StockBatchesCard({
                     </TableCell>
 
                     <TableCell className="text-center font-mono text-muted-foreground">
-                      {batch.purchase_price.toLocaleString()} SYP
+                      {batch.purchase_price.toLocaleString()}{" "}
+                      {t("inventory.batchesCard.currency")}
                     </TableCell>
 
                     <TableCell className="text-center font-mono text-emerald-400 font-semibold">
-                      {batch.selling_price.toLocaleString()} SYP
+                      {batch.selling_price.toLocaleString()}{" "}
+                      {t("inventory.batchesCard.currency")}
                     </TableCell>
 
                     <TableCell className="text-center font-mono text-muted-foreground">
@@ -134,12 +134,8 @@ export default function StockBatchesCard({
                         }`}
                       >
                         {batch.status === "active"
-                          ? isArabic
-                            ? "نشط"
-                            : "Active"
-                          : isArabic
-                            ? "منتهي"
-                            : "Expired"}
+                          ? t("inventory.batchesCard.statusValues.active")
+                          : t("inventory.batchesCard.statusValues.expired")}
                       </span>
                     </TableCell>
 
@@ -166,7 +162,7 @@ export default function StockBatchesCard({
                           >
                             <ShieldAlert className="h-3.5 w-3.5 shrink-0" />
                             <span>
-                              {isArabic ? "إدراج كمنتهي" : "Mark Expired"}
+                              {t("inventory.batchesCard.actions.markExpired")}
                             </span>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
