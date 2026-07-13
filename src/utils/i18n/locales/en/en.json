@@ -482,5 +482,33 @@
             "prescription": "Prescription Required",
             "partial_selling": "Allow Partial Selling (Break Pack)"
         }
+    },
+    "suppliers": {
+    "pageTitle": "Suppliers",
+    "pageSubtitle": "Manage your pharmaceutical suppliers and medical companies list",
+    "searchPlaceholder": "Search for a supplier...",
+    "pagination": {
+      "showing": "Showing",
+      "of": "of",
+      "suppliers": "suppliers"
+    },
+    "actions": {
+      "addSupplier": "Add Supplier",
+      "view": "View Details",
+      "edit": "Edit Supplier",
+      "delete": "Delete Supplier",
+      "restore": "Restore"
+    },
+    "tableHeaders": {
+      "name": "Name",
+      "company": "Company",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "status": "Status"
+    },
+    "statusValues": {
+      "active": "Active",
+      "deleted": "Deleted"
     }
+  }
     }

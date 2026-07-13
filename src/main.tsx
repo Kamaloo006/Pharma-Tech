@@ -33,6 +33,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useTranslation } from "react-i18next";
 import ProductDetailsPage from "./pages/dashboard/ProductDetailsPage.tsx";
 
+import Suppliers from "./pages/dashboard/Suppliers.tsx";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -84,6 +86,10 @@ const router = createBrowserRouter([
           {
             path: "product-details/:id",
             element: <ProductDetailsPage />,
+          },
+          {
+            path: "suppliers",
+            element: <Suppliers />,
           },
         ],
       },

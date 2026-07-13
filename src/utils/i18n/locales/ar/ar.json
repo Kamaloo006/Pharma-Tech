@@ -480,5 +480,33 @@
             "prescription": "يتطلب وصفة طبية صرفة",
             "partial_selling": "السماح بالبيع الجزئي (فرط العلبة)"
         }
+    },
+    "suppliers": {
+    "pageTitle": "الموردين",
+    "pageSubtitle": "إدارة قائمة موردي الأدوية والشركات",
+    "searchPlaceholder": "بحث عن مورد...",
+    "pagination": {
+      "showing": "عرض",
+      "of": "من أصل",
+      "suppliers": "موردين"
+    },
+    "actions": {
+      "addSupplier": "إضافة مورد",
+      "view": "عرض التفاصيل",
+      "edit": "تعديل المورد",
+      "delete": "حذف المورد",
+      "restore": "استعادة"
+    },
+    "tableHeaders": {
+      "name": "الاسم",
+      "company": "الشركة",
+      "phone": "رقم الهاتف",
+      "email": "البريد الإلكتروني",
+      "status": "الحالة"
+    },
+    "statusValues": {
+      "active": "نشط",
+      "deleted": "محذوف"
     }
+  }
 }
