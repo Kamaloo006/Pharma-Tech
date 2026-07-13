@@ -9,7 +9,15 @@
         "error": "خطأ",
         "appName": "فارماتيك",
         "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
-        "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً."
+        "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً.",
+        "loading": "جاري التحميل...",
+    "cancel": "إلغاء",
+    "save": "حفظ التغييرات",
+    "add": "إضافة",
+        "buttons": {
+      "cancel": "إلغاء",
+      "confirmDelete": "تأكيد الحذف"
+    }
     },
     "validation": {
         "invalidEmail": "البريد الإلكتروني غير صالح",
@@ -482,20 +490,19 @@
         }
     },
     "suppliers": {
-    "pageTitle": "الموردين",
-    "pageSubtitle": "إدارة قائمة موردي الأدوية والشركات",
-    "searchPlaceholder": "بحث عن مورد...",
-    "pagination": {
-      "showing": "عرض",
-      "of": "من أصل",
-      "suppliers": "موردين"
+    "title": "إدارة الموردين",
+    "buttons": {
+      "addSupplier": "إضافة مورد"
     },
-    "actions": {
-      "addSupplier": "إضافة مورد",
-      "view": "عرض التفاصيل",
-      "edit": "تعديل المورد",
-      "delete": "حذف المورد",
-      "restore": "استعادة"
+    "dialogs": {
+      "deleteTitle": "هل أنت متأكد من الحذف؟",
+      "deleteDescription": "سيتم نقل المورد الحالي إلى سلة المحذوفات. يمكنك استعادته لاحقاً في أي وقت."
+    },
+    "messages": {
+      "deleteSuccess": "تم نقل المورد إلى السلة بنجاح",
+      "deleteError": "تعذر حذف المورد، يرجى المحاولة مجدداً",
+      "restoreSuccess": "تم استعادة المورد بنجاح",
+      "restoreError": "تعذر استعادة المورد"
     },
     "tableHeaders": {
       "name": "الاسم",
@@ -504,9 +511,43 @@
       "email": "البريد الإلكتروني",
       "status": "الحالة"
     },
+    "table": {
+      "empty": "لا يوجد موردين مطابقين للبحث"
+    },
     "statusValues": {
       "active": "نشط",
       "deleted": "محذوف"
+    },
+    "actions": {
+      "edit": "تعديل المورد",
+      "delete": "حذف المورد",
+      "restore": "استعادة"
+    },
+    "pagination": {
+      "showing": "عرض",
+      "of": "من أصل",
+      "suppliers": "موردين"
+    },
+    "form": {
+      "addTitle": "إضافة مورد جديد",
+      "editTitle": "تعديل بيانات المورد",
+      "labels": {
+        "name": "الاسم",
+        "company": "الشركة التابع لها",
+        "phone": "رقم الهاتف",
+        "email": "البريد الإلكتروني",
+        "address": "العنوان",
+        "notes": "ملاحظات"
+      },
+      "placeholders": {
+        "selectCompany": "اختر شركة",
+        "noCompany": "بدون شركة / لا يوجد"
+      }
+    },
+    "notifications": {
+      "createSuccess": "تم إضافة المورد الجديد بنجاح",
+      "updateSuccess": "تم تحديث بيانات المورد بنجاح",
+      "errorOccurred": "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً"
     }
   }
 }

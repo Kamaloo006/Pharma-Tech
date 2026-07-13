@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { Supplier, SupplierFormData } from "../hooks/useSuppliers";
+import type { Supplier, SupplierFormData } from "../types/Supplier";
 import { useCompanies } from "@/features/inventory/hooks/useCompanies";
 import { Loader2 } from "lucide-react";
 
@@ -97,14 +97,12 @@ export function SupplierFormModal({
       await onSubmitAction(formData);
       toast.success(
         supplier
-          ? t("suppliers.updateSuccess", "تم تحديث بيانات المورد بنجاح")
-          : t("suppliers.createSuccess", "تم إضافة المورد الجديد بنجاح"),
+          ? t("suppliers.notifications.updateSuccess")
+          : t("suppliers.notifications.createSuccess"),
       );
       onClose();
     } catch (err) {
-      toast.error(
-        t("suppliers.errorOccurred", "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً"),
-      );
+      toast.error(t("suppliers.notifications.errorOccurred"));
     }
   };
 
@@ -117,14 +115,14 @@ export function SupplierFormModal({
         <DialogHeader>
           <DialogTitle className="text-left">
             {supplier
-              ? t("suppliers.editSupplier", "تعديل بيانات المورد")
-              : t("suppliers.addSupplier", "إضافة مورد جديد")}
+              ? t("suppliers.form.editTitle")
+              : t("suppliers.form.addTitle")}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
           <div className="space-y-1">
-            <Label htmlFor="name">{t("suppliers.name", "الاسم")}</Label>
+            <Label htmlFor="name">{t("suppliers.form.labels.name")}</Label>
             <Input
               id="name"
               name="name"
@@ -136,25 +134,27 @@ export function SupplierFormModal({
           </div>
 
           <div className="space-y-1">
-            <Label>{t("suppliers.company", "الشركة التابع لها")}</Label>
+            <Label>{t("suppliers.form.labels.company")}</Label>
             <Select
               disabled={isLoading || isLoadingCompanies}
               value={formData.company_id ? String(formData.company_id) : "none"}
               onValueChange={handleCompanyChange}
             >
-              <SelectTrigger className="w-full text-right bg-background text-foreground border-border">
+              <SelectTrigger
+                className={`w-full bg-background text-foreground border-border ${isArabic ? "text-right" : "text-left"}`}
+              >
                 <SelectValue
                   placeholder={
                     isLoadingCompanies
-                      ? t("common.loading", "جاري التحميل...")
-                      : t("suppliers.selectCompany", "اختر شركة")
+                      ? t("common.loading")
+                      : t("suppliers.form.placeholders.selectCompany")
                   }
                 />
               </SelectTrigger>
 
               <SelectContent className="bg-background text-foreground border-border">
                 <SelectItem value="none">
-                  {t("suppliers.noCompany", "بدون شركة / لا يوجد")}
+                  {t("suppliers.form.placeholders.noCompany")}
                 </SelectItem>
                 {companies?.map((company) => (
                   <SelectItem key={company.id} value={String(company.id)}>
@@ -166,7 +166,7 @@ export function SupplierFormModal({
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="phone">{t("suppliers.phone", "رقم الهاتف")}</Label>
+            <Label htmlFor="phone">{t("suppliers.form.labels.phone")}</Label>
             <Input
               id="phone"
               name="phone"
@@ -178,9 +178,7 @@ export function SupplierFormModal({
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="email">
-              {t("suppliers.email", "البريد الإلكتروني")}
-            </Label>
+            <Label htmlFor="email">{t("suppliers.form.labels.email")}</Label>
             <Input
               id="email"
               name="email"
@@ -193,7 +191,9 @@ export function SupplierFormModal({
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="address">{t("suppliers.address", "العنوان")}</Label>
+            <Label htmlFor="address">
+              {t("suppliers.form.labels.address")}
+            </Label>
             <Input
               id="address"
               name="address"
@@ -204,7 +204,7 @@ export function SupplierFormModal({
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="notes">{t("suppliers.notes", "ملاحظات")}</Label>
+            <Label htmlFor="notes">{t("suppliers.form.labels.notes")}</Label>
             <Textarea
               id="notes"
               name="notes"
@@ -224,13 +224,15 @@ export function SupplierFormModal({
               onClick={onClose}
               disabled={isLoading}
             >
-              {t("common.cancel", "إلغاء")}
+              {t("common.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-              {supplier
-                ? t("common.save", "حفظ التغييرات")
-                : t("common.add", "إضافة المورد")}
+              {isLoading && (
+                <Loader2
+                  className={`h-4 w-4 animate-spin ${isArabic ? "ml-2" : "mr-2"}`}
+                />
+              )}
+              {supplier ? t("common.save") : t("common.add")}
             </Button>
           </DialogFooter>
         </form>

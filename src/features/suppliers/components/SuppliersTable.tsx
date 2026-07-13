@@ -1,4 +1,3 @@
-// features/inventory/components/SuppliersTable.tsx
 import { useTranslation } from "react-i18next";
 import {
   MoreHorizontal,
@@ -23,7 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { type Supplier } from "../hooks/useSuppliers";
+import { type Supplier } from "../types/Supplier";
 
 interface SuppliersTableProps {
   suppliers: Supplier[];
@@ -78,9 +77,7 @@ export default function SuppliersTable({
                   colSpan={6}
                   className="text-center py-8 text-muted-foreground"
                 >
-                  {isArabic
-                    ? "لا يوجد موردين مطابقين للبحث"
-                    : "No matching suppliers found"}
+                  {t("suppliers.table.empty")}
                 </TableCell>
               </TableRow>
             ) : (

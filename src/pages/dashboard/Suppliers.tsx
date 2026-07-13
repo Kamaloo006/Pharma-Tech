@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import {
-  useSuppliers,
-  type Supplier,
-} from "../../features/suppliers/hooks/useSuppliers";
+import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
+import { type Supplier } from "../../features/suppliers/types/Supplier";
 import { SupplierFormModal } from "@/features/suppliers/components/SupplierFormModal";
 import SuppliersTable from "@/features/suppliers/components/SuppliersTable";
 import { Loader2, Plus } from "lucide-react";
@@ -48,23 +46,19 @@ export default function SuppliersPage() {
     if (!selectedSupplier) return;
     try {
       await deleteSupplier(selectedSupplier.id);
-      toast.success(
-        t("suppliers.deleteSuccess", "تم نقل المورد إلى السلة بنجاح"),
-      );
+      toast.success(t("suppliers.messages.deleteSuccess"));
       setIsDeleteOpen(false);
     } catch (err) {
-      toast.error(
-        t("suppliers.deleteError", "تعذر حذف المورد، يرجى المحاولة مجدداً"),
-      );
+      toast.error(t("suppliers.messages.deleteError"));
     }
   };
 
   const handleRestoreClick = async (id: number) => {
     try {
       await restoreSupplier(id);
-      toast.success(t("suppliers.restoreSuccess", "تم استعادة المورد بنجاح"));
+      toast.success(t("suppliers.messages.restoreSuccess"));
     } catch (err) {
-      toast.error(t("suppliers.restoreError", "تعذر استعادة المورد"));
+      toast.error(t("suppliers.messages.restoreError"));
     }
   };
 
@@ -88,9 +82,8 @@ export default function SuppliersPage() {
     <div className="p-6 space-y-6" dir={isArabic ? "rtl" : "ltr"}>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-foreground">
-          {t("suppliers.title", "إدارة الموردين")}
+          {t("suppliers.title")}
         </h1>
-        {/* زر إضافة مورد جديد لتشغيل المودال الذكي وهو فارغ */}
         <Button
           onClick={() => {
             setSelectedSupplier(null);
@@ -99,7 +92,7 @@ export default function SuppliersPage() {
           className="flex items-center gap-2"
         >
           <Plus className="h-4 w-4" />
-          {t("suppliers.addSupplierBtn", "إضافة مورد")}
+          <span>{t("suppliers.buttons.addSupplier")}</span>
         </Button>
       </div>
 
@@ -122,7 +115,6 @@ export default function SuppliersPage() {
         }}
       />
 
-      {/* مودال الاستمارة الذكي (إضافة + تعديل) في مكون واحد غاية في النظافة */}
       <SupplierFormModal
         supplier={selectedSupplier}
         isOpen={isFormOpen}
@@ -138,22 +130,19 @@ export default function SuppliersPage() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className={isArabic ? "text-right" : "text-left"}>
-              {t("suppliers.deleteConfirmTitle", "هل أنت متأكد من الحذف؟")}
+              {t("suppliers.dialogs.deleteTitle")}
             </AlertDialogTitle>
             <AlertDialogDescription
               className={isArabic ? "text-right" : "text-left"}
             >
-              {t(
-                "suppliers.deleteConfirmDesc",
-                "سيتم نقل المورد الحالي إلى سلة المحذوفات. يمكنك استعادته لاحقاً في أي وقت.",
-              )}
+              {t("suppliers.dialogs.deleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter
             className={`gap-2 ${isArabic ? "flex-row-reverse justify-start" : ""}`}
           >
             <AlertDialogCancel disabled={isDeleting}>
-              {t("common.cancel", "إلغاء")}
+              {t("common.buttons.cancel")}
             </AlertDialogCancel>
             <Button
               variant="destructive"
@@ -161,7 +150,7 @@ export default function SuppliersPage() {
               disabled={isDeleting}
             >
               {isDeleting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-              {t("common.confirmDelete", "تأكيد الحذف")}
+              <span>{t("common.buttons.confirmDelete")}</span>
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

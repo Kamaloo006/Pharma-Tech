@@ -9,7 +9,11 @@
         "error": "Error",
         "appName": "PharmaTech",
         "networkError": "No internet connection. Please check your network.",
-        "serverError": "We are facing server issues, please try again later."
+        "serverError": "We are facing server issues, please try again later.",
+        "loading": "Loading...",
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "add": "Add"
     },
     "validation": {
         "invalidEmail": "Invalid email address",
@@ -484,31 +488,64 @@
         }
     },
     "suppliers": {
-    "pageTitle": "Suppliers",
-    "pageSubtitle": "Manage your pharmaceutical suppliers and medical companies list",
-    "searchPlaceholder": "Search for a supplier...",
+    "title": "Suppliers Management",
+    "buttons": {
+      "addSupplier": "Add Supplier"
+    },
+    "dialogs": {
+      "deleteTitle": "Are you sure you want to delete?",
+      "deleteDescription": "The current supplier will be moved to the trash. You can restore them later at any time."
+    },
+    "messages": {
+      "deleteSuccess": "Supplier successfully moved to trash",
+      "deleteError": "Failed to delete supplier, please try again",
+      "restoreSuccess": "Supplier restored successfully",
+      "restoreError": "Failed to restore supplier"
+    },
+    "tableHeaders": {
+      "name": "Name",
+      "company": "Company",
+      "phone": "Phone",
+      "email": "Email",
+      "status": "Status"
+    },
+    "table": {
+      "empty": "No matching suppliers found"
+    },
+    "statusValues": {
+      "active": "Active",
+      "deleted": "Deleted"
+    },
+    "actions": {
+      "edit": "Edit Supplier",
+      "delete": "Delete Supplier",
+      "restore": "Restore"
+    },
     "pagination": {
       "showing": "Showing",
       "of": "of",
       "suppliers": "suppliers"
     },
-    "actions": {
-      "addSupplier": "Add Supplier",
-      "view": "View Details",
-      "edit": "Edit Supplier",
-      "delete": "Delete Supplier",
-      "restore": "Restore"
+    "form": {
+      "addTitle": "Add New Supplier",
+      "editTitle": "Edit Supplier Details",
+      "labels": {
+        "name": "Name",
+        "company": "Associated Company",
+        "phone": "Phone Number",
+        "email": "Email Address",
+        "address": "Address",
+        "notes": "Notes"
+      },
+      "placeholders": {
+        "selectCompany": "Select a company",
+        "noCompany": "No Company / None"
+      }
     },
-    "tableHeaders": {
-      "name": "Name",
-      "company": "Company",
-      "phone": "Phone Number",
-      "email": "Email Address",
-      "status": "Status"
-    },
-    "statusValues": {
-      "active": "Active",
-      "deleted": "Deleted"
+    "notifications": {
+      "createSuccess": "New supplier added successfully",
+      "updateSuccess": "Supplier details updated successfully",
+      "errorOccurred": "An unexpected error occurred, please try again later"
     }
   }
     }

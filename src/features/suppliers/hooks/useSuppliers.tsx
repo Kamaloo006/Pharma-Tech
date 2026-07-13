@@ -2,29 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import api from "@/lib/api";
-
-export interface Supplier {
-  id: number;
-  name: string;
-  phone: string;
-  email: string;
-  address: string | null;
-  notes: string | null;
-  deleted_at: string | null;
-  company_id?: number | null;
-  company: { id: number; name: string } | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface SupplierFormData {
-  name: string;
-  phone: string;
-  email: string;
-  address?: string | null;
-  notes?: string | null;
-  company_id?: number | null;
-}
+import type { SupplierFormData } from "../types/Supplier";
 
 export function useSuppliers() {
   const queryClient = useQueryClient();
