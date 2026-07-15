@@ -1,3 +1,4 @@
+// features/finance/components/StatCards.tsx
 import { useTranslation } from "react-i18next";
 import { Wallet, TrendingUp, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import type { CashBox, CashBoxStats } from "../types/cashBox";
@@ -11,7 +12,7 @@ interface StatCardsProps {
 }
 
 export default function StatCards({ cashBox, statistics }: StatCardsProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   const todayIn = statistics?.today?.in ?? 0;
@@ -19,19 +20,19 @@ export default function StatCards({ cashBox, statistics }: StatCardsProps) {
 
   const cards = [
     {
-      title: isArabic ? "الرصيد الافتتاحي" : "Opening Balance",
+      title: t("cashbox.stats.openingBalance"),
       value: cashBox.opening_balance,
       icon: <Wallet className="h-4 w-4 text-amber-500" />,
       textClass: "text-foreground",
     },
     {
-      title: isArabic ? "الرصيد الحالي" : "Current Balance",
+      title: t("cashbox.stats.currentBalance"),
       value: cashBox.current_balance,
       icon: <TrendingUp className="h-4 w-4 text-primary" />,
       textClass: "text-foreground",
     },
     {
-      title: isArabic ? "النقد الداخل اليوم" : "Today's Cash In",
+      title: t("cashbox.stats.todayCashIn"),
       value: todayIn,
       icon: (
         <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
@@ -41,7 +42,7 @@ export default function StatCards({ cashBox, statistics }: StatCardsProps) {
       textClass: "text-emerald-400",
     },
     {
-      title: isArabic ? "النقد الخارج اليوم" : "Today's Cash Out",
+      title: t("cashbox.stats.todayCashOut"),
       value: todayOut,
       icon: (
         <div className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
@@ -53,11 +54,14 @@ export default function StatCards({ cashBox, statistics }: StatCardsProps) {
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+    <div
+      className="grid gap-4 sm:grid-cols-2 md:grid-cols-4"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
       {cards.map((card, index) => (
         <div
           key={index}
-          className="p-5 rounded-2xl bg-card border border-border shadow-sm space-y-2"
+          className="p-5 rounded-2xl bg-card border border-border shadow-sm space-y-2 text-start"
         >
           <div className="flex items-center justify-between text-muted-foreground">
             <span className="text-xs font-medium">{card.title}</span>

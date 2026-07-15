@@ -1,3 +1,4 @@
+// features/finance/components/TransactionsTable.tsx
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
@@ -21,7 +22,7 @@ interface TransactionsTableProps {
 export default function TransactionsTable({
   cashBoxId,
 }: TransactionsTableProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   const defaultFilters: TransactionsFilterParams = {
@@ -48,21 +49,16 @@ export default function TransactionsTable({
     manual_out: "bg-orange-500/10 text-orange-400 border-orange-500/20",
   };
 
-  const TRANSACTION_TRANSLATIONS: Record<string, { ar: string; en: string }> = {
-    sale_in: { ar: "مبيعات (دخل)", en: "Sale In" },
-    purchase_out: { ar: "مشتريات (خرج)", en: "Purchase Out" },
-    customer_return_out: { ar: "مرتجع عميل (خرج)", en: "Customer Return" },
-    supplier_return_in: { ar: "مرتجع مورد (دخل)", en: "Supplier Return" },
-    customer_debt_payment_in: {
-      ar: "سداد ديون عميل (دخل)",
-      en: "Customer Debt Payment",
-    },
-    supplier_debt_payment_out: {
-      ar: "سداد ديون مورد (خرج)",
-      en: "Supplier Debt Payment",
-    },
-    manual_in: { ar: "إدخال يدوي (دخل)", en: "Manual In" },
-    manual_out: { ar: "إخراج يدوي (خرج)", en: "Manual Out" },
+  // مخرجات المفاتيح المتوافقة مع هيكل ملف الترجمة json
+  const TRANSACTION_TRANSLATION_KEYS: Record<string, string> = {
+    sale_in: "saleIn",
+    purchase_out: "purchaseOut",
+    customer_return_out: "customerReturnOut",
+    supplier_return_in: "supplierReturnIn",
+    customer_debt_payment_in: "customerDebtPaymentIn",
+    supplier_debt_payment_out: "supplierDebtPaymentOut",
+    manual_in: "manualIn",
+    manual_out: "manualOut",
   };
 
   const [appliedFilters, setAppliedFilters] =
@@ -124,37 +120,37 @@ export default function TransactionsTable({
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "التاريخ ووقت العملية" : "Transaction Time"}
+                {t("cashbox.table.headers.time")}
               </TableHead>
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "نوع الحركة" : "Type"}
+                {t("cashbox.table.headers.type")}
               </TableHead>
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "المبلغ" : "Amount"}
+                {t("cashbox.table.headers.amount")}
               </TableHead>
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "الرصيد بعد العملية" : "Balance After"}
+                {t("cashbox.table.headers.balanceAfter")}
               </TableHead>
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "المستند المرجعي" : "Reference"}
+                {t("cashbox.table.headers.reference")}
               </TableHead>
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "بواسطة" : "Created By"}
+                {t("cashbox.table.headers.createdBy")}
               </TableHead>
               <TableHead
                 className={`p-4 ${isArabic ? "text-right" : "text-left"}`}
               >
-                {isArabic ? "ملاحظات" : "Notes"}
+                {t("cashbox.table.headers.notes")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -163,17 +159,18 @@ export default function TransactionsTable({
             {transactions.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={6}
+                  colSpan={7}
                   className="text-center p-8 text-xs text-muted-foreground h-32"
                 >
-                  {isArabic
-                    ? "لا يوجد حركات مالية مطابقة للفلاتر حالياً."
-                    : "No transactions found matching filters."}
+                  {t("cashbox.table.noData")}
                 </TableCell>
               </TableRow>
             ) : (
               transactions.map((tx) => {
                 const isOut = tx.transaction_type.endsWith("_out");
+                const translationKey =
+                  TRANSACTION_TRANSLATION_KEYS[tx.transaction_type];
+
                 return (
                   <TableRow
                     key={tx.id}
@@ -197,11 +194,9 @@ export default function TransactionsTable({
                             : "bg-destructive/10 text-destructive border-destructive/25")
                         }`}
                       >
-                        {isArabic
-                          ? TRANSACTION_TRANSLATIONS[tx.transaction_type]?.ar ||
-                            tx.transaction_type
-                          : TRANSACTION_TRANSLATIONS[tx.transaction_type]?.en ||
-                            tx.transaction_type}
+                        {translationKey
+                          ? t(`cashbox.filters.types.${translationKey}`)
+                          : tx.transaction_type}
                       </span>
                     </TableCell>
                     <TableCell
@@ -252,9 +247,14 @@ export default function TransactionsTable({
           dir={isArabic ? "rtl" : "ltr"}
         >
           <div className="text-xs text-muted-foreground">
-            {isArabic
-              ? `عرض الحركات من ${meta.total === 0 ? 0 : (meta.current_page - 1) * meta.per_page + 1} إلى ${Math.min(meta.current_page * meta.per_page, meta.total)} من إجمالي ${meta.total}`
-              : `Showing ${meta.total === 0 ? 0 : (meta.current_page - 1) * meta.per_page + 1} to ${Math.min(meta.current_page * meta.per_page, meta.total)} of ${meta.total} transactions`}
+            {t("cashbox.table.pagination.info", {
+              from:
+                meta.total === 0
+                  ? 0
+                  : (meta.current_page - 1) * meta.per_page + 1,
+              to: Math.min(meta.current_page * meta.per_page, meta.total),
+              total: meta.total,
+            })}
           </div>
           <div className="flex items-center gap-2">
             <Button

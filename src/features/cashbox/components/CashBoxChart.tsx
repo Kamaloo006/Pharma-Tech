@@ -1,3 +1,4 @@
+// features/cashbox/components/CashBoxChart.tsx
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LineChart as ChartIcon, Loader2 } from "lucide-react";
@@ -25,7 +26,7 @@ interface CashBoxChartProps {
 }
 
 export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   const [period, setPeriod] = useState<"month" | "week">("week");
@@ -104,7 +105,7 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
   };
 
   return (
-    <div className="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4 relative min-h-[350px]">
+    <div className="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-4 relative min-h-87.5">
       <div
         className="flex items-center justify-between border-b border-border/40 pb-3"
         dir={isArabic ? "rtl" : "ltr"}
@@ -113,19 +114,17 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
           <ChartIcon className="h-5 w-5 text-primary" />
           <div className="space-y-0.5 text-start">
             <h3 className="text-sm font-bold text-foreground">
-              {isArabic
-                ? "منحنى حركة التدفقات النقدية والسيولة"
-                : "Cash Flow & Run Chart"}
+              {t("cashbox.chart.title")}
             </h3>
             <p className="text-[11px] text-muted-foreground">
-              {isArabic
-                ? `عرض الحركات الإجمالية لـ ${period === "month" ? "آخر 30 يوماً" : "آخر 7 أيام"}`
-                : `Showing continuous data for the ${period === "month" ? "last 30 days" : "last 7 days"}`}
+              {period === "month"
+                ? t("cashbox.chart.subtitleMonth")
+                : t("cashbox.chart.subtitleWeek")}
             </p>
           </div>
         </div>
 
-        {/* 3️⃣ قائمة الاختيار من شاد سي إن */}
+        {/* قائمة الاختيار من شاد سي إن */}
         <div className="w-32.5">
           <Select
             value={period}
@@ -139,13 +138,13 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
                 value="month"
                 className="focus:bg-muted focus:text-foreground cursor-pointer text-xs"
               >
-                {isArabic ? "الشهر الحالي" : "Current Month"}
+                {t("cashbox.chart.periods.month")}
               </SelectItem>
               <SelectItem
                 value="week"
                 className="focus:bg-muted focus:text-foreground cursor-pointer text-xs"
               >
-                {isArabic ? "الأسبوع الحالي" : "Current Week"}
+                {t("cashbox.chart.periods.week")}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -156,18 +155,12 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
         <div className="absolute inset-0 flex items-center justify-center bg-card/60 backdrop-blur-[0.5px]">
           <div className="flex flex-col items-center gap-2 text-xs text-muted-foreground">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
-            <span>
-              {isArabic
-                ? "جاري تجميع حركات الكاش..."
-                : "Processing cash flows..."}
-            </span>
+            <span>{t("cashbox.chart.loading")}</span>
           </div>
         </div>
       ) : chartData.length === 0 ? (
         <div className="h-72 flex items-center justify-center text-xs text-muted-foreground">
-          {isArabic
-            ? "لا توجد حركات مالية مسجلة خلال هذه الفترة لرسمها."
-            : "No transaction data available for this period."}
+          {t("cashbox.chart.noData")}
         </div>
       ) : (
         <div className="w-full h-72 pt-4 font-mono text-xs" dir="ltr">
@@ -232,9 +225,7 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
               />
 
               <Area
-                name={
-                  isArabic ? "الأموال الداخلة / مقبوضات" : "Cash In (Income)"
-                }
+                name={t("cashbox.chart.legend.income")}
                 type="monotone"
                 dataKey="income"
                 stroke="#10b981"
@@ -245,9 +236,7 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
               />
 
               <Area
-                name={
-                  isArabic ? "الأموال الخارجة / مدفوعات" : "Cash Out (Expense)"
-                }
+                name={t("cashbox.chart.legend.expense")}
                 type="monotone"
                 dataKey="expense"
                 stroke="#ef4444"

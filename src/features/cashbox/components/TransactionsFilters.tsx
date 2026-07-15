@@ -1,3 +1,4 @@
+// features/finance/components/TransactionsFilters.tsx
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Search, Filter, Loader2, RotateCcw } from "lucide-react";
@@ -24,7 +25,7 @@ export default function TransactionsFilters({
   isLoading,
   onApply,
 }: TransactionsFiltersProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   const [tempFilters, setTempFilters] = useState<TransactionsFilterParams>({
@@ -47,31 +48,15 @@ export default function TransactionsFilters({
   };
 
   const TRANSACTION_TYPES = [
-    { value: "all", ar: "الكل", en: "All" },
-    { value: "sale_in", ar: "مبيعات (دخل)", en: "Sale In" },
-    { value: "purchase_out", ar: "مشتريات (خرج)", en: "Purchase Out" },
-    {
-      value: "customer_return_out",
-      ar: "مرتجع عميل (خرج)",
-      en: "Customer Return Out",
-    },
-    {
-      value: "supplier_return_in",
-      ar: "مرتجع مورد (دخل)",
-      en: "Supplier Return In",
-    },
-    {
-      value: "customer_debt_payment_in",
-      ar: "سداد ديون عميل (دخل)",
-      en: "Customer Debt Payment In",
-    },
-    {
-      value: "supplier_debt_payment_out",
-      ar: "سداد ديون مورد (خرج)",
-      en: "Supplier Debt Payment Out",
-    },
-    { value: "manual_in", ar: "إدخال يدوي (دخل)", en: "Manual In" },
-    { value: "manual_out", ar: "إخراج يدوي (خرج)", en: "Manual Out" },
+    { value: "all", key: "all" },
+    { value: "sale_in", key: "saleIn" },
+    { value: "purchase_out", key: "purchaseOut" },
+    { value: "customer_return_out", key: "customerReturnOut" },
+    { value: "supplier_return_in", key: "supplierReturnIn" },
+    { value: "customer_debt_payment_in", key: "customerDebtPaymentIn" },
+    { value: "supplier_debt_payment_out", key: "supplierDebtPaymentOut" },
+    { value: "manual_in", key: "manualIn" },
+    { value: "manual_out", key: "manualOut" },
   ] as const;
 
   const handleApply = () => {
@@ -86,11 +71,14 @@ export default function TransactionsFilters({
   return (
     <div className="space-y-6">
       {/* هيدر التحكم */}
-      <div className="flex items-center justify-between border-b border-border/60 pb-3">
+      <div
+        className="flex items-center justify-between border-b border-border/60 pb-3"
+        dir={isArabic ? "rtl" : "ltr"}
+      >
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4 text-muted-foreground" />
           <h3 className="text-sm font-bold text-foreground">
-            {isArabic ? "تصفية الحركات المالية" : "Filter Transactions"}
+            {t("cashbox.filters.title")}
           </h3>
         </div>
 
@@ -103,7 +91,7 @@ export default function TransactionsFilters({
             disabled={isLoading}
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            {isArabic ? "إعادة تعيين" : "Reset"}
+            {t("cashbox.filters.buttons.reset")}
           </Button>
           <Button
             size="sm"
@@ -114,12 +102,12 @@ export default function TransactionsFilters({
             {isLoading ? (
               <>
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                {isArabic ? "جاري البحث..." : "Applying..."}
+                {t("cashbox.filters.buttons.applying")}
               </>
             ) : (
               <>
                 <Search className="h-3.5 w-3.5" />
-                {isArabic ? "بحث وتطبيق" : "Apply Filters"}
+                {t("cashbox.filters.buttons.apply")}
               </>
             )}
           </Button>
@@ -127,20 +115,21 @@ export default function TransactionsFilters({
       </div>
 
       {/* حقول المدخلات */}
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-end text-right">
+      <div
+        className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-end text-start"
+        dir={isArabic ? "rtl" : "ltr"}
+      >
         {/* بحث بالكلمة */}
         <div className="space-y-2 flex flex-col justify-end">
           <Label className="text-xs font-medium text-muted-foreground text-start">
-            {isArabic ? "بحث بالكلمة" : "Search Keyword"}
+            {t("cashbox.filters.labels.search")}
           </Label>
           <div className="relative w-full">
             <Search
               className={`absolute top-3 h-4 w-4 text-muted-foreground ${isArabic ? "right-3" : "left-3"}`}
             />
             <Input
-              placeholder={
-                isArabic ? "ملاحظات، كود المستند..." : "Notes, doc code..."
-              }
+              placeholder={t("cashbox.filters.placeholders.search")}
               value={tempFilters.search}
               onChange={(e) => handleTempFilterChange("search", e.target.value)}
               className={`h-10 text-xs bg-background border-border w-full ${isArabic ? "pr-9 text-right" : "pl-9"}`}
@@ -151,7 +140,7 @@ export default function TransactionsFilters({
         {/* نوع العملية */}
         <div className="space-y-2 flex flex-col justify-end">
           <Label className="text-xs font-medium text-muted-foreground text-start">
-            {isArabic ? "نوع العملية" : "Transaction Type"}
+            {t("cashbox.filters.labels.type")}
           </Label>
           <Select
             value={tempFilters.type}
@@ -159,7 +148,7 @@ export default function TransactionsFilters({
           >
             <SelectTrigger className="h-10 text-xs bg-background border-border text-foreground w-full">
               <SelectValue
-                placeholder={isArabic ? "اختر النوع" : "Select Type"}
+                placeholder={t("cashbox.filters.placeholders.selectType")}
               />
             </SelectTrigger>
             <SelectContent className="bg-slate-900 border border-border text-foreground z-50 shadow-xl max-h-75 overflow-y-auto">
@@ -169,7 +158,7 @@ export default function TransactionsFilters({
                   value={typeOption.value}
                   className="focus:bg-muted focus:text-foreground cursor-pointer text-xs"
                 >
-                  {isArabic ? typeOption.ar : typeOption.en}
+                  {t(`cashbox.filters.types.${typeOption.key}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -179,7 +168,7 @@ export default function TransactionsFilters({
         {/* من تاريخ */}
         <div className="space-y-2 flex flex-col justify-end">
           <Label className="text-xs font-medium text-muted-foreground text-start">
-            {isArabic ? "من تاريخ" : "Date From"}
+            {t("cashbox.filters.labels.dateFrom")}
           </Label>
           <Input
             type="date"
@@ -195,7 +184,7 @@ export default function TransactionsFilters({
         {/* إلى تاريخ */}
         <div className="space-y-2 flex flex-col justify-end">
           <Label className="text-xs font-medium text-muted-foreground text-start">
-            {isArabic ? "إلى تاريخ" : "Date To"}
+            {t("cashbox.filters.labels.dateTo")}
           </Label>
           <Input
             type="date"
@@ -209,7 +198,7 @@ export default function TransactionsFilters({
         {/* العناصر لكل صفحة */}
         <div className="space-y-2 flex flex-col justify-end">
           <Label className="text-xs font-medium text-muted-foreground text-start">
-            {isArabic ? "العناصر لكل صفحة" : "Per Page"}
+            {t("cashbox.filters.labels.perPage")}
           </Label>
           <Select
             value={tempFilters.per_page}

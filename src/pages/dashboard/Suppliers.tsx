@@ -5,7 +5,7 @@ import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
 import { type Supplier } from "../../features/suppliers/types/Supplier";
 import { SupplierFormModal } from "@/features/suppliers/components/SupplierFormModal";
 import SuppliersTable from "@/features/suppliers/components/SuppliersTable";
-import { Group, Loader2, Plus, Users } from "lucide-react";
+import { Loader2, Plus, Users } from "lucide-react";
 
 import {
   AlertDialog,

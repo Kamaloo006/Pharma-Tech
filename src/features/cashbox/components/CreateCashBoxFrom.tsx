@@ -18,7 +18,7 @@ export default function CreateCashBoxForm({
   onCreate,
   isSubmitting,
 }: CreateCashBoxFormProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
   const [openingBalance, setOpeningBalance] = useState<string>("");
 
@@ -27,29 +27,16 @@ export default function CreateCashBoxForm({
     const numericBalance = Number(openingBalance);
 
     if (isNaN(numericBalance) || numericBalance < 0) {
-      toast.error(
-        isArabic
-          ? "يرجى إدخال رصيد افتتاحي صحيح"
-          : "Please enter a valid opening balance",
-      );
+      toast.error(t("cashbox.form.validation.invalidBalance"));
       return;
     }
 
     const result = await onCreate(numericBalance);
 
     if (result.success) {
-      toast.success(
-        isArabic
-          ? "تم فتح صندوق الصيدلية بنجاح"
-          : "Cash box created successfully",
-      );
+      toast.success(t("cashbox.form.notifications.success"));
     } else {
-      toast.error(
-        result.error ||
-          (isArabic
-            ? "حدث خطأ أثناء إنشاء الصندوق"
-            : "Error creating cash box"),
-      );
+      toast.error(result.error || t("cashbox.form.notifications.error"));
     }
   };
 
@@ -64,12 +51,10 @@ export default function CreateCashBoxForm({
         </div>
         <div className="space-y-2">
           <h2 className="text-xl font-bold text-foreground">
-            {isArabic ? "💰 إعداد الصندوق المالي" : "💰 Cash Box Setup"}
+            {t("cashbox.form.title")}
           </h2>
           <p className="text-sm text-muted-foreground px-2">
-            {isArabic
-              ? "لم يتم العثور على صندوق مالي نشط لهذه الصيدلية. يرجى تعيين الرصيد الافتتاحي لفتح الصندوق وبدء العمليات."
-              : "No active cash box found for this pharmacy. Please set the opening balance to initialize the cash box."}
+            {t("cashbox.form.description")}
           </p>
         </div>
         <hr className="border-border/60" />
@@ -77,11 +62,9 @@ export default function CreateCashBoxForm({
           <div className="space-y-2">
             <Label
               htmlFor="opening_balance"
-              className="text-muted-foreground text-xs font-semibold block"
+              className={`text-muted-foreground text-xs font-semibold block ${isArabic ? "text-right" : "text-left"}`}
             >
-              {isArabic
-                ? "الرصيد الافتتاحي للصندوق"
-                : "Cash Box Opening Balance"}
+              {t("cashbox.form.label")}
             </Label>
             <Input
               id="opening_balance"
@@ -101,8 +84,12 @@ export default function CreateCashBoxForm({
             className="w-full text-sm font-semibold h-11"
             disabled={isSubmitting}
           >
-            {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-            {isArabic ? "تأكيد وفتح الصندوق" : "Confirm & Open Box"}
+            {isSubmitting && (
+              <Loader2
+                className={`h-4 w-4 animate-spin ${isArabic ? "ml-2" : "mr-2"}`}
+              />
+            )}
+            {t("cashbox.form.submit")}
           </Button>
         </form>
       </div>
