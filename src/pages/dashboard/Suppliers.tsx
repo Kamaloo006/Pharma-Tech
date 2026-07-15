@@ -5,7 +5,7 @@ import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
 import { type Supplier } from "../../features/suppliers/types/Supplier";
 import { SupplierFormModal } from "@/features/suppliers/components/SupplierFormModal";
 import SuppliersTable from "@/features/suppliers/components/SuppliersTable";
-import { Loader2, Plus } from "lucide-react";
+import { Group, Loader2, Plus, Users } from "lucide-react";
 
 import {
   AlertDialog,
@@ -81,8 +81,9 @@ export default function SuppliersPage() {
   return (
     <div className="p-6 space-y-6" dir={isArabic ? "rtl" : "ltr"}>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-foreground">
+        <h1 className="text-2xl font-bold  text-foreground flex gap-2 items-center">
           {t("suppliers.title")}
+          <Users className=" text-primary " />
         </h1>
         <Button
           onClick={() => {

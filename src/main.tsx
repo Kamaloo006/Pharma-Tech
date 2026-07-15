@@ -34,6 +34,7 @@ import { useTranslation } from "react-i18next";
 import ProductDetailsPage from "./pages/dashboard/ProductDetailsPage.tsx";
 
 import Suppliers from "./pages/dashboard/Suppliers.tsx";
+import Cashbox from "./pages/dashboard/Cashbox.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
           {
             path: "suppliers",
             element: <Suppliers />,
+          },
+          {
+            path: "cashbox",
+            element: <Cashbox />,
           },
         ],
       },

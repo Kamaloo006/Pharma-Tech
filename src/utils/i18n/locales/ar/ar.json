@@ -228,7 +228,8 @@
         "suppliers": "الموردون",
         "enterprise": "مؤسسة",
         "profileSettings": "إعدادات الملف الشخصي",
-        "logOut": "تسجيل الخروج"
+        "logOut": "تسجيل الخروج",
+        "cashbox": "الخزنة"
     },
     "dashboard":{
         "addProduct": "إضافة منتج",

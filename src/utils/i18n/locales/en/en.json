@@ -225,7 +225,8 @@
         "suppliers": "Suppliers",
         "enterprise": "Enterprise",
         "profileSettings": "Profile Settings",
-        "logOut": "Log out"
+        "logOut": "Log out",
+        "cashbox": "Cashbox"
     },
   "dashboard":{
         "addProduct": "Add Product",
