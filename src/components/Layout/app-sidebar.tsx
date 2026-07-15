@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next";
 import {
   LayoutDashboard,
   Boxes,
-  FolderOpen,
   Users,
   Settings,
   ChevronLeft,
   ChevronRight,
   ChevronsUpDown,
-  LogOut, // 🟢 إضافة أيقونة تسجيل الخروج للمظهر الجمالي
+  LogOut,
+  DollarSign, // 🟢 إضافة أيقونة تسجيل الخروج للمظهر الجمالي
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -56,11 +56,6 @@ export default function AppSidebar() {
           icon: Boxes,
           url: "/dashboard/inventory",
         },
-        {
-          title: t("sidebar.catalog"),
-          icon: FolderOpen,
-          url: "/dashboard/catalog",
-        },
       ],
     },
     {
@@ -70,6 +65,11 @@ export default function AppSidebar() {
           title: t("sidebar.suppliers"),
           icon: Users,
           url: "/dashboard/suppliers",
+        },
+        {
+          title: t("sidebar.cashbox"),
+          icon: DollarSign,
+          url: "/dashboard/cashbox",
         },
       ],
     },

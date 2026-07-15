@@ -225,7 +225,8 @@
         "suppliers": "Suppliers",
         "enterprise": "Enterprise",
         "profileSettings": "Profile Settings",
-        "logOut": "Log out"
+        "logOut": "Log out",
+        "cashbox": "Cashbox"
     },
   "dashboard":{
         "addProduct": "Add Product",
@@ -547,5 +548,91 @@
       "updateSuccess": "Supplier details updated successfully",
       "errorOccurred": "An unexpected error occurred, please try again later"
     }
-  }
+  },
+  "cashbox": {
+    "page": {
+      "loading": "Loading cash box data...",
+      "title": "Cash Box Management",
+      "statusActive": "Active & Open"
+    },
+    "chart": {
+      "title": "Cash Flow & Run Chart",
+      "subtitleMonth": "Showing continuous data for the last 30 days",
+      "subtitleWeek": "Showing continuous data for the last 7 days",
+      "loading": "Processing cash flows...",
+      "noData": "No transaction data available for this period.",
+      "periods": {
+        "month": "Current Month",
+        "week": "Current Week"
+      },
+      "legend": {
+        "income": "Cash In (Income)",
+        "expense": "Cash Out (Expense)"
+      }
+    },
+    "form": {
+      "title": "💰 Cash Box Setup",
+      "description": "No active cash box found for this pharmacy. Please set the opening balance to initialize the cash box.",
+      "label": "Cash Box Opening Balance",
+      "submit": "Confirm & Open Box",
+      "validation": {
+        "invalidBalance": "Please enter a valid opening balance"
+      },
+      "notifications": {
+        "success": "Cash box created successfully",
+        "error": "Error creating cash box"
+      }
+    },
+    "stats": {
+      "openingBalance": "Opening Balance",
+      "currentBalance": "Current Balance",
+      "todayCashIn": "Today's Cash In",
+      "todayCashOut": "Today's Cash Out"
+    },
+    "filters": {
+      "title": "Filter Transactions",
+      "buttons": {
+        "reset": "Reset",
+        "apply": "Apply Filters",
+        "applying": "Applying..."
+      },
+      "labels": {
+        "search": "Search Keyword",
+        "type": "Transaction Type",
+        "dateFrom": "Date From",
+        "dateTo": "Date To",
+        "perPage": "Per Page"
+      },
+      "placeholders": {
+        "search": "Notes, doc code...",
+        "selectType": "Select Type"
+      },
+      "types": {
+        "all": "All",
+        "saleIn": "Sale In",
+        "purchaseOut": "Purchase Out",
+        "customerReturnOut": "Customer Return Out",
+        "supplierReturnIn": "Supplier Return In",
+        "customerDebtPaymentIn": "Customer Debt Payment In",
+        "supplierDebtPaymentOut": "Supplier Debt Payment Out",
+        "manualIn": "Manual In",
+        "manualOut": "Manual Out"
+      }
+    },
+    "table": {
+      "noData": "No transactions found matching filters.",
+      "headers": {
+        "time": "Transaction Time",
+        "type": "Type",
+        "amount": "Amount",
+        "balanceAfter": "Balance After",
+        "reference": "Reference",
+        "createdBy": "Created By",
+        "notes": "Notes"
+      },
+      "pagination": {
+        "info": "Showing {{from}} to {{to}} of {{total}} transactions"
+      }
     }
+  }
+}
