@@ -27,6 +27,14 @@ export default function ProductInventoryCard({
   const { t } = useTranslation();
   const isQuantityZero = product.total_quantity === 0;
 
+  const handleNavigateToCreateInvoice = () => {
+    if (product?.id) {
+      navigate(`/dashboard/purchases/new?productId=${product.id}`);
+    } else {
+      navigate("/dashboard/purchases/new");
+    }
+  };
+
   return (
     <div
       className="rounded-2xl border border-border bg-card p-5 space-y-4 shadow-sm"
@@ -87,7 +95,7 @@ export default function ProductInventoryCard({
 
           <div className="flex flex-col gap-2">
             <Button
-              onClick={() => navigate("/purchases/new")}
+              onClick={handleNavigateToCreateInvoice}
               className="w-full h-9 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold text-xs gap-1.5 shadow-sm transition-all"
             >
               <ShoppingCart className="h-3.5 w-3.5" />
@@ -107,7 +115,7 @@ export default function ProductInventoryCard({
       ) : (
         <div className="pt-1">
           <Button
-            onClick={() => navigate("/purchases/new")}
+            onClick={handleNavigateToCreateInvoice}
             variant="secondary"
             className="w-full h-9 rounded-xl bg-muted border border-border/60 hover:bg-muted/80 text-foreground font-semibold text-xs gap-1.5 transition-all"
           >

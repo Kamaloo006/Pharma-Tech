@@ -165,7 +165,7 @@ export default function PurchaseInvoiceDetails() {
                   <span>{isArabic ? "إلغاء الفاتورة" : "Cancel Invoice"}</span>
                 </Button>
               </DialogTrigger>
-              <DialogContent className="bg-muted border border-border sm:max-w-[420px] rounded-2xl text-start">
+              <DialogContent className="bg-muted border border-border sm:max-w-105 rounded-2xl text-start">
                 <DialogHeader className="space-y-3">
                   <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
                     <AlertCircle className="h-6 w-6 animate-pulse" />
@@ -476,7 +476,7 @@ export default function PurchaseInvoiceDetails() {
               </div>
 
               <div className="border-t border-border/40 pt-3 flex justify-between items-center text-xs">
-                <span className="text-muted-foreground font-semibold text-emerald-500">
+                <span className="text-muted-foreground font-semibold ">
                   {isArabic ? "المبلغ المدفوع" : "Amount Paid"}
                 </span>
                 <span className="font-bold text-emerald-500">

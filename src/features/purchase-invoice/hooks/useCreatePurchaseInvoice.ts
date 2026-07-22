@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { useProducts } from "@/features/inventory/hooks/UseProducts";
+import { useProductDetails } from "@/features/inventory/hooks/useProductDetails";
 import { useCashBox } from "@/features/cashbox/hooks/useCashbox";
 import { useDebounce } from "@/hooks/useDebounce";
 import type {
@@ -11,6 +11,7 @@ import type {
   PurchaseInvoice,
 } from "@/features/purchase-invoice/types/purchase-invoice";
 import type { Product } from "@/features/inventory/types/Product";
+import type { ProductDetails } from "@/features/inventory/types/Product";
 import api from "@/lib/api";
 
 const createPurchaseInvoiceApi = async (
@@ -26,7 +27,16 @@ const createPurchaseInvoiceApi = async (
 export function useCreatePurchaseInvoice() {
   const [isArabic] = useState<boolean>(true);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
+
+  // 1. قراءة productId من URL
+  const paramProductId = searchParams.get("productId");
+  const initialProductAdded = useRef<boolean>(false);
+
+  // جلب بيانات المنتج الممرر في URL تلقائياً
+  const { product: initialProduct, productLoading: isLoadingInitialProduct } =
+    useProductDetails(paramProductId);
 
   // Basic Form States
   const [supplierId, setSupplierId] = useState<string>("");
@@ -67,41 +77,48 @@ export function useCreatePurchaseInvoice() {
     return productsData?.data || [];
   }, [activeSearchQuery, isDebouncing, isSearchingProducts, productsData]);
 
-  // Invoice Items Management
-  const handleAddProduct = (product: Product) => {
-    const existingIndex = items.findIndex(
-      (item) => item.product_id === product.id
-    );
+  // Invoice Items Management (يقبل Product أو ProductDetails)
+  const handleAddProduct = (product: Product | ProductDetails) => {
+    setItems((prev) => {
+      const existingIndex = prev.findIndex(
+        (item) => item.product_id === product.id
+      );
 
-    if (existingIndex > -1) {
-      setItems((prev) =>
-        prev.map((item, idx) =>
+      if (existingIndex > -1) {
+        return prev.map((item, idx) =>
           idx === existingIndex
             ? { ...item, quantity: item.quantity + 1 }
             : item
-        )
-      );
-    } else {
-      const newItem: InvoiceItem = {
-        id: `row-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
-        product_id: product.id,
-        brand_name: product.brand_name || product.ar_name,
-        scientific_name: product.category?.name || "N/A",
-        strength: product.strength || "",
-        wholesale_price: product.buying_price || 0,
-        selling_price: product.selling_price || 0,
-        tax: 0,
-        discount: 0,
-        quantity: 1,
-        batch_number: "",
-        expiry_date: product.nearest_expiry || "",
-      };
-
-      setItems((prev) => [...prev, newItem]);
-    }
+        );
+      } else {
+        const newItem: InvoiceItem = {
+          id: `row-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          product_id: product.id,
+          brand_name: product.brand_name || product.ar_name,
+          scientific_name: product.category?.name || "N/A",
+          strength: product.strength || "",
+          wholesale_price: product.buying_price || 0,
+          selling_price: product.selling_price || 0,
+          tax: 0,
+          discount: 0,
+          quantity: 1,
+          batch_number: "",
+          expiry_date: product.nearest_expiry || "",
+        };
+        return [...prev, newItem];
+      }
+    });
 
     setSearchQuery("");
   };
+
+  // 2. إضافة المنتج الممرر عبر URL أوتوماتيكياً فور تحميل بياناته
+  useEffect(() => {
+    if (initialProduct && !initialProductAdded.current) {
+      handleAddProduct(initialProduct);
+      initialProductAdded.current = true;
+    }
+  }, [initialProduct]);
 
   const updateItemField = (
     rowId: string,
@@ -276,6 +293,7 @@ export function useCreatePurchaseInvoice() {
     filteredProducts,
     isSearchingProducts,
     isDebouncing,
+    isLoadingInitialProduct,
     handleAddProduct,
     updateItemField,
     removeItem,

@@ -10,7 +10,7 @@ export function useSuppliers() {
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["suppliers", page, searchQuery],
     queryFn: async () => {
       try {
