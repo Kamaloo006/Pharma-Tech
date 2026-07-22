@@ -77,7 +77,6 @@ export function useCashBoxTransactions(params: TransactionsFilterParams, enabled
           date_to: params.date_to || undefined,
         }
       });
-      console.log(response.data)
       return response.data;
     },
     enabled: enabled,

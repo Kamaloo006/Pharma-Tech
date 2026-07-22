@@ -78,9 +78,7 @@ export default function Inventory() {
       <div className="flex h-[60vh] w-full flex-col items-center justify-center gap-3 text-muted-foreground animate-pulse">
         <Loader2 className="size-7 animate-spin text-primary" />
         <span className="text-xs font-medium">
-          {isArabic
-            ? "جاري جلب بيانات المستودع الحية من السيرفر..."
-            : "Fetching live inventory from server..."}
+          {isArabic ? "جاري جلب بيانات المستودع..." : "Fetching inventory"}
         </span>
       </div>
     );

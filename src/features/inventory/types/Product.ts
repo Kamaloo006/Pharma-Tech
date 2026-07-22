@@ -16,6 +16,7 @@ export interface Product {
   brand_name: string;
   ar_name:string;
   selling_price: number;
+  buying_price: number;
   base_unit: { id: number; name: string; type: string }; 
   selling_unit?: { id: number; name: string; type: string }; 
   min_stock: number;

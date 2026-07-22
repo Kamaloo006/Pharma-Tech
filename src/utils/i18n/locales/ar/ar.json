@@ -229,7 +229,9 @@
         "enterprise": "مؤسسة",
         "profileSettings": "إعدادات الملف الشخصي",
         "logOut": "تسجيل الخروج",
-        "cashbox": "الخزنة"
+        "cashbox": "الخزنة",
+        "purchases": "الفواتير",
+        "newPurchase":"إنشاء فاتورة"
     },
     "dashboard":{
         "addProduct": "إضافة منتج",

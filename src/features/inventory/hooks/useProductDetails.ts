@@ -1,63 +1,68 @@
-
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import api from "@/lib/api";
-import type {  ProductDetails } from "../types/Product";
+import type { ProductDetails } from "../types/Product";
 import type { StockMovement } from "../types/StockMovement";
 import type { Batch } from "../types/Batch";
 
 
+export function useProductDetails(customProductId?: string | null) {
+  const { id: paramId } = useParams<{ id: string }>();
+  
+  
+  const productId = customProductId ?? paramId;
 
-
-
-export function useProductDetails() {
-  const { id } = useParams<{ id: string }>();
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   
-  const {data: ProductData, isLoading, error, refetch:refetchProduct} = useQuery<ProductDetails, any>({
-    queryKey: ["product-details", id],
+  const {
+    data: ProductData,
+    isLoading,
+    error,
+    refetch: refetchProduct,
+  } = useQuery<ProductDetails, any>({
+    queryKey: ["product-details", productId],
     queryFn: async () => {
-      const { data } = await api.get(`/products/${id}`);
+      const { data } = await api.get(`/products/${productId}`);
       return data.data;
     },
-    enabled: !!id,
+    enabled: !!productId,
     retry: (failureCount, error) => {
-      
-      if (error?.response?.status === 404 || error?.response?.status === 403) return false;
+      if (error?.response?.status === 404 || error?.response?.status === 403)
+        return false;
       return failureCount < 2;
-    }
+    },
   });
 
-  
   const isProductLoaded = !!ProductData;
 
   
   const batchesQuery = useQuery<Batch[], any>({
-    queryKey: ["product-batches", id],
+    queryKey: ["product-batches", productId],
     queryFn: async () => {
-      const { data } = await api.get(`/products/${id}/batches/available`);
+      const { data } = await api.get(`/products/${productId}/batches/available`);
       return data.data;
     },
-    enabled: isProductLoaded, 
+    
+    enabled: isProductLoaded && !!productId,
   });
 
   
   const movementsQuery = useQuery<StockMovement[], any>({
-    queryKey: ["product-movements", id],
+    queryKey: ["product-movements", productId],
     queryFn: async () => {
-      const { data } = await api.get(`/stock-movements?product_id=${id}`);
+      const { data } = await api.get(`/stock-movements?product_id=${productId}`);
       return data.data;
     },
-    enabled: isProductLoaded, 
+    enabled: isProductLoaded && !!productId,
   });
 
   return {
-    id,
+    id: productId,
     product: ProductData,
     productLoading: isLoading,
     productError: error,
@@ -68,7 +73,7 @@ export function useProductDetails() {
     refetchBatches: batchesQuery.refetch,
 
     t,
-    
+
     movements: movementsQuery.data || [],
     movementsLoading: movementsQuery.isLoading,
     movementsError: movementsQuery.isError,

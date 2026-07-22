@@ -13,14 +13,27 @@ export function useSuppliers() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["suppliers", page, searchQuery],
     queryFn: async () => {
-      const response = await api.get(`/suppliers`, {
-        params: {
-          page,
-          search: searchQuery,
-          with_trashed: 1,
-        },
-      });
-      return response.data;
+      try {
+        const response = await api.get(`/suppliers`, {
+          params: { page, search: searchQuery, with_trashed: 1 },
+        });
+
+        if (page === 1 && !searchQuery && response.data?.data) {
+          localStorage.setItem(
+            "cached_suppliers",
+            JSON.stringify(response.data.data),
+          );
+        }
+
+        return response.data;
+      } catch (err) {
+        const localData = localStorage.getItem("cached_suppliers");
+        if (localData) {
+          console.warn("Using offline cached suppliers due to network error.");
+          return { data: JSON.parse(localData), meta: null };
+        }
+        throw err;
+      }
     },
     staleTime: 1000 * 60 * 5,
   });

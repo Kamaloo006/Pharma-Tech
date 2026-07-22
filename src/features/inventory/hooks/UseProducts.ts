@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";  
-import type { AddProductInput, ProductFilters, ProductsResponse } from "../types/Product";
+import type { AddProductInput, ProductDetails, ProductFilters, ProductsResponse } from "../types/Product";
 
 
 
@@ -11,7 +11,6 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
     per_page: filters.per_page,
   };
 
-  // console.log(filters)
 
   if (filters.search) params.search = filters.search;
   if (filters.category_id && filters.category_id !== "all") params.category_id = filters.category_id;
@@ -39,18 +38,37 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductsResp
   if (filters.sort_by && filters.sort_by !== "") params.sort_by = filters.sort_by;
 
   const { data } = await api.get<ProductsResponse>("/products", { params });
-  console.log(data)
+  console.log("product data", data )
   return data;
 };
 
-export const useProducts = (filters: ProductFilters) => {
+export const useProducts = (filters: ProductFilters, enabled = true) => {
   return useQuery<ProductsResponse, Error>({
     queryKey: ["products", filters],
     queryFn: () => getProducts(filters),
-    staleTime: 1000 * 30, 
-    placeholderData: (previousData) => previousData, 
+    enabled,
+    staleTime: 1000 * 60 * 5, 
+    gcTime: 1000 * 60 * 10,    
+    placeholderData: keepPreviousData, 
   });
 };
+
+export function useFetchProductDetailsOnSelect() {
+  const queryClient = useQueryClient();
+
+  const fetchDetails = async (productId: number): Promise<ProductDetails> => {
+    // 1. يكتشف أولاً إن كانت التفاصيل كاش مسبقاً في React Query
+    const cachedData = queryClient.getQueryData<ProductDetails>(["product-details", productId]);
+    if (cachedData) return cachedData;
+
+    // 2. إذا لم تكن موجودة يجلبها فوراً من الـ API
+    const { data } = await api.get(`/products/${productId}`);
+    console.log("preftech products", data)
+    return data.data;
+  };
+
+  return { fetchDetails };
+}
 
 export const usePrefetchProducts = () => {
   const queryClient = useQueryClient();

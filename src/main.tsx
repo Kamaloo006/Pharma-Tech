@@ -1,4 +1,4 @@
-import { StrictMode, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import {
   Navigate,
@@ -35,11 +35,14 @@ import ProductDetailsPage from "./pages/dashboard/ProductDetailsPage.tsx";
 
 import Suppliers from "./pages/dashboard/Suppliers.tsx";
 import Cashbox from "./pages/dashboard/Cashbox.tsx";
+import PurchaseInvoiceList from "./pages/dashboard/PurchaseInvoiceList.tsx";
+import CreatePurchaseInvoice from "./pages/dashboard/CreatePurchaseInvoice.tsx";
+import PurchaseInvoiceDetails from "./pages/dashboard/PurchaseInvoiceDetails.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1,
+      retry: 0,
       refetchOnWindowFocus: false,
     },
   },
@@ -96,6 +99,18 @@ const router = createBrowserRouter([
             path: "cashbox",
             element: <Cashbox />,
           },
+          {
+            path: "purchases",
+            element: <PurchaseInvoiceList />,
+          },
+          {
+            path: "purchases/new",
+            element: <CreatePurchaseInvoice />,
+          },
+          {
+            path: "purchase-details",
+            element: <PurchaseInvoiceDetails />,
+          },
         ],
       },
     ],
@@ -120,16 +135,14 @@ function GoogleAuthProvider({ children }: { children: ReactNode }) {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <GoogleAuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-            <RouterProvider router={router} />
-            <Toaster position="top-center" />
-          </ThemeProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </GoogleAuthProvider>
-  </StrictMode>,
+  <GoogleAuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <RouterProvider router={router} />
+          <Toaster position="top-center" />
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </GoogleAuthProvider>,
 );
