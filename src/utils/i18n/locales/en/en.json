@@ -226,7 +226,9 @@
         "enterprise": "Enterprise",
         "profileSettings": "Profile Settings",
         "logOut": "Log out",
-        "cashbox": "Cashbox"
+        "cashbox": "Cashbox",
+        "purchases": "Purchases Invoices",
+        "newPurchase":"Create Purchase Invoice"
     },
   "dashboard":{
         "addProduct": "Add Product",

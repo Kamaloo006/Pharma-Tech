@@ -8,7 +8,9 @@ import {
   ChevronRight,
   ChevronsUpDown,
   LogOut,
-  DollarSign, // 🟢 إضافة أيقونة تسجيل الخروج للمظهر الجمالي
+  DollarSign,
+  ReceiptText,
+  NotebookPen,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -52,15 +54,25 @@ export default function AppSidebar() {
           url: "/dashboard",
         },
         {
-          title: t("sidebar.inventory"),
-          icon: Boxes,
-          url: "/dashboard/inventory",
+          title: t("sidebar.purchases"),
+          icon: ReceiptText,
+          url: "/dashboard/purchases",
+        },
+        {
+          title: t("sidebar.newPurchase"),
+          icon: NotebookPen,
+          url: "/dashboard/purchases/new",
         },
       ],
     },
     {
       label: t("sidebar.management"),
       items: [
+        {
+          title: t("sidebar.inventory"),
+          icon: Boxes,
+          url: "/dashboard/inventory",
+        },
         {
           title: t("sidebar.suppliers"),
           icon: Users,
