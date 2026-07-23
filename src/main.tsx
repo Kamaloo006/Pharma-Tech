@@ -108,7 +108,7 @@ const router = createBrowserRouter([
             element: <CreatePurchaseInvoice />,
           },
           {
-            path: "purchase-details",
+            path: "purchase-details/:id",
             element: <PurchaseInvoiceDetails />,
           },
         ],

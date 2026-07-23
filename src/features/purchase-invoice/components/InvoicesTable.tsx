@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Link } from "react-router-dom";
 
 interface InvoicesTableProps {
   isLoading: boolean;
@@ -36,9 +37,7 @@ export function InvoicesTable({
       <div className="flex flex-col items-center justify-center min-h-75 space-y-4">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <p className="text-xs text-muted-foreground">
-          {isArabic
-            ? "جاري جلب الفواتير من الخادم..."
-            : "Loading invoices from server..."}
+          {isArabic ? "جاري جلب الفواتير..." : "Loading invoices..."}
         </p>
       </div>
     );
@@ -64,7 +63,11 @@ export function InvoicesTable({
 
   return (
     <div
-      className={`transition-all duration-200 ${showFilterLoading ? "opacity-60 pointer-events-none filter blur-[0.5px]" : "opacity-100"}`}
+      className={`transition-all duration-200 ${
+        showFilterLoading
+          ? "opacity-60 pointer-events-none filter blur-[0.5px]"
+          : "opacity-100"
+      }`}
     >
       <div className="overflow-x-auto">
         <Table className="text-xs">
@@ -192,14 +195,16 @@ export function InvoicesTable({
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 hover:bg-muted"
-                      title={isArabic ? "عرض التفاصيل" : "View Details"}
-                    >
-                      <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
-                    </Button>
+                    <Link to={`/dashboard/purchase-details/${invoice.id}`}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 hover:bg-muted"
+                        title={isArabic ? "عرض التفاصيل" : "View Details"}
+                      >
+                        <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))

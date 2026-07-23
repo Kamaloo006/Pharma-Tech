@@ -226,7 +226,7 @@ export function useCreatePurchaseInvoice() {
       alert(
         isArabic ? "تم إتمام وحفظ الفاتورة بنجاح" : "Invoice saved successfully"
       );
-      navigate("/dashboard/purchase-invoices");
+      navigate("/dashboard/purchases");
     },
     onError: (error: any) => {
       const errorMsg =

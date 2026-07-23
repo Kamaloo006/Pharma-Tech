@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { type InvoiceItem } from "../types/purchase-invoice";
+import { type InvoiceItem } from "../../types/purchase-invoice";
 
 interface InvoiceItemsTableProps {
   isArabic: boolean;

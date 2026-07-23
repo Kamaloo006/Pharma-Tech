@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CreditCard, DollarSign, Save } from "lucide-react";
+import type { PurchaseInvoice } from "../../types/purchase-invoice";
 
 interface PaymentDetailsCardProps {
   isArabic: boolean;
