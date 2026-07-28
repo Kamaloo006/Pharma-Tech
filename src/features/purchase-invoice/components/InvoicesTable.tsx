@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Loader2, AlertCircle, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Link } from "react-router-dom";
 
 interface InvoicesTableProps {
   isLoading: boolean;
@@ -16,7 +18,6 @@ interface InvoicesTableProps {
   invoices: any[];
   showFilterLoading: boolean;
   refetch: () => void;
-  isArabic: boolean;
   formatDate: (date: string) => string;
   formatCurrency: (amount: number) => string;
 }
@@ -27,18 +28,17 @@ export function InvoicesTable({
   invoices,
   showFilterLoading,
   refetch,
-  isArabic,
   formatDate,
   formatCurrency,
 }: InvoicesTableProps) {
+  const { t } = useTranslation();
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-75 space-y-4">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <p className="text-xs text-muted-foreground">
-          {isArabic
-            ? "جاري جلب الفواتير من الخادم..."
-            : "Loading invoices from server..."}
+          {t("purchaseInvoice.table.loading")}
         </p>
       </div>
     );
@@ -49,14 +49,14 @@ export function InvoicesTable({
       <div className="flex flex-col items-center justify-center min-h-75 text-center p-6">
         <AlertCircle className="h-10 w-10 text-destructive mb-2" />
         <p className="text-xs font-bold text-foreground">
-          {isArabic ? "فشل تحديث البيانات" : "Failed to load data"}
+          {t("purchaseInvoice.table.error")}
         </p>
         <Button
           onClick={() => refetch()}
           variant="outline"
           className="h-8 text-[11px] font-bold mt-3"
         >
-          {isArabic ? "إعادة المحاولة" : "Retry"}
+          {t("common.retry")}
         </Button>
       </div>
     );
@@ -64,41 +64,45 @@ export function InvoicesTable({
 
   return (
     <div
-      className={`transition-all duration-200 ${showFilterLoading ? "opacity-60 pointer-events-none filter blur-[0.5px]" : "opacity-100"}`}
+      className={`transition-all duration-200 ${
+        showFilterLoading
+          ? "opacity-60 pointer-events-none filter blur-[0.5px]"
+          : "opacity-100"
+      }`}
     >
       <div className="overflow-x-auto">
         <Table className="text-xs">
           <TableHeader className="bg-muted/10">
             <TableRow className="border-b border-border/65">
-              <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {isArabic ? "رقم الفاتورة" : "Invoice No."}
+              <TableHead className="text-start">
+                {t("purchaseInvoice.table.invoiceNo")}
               </TableHead>
-              <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {isArabic ? "المورد" : "Supplier"}
-              </TableHead>
-              <TableHead className="text-center">
-                {isArabic ? "تاريخ الفاتورة" : "Date"}
+              <TableHead className="text-start">
+                {t("purchaseInvoice.table.supplier")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "المجموع الكلي" : "Grand Total"}
+                {t("purchaseInvoice.table.date")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "المدفوع" : "Amount Paid"}
+                {t("purchaseInvoice.table.grandTotal")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "المتبقي" : "Amount Due"}
+                {t("purchaseInvoice.table.amountPaid")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "طريقة الدفع" : "Payment Method"}
+                {t("purchaseInvoice.table.amountDue")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "حالة الدفع" : "Payment Status"}
+                {t("purchaseInvoice.table.paymentMethod")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "الحالة" : "Status"}
+                {t("purchaseInvoice.table.paymentStatus")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "خيارات" : "Actions"}
+                {t("purchaseInvoice.table.status")}
+              </TableHead>
+              <TableHead className="text-center">
+                {t("purchaseInvoice.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -109,9 +113,7 @@ export function InvoicesTable({
                   colSpan={10}
                   className="text-center py-12 text-muted-foreground font-semibold"
                 >
-                  {isArabic
-                    ? "لم نجد أي فواتير تطابق الفلاتر النشطة حالياً."
-                    : "No invoices match your selected filters."}
+                  {t("purchaseInvoice.table.noData")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -147,12 +149,8 @@ export function InvoicesTable({
                   </TableCell>
                   <TableCell className="text-center font-semibold capitalize text-muted-foreground">
                     {invoice.payment_method === "debt"
-                      ? isArabic
-                        ? "ذمم / دين"
-                        : "Debt"
-                      : isArabic
-                        ? "نقدي"
-                        : "Cash"}
+                      ? t("purchaseInvoice.paymentMethod.debt")
+                      : t("purchaseInvoice.paymentMethod.cash")}
                   </TableCell>
                   <TableCell className="text-center">
                     <Badge
@@ -166,11 +164,11 @@ export function InvoicesTable({
                       }`}
                     >
                       {invoice.payment_status === "paid" &&
-                        (isArabic ? "مدفوعة" : "Paid")}
+                        t("purchaseInvoice.paymentStatus.paid")}
                       {invoice.payment_status === "partial" &&
-                        (isArabic ? "دفع جزئي" : "Partial")}
+                        t("purchaseInvoice.paymentStatus.partial")}
                       {invoice.payment_status === "unpaid" &&
-                        (isArabic ? "غير مدفوعة" : "Unpaid")}
+                        t("purchaseInvoice.paymentStatus.unpaid")}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">
@@ -183,23 +181,21 @@ export function InvoicesTable({
                       }`}
                     >
                       {invoice.status === "completed"
-                        ? isArabic
-                          ? "مرحّلة"
-                          : "Completed"
-                        : isArabic
-                          ? "ملغاة"
-                          : "Cancelled"}
+                        ? t("purchaseInvoice.status.completed")
+                        : t("purchaseInvoice.status.cancelled")}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 hover:bg-muted"
-                      title={isArabic ? "عرض التفاصيل" : "View Details"}
-                    >
-                      <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
-                    </Button>
+                    <Link to={`/dashboard/purchase-details/${invoice.id}`}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 hover:bg-muted"
+                        title={t("purchaseInvoice.table.viewDetails")}
+                      >
+                        <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))

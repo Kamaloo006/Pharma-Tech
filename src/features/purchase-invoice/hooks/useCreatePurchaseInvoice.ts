@@ -13,6 +13,8 @@ import type {
 import type { Product } from "@/features/inventory/types/Product";
 import type { ProductDetails } from "@/features/inventory/types/Product";
 import api from "@/lib/api";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const createPurchaseInvoiceApi = async (
   payload: CreatePurchaseInvoicePayload
@@ -29,6 +31,8 @@ export function useCreatePurchaseInvoice() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
+
+  const {t} = useTranslation();
 
   // 1. قراءة productId من URL
   const paramProductId = searchParams.get("productId");
@@ -218,15 +222,19 @@ export function useCreatePurchaseInvoice() {
   // React Query Mutation
   const createInvoiceMutation = useMutation({
     mutationFn: createPurchaseInvoiceApi,
+    
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["cashbox"] });
-      queryClient.invalidateQueries({ queryKey: ["purchase-invoices"] });
+      queryClient.invalidateQueries({
+      queryKey: ["purchase-invoices"],
+      refetchType: "all", 
+    });
 
-      alert(
-        isArabic ? "تم إتمام وحفظ الفاتورة بنجاح" : "Invoice saved successfully"
-      );
-      navigate("/dashboard/purchase-invoices");
+      toast.success(t("createPurchase.success"), {
+        description: t("createPurchase.successDescription"),
+      });
+      navigate("/dashboard/purchases");
     },
     onError: (error: any) => {
       const errorMsg =
@@ -234,6 +242,7 @@ export function useCreatePurchaseInvoice() {
         (isArabic ? "حدث خطأ أثناء حفظ الفاتورة" : "Failed to save invoice");
       alert(errorMsg);
     },
+    
   });
 
   const isSaveDisabled =

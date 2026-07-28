@@ -3,6 +3,7 @@ import {
   Controller,
   type UseFormHandleSubmit,
 } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Search, RotateCcw, Filter, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { type InvoiceFilters } from "@/features/purchase-invoice/hooks/usePurchaseInvoices";
+import { type InvoiceFilters } from "../types/purchase-invoice";
 
 interface InvoiceFiltersFormProps {
   control: Control<InvoiceFilters>;
@@ -27,7 +28,6 @@ interface InvoiceFiltersFormProps {
   showFilterLoading: boolean;
   isLoadingSuppliers: boolean;
   suppliers: any[];
-  isArabic: boolean;
   fromDateValue?: string;
 }
 
@@ -43,26 +43,28 @@ export function InvoiceFiltersForm({
   showFilterLoading,
   isLoadingSuppliers,
   suppliers,
-  isArabic,
   fromDateValue,
 }: InvoiceFiltersFormProps) {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="p-4 bg-muted/20 border-b border-border/60 text-start space-y-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="relative w-full md:max-w-xs">
             <Search
-              className={`absolute top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground ${isArabic ? "right-3" : "left-3"}`}
+              className={`absolute top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground ${
+                isRtl ? "right-3" : "left-3"
+              }`}
             />
             <Input
-              placeholder={
-                isArabic
-                  ? "بحث سريع برقم الفاتورة..."
-                  : "Quick search by invoice #..."
-              }
+              placeholder={t("purchaseInvoice.filters.searchPlaceholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={`h-9 text-xs rounded-xl ${isArabic ? "pr-9 pl-4" : "pl-9 pr-4"}`}
+              className={`h-9 text-xs rounded-xl ${
+                isRtl ? "pr-9 pl-4" : "pl-9 pr-4"
+              }`}
             />
           </div>
 
@@ -76,7 +78,7 @@ export function InvoiceFiltersForm({
                 className="h-9 px-3 text-xs font-bold text-destructive hover:bg-destructive/5 gap-1.5 rounded-xl"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
-                <span>{isArabic ? "إعادة ضبط" : "Reset"}</span>
+                <span>{t("purchaseInvoice.filters.reset")}</span>
               </Button>
             )}
 
@@ -90,7 +92,7 @@ export function InvoiceFiltersForm({
               ) : (
                 <Filter className="h-3.5 w-3.5" />
               )}
-              <span>{isArabic ? "تطبيق الفلاتر" : "Apply Filters"}</span>
+              <span>{t("purchaseInvoice.filters.apply")}</span>
             </Button>
           </div>
         </div>
@@ -98,7 +100,7 @@ export function InvoiceFiltersForm({
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-1">
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-muted-foreground">
-              {isArabic ? "المورد" : "Supplier"}
+              {t("purchaseInvoice.filters.supplier")}
             </span>
             <Controller
               name="supplier_id"
@@ -110,7 +112,7 @@ export function InvoiceFiltersForm({
                 >
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
                     <SelectValue
-                      placeholder={isArabic ? "اختر المورد" : "Select Supplier"}
+                      placeholder={t("purchaseInvoice.filters.selectSupplier")}
                     />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border shadow-md">
@@ -119,12 +121,8 @@ export function InvoiceFiltersForm({
                       className="text-xs font-semibold cursor-pointer"
                     >
                       {isLoadingSuppliers
-                        ? isArabic
-                          ? "جاري التحميل..."
-                          : "Loading..."
-                        : isArabic
-                          ? "كل الموردين"
-                          : "All Suppliers"}
+                        ? t("common.loading")
+                        : t("purchaseInvoice.filters.allSuppliers")}
                     </SelectItem>
                     {suppliers.map((s: any) => (
                       <SelectItem
@@ -143,7 +141,7 @@ export function InvoiceFiltersForm({
 
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-muted-foreground">
-              {isArabic ? "حالة الفاتورة" : "Status"}
+              {t("purchaseInvoice.filters.status")}
             </span>
             <Controller
               name="status"
@@ -161,19 +159,19 @@ export function InvoiceFiltersForm({
                       value="all"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "كل الحالات" : "All Statuses"}
+                      {t("purchaseInvoice.filters.allStatuses")}
                     </SelectItem>
                     <SelectItem
                       value="completed"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "مرحلة" : "Completed"}
+                      {t("purchaseInvoice.status.completed")}
                     </SelectItem>
                     <SelectItem
                       value="cancelled"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "ملغاة" : "Cancelled"}
+                      {t("purchaseInvoice.status.cancelled")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -183,7 +181,7 @@ export function InvoiceFiltersForm({
 
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-muted-foreground">
-              {isArabic ? "حالة الدفع" : "Payment"}
+              {t("purchaseInvoice.filters.paymentStatus")}
             </span>
             <Controller
               name="payment_status"
@@ -201,25 +199,25 @@ export function InvoiceFiltersForm({
                       value="all"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "كل الحالات" : "All Payments"}
+                      {t("purchaseInvoice.filters.allPayments")}
                     </SelectItem>
                     <SelectItem
                       value="paid"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "مدفوعة" : "Paid"}
+                      {t("purchaseInvoice.paymentStatus.paid")}
                     </SelectItem>
                     <SelectItem
                       value="partial"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "دفع جزئي" : "Partial"}
+                      {t("purchaseInvoice.paymentStatus.partial")}
                     </SelectItem>
                     <SelectItem
                       value="unpaid"
                       className="text-xs font-semibold cursor-pointer"
                     >
-                      {isArabic ? "غير مدفوعة" : "Unpaid"}
+                      {t("purchaseInvoice.paymentStatus.unpaid")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -229,7 +227,7 @@ export function InvoiceFiltersForm({
 
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-muted-foreground">
-              {isArabic ? "من تاريخ" : "From"}
+              {t("purchaseInvoice.filters.fromDate")}
             </span>
             <Controller
               name="from_date"
@@ -247,7 +245,7 @@ export function InvoiceFiltersForm({
 
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-muted-foreground">
-              {isArabic ? "إلى تاريخ" : "To"}
+              {t("purchaseInvoice.filters.toDate")}
             </span>
             <Controller
               name="to_date"

@@ -11,6 +11,7 @@
         "networkError": "No internet connection. Please check your network.",
         "serverError": "We are facing server issues, please try again later.",
         "loading": "Loading...",
+        "currency": "SYP",
     "cancel": "Cancel",
     "save": "Save Changes",
     "add": "Add"
@@ -635,6 +636,166 @@
       "pagination": {
         "info": "Showing {{from}} to {{to}} of {{total}} transactions"
       }
+    }
+  },
+  "createPurchase":{
+    "successDescription": "Purchase invoice completed and saved successfully",
+    "success": "Purchase invoice created successfully"
+  },
+  "purchaseInvoice": {
+    "header": {
+      "title": "Purchase Invoices",
+      "description": "Manage and track warehouse supply invoices, payments, and debts.",
+      "newInvoice": "New Purchase Invoice"
+    },
+    "filters": {
+      "searchPlaceholder": "Quick search by invoice #...",
+      "reset": "Reset",
+      "apply": "Apply Filters",
+      "supplier": "Supplier",
+      "selectSupplier": "Select Supplier",
+      "allSuppliers": "All Suppliers",
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "paymentStatus": "Payment",
+      "allPayments": "All Payments",
+      "fromDate": "From",
+      "toDate": "To"
+    },
+    "status": {
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "paymentStatus": {
+      "paid": "Paid",
+      "partial": "Partial",
+      "unpaid": "Unpaid"
+    },
+    "paymentMethod": {
+      "cash": "Cash",
+      "debt": "Debt"
+    },
+    "table": {
+      "medicalProduct": "Medical Product",
+      "quantity": "Qty",
+      "buyingPrice": "Buying Price",
+      "tax": "Tax %",
+      "discount": "Discount",
+      "batchNumber": "Batch No.",
+      "expiryDate": "Expiry",
+      "sellingPrice": "Selling Price",
+      "total": "Total",
+      "empty": "No products added to the invoice yet.",
+      "loading": "Loading invoices...",
+      "error": "Failed to load data",
+      "noData": "No invoices match your selected filters.",
+      "invoiceNo": "Invoice No.",
+      "supplier": "Supplier",
+      "date": "Date",
+      "grandTotal": "Grand Total",
+      "amountPaid": "Amount Paid",
+      "amountDue": "Amount Due",
+      "paymentMethod": "Payment Method",
+      "paymentStatus": "Payment Status",
+      "status": "Status",
+      "actions": "Actions",
+      "viewDetails": "View Details"
+    },
+    "summary": {
+      "title": "Invoice Summary",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "tax": "Tax",
+      "grandTotal": "Grand Total"
+    },
+    "alerts": {
+      "cashBoxNotConfiguredTitle": "Cash Box is not configured!",
+      "cashBoxNotConfiguredDesc": "You cannot process cash transactions without configuring an active Cash Box.",
+      "createCashBoxBtn": "Create Cash Box",
+      "duplicateBatchesTitle": "Duplicate Batch Numbers Detected!",
+      "duplicateBatchesDesc": "You've used the batch number ({{batches}}) multiple times in this invoice. Please resolve."
+    },
+    "payment": {
+      "title": "Payment Method & Settlement",
+      "methodLabel": "Payment Method",
+      "methods": {
+        "cash": "Cash",
+        "credit": "Credit Card",
+        "debt": "Debt / Credit"
+      },
+      "amountPaidLabel": "Amount Paid",
+      "amountExceededError": "Amount paid exceeds the invoice total!",
+      "remainingLabel": "Remaining Due:",
+      "statusLabel": "Payment Status:",
+      "saveInvoiceBtn": "Complete & Save Invoice"
+    },
+    "search": {
+      "label": "Search medicine / product by name or barcode",
+      "placeholder": "Search medicine...",
+      "minCharsMessage": "Please type 2 or more characters to search",
+      "searching": "Searching...",
+      "sellingPriceLabel": "Selling Price",
+      "noResults": "No matching products found"
+    },
+    "supplierForm": {
+      "title": "Basic Supplier Information",
+      "supplierLabel": "Supplier *",
+      "requiredNotice": "Required to save invoice",
+      "selectSupplierPlaceholder": "Select invoice supplier",
+      "loadingSuppliers": "Loading suppliers...",
+      "loading": "Loading...",
+      "noSuppliers": "No available suppliers",
+      "invoiceDateLabel": "Invoice Date",
+      "notesLabel": "Invoice Notes",
+      "notesPlaceholder": "Write any notes regarding shipping, payment, or receiving items..."
+    }
+  },
+  "purchaseInvoiceDetails": {
+    "info": {
+      "title": "Invoice Information",
+      "invoiceNumber": "Invoice Number",
+      "supplier": "Supplier",
+      "date": "Date",
+      "createdBy": "Created By",
+      "status": "Status",
+      "statusCompleted": "Completed",
+      "statusCancelled": "Cancelled",
+      "paymentStatus": "Payment Status",
+      "paymentFullyPaid": "Fully Paid",
+      "paymentPartiallyPaid": "Partially Paid",
+      "paymentRefundedUnpaid": "Refunded / Unpaid"
+    },
+    "payment": {
+      "title": "Financial Totals",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "taxValue": "Tax Value",
+      "grandTotal": "Grand Total",
+      "amountPaid": "Amount Paid",
+      "remainingDue": "Remaining Due"
+    },
+    "receivedProducts": {
+      "title": "Received Products",
+      "product": "Product",
+      "qty": "Qty",
+      "buyingPrice": "Buying Price",
+      "tax": "Tax",
+      "discount": "Discount",
+      "sellingPrice": "Selling Price",
+      "total": "Total"
+    },
+    "stockStatus": {
+      "title": "Stock Status",
+      "product": "Product",
+      "qty": "Qty",
+      "units": "units"
+    },
+    "supplierDebt": {
+      "title": "Supplier Debt",
+      "remainingDebt": "Remaining Debt",
+      "status": "Status",
+      "statusOpen": "Open Debt",
+      "openDebtRecord": "Open Supplier Debt"
     }
   }
 }

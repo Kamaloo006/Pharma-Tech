@@ -264,6 +264,7 @@ export default function AddProductModal({
                       </Label>
                       <Input
                         type="number"
+                        min="100"
                         step="0.01"
                         {...register("buying_price")}
                         className={cn(
@@ -283,6 +284,7 @@ export default function AddProductModal({
                         {t("inventory.fields.selling_price")} *
                       </Label>
                       <Input
+                        min="100"
                         type="number"
                         step="0.01"
                         {...register("selling_price")}

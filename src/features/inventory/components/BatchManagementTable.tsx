@@ -1,5 +1,5 @@
 import { MoreVertical, Plus, Trash2, Edit, Printer } from "lucide-react";
-import type { Batch } from "../types/Product";
+import type { Batch } from "../types/Batch";
 import {
   Table,
   TableBody,

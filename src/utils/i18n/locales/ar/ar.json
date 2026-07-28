@@ -11,6 +11,7 @@
         "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
         "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً.",
         "loading": "جاري التحميل...",
+        "currency": "ل.س",
     "cancel": "إلغاء",
     "save": "حفظ التغييرات",
     "add": "إضافة",
@@ -639,5 +640,166 @@
       }
     }
     
+  },
+  "createPurchase":{
+    "successDescription": "تم إتمام وحفظ الفاتورة بنجاح",
+    "success:": "تم إنشاء الفاتورة بنجاح"
+  },
+  "purchaseInvoice": {
+    "header": {
+      "title": "فواتير المشتريات",
+      "description": "إدارة وتتبع فواتير التوريد، المدفوعات والديون للمستودعات.",
+      "newInvoice": "فاتورة مشتريات جديدة"
+    },
+    "filters": {
+      "searchPlaceholder": "بحث سريع برقم الفاتورة...",
+      "reset": "إعادة ضبط",
+      "apply": "تطبيق الفلاتر",
+      "supplier": "المورد",
+      "selectSupplier": "اختر المورد",
+      "allSuppliers": "كل الموردين",
+      "status": "حالة الفاتورة",
+      "allStatuses": "كل الحالات",
+      "paymentStatus": "حالة الدفع",
+      "allPayments": "كل الحالات",
+      "fromDate": "من تاريخ",
+      "toDate": "إلى تاريخ"
+    },
+    "status": {
+      "completed": "مرحّلة",
+      "cancelled": "ملغاة"
+    },
+    "paymentStatus": {
+      "paid": "مدفوعة",
+      "partial": "دفع جزئي",
+      "unpaid": "غير مدفوعة"
+    },
+    "paymentMethod": {
+      "cash": "نقدي",
+      "debt": "ذمم / دين"
+    },
+    "table": {
+      "medicalProduct": "المنتج الطبي",
+      "quantity": "الكمية",
+      "buyingPrice": "سعر الشراء",
+      "tax": "الضريبة %",
+      "discount": "خصم/ق",
+      "batchNumber": "رقم التشغيلة",
+      "expiryDate": "تاريخ الصلاحية",
+      "sellingPrice": "سعر البيع المقترح",
+      "total": "الإجمالي",
+      "empty": "لم تقم بإضافة أي منتج للفاتورة بعد.",
+      "loading": "جاري جلب الفواتير...",
+      "error": "فشل تحديث البيانات",
+      "noData": "لم نجد أي فواتير تطابق الفلاتر النشطة حالياً.",
+      "invoiceNo": "رقم الفاتورة",
+      "supplier": "المورد",
+      "date": "تاريخ الفاتورة",
+      "grandTotal": "المجموع الكلي",
+      "amountPaid": "المدفوع",
+      "amountDue": "المتبقي",
+      "paymentMethod": "طريقة الدفع",
+      "paymentStatus": "حالة الدفع",
+      "status": "الحالة",
+      "actions": "خيارات",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "summary": {
+      "title": "ملخص الحساب اللحظي",
+      "subtotal": "المجموع الفرعي",
+      "discount": "إجمالي الخصم",
+      "tax": "إجمالي الضريبة",
+      "grandTotal": "الإجمالي النهائي"
+    },
+    "alerts": {
+      "cashBoxNotConfiguredTitle": "صندوق النقود غير مهيأ!",
+      "cashBoxNotConfiguredDesc": "لا يمكنك إجراء عمليات دفع نقدية بدون ربط صندوق نقود نشط بالمستخدم الحالي.",
+      "createCashBoxBtn": "إنشاء وتفعيل كاش بوكس",
+      "duplicateBatchesTitle": "تكرار في أرقام التشغيلات (Batch Numbers)",
+      "duplicateBatchesDesc": "لقد قمت بتكرار الرقم ({{batches}}) لأكثر من منتج في هذه الفاتورة. يرجى تعديلها لتفادي التداخل بالصيدلية."
+    },
+    "payment": {
+      "title": "طريقة الدفع والتسديد",
+      "methodLabel": "طريقة الدفع",
+      "methods": {
+        "cash": "نقداً",
+        "credit": "بطاقة/بنك",
+        "debt": "ذمة / أجل"
+      },
+      "amountPaidLabel": "المبلغ المدفوع",
+      "amountExceededError": "المبلغ المدفوع أكبر من إجمالي الفاتورة!",
+      "remainingLabel": "المبلغ المتبقي:",
+      "statusLabel": "حالة الدفع:",
+      "saveInvoiceBtn": "إتمام وحفظ الفاتورة"
+    },
+    "search": {
+      "label": "ابحث عن دواء / منتج بالاسم أو الـ Barcode",
+      "placeholder": "ابحث عن الدواء...",
+      "minCharsMessage": "يرجى كتابة حرفين أو أكثر للبحث",
+      "searching": "جاري البحث...",
+      "sellingPriceLabel": "سعر البيع",
+      "noResults": "لم يتم العثور على أي منتج مطابق للبحث"
+    },
+    "supplierForm": {
+      "title": "معلومات المورد الأساسية",
+      "supplierLabel": "المورد *",
+      "requiredNotice": "مطلوب لحفظ الفاتورة",
+      "selectSupplierPlaceholder": "اختر مورد الفاتورة",
+      "loadingSuppliers": "جاري تحميل الموردين...",
+      "loading": "جاري التحميل...",
+      "noSuppliers": "لا يوجد موردين متاحيين",
+      "invoiceDateLabel": "تاريخ الفاتورة",
+      "notesLabel": "ملاحظات الفاتورة",
+      "notesPlaceholder": "أكتب أي ملاحظات متعلقة بالشحن، الدفع، أو تسلم المنتجات..."
+    }
+  },
+  "purchaseInvoiceDetails": {
+    "info": {
+      "title": "معلومات الفاتورة العامة",
+      "invoiceNumber": "رقم الفاتورة",
+      "supplier": "المورد",
+      "date": "التاريخ",
+      "createdBy": "بواسطة",
+      "status": "الحالة",
+      "statusCompleted": "مكتملة",
+      "statusCancelled": "ملغاة",
+      "paymentStatus": "حالة الدفع",
+      "paymentFullyPaid": "مدفوعة بالكامل",
+      "paymentPartiallyPaid": "دفعة جزئية",
+      "paymentRefundedUnpaid": "مسترجعة / غير مدفوعة"
+    },
+    "payment": {
+      "title": "الملخص المالي",
+      "subtotal": "المجموع الفرعي",
+      "discount": "الخصم",
+      "taxValue": "الضريبة",
+      "grandTotal": "المجموع الكلي",
+      "amountPaid": "المبلغ المدفوع",
+      "remainingDue": "المبلغ المتبقي"
+    },
+    "receivedProducts": {
+      "title": "الأدوية والمنتجات المستلمة",
+      "product": "المنتج",
+      "qty": "الكمية",
+      "buyingPrice": "سعر الشراء",
+      "tax": "الضريبة",
+      "discount": "الخصم",
+      "sellingPrice": "سعر البيع",
+      "total": "الإجمالي"
+    },
+    "stockStatus": {
+      "title": "تأكيد كميات المخزون المضافة",
+      "product": "المنتج",
+      "qty": "الكمية",
+      "units": "وحدة"
+    },
+    "supplierDebt": {
+      "title": "ديون ذمم المورد",
+      "remainingDebt": "إجمالي الدين المترتب",
+      "status": "الحالة",
+      "statusOpen": "قيد المتابعة (مفتوح)",
+      "openDebtRecord": "فتح سجل ذمم المورد"
+    }
   }
+  
 }

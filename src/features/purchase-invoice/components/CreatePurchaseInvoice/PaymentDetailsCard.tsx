@@ -9,9 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CreditCard, DollarSign, Save } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface PaymentDetailsCardProps {
-  isArabic: boolean;
   paymentMethod: "cash" | "credit" | "debt";
   setPaymentMethod: (val: "cash" | "credit" | "debt") => void;
   amountPaid: number;
@@ -25,7 +25,6 @@ interface PaymentDetailsCardProps {
 }
 
 export function PaymentDetailsCard({
-  isArabic,
   paymentMethod,
   setPaymentMethod,
   amountPaid,
@@ -37,19 +36,21 @@ export function PaymentDetailsCard({
   isSaveDisabled,
   onSaveInvoice,
 }: PaymentDetailsCardProps) {
+  const { t } = useTranslation();
+
   return (
     <Card className="border-border bg-card shadow-sm rounded-2xl">
       <CardHeader className="pb-3 border-b border-border/40">
         <CardTitle className="text-sm font-bold flex items-center gap-2">
           <CreditCard className="h-4 w-4 text-primary" />
-          {isArabic ? "طريقة الدفع والتسديد" : "Payment Details"}
+          {t("purchaseInvoice.payment.title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-5 space-y-4">
         {/* اختيار طريقة الدفع */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-muted-foreground">
-            {isArabic ? "طريقة الدفع" : "Payment Method"}
+            {t("purchaseInvoice.payment.methodLabel")}
           </label>
           <Select
             value={paymentMethod}
@@ -64,13 +65,13 @@ export function PaymentDetailsCard({
             </SelectTrigger>
             <SelectContent className="bg-muted border border-border text-foreground">
               <SelectItem value="cash" className="text-xs">
-                {isArabic ? "نقداً (Cash)" : "Cash"}
+                {t("purchaseInvoice.payment.methods.cash")}
               </SelectItem>
               <SelectItem value="credit" className="text-xs">
-                {isArabic ? "بطاقة/بنك (Credit)" : "Credit"}
+                {t("purchaseInvoice.payment.methods.credit")}
               </SelectItem>
               <SelectItem value="debt" className="text-xs">
-                {isArabic ? "ذمة / أجل (Debt)" : "Debt"}
+                {t("purchaseInvoice.payment.methods.debt")}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -79,7 +80,7 @@ export function PaymentDetailsCard({
         {/* المبلغ المدفوع */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-muted-foreground">
-            {isArabic ? "المبلغ المدفوع (Amount Paid)" : "Amount Paid"}
+            {t("purchaseInvoice.payment.amountPaidLabel")}
           </label>
 
           <div className="relative">
@@ -101,10 +102,7 @@ export function PaymentDetailsCard({
           {/* رسالة الخطأ المباشرة */}
           {isAmountPaidExceeded && (
             <p className="text-[11px] font-medium text-destructive mt-1 flex items-center gap-1">
-              ⚠️{" "}
-              {isArabic
-                ? "المبلغ المدفوع أكبر من إجمالي الفاتورة!"
-                : "Amount paid exceeds grand total!"}
+              ⚠️ {t("purchaseInvoice.payment.amountExceededError")}
             </p>
           )}
         </div>
@@ -113,20 +111,20 @@ export function PaymentDetailsCard({
         <div className="p-3.5 bg-muted/50 rounded-xl border border-border/50 space-y-2">
           <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground font-medium">
-              {isArabic ? "المبلغ المتبقي:" : "Remaining:"}
+              {t("purchaseInvoice.payment.remainingLabel")}
             </span>
             <span
               className={`font-extrabold font-mono text-sm ${
                 remainingAmount > 0 ? "text-destructive" : "text-emerald-500"
               }`}
             >
-              {remainingAmount.toFixed(2)} ل.س
+              {remainingAmount.toFixed(2)} {t("common.currency")}
             </span>
           </div>
 
           <div className="flex justify-between items-center text-xs border-t border-border/40 pt-2">
             <span className="text-muted-foreground font-medium">
-              {isArabic ? "حالة الدفع:" : "Payment Status:"}
+              {t("purchaseInvoice.payment.statusLabel")}
             </span>
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary">
               {paymentStatus}
@@ -141,7 +139,7 @@ export function PaymentDetailsCard({
           className="w-full h-11 text-xs font-bold gap-2 shadow-sm mt-2"
         >
           <Save className="h-4 w-4" />
-          {isArabic ? "إتمام وحفظ الفاتورة" : "Save Invoice"}
+          {t("purchaseInvoice.payment.saveInvoiceBtn")}
         </Button>
       </CardContent>
     </Card>

@@ -1,16 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { type PurchaseInvoicesResponse } from "../types/purchase-invoice";
+import { type InvoiceFilters, type PurchaseInvoicesResponse } from "../types/purchase-invoice";
 import api from "@/lib/api";
 
 
-export interface InvoiceFilters {
-  supplier_id?: string;
-  status?: string;
-  search?:string;
-  payment_status?: string;
-  from_date?: string;
-  to_date?: string;
-}
+
 
 const fetchPurchaseInvoices = async (
   page: number = 1,
@@ -22,7 +15,6 @@ const fetchPurchaseInvoices = async (
       ...filters,
     },
   });
-  console.log(data);
   return data;
 };
 

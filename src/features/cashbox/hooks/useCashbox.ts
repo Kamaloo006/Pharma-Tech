@@ -26,7 +26,8 @@ export function useCashBox() {
     retry: (failureCount, error: any) => {
       if (error.response?.status === 404) return false; 
       return failureCount < 2;
-    }
+    },
+    staleTime: 5 * 60 * 1000,
   });
 
   
@@ -80,7 +81,8 @@ export function useCashBoxTransactions(params: TransactionsFilterParams, enabled
       return response.data;
     },
     enabled: enabled,
-    placeholderData: (previousData) => previousData, 
+    staleTime: 5 * 60 * 1000,
+    placeholderData: (previousData) => previousData, // يمنع اختفاء الجدول أثناء الانتقال
   });
 }
 

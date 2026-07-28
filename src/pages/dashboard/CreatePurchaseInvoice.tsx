@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Receipt, Loader2 } from "lucide-react";
 
-import { SupplierForm } from "@/features/purchase-invoice/components/SupplierForm";
-import { LiveAlerts } from "@/features/purchase-invoice/components/LiveAlerts";
-import { ProductSearchPOS } from "@/features/purchase-invoice/components/ProductSearchPOS";
-import { InvoiceItemsTable } from "@/features/purchase-invoice/components/InvoiceItemsTable";
-import { InvoiceSummaryCard } from "@/features/purchase-invoice/components/InvoiceSummaryCard";
-import { PaymentDetailsCard } from "@/features/purchase-invoice/components/PaymentDetailsCard";
+import { SupplierForm } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/SupplierForm";
+import { LiveAlerts } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/LiveAlerts";
+import { ProductSearchPOS } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/ProductSearchPOS";
+import { InvoiceItemsTable } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/InvoiceItemsTable";
+import { InvoiceSummaryCard } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/InvoiceSummaryCard";
+import { PaymentDetailsCard } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/PaymentDetailsCard";
 
 import { useCreatePurchaseInvoice } from "@/features/purchase-invoice/hooks/useCreatePurchaseInvoice";
 

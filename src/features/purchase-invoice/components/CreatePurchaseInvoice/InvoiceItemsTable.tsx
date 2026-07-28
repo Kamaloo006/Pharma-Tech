@@ -9,10 +9,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { type InvoiceItem } from "../types/purchase-invoice";
+import { useTranslation } from "react-i18next";
+import { type InvoiceItem } from "../../types/purchase-invoice";
 
 interface InvoiceItemsTableProps {
-  isArabic: boolean;
   items: InvoiceItem[];
   updateItemField: (
     rowId: string,
@@ -23,11 +23,13 @@ interface InvoiceItemsTableProps {
 }
 
 export function InvoiceItemsTable({
-  isArabic,
   items,
   updateItemField,
   removeItem,
 }: InvoiceItemsTableProps) {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
   return (
     <div className="rounded-xl border border-border/80 overflow-x-auto bg-background/50">
       <Table className="text-xs min-w-237.5">
@@ -36,31 +38,31 @@ export function InvoiceItemsTable({
             <TableHead
               className={`w-40 ${isArabic ? "text-right" : "text-left"}`}
             >
-              {isArabic ? "المنتج الطبي" : "Medical Product"}
+              {t("purchaseInvoice.table.medicalProduct")}
             </TableHead>
             <TableHead className="w-16 text-center">
-              {isArabic ? "الكمية" : "Qty"}
+              {t("purchaseInvoice.table.quantity")}
             </TableHead>
             <TableHead className="w-20 text-center">
-              {isArabic ? "سعر الشراء" : "Buying Price"}
+              {t("purchaseInvoice.table.buyingPrice")}
             </TableHead>
             <TableHead className="w-16 text-center">
-              {isArabic ? "الضريبة %" : "Tax %"}
+              {t("purchaseInvoice.table.tax")}
             </TableHead>
             <TableHead className="w-20 text-center">
-              {isArabic ? "خصم/ق" : "Discount"}
+              {t("purchaseInvoice.table.discount")}
             </TableHead>
             <TableHead className="w-24 text-center">
-              {isArabic ? "رقم التشغيلة" : "Batch No."}
+              {t("purchaseInvoice.table.batchNumber")}
             </TableHead>
             <TableHead className="w-32 text-center">
-              {isArabic ? "تاريخ الصلاحية" : "Expiry"}
+              {t("purchaseInvoice.table.expiryDate")}
             </TableHead>
             <TableHead className="w-20 text-center">
-              {isArabic ? "سعر البيع المقترح" : "Selling Price"}
+              {t("purchaseInvoice.table.sellingPrice")}
             </TableHead>
             <TableHead className="w-24 text-center">
-              {isArabic ? "الإجمالي" : "Total"}
+              {t("purchaseInvoice.table.total")}
             </TableHead>
             <TableHead className="w-10 text-center"></TableHead>
           </TableRow>
@@ -199,7 +201,7 @@ export function InvoiceItemsTable({
                   </TableCell>
 
                   <TableCell className="text-center font-bold text-foreground">
-                    {lineGrandTotal.toFixed(2)} ل.س
+                    {lineGrandTotal.toFixed(2)} {t("common.currency")}
                   </TableCell>
 
                   <TableCell className="p-1 text-center">
@@ -221,9 +223,7 @@ export function InvoiceItemsTable({
                 colSpan={10}
                 className="py-8 text-center text-muted-foreground"
               >
-                {isArabic
-                  ? "لم تقم بإضافة أي منتج للفاتورة بعد."
-                  : "No products added to the invoice yet."}
+                {t("purchaseInvoice.table.empty")}
               </TableCell>
             </TableRow>
           )}

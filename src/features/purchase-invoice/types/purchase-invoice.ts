@@ -16,7 +16,24 @@ export interface User {
   created_at: string;
 }
 
+export interface InvoiceFilters {
+  supplier_id?: string;
+  status?: string;
+  search?:string;
+  payment_status?: string;
+  from_date?: string;
+  to_date?: string;
+}
 
+export interface SupplierDebtPayment {
+  id: number;
+  cash_transaction_id: number;
+  amount: number;
+  payment_date: string;
+  notes: string | null;
+  created_by?: User;
+  created_at: string;
+}
 
 export interface SupplierDebt {
   id: number;
@@ -27,6 +44,7 @@ export interface SupplierDebt {
   remaining_amount: number;
   due_date: string | null;
   status: 'paid' | 'partial' | 'unpaid';
+  payments?: SupplierDebtPayment[];
   created_at: string;
   updated_at: string;
 }
@@ -41,7 +59,6 @@ export interface PurchaseInvoiceItemResource {
   line_total: number;
   product?: Product;
 }
-
 
 export interface PurchaseInvoice {
   id: number;
@@ -60,11 +77,10 @@ export interface PurchaseInvoice {
   supplier?: Supplier;
   created_by?: User;
   items?: PurchaseInvoiceItemResource[];
-  supplier_debt: SupplierDebt | null;
+  supplier_debt?: SupplierDebt | null;
   created_at: string;
   updated_at: string;
 }
-
 
 export interface PaginationLinks {
   first: string;
@@ -111,7 +127,6 @@ export interface InvoiceItem {
   expiry_date: string;
   selling_price: number;
 }
-
 
 export interface CreatePurchaseInvoicePayload {
   supplier_id: number;
