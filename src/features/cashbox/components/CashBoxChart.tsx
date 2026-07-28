@@ -123,26 +123,24 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
             </p>
           </div>
         </div>
-
-        {/* قائمة الاختيار من شاد سي إن */}
         <div className="w-32.5">
           <Select
             value={period}
             onValueChange={(value: "month" | "week") => setPeriod(value)}
           >
-            <SelectTrigger className="h-9 text-xs bg-background border-border text-foreground w-full">
+            <SelectTrigger className="h-9 text-xs   text-foreground w-full">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-emerald-500 border border-border text-foreground z-50 shadow-xl">
+            <SelectContent className="bg-muted/50 border border-border text-foreground z-50 shadow-xl">
               <SelectItem
                 value="month"
-                className="focus:bg-muted focus:text-foreground cursor-pointer text-xs"
+                className="focus:bg-muted focus:text-foreground hover:bg-muted/80 cursor-pointer text-xs"
               >
                 {t("cashbox.chart.periods.month")}
               </SelectItem>
               <SelectItem
                 value="week"
-                className="focus:bg-muted focus:text-foreground cursor-pointer text-xs"
+                className="focus:bg-muted focus:text-foreground hover:bg-muted/80 cursor-pointer text-xs"
               >
                 {t("cashbox.chart.periods.week")}
               </SelectItem>

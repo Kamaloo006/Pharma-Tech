@@ -26,7 +26,6 @@ import {
   useCancelPurchaseInvoice,
 } from "@/features/purchase-invoice/hooks/usePurchaseInvoiceDetails";
 
-// استدعاء المكونات الفرعية المنفصلة
 import { InvoiceInfoCard } from "@/features/purchase-invoice/components/PurchaseInvoiceDetails/InvoiceInfoCard";
 import { ReceivedProductsCard } from "@/features/purchase-invoice/components/PurchaseInvoiceDetails/ReceivedProductsCard";
 import { SupplierDebtCard } from "@/features/purchase-invoice/components/PurchaseInvoiceDetails/SupplierDebtCard";

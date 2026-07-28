@@ -639,5 +639,9 @@
       }
     }
     
+  },
+  "createPurchase":{
+    "successDescription": "تم إتمام وحفظ الفاتورة بنجاح",
+    "success:": "تم إنشاء الفاتورة بنجاح"
   }
 }

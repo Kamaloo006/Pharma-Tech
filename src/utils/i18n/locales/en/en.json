@@ -636,5 +636,9 @@
         "info": "Showing {{from}} to {{to}} of {{total}} transactions"
       }
     }
+  },
+  "createPurchase":{
+    "successDescription": "Purchase invoice completed and saved successfully",
+    "success": "Purchase invoice created successfully"
   }
 }

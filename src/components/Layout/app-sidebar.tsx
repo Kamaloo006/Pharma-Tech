@@ -34,7 +34,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import clsx from "clsx";
-import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 export default function AppSidebar() {
@@ -44,6 +43,7 @@ export default function AppSidebar() {
   const isArabic = i18n.language === "ar";
   const navigate = useNavigate();
   const { user, logout, pharmacy } = useAuth();
+
   const navigationGroups = [
     {
       label: t("sidebar.mainMenu"),
@@ -87,11 +87,6 @@ export default function AppSidebar() {
     },
   ];
 
-  useEffect(() => {
-    console.log(pharmacy);
-    open && !isMobile && toggleSidebar();
-  }, []);
-
   const handleLogout = () => {
     logout();
     navigate("/login/pharmacist");
@@ -99,22 +94,23 @@ export default function AppSidebar() {
 
   return (
     <>
+      {/* الـ Overlay والـ Blur للشاشات الكبيرة كما طلبته */}
       {open && !isMobile && (
         <button
           type="button"
           aria-label={t("header.closeSidebar")}
           onClick={toggleSidebar}
-          className="fixed inset-0 z-40 hidden bg-black/10 backdrop-blur-md md:block"
+          className="fixed inset-0 z-40 hidden bg-black/10 backdrop-blur-md transition-all duration-300 md:block"
         />
       )}
+
       <Sidebar
         collapsible="icon"
         side={isArabic ? "right" : "left"}
-        className="z-50 border-r border-sidebar-border/80 bg-sidebar text-sidebar-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_50px_rgba(2,6,23,0.28)]"
+        className="z-50 border-r border-sidebar-border/80 bg-sidebar text-sidebar-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_50px_rgba(2,6,23,0.28)] transition-transform duration-300 ease-in-out"
       >
-        {/* 1️⃣ Header */}
         <SidebarHeader className="border-b border-sidebar-border/70 px-3 py-3">
-          {open ? (
+          {open || isMobile ? (
             <div
               dir={isArabic ? "rtl" : "ltr"}
               className="flex w-full items-center gap-2 rounded-full border border-sidebar-border/70 bg-background/5 px-2 py-2 backdrop-blur-sm"
@@ -161,11 +157,10 @@ export default function AppSidebar() {
           )}
         </SidebarHeader>
 
-        {/* 2️⃣ Content (Sidebar Items) */}
         <SidebarContent className="px-2 py-3">
           {navigationGroups.map((group, index) => (
             <SidebarGroup key={index} className="px-0 py-1">
-              {open && (
+              {(open || isMobile) && (
                 <SidebarGroupLabel
                   className="px-3 flex text-[11px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/45"
                   dir={isArabic ? "rtl" : "ltr"}
@@ -182,7 +177,7 @@ export default function AppSidebar() {
                       tooltip={item.title}
                       className={clsx(
                         "group h-11 rounded-2xl px-3 text-sm font-medium text-sidebar-foreground/75 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-foreground data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20",
-                        !open && "justify-center",
+                        !open && !isMobile && "justify-center",
                       )}
                     >
                       <Link
@@ -190,11 +185,15 @@ export default function AppSidebar() {
                         dir={isArabic ? "rtl" : "ltr"}
                         className={clsx(
                           "flex w-full items-center",
-                          open ? "gap-3 justify-start" : "justify-center",
+                          open || isMobile
+                            ? "gap-3 justify-start"
+                            : "justify-center",
                         )}
                       >
                         <item.icon className="size-4 shrink-0" />
-                        {open && <span className="truncate">{item.title}</span>}
+                        {(open || isMobile) && (
+                          <span className="truncate">{item.title}</span>
+                        )}
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -204,7 +203,6 @@ export default function AppSidebar() {
           ))}
         </SidebarContent>
 
-        {/* 3️⃣ Footer */}
         <SidebarFooter className="border-t border-sidebar-border/70 p-3">
           <SidebarMenu>
             <SidebarMenuItem>
@@ -214,14 +212,16 @@ export default function AppSidebar() {
                     size="lg"
                     className={clsx(
                       "h-auto w-full rounded-2xl border border-sidebar-border/70 bg-background/5 p-2 transition-colors hover:bg-sidebar-accent/60",
-                      !open && "justify-center",
+                      !open && !isMobile && "justify-center",
                     )}
                   >
                     <div
                       dir={isArabic ? "rtl" : "ltr"}
                       className={clsx(
                         "flex min-w-0 flex-1 items-center overflow-hidden",
-                        open ? "gap-3 justify-start" : "justify-center",
+                        open || isMobile
+                          ? "gap-3 justify-start"
+                          : "justify-center",
                       )}
                     >
                       <Avatar className="size-10 shrink-0 border border-sidebar-border/70">
@@ -235,7 +235,7 @@ export default function AppSidebar() {
                             : "PM"}
                         </AvatarFallback>
                       </Avatar>
-                      {open && (
+                      {(open || isMobile) && (
                         <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                           <span className="truncate text-sm font-semibold text-sidebar-foreground">
                             {user?.first_name}
@@ -246,7 +246,7 @@ export default function AppSidebar() {
                         </div>
                       )}
                     </div>
-                    {open && (
+                    {(open || isMobile) && (
                       <ChevronsUpDown className="size-4 shrink-0 text-sidebar-foreground/55" />
                     )}
                   </SidebarMenuButton>
@@ -263,13 +263,12 @@ export default function AppSidebar() {
                     <span>{t("sidebar.profileSettings")}</span>
                   </DropdownMenuItem>
 
-                  {/* 🟢 تعديل زر تسجيل الخروج ليكون متوافقاً مع shadcn/ui وتجربة الاستخدام */}
                   <DropdownMenuItem
                     dir={isArabic ? "rtl" : "ltr"}
-                    onClick={handleLogout} // 👈 تم نقل الاستدعاء إلى الحاوية الرئيسية مباشرة لمساحة ضغط كاملة
+                    onClick={handleLogout}
                     className="cursor-pointer gap-2 rounded-xl text-red-500 focus:bg-red-500/10 focus:text-red-500"
                   >
-                    <LogOut className="size-4" /> {/* 👈 إضافة الأيقونة */}
+                    <LogOut className="size-4" />
                     <span>{t("sidebar.logOut")}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>

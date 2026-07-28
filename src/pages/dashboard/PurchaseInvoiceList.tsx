@@ -3,10 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
 
-import {
-  usePurchaseInvoices,
-  type InvoiceFilters,
-} from "@/features/purchase-invoice/hooks/usePurchaseInvoices";
+import { usePurchaseInvoices } from "@/features/purchase-invoice/hooks/usePurchaseInvoices";
+import { type InvoiceFilters } from "@/features/purchase-invoice/types/purchase-invoice";
 import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
 
 import { InvoiceHeader } from "@/features/purchase-invoice/components/InvoiceHeader";

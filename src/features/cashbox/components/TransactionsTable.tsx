@@ -1,5 +1,5 @@
 // features/finance/components/TransactionsTable.tsx
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -49,7 +49,6 @@ export default function TransactionsTable({
     manual_out: "bg-orange-500/10 text-orange-400 border-orange-500/20",
   };
 
-  // مخرجات المفاتيح المتوافقة مع هيكل ملف الترجمة json
   const TRANSACTION_TRANSLATION_KEYS: Record<string, string> = {
     sale_in: "saleIn",
     purchase_out: "purchaseOut",
@@ -65,32 +64,21 @@ export default function TransactionsTable({
     useState<TransactionsFilterParams>({
       ...defaultFilters,
     });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { data, isLoading: isQueryLoading } = useCashBoxTransactions(
+  // نستخدم isFetching لمعرفة حالة التحميل أثناء الانتقال بين الصفحات والفلاتر
+  const { data, isFetching, isLoading } = useCashBoxTransactions(
     appliedFilters,
     !!cashBoxId,
   );
 
-  const isCombinedLoading = isQueryLoading || isSubmitting;
-
-  useEffect(() => {
-    if (!isQueryLoading) {
-      setIsSubmitting(false);
-    }
-  }, [isQueryLoading]);
-
   const handleFilterApply = (newFilters: TransactionsFilterParams) => {
-    setIsSubmitting(true);
     setAppliedFilters({
       ...newFilters,
       page: 1,
     });
-    setTimeout(() => setIsSubmitting(false), 400);
   };
 
   const handlePageChange = (newPage: number) => {
-    setIsSubmitting(true);
     setAppliedFilters((prev) => ({ ...prev, page: newPage }));
   };
 
@@ -99,16 +87,17 @@ export default function TransactionsTable({
 
   return (
     <div className="p-6 rounded-2xl border border-border bg-card shadow-sm space-y-6">
-      {/* استدعاء مكون الفلاتر المفصول */}
+      {/* مكون الفلاتر */}
       <TransactionsFilters
         defaultFilters={defaultFilters}
-        isLoading={isCombinedLoading}
+        isLoading={isFetching}
         onApply={handleFilterApply}
       />
 
-      {/* قسم جدول الحركات (Shadcn Table) */}
+      {/* قسم جدول الحركات */}
       <div className="overflow-x-auto rounded-xl border border-border bg-background relative min-h-50">
-        {isCombinedLoading && (
+        {/* مؤشر التحميل يعمل بدقة أثناء جلب الصفحة الجديدة دون تعليق */}
+        {isFetching && (
           <div className="absolute inset-0 bg-background/60 backdrop-blur-[1px] flex items-center justify-center z-10 transition-all">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
           </div>
@@ -156,7 +145,7 @@ export default function TransactionsTable({
           </TableHeader>
 
           <TableBody className="text-foreground font-medium text-xs">
-            {transactions.length === 0 ? (
+            {!isLoading && transactions.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={7}
@@ -177,7 +166,9 @@ export default function TransactionsTable({
                     className="hover:bg-muted/30 transition-colors"
                   >
                     <TableCell
-                      className={`p-4 font-mono text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}
+                      className={`p-4 font-mono text-muted-foreground ${
+                        isArabic ? "text-right" : "text-left"
+                      }`}
                     >
                       {new Date(tx.transaction_time).toLocaleString(
                         isArabic ? "ar-EG" : "en-US",
@@ -200,7 +191,9 @@ export default function TransactionsTable({
                       </span>
                     </TableCell>
                     <TableCell
-                      className={`p-4 font-mono font-bold ${isArabic ? "text-right" : "text-left"} ${!isOut ? "text-emerald-400" : "text-destructive"}`}
+                      className={`p-4 font-mono font-bold ${
+                        isArabic ? "text-right" : "text-left"
+                      } ${!isOut ? "text-emerald-400" : "text-destructive"}`}
                     >
                       {!isOut
                         ? `+${tx.amount.toLocaleString()}`
@@ -208,7 +201,11 @@ export default function TransactionsTable({
                     </TableCell>
                     <TableCell>
                       <span
-                        className={`p-1 px-2 rounded-md font-mono text-[11px] font-semibold ${tx.balance_after !== null ? "bg-muted/20 text-muted-foreground" : "bg-destructive/10 text-destructive"}`}
+                        className={`p-1 px-2 rounded-md font-mono text-[11px] font-semibold ${
+                          tx.balance_after !== null
+                            ? "bg-muted/20 text-muted-foreground"
+                            : "bg-destructive/10 text-destructive"
+                        }`}
                       >
                         {tx.balance_after !== null
                           ? tx.balance_after.toLocaleString()
@@ -216,7 +213,9 @@ export default function TransactionsTable({
                       </span>
                     </TableCell>
                     <TableCell
-                      className={`p-4 font-mono text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}
+                      className={`p-4 font-mono text-muted-foreground ${
+                        isArabic ? "text-right" : "text-left"
+                      }`}
                     >
                       {tx.reference_type} (#{tx.reference_id})
                     </TableCell>
@@ -228,7 +227,9 @@ export default function TransactionsTable({
                         : "—"}
                     </TableCell>
                     <TableCell
-                      className={`p-4 text-muted-foreground max-w-xs truncate ${isArabic ? "text-right" : "text-left"}`}
+                      className={`p-4 text-muted-foreground max-w-xs truncate ${
+                        isArabic ? "text-right" : "text-left"
+                      }`}
                     >
                       {tx.notes || "—"}
                     </TableCell>
@@ -240,7 +241,7 @@ export default function TransactionsTable({
         </Table>
       </div>
 
-      {/* الـ Pagination */}
+      {/* Pagination */}
       {meta && meta.last_page > 1 && (
         <div
           className="flex items-center justify-between border-t border-border/60 pt-4"
@@ -262,7 +263,7 @@ export default function TransactionsTable({
               size="icon"
               className="h-8 w-8"
               onClick={() => handlePageChange(meta.current_page - 1)}
-              disabled={meta.current_page === 1 || isCombinedLoading}
+              disabled={meta.current_page === 1 || isFetching}
             >
               {isArabic ? (
                 <ChevronRight className="h-4 w-4" />
@@ -280,9 +281,7 @@ export default function TransactionsTable({
               size="icon"
               className="h-8 w-8"
               onClick={() => handlePageChange(meta.current_page + 1)}
-              disabled={
-                meta.current_page === meta.last_page || isCombinedLoading
-              }
+              disabled={meta.current_page === meta.last_page || isFetching}
             >
               {isArabic ? (
                 <ChevronLeft className="h-4 w-4" />

@@ -133,8 +133,6 @@ export default function InventoryTable({
         <TableBody>
           {products.length > 0 ? (
             products.map((med) => {
-              // const displayName =
-              //   isArabic && med.ar_name ? med.ar_name : med.brand_name;
               let statusLabel = t("inventory.stock_status.available");
               let statusClass =
                 "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
@@ -298,22 +296,25 @@ export default function InventoryTable({
                           <MoreVertical className="size-3.5" />
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-40">
+                      <DropdownMenuContent
+                        align="end"
+                        className="w-40 bg-muted/20 backdrop-blur-sm border border-border/60 text-xs"
+                      >
                         <Link to={`/dashboard/product-details/${med.id}`}>
-                          <DropdownMenuItem className="cursor-pointer gap-2">
+                          <DropdownMenuItem className="cursor-pointer gap-2 hover:bg-muted/70">
                             <Eye className="size-3.5 text-muted-foreground" />
                             <span>{t("inventory.showDetails")}</span>
                           </DropdownMenuItem>
                         </Link>
                         <Link to={`/dashboard/products/${med.id}/batches`}>
-                          <DropdownMenuItem className="cursor-pointer gap-2">
+                          <DropdownMenuItem className="cursor-pointer gap-2 hover:bg-muted/70">
                             <Package className="size-3.5 text-muted-foreground" />
                             <span>{t("inventory.manageBatches")}</span>
                           </DropdownMenuItem>
                         </Link>
 
                         <DropdownMenuItem
-                          className="cursor-pointer gap-2"
+                          className="cursor-pointer gap-2 hover:bg-muted/70"
                           onClick={() => onEdit(med)}
                         >
                           <Pencil className="size-3.5 text-muted-foreground" />
@@ -325,7 +326,7 @@ export default function InventoryTable({
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <DropdownMenuItem
-                              className="cursor-pointer gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
+                              className="cursor-pointer gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive hover:bg-muted/70"
                               onSelect={(e) => e.preventDefault()}
                             >
                               <Trash2 className="size-3.5" />
