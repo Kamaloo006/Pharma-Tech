@@ -1,9 +1,9 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, ExternalLink } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface LiveAlertsProps {
-  isArabic: boolean;
   paymentMethod: string;
   isCashBoxConfigured: boolean;
   hasDuplicateBatches: boolean;
@@ -11,12 +11,13 @@ interface LiveAlertsProps {
 }
 
 export function LiveAlerts({
-  isArabic,
   paymentMethod,
   isCashBoxConfigured,
   hasDuplicateBatches,
   duplicateBatchNumbers,
 }: LiveAlertsProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       {paymentMethod === "cash" && !isCashBoxConfigured && (
@@ -28,14 +29,10 @@ export function LiveAlerts({
             <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" />
             <div>
               <AlertTitle className="text-xs font-bold">
-                {isArabic
-                  ? "صندوق النقود غير مهيأ!"
-                  : "Cash Box is not configured!"}
+                {t("purchaseInvoice.alerts.cashBoxNotConfiguredTitle")}
               </AlertTitle>
               <AlertDescription className="text-[11px] text-destructive-foreground/80 mt-1">
-                {isArabic
-                  ? "لا يمكنك إجراء عمليات دفع نقدية بدون ربط صندوق نقود نشط بالمستخدم الحالي."
-                  : "You cannot process cash transactions without configuring an active Cash Box."}
+                {t("purchaseInvoice.alerts.cashBoxNotConfiguredDesc")}
               </AlertDescription>
             </div>
           </div>
@@ -43,9 +40,7 @@ export function LiveAlerts({
             variant="destructive"
             className="h-9 text-xs font-bold gap-1.5 self-start md:self-auto shadow-sm"
           >
-            <span>
-              {isArabic ? "إنشاء وتفعيل كاش بوكس" : "Create Cash Box"}
-            </span>
+            <span>{t("purchaseInvoice.alerts.createCashBoxBtn")}</span>
             <ExternalLink className="h-3 w-3" />
           </Button>
         </Alert>
@@ -57,14 +52,12 @@ export function LiveAlerts({
             <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" />
             <div>
               <AlertTitle className="text-xs font-bold">
-                {isArabic
-                  ? "تكرار في أرقام التشغيلات (Batch Numbers)"
-                  : "Duplicate Batch Numbers Detected!"}
+                {t("purchaseInvoice.alerts.duplicateBatchesTitle")}
               </AlertTitle>
               <AlertDescription className="text-[11px] text-amber-500/90 mt-1">
-                {isArabic
-                  ? `لقد قمت بتكرار الرقم (${duplicateBatchNumbers.join(", ")}) لأكثر من منتج في هذه الفاتورة. يرجى تعديلها لتفادي التداخل بالصيدلية.`
-                  : `You've used the batch number (${duplicateBatchNumbers.join(", ")}) multiple times in this invoice. Please resolve.`}
+                {t("purchaseInvoice.alerts.duplicateBatchesDesc", {
+                  batches: duplicateBatchNumbers.join(", "),
+                })}
               </AlertDescription>
             </div>
           </div>

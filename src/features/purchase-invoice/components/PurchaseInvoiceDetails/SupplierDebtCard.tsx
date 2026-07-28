@@ -10,13 +10,12 @@ interface SupplierDebtCardProps {
 }
 
 export function SupplierDebtCard({ invoice }: SupplierDebtCardProps) {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const isArabic = i18n.language === "ar";
 
   return (
     <DetailCard
-      title={isArabic ? "ديون ذمم المورد" : "Supplier Debt"}
+      title={t("purchaseInvoiceDetails.supplierDebt.title")}
       icon={AlertCircle}
       className="border-destructive/30 bg-secondary/40 dark:bg-destructive/20 shadow-sm"
       headerClassName="border-destructive/20 text-destructive"
@@ -24,19 +23,19 @@ export function SupplierDebtCard({ invoice }: SupplierDebtCardProps) {
     >
       <div className="space-y-1">
         <span className="text-[10px] font-bold text-muted-foreground">
-          {isArabic ? "إجمالي الدين المترتب" : "Remaining Debt"}
+          {t("purchaseInvoiceDetails.supplierDebt.remainingDebt")}
         </span>
         <p className="text-lg font-black text-destructive">
-          {Number(invoice.amount_due).toFixed(2)} ل.س
+          {Number(invoice.amount_due).toFixed(2)} {t("common.currency")}
         </p>
       </div>
 
       <div className="flex justify-between items-center text-xs pt-2 border-t border-destructive/20">
         <span className="text-muted-foreground">
-          {isArabic ? "الحالة" : "Status"}
+          {t("purchaseInvoiceDetails.supplierDebt.status")}
         </span>
         <span className="px-2 py-0.5 rounded-full text-[9px] font-bold border bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30 animate-pulse">
-          {isArabic ? "قيد المتابعة (مفتوح)" : "Open Debt"}
+          {t("purchaseInvoiceDetails.supplierDebt.statusOpen")}
         </span>
       </div>
 
@@ -46,7 +45,7 @@ export function SupplierDebtCard({ invoice }: SupplierDebtCardProps) {
           navigate(`/suppliers/debts/${invoice.supplier_debt?.id}`)
         }
       >
-        <span>{isArabic ? "فتح سجل ذمم المورد" : "Open Supplier Debt"}</span>
+        <span>{t("purchaseInvoiceDetails.supplierDebt.openDebtRecord")}</span>
         <ExternalLink className="h-3 w-3" />
       </Button>
     </DetailCard>

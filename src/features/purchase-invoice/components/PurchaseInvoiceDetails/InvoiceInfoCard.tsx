@@ -15,8 +15,7 @@ interface InvoiceInfoCardProps {
 }
 
 export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
-  const { i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const { t } = useTranslation();
   const isCompleted = invoice.status === "completed";
 
   const createdByName = invoice.created_by
@@ -24,15 +23,12 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
     : "—";
 
   return (
-    <DetailCard
-      title={isArabic ? "معلومات الفاتورة العامة" : "Invoice Information"}
-      icon={FileText}
-    >
+    <DetailCard title={t("purchaseInvoiceDetails.info.title")} icon={FileText}>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-y-5 gap-x-4 text-start">
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-1">
             <FileText className="h-3 w-3" />
-            {isArabic ? "رقم الفاتورة" : "Invoice Number"}
+            {t("purchaseInvoiceDetails.info.invoiceNumber")}
           </span>
           <p className="text-xs font-bold text-foreground font-mono">
             {invoice.invoice_number}
@@ -42,7 +38,7 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-1">
             <Building2 className="h-3 w-3" />
-            {isArabic ? "المورد" : "Supplier"}
+            {t("purchaseInvoiceDetails.info.supplier")}
           </span>
           <p className="text-xs font-bold text-foreground truncate">
             {invoice.supplier?.name || "—"}
@@ -52,7 +48,7 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            {isArabic ? "التاريخ" : "Date"}
+            {t("purchaseInvoiceDetails.info.date")}
           </span>
           <p className="text-xs font-bold text-foreground font-mono">
             {invoice.invoice_date}
@@ -62,14 +58,14 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-1">
             <User className="h-3 w-3" />
-            {isArabic ? "بواسطة" : "Created By"}
+            {t("purchaseInvoiceDetails.info.createdBy")}
           </span>
           <p className="text-xs font-bold text-foreground">{createdByName}</p>
         </div>
 
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-muted-foreground">
-            {isArabic ? "الحالة" : "Status"}
+            {t("purchaseInvoiceDetails.info.status")}
           </span>
           <div>
             <span
@@ -82,12 +78,12 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
               {isCompleted ? (
                 <>
                   <CheckCircle2 className="h-3 w-3" />
-                  {isArabic ? "مكتملة" : "Completed"}
+                  {t("purchaseInvoiceDetails.info.statusCompleted")}
                 </>
               ) : (
                 <>
                   <XCircle className="h-3 w-3" />
-                  {isArabic ? "ملغاة" : "Cancelled"}
+                  {t("purchaseInvoiceDetails.info.statusCancelled")}
                 </>
               )}
             </span>
@@ -96,7 +92,7 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
 
         <div className="space-y-1">
           <span className="text-[10px] font-bold text-muted-foreground">
-            {isArabic ? "حالة الدفع" : "Payment Status"}
+            {t("purchaseInvoiceDetails.info.paymentStatus")}
           </span>
           <div>
             <span
@@ -109,11 +105,11 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
               }`}
             >
               {invoice.payment_status === "paid" &&
-                (isArabic ? "مدفوعة بالكامل" : "Fully Paid")}
+                t("purchaseInvoiceDetails.info.paymentFullyPaid")}
               {invoice.payment_status === "partial" &&
-                (isArabic ? "دفعة جزئية" : "Partially Paid")}
+                t("purchaseInvoiceDetails.info.paymentPartiallyPaid")}
               {invoice.payment_status === "unpaid" &&
-                (isArabic ? "مسترجعة / غير مدفوعة" : "Refunded / Unpaid")}
+                t("purchaseInvoiceDetails.info.paymentRefundedUnpaid")}
             </span>
           </div>
         </div>

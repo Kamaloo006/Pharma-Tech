@@ -11,9 +11,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar as CalendarIcon, Info, Loader2 } from "lucide-react";
 import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
 import type { Supplier } from "@/features/suppliers/types/Supplier";
+import { useTranslation } from "react-i18next";
 
 interface SupplierFormProps {
-  isArabic: boolean;
   supplierId: string;
   setSupplierId: (id: string) => void;
   invoiceDate: string;
@@ -23,7 +23,6 @@ interface SupplierFormProps {
 }
 
 export function SupplierForm({
-  isArabic,
   supplierId,
   setSupplierId,
   invoiceDate,
@@ -31,6 +30,7 @@ export function SupplierForm({
   notes,
   setNotes,
 }: SupplierFormProps) {
+  const { t } = useTranslation();
   const { suppliers, isLoading } = useSuppliers();
 
   return (
@@ -38,16 +38,16 @@ export function SupplierForm({
       <CardHeader className="pb-3 border-b border-border/40">
         <CardTitle className="text-sm font-bold flex items-center gap-2">
           <Info className="h-4 w-4 text-primary" />
-          {isArabic ? "معلومات المورد الأساسية" : "Supplier Information"}
+          {t("purchaseInvoice.supplierForm.title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1.5 text-start">
           <label className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-            {isArabic ? "المورد *" : "Supplier *"}
+            {t("purchaseInvoice.supplierForm.supplierLabel")}
             {!supplierId && (
               <span className="text-[9px] text-destructive">
-                ({isArabic ? "مطلوب لحفظ الفاتورة" : "Required"})
+                ({t("purchaseInvoice.supplierForm.requiredNotice")})
               </span>
             )}
           </label>
@@ -58,12 +58,10 @@ export function SupplierForm({
               <SelectValue
                 placeholder={
                   isLoading
-                    ? isArabic
-                      ? "جاري تحميل الموردين..."
-                      : "Loading suppliers..."
-                    : isArabic
-                      ? "اختر مورد الفاتورة"
-                      : "Select Supplier"
+                    ? t("purchaseInvoice.supplierForm.loadingSuppliers")
+                    : t(
+                        "purchaseInvoice.supplierForm.selectSupplierPlaceholder",
+                      )
                 }
               />
             </SelectTrigger>
@@ -71,11 +69,11 @@ export function SupplierForm({
               {isLoading ? (
                 <div className="flex items-center justify-center p-3 text-xs text-muted-foreground gap-2">
                   <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                  {isArabic ? "جاري التحميل..." : "Loading..."}
+                  {t("purchaseInvoice.supplierForm.loading")}
                 </div>
               ) : suppliers.length === 0 ? (
                 <div className="p-3 text-xs text-muted-foreground text-center">
-                  {isArabic ? "لا يوجد موردين متاحيين" : "No suppliers found"}
+                  {t("purchaseInvoice.supplierForm.noSuppliers")}
                 </div>
               ) : (
                 suppliers.map((supplier: Supplier) => (
@@ -94,7 +92,7 @@ export function SupplierForm({
 
         <div className="space-y-1.5 text-start">
           <label className="text-xs font-semibold text-muted-foreground">
-            {isArabic ? "تاريخ الفاتورة" : "Invoice Date"}
+            {t("purchaseInvoice.supplierForm.invoiceDateLabel")}
           </label>
           <div className="relative">
             <CalendarIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
@@ -109,16 +107,12 @@ export function SupplierForm({
 
         <div className="space-y-1.5 text-start md:col-span-2">
           <label className="text-xs font-semibold text-muted-foreground">
-            {isArabic ? "ملاحظات الفاتورة" : "Invoice Notes"}
+            {t("purchaseInvoice.supplierForm.notesLabel")}
           </label>
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder={
-              isArabic
-                ? "أكتب أي ملاحظات متعلقة بالشحن، الدفع، أو تسلم المنتجات..."
-                : "Enter any shipping, payment notes..."
-            }
+            placeholder={t("purchaseInvoice.supplierForm.notesPlaceholder")}
             className="bg-background border-border text-xs resize-none min-h-15"
           />
         </div>

@@ -1,9 +1,9 @@
 import { Search, Loader2, Package, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { type Product } from "@/features/inventory/types/Product";
+import { useTranslation } from "react-i18next";
 
 interface ProductSearchPOSProps {
-  isArabic: boolean;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   filteredProducts: Product[];
@@ -13,7 +13,6 @@ interface ProductSearchPOSProps {
 }
 
 export function ProductSearchPOS({
-  isArabic,
   searchQuery,
   setSearchQuery,
   filteredProducts,
@@ -21,6 +20,7 @@ export function ProductSearchPOS({
   isLoading = false,
   isDebouncing = false,
 }: ProductSearchPOSProps) {
+  const { t } = useTranslation();
   const isSearching = isLoading || isDebouncing;
   const minSearchLength = 2;
   const isSearchValid = searchQuery.trim().length >= minSearchLength;
@@ -28,11 +28,7 @@ export function ProductSearchPOS({
   return (
     <div className="relative space-y-2">
       <label className="text-xs font-bold text-muted-foreground flex items-center justify-between">
-        <span>
-          {isArabic
-            ? "ابحث عن دواء / منتج بالاسم أو الـ Barcode"
-            : "Search Product by Name or Barcode"}
-        </span>
+        <span>{t("purchaseInvoice.search.label")}</span>
       </label>
 
       <div className="relative">
@@ -40,9 +36,7 @@ export function ProductSearchPOS({
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={
-            isArabic ? "ابحث عن الدواء..." : "Search for a product..."
-          }
+          placeholder={t("purchaseInvoice.search.placeholder")}
           className="h-11 pr-10 pl-10 text-xs bg-background border-border rounded-xl focus-visible:ring-primary shadow-inner"
         />
 
@@ -55,14 +49,12 @@ export function ProductSearchPOS({
         <div className="absolute right-0 left-0 top-18 z-50 bg-card border border-border rounded-xl shadow-2xl max-h-75 overflow-y-auto divide-y divide-border/40">
           {!isSearchValid ? (
             <div className="p-4 text-center text-xs text-muted-foreground">
-              {isArabic
-                ? "يرجى كتابة حرفين أو أكثر للبحث"
-                : "Please enter 2 or more characters"}
+              {t("purchaseInvoice.search.minCharsMessage")}
             </div>
           ) : isSearching ? (
             <div className="p-6 text-center text-xs text-muted-foreground flex flex-col items-center justify-center gap-2">
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
-              <span>{isArabic ? "جاري البحث..." : "Searching..."}</span>
+              <span>{t("purchaseInvoice.search.searching")}</span>
             </div>
           ) : filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
@@ -89,10 +81,11 @@ export function ProductSearchPOS({
                 <div className="flex items-center gap-3 text-left">
                   <div className="text-right">
                     <span className="block text-xs font-mono font-bold text-foreground">
-                      {(product.selling_price || 0).toFixed(2)} ل.س
+                      {(product.selling_price || 0).toFixed(2)}{" "}
+                      {t("common.currency")}
                     </span>
                     <span className="text-[10px] text-muted-foreground">
-                      {isArabic ? "سعر البيع" : "Selling Price"}
+                      {t("purchaseInvoice.search.sellingPriceLabel")}
                     </span>
                   </div>
 
@@ -104,9 +97,7 @@ export function ProductSearchPOS({
             ))
           ) : (
             <div className="p-6 text-center text-xs text-muted-foreground">
-              {isArabic
-                ? "لم يتم العثور على أي منتج مطابق للبحث"
-                : "No matching products found"}
+              {t("purchaseInvoice.search.noResults")}
             </div>
           )}
         </div>

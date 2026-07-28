@@ -16,12 +16,11 @@ interface ReceivedProductsCardProps {
 }
 
 export function ReceivedProductsCard({ items }: ReceivedProductsCardProps) {
-  const { i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const { t } = useTranslation();
 
   return (
     <DetailCard
-      title={isArabic ? "الأدوية والمنتجات المستلمة" : "Received Products"}
+      title={t("purchaseInvoiceDetails.receivedProducts.title")}
       icon={Package}
       contentClassName="p-0"
     >
@@ -29,26 +28,26 @@ export function ReceivedProductsCard({ items }: ReceivedProductsCardProps) {
         <Table className="text-xs">
           <TableHeader className="bg-muted/30">
             <TableRow className="border-b border-border/65">
-              <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {isArabic ? "المنتج" : "Product"}
+              <TableHead className="text-start">
+                {t("purchaseInvoiceDetails.receivedProducts.product")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "الكمية" : "Qty"}
+                {t("purchaseInvoiceDetails.receivedProducts.qty")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "سعر الشراء" : "Buying Price"}
+                {t("purchaseInvoiceDetails.receivedProducts.buyingPrice")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "الضريبة" : "Tax"}
+                {t("purchaseInvoiceDetails.receivedProducts.tax")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "الخصم" : "Discount"}
+                {t("purchaseInvoiceDetails.receivedProducts.discount")}
               </TableHead>
               <TableHead className="text-center">
-                {isArabic ? "سعر البيع" : "Selling Price"}
+                {t("purchaseInvoiceDetails.receivedProducts.sellingPrice")}
               </TableHead>
-              <TableHead className={isArabic ? "text-left" : "text-right"}>
-                {isArabic ? "الإجمالي" : "Total"}
+              <TableHead className="text-end">
+                {t("purchaseInvoiceDetails.receivedProducts.total")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -70,25 +69,22 @@ export function ReceivedProductsCard({ items }: ReceivedProductsCardProps) {
                   {item.quantity}
                 </TableCell>
                 <TableCell className="text-center font-mono">
-                  {Number(item.wholesale_price).toFixed(2)} ل.س
+                  {Number(item.wholesale_price).toFixed(2)}{" "}
+                  {t("common.currency")}
                 </TableCell>
                 <TableCell className="text-center text-muted-foreground">
                   {item.tax}%
                 </TableCell>
                 <TableCell className="text-center text-destructive">
-                  -{Number(item.discount).toFixed(2)} ل.س
+                  -{Number(item.discount).toFixed(2)} {t("common.currency")}
                 </TableCell>
                 <TableCell className="text-center text-emerald-500 font-semibold">
                   {item.product?.selling_price
-                    ? `${Number(item.product.selling_price).toFixed(2)} ل.س`
+                    ? `${Number(item.product.selling_price).toFixed(2)} ${t("common.currency")}`
                     : "—"}
                 </TableCell>
-                <TableCell
-                  className={`font-bold text-foreground ${
-                    isArabic ? "text-left" : "text-right"
-                  }`}
-                >
-                  {Number(item.line_total).toFixed(2)} ل.س
+                <TableCell className="font-bold text-foreground text-end">
+                  {Number(item.line_total).toFixed(2)} {t("common.currency")}
                 </TableCell>
               </TableRow>
             ))}

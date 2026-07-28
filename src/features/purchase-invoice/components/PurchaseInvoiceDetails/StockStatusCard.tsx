@@ -17,23 +17,22 @@ interface StockStatusCardProps {
 }
 
 export function StockStatusCard({ items, isCompleted }: StockStatusCardProps) {
-  const { i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const { t } = useTranslation();
 
   return (
     <DetailCard
-      title={isArabic ? "تأكيد كميات المخزون المضافة" : "Stock Status"}
+      title={t("purchaseInvoiceDetails.stockStatus.title")}
       icon={Layers}
       contentClassName="p-0"
     >
       <Table className="text-[11px]">
         <TableHeader className="bg-muted/40">
           <TableRow className="border-b border-border/70">
-            <TableHead className={isArabic ? "text-right" : "text-left"}>
-              {isArabic ? "المنتج" : "Product"}
+            <TableHead className="text-start">
+              {t("purchaseInvoiceDetails.stockStatus.product")}
             </TableHead>
-            <TableHead className={isArabic ? "text-left" : "text-right"}>
-              {isArabic ? "الكمية" : "Qty"}
+            <TableHead className="text-end">
+              {t("purchaseInvoiceDetails.stockStatus.qty")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -49,16 +48,14 @@ export function StockStatusCard({ items, isCompleted }: StockStatusCardProps) {
                 </p>
               </TableCell>
               <TableCell
-                className={`font-extrabold ${
-                  isArabic ? "text-left" : "text-right"
-                } ${
+                className={`font-extrabold text-end ${
                   isCompleted
                     ? "text-emerald-500"
                     : "text-destructive line-through"
                 }`}
               >
                 {isCompleted ? `+${item.quantity}` : `0`}{" "}
-                {isArabic ? "وحدة" : "units"}
+                {t("purchaseInvoiceDetails.stockStatus.units")}
               </TableCell>
             </TableRow>
           ))}
