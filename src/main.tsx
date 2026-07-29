@@ -38,6 +38,8 @@ import Cashbox from "./pages/dashboard/Cashbox.tsx";
 import PurchaseInvoiceList from "./pages/dashboard/PurchaseInvoiceList.tsx";
 import CreatePurchaseInvoice from "./pages/dashboard/CreatePurchaseInvoice.tsx";
 import PurchaseInvoiceDetails from "./pages/dashboard/PurchaseInvoiceDetails.tsx";
+import SupplierDebt from "./pages/dashboard/SupplierDebt.tsx";
+import SupplierDebtDetails from "./pages/dashboard/SupplierDebtDetails.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -110,6 +112,14 @@ const router = createBrowserRouter([
           {
             path: "purchase-details/:id",
             element: <PurchaseInvoiceDetails />,
+          },
+          {
+            path: "supplier-debt",
+            element: <SupplierDebt />,
+          },
+          {
+            path: "supplier-debt/:id",
+            element: <SupplierDebtDetails />,
           },
         ],
       },

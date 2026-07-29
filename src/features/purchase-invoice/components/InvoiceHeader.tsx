@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-export function InvoiceHeader() {
+export function InvoiceHeader({ isArabic }: { isArabic: boolean }) {
   const { t } = useTranslation();
 
   return (

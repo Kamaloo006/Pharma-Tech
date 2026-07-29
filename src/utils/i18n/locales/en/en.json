@@ -229,7 +229,8 @@
         "logOut": "Log out",
         "cashbox": "Cashbox",
         "purchases": "Purchases Invoices",
-        "newPurchase":"Create Purchase Invoice"
+        "newPurchase":"Create Purchase Invoice",
+        "supplierDebt": "Supplier Debt"
     },
   "dashboard":{
         "addProduct": "Add Product",
