@@ -1,8 +1,8 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Wallet, DollarSign, CheckCircle2, AlertCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import CountUpModule from "react-countup";
-import React from "react";
 
 const CountUp = (CountUpModule as any).default || CountUpModule;
 
@@ -72,13 +72,19 @@ DebtStatCard.displayName = "DebtStatCard";
 
 export function SupplierDebtHeader({
   totals = { total: 0, paid: 0, remaining: 0 },
-  formatCurrency = (amt) => `${amt.toLocaleString()} ل.س`,
+  formatCurrency,
 }: SupplierDebtHeaderProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
+  const defaultFormatCurrency = (amt: number) =>
+    `${amt.toLocaleString()} ${t("common.currency", "YER")}`;
+
+  const formatter = formatCurrency || defaultFormatCurrency;
 
   const cards = [
     {
-      title: t("supplierDebt.header.totalAmount", "إجمالي الديون"),
+      title: t("supplierDebt.header.totalAmount", "Total Debt"),
       value: totals.total,
       textColor: "text-foreground",
       bgColor: "bg-primary/10",
@@ -86,7 +92,7 @@ export function SupplierDebtHeader({
       icon: <DollarSign className="h-5 w-5" />,
     },
     {
-      title: t("supplierDebt.header.paidAmount", "المبالغ المدفوعة"),
+      title: t("supplierDebt.header.paidAmount", "Paid Amount"),
       value: totals.paid,
       textColor: "text-emerald-500",
       bgColor: "bg-emerald-500/10",
@@ -94,7 +100,7 @@ export function SupplierDebtHeader({
       icon: <CheckCircle2 className="h-5 w-5" />,
     },
     {
-      title: t("supplierDebt.header.remainingAmount", "المتبقي للاستحقاق"),
+      title: t("supplierDebt.header.remainingAmount", "Remaining Due"),
       value: totals.remaining,
       textColor: "text-destructive",
       bgColor: "bg-destructive/10",
@@ -104,17 +110,17 @@ export function SupplierDebtHeader({
   ];
 
   return (
-    <div className="space-y-4 mb-6">
+    <div className="space-y-4 mb-6" dir={isArabic ? "rtl" : "ltr"}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
+            {t("supplierDebt.header.title", "Supplier Debts")}
             <Wallet className="h-6 w-6 text-primary" />
-            {t("supplierDebt.header.title", "ديون الموردين")}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
             {t(
               "supplierDebt.header.description",
-              "إدارة ومتابعة المبالغ والديون المستحقة للموردين",
+              "Manage and track payables and debts owed to suppliers.",
             )}
           </p>
         </div>
@@ -130,7 +136,7 @@ export function SupplierDebtHeader({
             bgColor={card.bgColor}
             iconColor={card.iconColor}
             icon={card.icon}
-            formatCurrency={formatCurrency}
+            formatCurrency={formatter}
           />
         ))}
       </div>
