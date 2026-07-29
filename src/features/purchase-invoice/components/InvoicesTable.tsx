@@ -18,6 +18,7 @@ interface InvoicesTableProps {
   invoices: any[];
   showFilterLoading: boolean;
   refetch: () => void;
+  isArabic: boolean;
   formatDate: (date: string) => string;
   formatCurrency: (amount: number) => string;
 }
@@ -28,6 +29,7 @@ export function InvoicesTable({
   invoices,
   showFilterLoading,
   refetch,
+  isArabic,
   formatDate,
   formatCurrency,
 }: InvoicesTableProps) {

@@ -11,6 +11,7 @@ import {
   DollarSign,
   ReceiptText,
   NotebookPen,
+  WalletCards,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -82,6 +83,11 @@ export default function AppSidebar() {
           title: t("sidebar.cashbox"),
           icon: DollarSign,
           url: "/dashboard/cashbox",
+        },
+        {
+          title: t("sidebar.supplierDebt"),
+          icon: WalletCards,
+          url: "/dashboard/supplier-debt",
         },
       ],
     },

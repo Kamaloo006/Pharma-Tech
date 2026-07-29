@@ -28,6 +28,7 @@ interface InvoiceFiltersFormProps {
   showFilterLoading: boolean;
   isLoadingSuppliers: boolean;
   suppliers: any[];
+  isArabic: boolean;
   fromDateValue?: string;
 }
 
@@ -39,6 +40,7 @@ export function InvoiceFiltersForm({
   setSearchTerm,
   hasActiveFilters,
   handleResetFilters,
+  isArabic,
   isFiltersChanged,
   showFilterLoading,
   isLoadingSuppliers,

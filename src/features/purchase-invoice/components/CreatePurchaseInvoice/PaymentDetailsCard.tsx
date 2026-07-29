@@ -64,13 +64,22 @@ export function PaymentDetailsCard({
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-muted border border-border text-foreground">
-              <SelectItem value="cash" className="text-xs">
+              <SelectItem
+                value="cash"
+                className="text-xs focus:bg-background focus:text-foreground"
+              >
                 {t("purchaseInvoice.payment.methods.cash")}
               </SelectItem>
-              <SelectItem value="credit" className="text-xs">
+              <SelectItem
+                value="credit"
+                className="text-xs focus:bg-background focus:text-foreground"
+              >
                 {t("purchaseInvoice.payment.methods.credit")}
               </SelectItem>
-              <SelectItem value="debt" className="text-xs">
+              <SelectItem
+                value="debt"
+                className="text-xs focus:bg-background focus:text-foreground"
+              >
                 {t("purchaseInvoice.payment.methods.debt")}
               </SelectItem>
             </SelectContent>

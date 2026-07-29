@@ -232,7 +232,8 @@
         "logOut": "تسجيل الخروج",
         "cashbox": "الخزنة",
         "purchases": "الفواتير",
-        "newPurchase":"إنشاء فاتورة"
+        "newPurchase":"إنشاء فاتورة",
+        "supplierDebt": "ديون الموردين"
     },
     "dashboard":{
         "addProduct": "إضافة منتج",
