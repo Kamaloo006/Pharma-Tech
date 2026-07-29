@@ -826,6 +826,7 @@
       "phone": "Phone Number",
       "email": "Email",
       "dueDate": "Due Date",
+      "viewInvoice":"Show Invoice",
       "financialMetrics": {
         "totalDebt": "Total Debt",
         "initialAmount": "SYR - Initial Debt Amount",

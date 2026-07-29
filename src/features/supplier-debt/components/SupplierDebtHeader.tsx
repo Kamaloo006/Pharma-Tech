@@ -78,7 +78,7 @@ export function SupplierDebtHeader({
   const isArabic = i18n.language === "ar";
 
   const defaultFormatCurrency = (amt: number) =>
-    `${amt.toLocaleString()} ${t("common.currency", "YER")}`;
+    `${amt.toLocaleString()} ${t("common.currency", "SYR")}`;
 
   const formatter = formatCurrency || defaultFormatCurrency;
 
