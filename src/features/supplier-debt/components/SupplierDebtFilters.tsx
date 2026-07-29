@@ -28,7 +28,8 @@ export function SupplierDebtFilters({
   onResetFilters,
   isLoading = false,
 }: SupplierDebtFiltersProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   const { suppliers, isLoading: isLoadingSuppliers } = useSuppliers();
 
@@ -57,12 +58,15 @@ export function SupplierDebtFilters({
     "text-xs focus:bg-primary/70 focus:text-foreground cursor-pointer font-medium";
 
   return (
-    <div className="bg-card border border-border/60 rounded-xl p-4 mb-6 shadow-xs">
+    <div
+      className="bg-card border border-border/60 rounded-xl p-4 mb-6 shadow-xs"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3 flex-1 min-w-70">
           <div className="w-full sm:w-52 space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierDebt.filters.supplier", "المورد")}
+              {t("supplierDebt.filters.supplier", "Supplier")}
             </label>
             <Select
               value={String(localFilters.supplier_id || "all")}
@@ -75,16 +79,16 @@ export function SupplierDebtFilters({
                 <SelectValue
                   placeholder={
                     isLoadingSuppliers
-                      ? t("common.loading", "جاري التحميل...")
-                      : t("supplierDebt.filters.allSuppliers", "جميع الموردين")
+                      ? t("common.loading", "Loading...")
+                      : t("supplierDebt.filters.allSuppliers", "All Suppliers")
                   }
                 />
               </SelectTrigger>
               <SelectContent className="bg-muted text-popover-foreground border-border shadow-md">
                 <SelectItem value="all" className={selectItemStyles}>
-                  {t("supplierDebt.filters.allSuppliers", "جميع الموردين")}
+                  {t("supplierDebt.filters.allSuppliers", "All Suppliers")}
                 </SelectItem>
-                {suppliers.map((s: { id: string | number; name: string }) => (
+                {suppliers?.map((s: { id: string | number; name: string }) => (
                   <SelectItem
                     key={s.id}
                     value={String(s.id)}
@@ -99,7 +103,7 @@ export function SupplierDebtFilters({
 
           <div className="w-full sm:w-44 space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierDebt.filters.status", "حالة الدين")}
+              {t("supplierDebt.filters.status", "Debt Status")}
             </label>
             <Select
               value={String(localFilters.status || "all")}
@@ -114,28 +118,28 @@ export function SupplierDebtFilters({
                 <SelectValue
                   placeholder={t(
                     "supplierDebt.filters.allStatuses",
-                    "جميع الحالات",
+                    "All Statuses",
                   )}
                 />
               </SelectTrigger>
               <SelectContent className="bg-muted text-popover-foreground border-border shadow-md">
                 <SelectItem value="all" className={selectItemStyles}>
-                  {t("supplierDebt.filters.allStatuses", "جميع الحالات")}
+                  {t("supplierDebt.filters.allStatuses", "All Statuses")}
                 </SelectItem>
                 <SelectItem value="open" className={selectItemStyles}>
-                  {t("supplierDebt.status.open", "غير مدفوع")}
+                  {t("supplierDebt.status.open", "Unpaid")}
                 </SelectItem>
                 <SelectItem value="partial" className={selectItemStyles}>
-                  {t("supplierDebt.status.partial", "مدفوع جزئياً")}
+                  {t("supplierDebt.status.partial", "Partially Paid")}
                 </SelectItem>
                 <SelectItem value="paid" className={selectItemStyles}>
-                  {t("supplierDebt.status.paid", "مكتمل")}
+                  {t("supplierDebt.status.paid", "Completed")}
                 </SelectItem>
                 <SelectItem value="overdue" className={selectItemStyles}>
-                  {t("supplierDebt.status.overdue", "متأخر")}
+                  {t("supplierDebt.status.overdue", "Overdue")}
                 </SelectItem>
                 <SelectItem value="cancelled" className={selectItemStyles}>
-                  {t("supplierDebt.status.cancelled", "ملغى")}
+                  {t("supplierDebt.status.cancelled", "Cancelled")}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -151,7 +155,7 @@ export function SupplierDebtFilters({
             disabled={isLoading}
           >
             <RotateCcw className="h-3.5 w-3.5 me-1 text-muted-foreground" />
-            {t("common.reset", "إعادة ضبط")}
+            {t("common.reset", "Reset")}
           </Button>
 
           <Button
@@ -165,7 +169,7 @@ export function SupplierDebtFilters({
             ) : (
               <Filter className="h-3.5 w-3.5 me-1.5" />
             )}
-            {t("common.applyFilters", "تطبيق الفلاتر")}
+            {t("common.applyFilters", "Apply Filters")}
           </Button>
         </div>
       </div>

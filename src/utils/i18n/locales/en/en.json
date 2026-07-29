@@ -798,5 +798,99 @@
       "statusOpen": "Open Debt",
       "openDebtRecord": "Open Supplier Debt"
     }
+  },
+  
+  "supplierDebt": {
+    "header": {
+      "title": "Supplier Debts",
+      "description": "Track outstanding balances, payments, and settlements with suppliers.",
+      "totalDebt": "Total Debts",
+      "paidDebt": "Total Paid",
+      "remainingDebt": "Total Remaining",
+      "totalAmount": "Total Debt",
+      "paidAmount": "Paid Amount",
+      "remainingAmount":"Remaining Amount:"
+
+    },
+    "details": {
+      "title": "Supplier Debt #{{id}}",
+      "purchaseInvoiceId": "Purchase Invoice ID:",
+      "createdDate": "Created:",
+      "payDebtBtn": "Pay Debt",
+      "notFoundTitle": "Debt Not Found",
+      "notFoundDesc": "Unable to load debt details. It might have been deleted.",
+      "backToList": "Back to Debts List",
+      "supplierInfo": "Supplier Information",
+      "supplierName": "Supplier Name",
+      "supplierCode": "Supplier Code",
+      "phone": "Phone Number",
+      "email": "Email",
+      "dueDate": "Due Date",
+      "viewInvoice":"Show Invoice",
+      "financialMetrics": {
+        "totalDebt": "Total Debt",
+        "initialAmount": "SYR - Initial Debt Amount",
+        "paid": "Paid",
+        "totalPayments": "SYR - Total Payments Made",
+        "remaining": "Remaining",
+        "balanceLeft": "SYR - Balance Left to Pay"
+      },
+      "paymentHistory": {
+        "title": "Payment History",
+        "date": "Date",
+        "amount": "Amount",
+        "createdBy": "Created By",
+        "notes": "Notes",
+        "noPayments": "No payment transactions recorded yet.",
+        "system": "System"
+      }
+    },
+    "payModal": {
+      "title": "Pay Supplier Debt",
+      "remainingAmount": "Remaining Amount:",
+      "amountLabel": "Amount *",
+      "payFullBalance": "Pay Full Balance",
+      "amountPlaceholder": "0.00",
+      "paymentDateLabel": "Payment Date *",
+      "notesLabel": "Notes",
+      "notesOptional": "(Optional)",
+      "notesPlaceholder": "e.g. Partial payment via bank transfer...",
+      "cancel": "Cancel",
+      "recordPayment": "Record Payment",
+      "processing": "Processing...",
+      "errors": {
+        "invalidAmount": "Please enter a valid amount greater than 0.",
+        "amountExceeded": "Amount cannot exceed remaining debt ({{max}} SYR).",
+        "dateRequired": "Payment date is required.",
+        "failedToRecord": "Failed to record payment. Please try again."
+      }
+    },
+    "filters": {
+      "supplier": "Supplier",
+      "allSuppliers": "All Suppliers",
+      "status": "Debt Status",
+      "allStatuses": "All Statuses"
+    },
+    "status": {
+      "open": "Open",
+      "partial": "Partial",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "cancelled": "Cancelled"
+    },
+    "table": {
+      "invoiceNo": "Invoice No.",
+      "supplier": "Supplier",
+      "totalAmount": "Total Amount",
+      "paidAmount": "Paid Amount",
+      "remainingAmount": "Remaining Debt",
+      "dueDate": "Due Date",
+      "status": "Status",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "loading": "Loading debts...",
+      "noData": "No debts found matching the filters."
+    }
   }
 }
+

@@ -29,7 +29,6 @@ export function InvoicesTable({
   invoices,
   showFilterLoading,
   refetch,
-  isArabic,
   formatDate,
   formatCurrency,
 }: InvoicesTableProps) {

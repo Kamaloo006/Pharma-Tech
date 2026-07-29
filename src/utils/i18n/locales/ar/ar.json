@@ -801,6 +801,100 @@
       "statusOpen": "قيد المتابعة (مفتوح)",
       "openDebtRecord": "فتح سجل ذمم المورد"
     }
+  },
+
+  
+  "supplierDebt": {
+    "header": {
+      "title": "ديون الموردين",
+      "description": "متابعة أرصدة الذمم المترتبة للموردين والدفعات والتسويات المالية.",
+      "totalDebt": "إجمالي الديون",
+      "paidDebt": "إجمالي المبالغ المدفوعة",
+      "remainingDebt": "إجمالي المتبقي",
+      "totalAmount":"إجمالي الدين:",
+      "paidAmount": "المبلغ المدفوع:",
+      "remainingAmount":"المبلغ المتبقي:"
+    },
+    "details": {
+      "title": "دين المورد #{{id}}",
+      "purchaseInvoiceId": "رقم فاتورة الشراء:",
+      "createdDate": "تاريخ الإنشاء:",
+      "payDebtBtn": "تسديد دفعة",
+      "notFoundTitle": "لم يتم العثور على سجل الدين",
+      "notFoundDesc": "تعذر تحميل تفاصيل الدين، ربما تم حذفه أو غير موجود.",
+      "backToList": "العودة لقائمة الديون",
+      "supplierInfo": "معلومات المورد",
+      "supplierName": "اسم المورد",
+      "supplierCode": "كود المورد",
+      "phone": "رقم الهاتف",
+      "email": "البريد الإلكتروني",
+      "dueDate": "تاريخ الاستحقاق",
+      "viewInvoice": "عرض الفاتورة",
+      "financialMetrics": {
+        "totalDebt": "إجمالي الدين",
+        "initialAmount": "ل.س - قيمة الدين الأصلية",
+        "paid": "المبلغ المدفوع",
+        "totalPayments": "ل.س - مجموع المسدد سابقاً",
+        "remaining": "المبلغ المتبقي",
+        "balanceLeft": "ل.س - الرصيد المتبقي للتسديد"
+      },
+      "paymentHistory": {
+        "title": "سجل الدفعات والتسديدات",
+        "date": "التاريخ",
+        "amount": "المبلغ",
+        "createdBy": "بواسطة",
+        "notes": "ملاحظات",
+        "noPayments": "لا توجد حركة عمليات تسديد مسجلة لهذا الدين حتى الآن.",
+        "system": "النظام"
+      }
+    },
+    "payModal": {
+      "title": "تسديد دين المورد",
+      "remainingAmount": "المبلغ المتبقي:",
+      "amountLabel": "المبلغ المراد دفعه *",
+      "payFullBalance": "دفع كامل المتبقي",
+      "amountPlaceholder": "0.00",
+      "paymentDateLabel": "تاريخ التسديد *",
+      "notesLabel": "ملاحظات",
+      "notesOptional": "(اختياري)",
+      "notesPlaceholder": "مثال: دفعة جزئية عبر تحويل بنكي...",
+      "cancel": "إلغاء",
+      "recordPayment": "تسجيل عملية الدفع",
+      "processing": "جاري المعالجة...",
+      "errors": {
+        "invalidAmount": "يرجى أدخال مبلغ صحيح أكبر من 0.",
+        "amountExceeded": "لا يمكن أن يتجاوز المبلغ المدفوع قيمة الدين المتبقية ({{max}} ل.س).",
+        "dateRequired": "تاريخ التسديد مطلوب.",
+        "failedToRecord": "فشل تسجيل دفعة الدين. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "filters": {
+      "supplier": "المورد",
+      "allSuppliers": "جميع الموردين",
+      "status": "حالة الدين",
+      "allStatuses": "جميع الحالات"
+    },
+    "status": {
+      "open": "غير مدفوع",
+      "partial": "مدفوع جزئياً",
+      "paid": "مكتمل",
+      "overdue": "متأخر",
+      "cancelled": "ملغى"
+    },
+    "table": {
+      "invoiceNo": "رقم الفاتورة",
+      "supplier": "المورد",
+      "totalAmount": "إجمالي الدين",
+      "paidAmount": "المدفوع",
+      "remainingAmount": "المتبقي",
+      "dueDate": "تاريخ الاستحقاق",
+      "status": "الحالة",
+      "actions": "خيارات",
+      "viewDetails": "عرض التفاصيل",
+      "loading": "جاري تحميل دين المورد...",
+      "noData": "لا توجد ديون تطابق الفلاتر النشطة حالياً."
+    }
   }
+
   
 }

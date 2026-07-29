@@ -35,14 +35,15 @@ export function SupplierDebtTable({
   formatDate,
   formatCurrency,
 }: SupplierDebtTableProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-75 space-y-4">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <p className="text-xs text-muted-foreground">
-          {t("supplierDebt.table.loading", "جاري تحميل ديون الموردين...")}
+          {t("supplierDebt.table.loading", "Loading supplier debts...")}
         </p>
       </div>
     );
@@ -53,14 +54,17 @@ export function SupplierDebtTable({
       <div className="flex flex-col items-center justify-center min-h-75 text-center p-6">
         <AlertCircle className="h-10 w-10 text-destructive mb-2" />
         <p className="text-xs font-bold text-foreground">
-          {t("supplierDebt.table.error", "حدث خطأ أثناء تحميل البيانات")}
+          {t(
+            "supplierDebt.table.error",
+            "An error occurred while loading data.",
+          )}
         </p>
         <Button
           onClick={() => refetch()}
           variant="outline"
           className="h-8 text-[11px] font-bold mt-3"
         >
-          {t("common.retry", "إعادة المحاولة")}
+          {t("common.retry", "Retry")}
         </Button>
       </div>
     );
@@ -68,6 +72,7 @@ export function SupplierDebtTable({
 
   return (
     <div
+      dir={isArabic ? "rtl" : "ltr"}
       className={`transition-all duration-200 ${
         showFilterLoading
           ? "opacity-60 pointer-events-none filter blur-[0.5px]"
@@ -78,29 +83,29 @@ export function SupplierDebtTable({
         <Table className="text-xs">
           <TableHeader className="bg-muted/10">
             <TableRow className="border-b border-border/65">
-              <TableHead className="text-start">
-                {t("supplierDebt.table.invoiceNo", "رقم الفاتورة")}
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("supplierDebt.table.invoiceNo", "Invoice No")}
               </TableHead>
-              <TableHead className="text-start">
-                {t("supplierDebt.table.supplier", "المورد")}
-              </TableHead>
-              <TableHead className="text-center">
-                {t("supplierDebt.table.dueDate", "تاريخ الاستحقاق")}
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("supplierDebt.table.supplier", "Supplier")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierDebt.table.totalAmount", "المبلغ الإجمالي")}
+                {t("supplierDebt.table.dueDate", "Due Date")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierDebt.table.paidAmount", "المبلغ المدفوع")}
+                {t("supplierDebt.table.totalAmount", "Total Amount")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierDebt.table.remainingAmount", "المبلغ المتبقي")}
+                {t("supplierDebt.table.paidAmount", "Paid Amount")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierDebt.table.status", "حالة الدين")}
+                {t("supplierDebt.table.remainingAmount", "Remaining Amount")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierDebt.table.actions", "الإجراءات")}
+                {t("supplierDebt.table.status", "Debt Status")}
+              </TableHead>
+              <TableHead className="text-center">
+                {t("supplierDebt.table.actions", "Actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -111,12 +116,11 @@ export function SupplierDebtTable({
                   colSpan={8}
                   className="text-center py-12 text-muted-foreground font-semibold"
                 >
-                  {t("supplierDebt.table.noData", "لا توجد ديون للعرض")}
+                  {t("supplierDebt.table.noData", "No debts found to display.")}
                 </TableCell>
               </TableRow>
             ) : (
               debts.map((item) => {
-                // حل أخطاء undefined بتمرير قيم افتراضية النصية
                 const dateValue = item.due_date || item.created_at || "";
                 const debtStatus: DebtStatus = item.status;
 
@@ -125,11 +129,17 @@ export function SupplierDebtTable({
                     key={item.id}
                     className="border-b border-border/40 hover:bg-muted/10"
                   >
-                    <TableCell className="font-bold text-foreground text-start py-4 font-mono">
+                    <TableCell
+                      className={`font-bold text-foreground py-4 font-mono ${
+                        isArabic ? "text-right" : "text-left"
+                      }`}
+                    >
                       {item.invoice_number || `#${item.id}`}
                     </TableCell>
 
-                    <TableCell className="text-start">
+                    <TableCell
+                      className={isArabic ? "text-right" : "text-left"}
+                    >
                       <div className="space-y-0.5">
                         <p className="font-semibold text-foreground">
                           {item.supplier?.name}
@@ -142,7 +152,6 @@ export function SupplierDebtTable({
                       </div>
                     </TableCell>
 
-                    {/* حماية تاريخ الاستحقاق من undefined */}
                     <TableCell className="text-center font-mono">
                       {formatDate(dateValue)}
                     </TableCell>
@@ -159,7 +168,6 @@ export function SupplierDebtTable({
                       {formatCurrency(item.remaining_amount ?? 0)}
                     </TableCell>
 
-                    {/* استخدام قيم DebtStatus الصحيحة ("open" بدلاً من "unpaid") */}
                     <TableCell className="text-center">
                       <Badge
                         variant="outline"
@@ -172,19 +180,19 @@ export function SupplierDebtTable({
                                 ? "border-amber-500/30 bg-amber-500/5 text-amber-500"
                                 : debtStatus === "cancelled"
                                   ? "border-muted bg-muted/20 text-muted-foreground"
-                                  : "border-destructive/30 bg-destructive/5 text-destructive" // حالة open
+                                  : "border-destructive/30 bg-destructive/5 text-destructive"
                         }`}
                       >
                         {debtStatus === "paid" &&
-                          t("supplierDebt.status.paid", "مكتمل")}
+                          t("supplierDebt.status.paid", "Completed")}
                         {debtStatus === "partial" &&
-                          t("supplierDebt.status.partial", "مدفوع جزئياً")}
+                          t("supplierDebt.status.partial", "Partially Paid")}
                         {debtStatus === "overdue" &&
-                          t("supplierDebt.status.overdue", "متأخر")}
+                          t("supplierDebt.status.overdue", "Overdue")}
                         {debtStatus === "cancelled" &&
-                          t("supplierDebt.status.cancelled", "ملغى")}
+                          t("supplierDebt.status.cancelled", "Cancelled")}
                         {(debtStatus === "open" || !debtStatus) &&
-                          t("supplierDebt.status.open", "غير مدفوع")}
+                          t("supplierDebt.status.open", "Unpaid")}
                       </Badge>
                     </TableCell>
 
@@ -196,7 +204,7 @@ export function SupplierDebtTable({
                           className="h-8 w-8 hover:bg-muted"
                           title={t(
                             "supplierDebt.table.viewDetails",
-                            "عرض التفاصيل",
+                            "View Details",
                           )}
                         >
                           <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />

@@ -40,7 +40,6 @@ export function InvoiceFiltersForm({
   setSearchTerm,
   hasActiveFilters,
   handleResetFilters,
-  isArabic,
   isFiltersChanged,
   showFilterLoading,
   isLoadingSuppliers,

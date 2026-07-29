@@ -1,4 +1,5 @@
 import { Calendar, User, History } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Table,
   TableBody,
@@ -16,21 +17,46 @@ interface SupplierDebtPaymentHistoryProps {
 export function SupplierDebtPaymentHistory({
   payments = [],
 }: SupplierDebtPaymentHistoryProps) {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
   return (
-    <div className="p-6 rounded-2xl border border-border bg-card shadow-xs space-y-4">
+    <div
+      className="p-6 rounded-2xl border border-border bg-card shadow-xs space-y-4"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
       <div className="flex items-center gap-2 pb-3 border-b border-border/60">
         <History className="w-4 h-4 text-primary" />
-        <h2 className="text-base font-bold text-foreground">Payment History</h2>
+        <h2 className="text-base font-bold text-foreground">
+          {t("supplierDebt.details.paymentHistory.title", "Payment History")}
+        </h2>
       </div>
 
       <div className="rounded-xl border border-border bg-background overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/40 hover:bg-muted/40">
-              <TableHead className="w-45">Date</TableHead>
-              <TableHead className="w-45">Amount</TableHead>
-              <TableHead className="w-50">Created By</TableHead>
-              <TableHead>Notes</TableHead>
+              <TableHead
+                className={`w-45 ${isArabic ? "text-right" : "text-left"}`}
+              >
+                {t("supplierDebt.details.paymentHistory.date", "Date")}
+              </TableHead>
+              <TableHead
+                className={`w-45 ${isArabic ? "text-right" : "text-left"}`}
+              >
+                {t("supplierDebt.details.paymentHistory.amount", "Amount")}
+              </TableHead>
+              <TableHead
+                className={`w-50 ${isArabic ? "text-right" : "text-left"}`}
+              >
+                {t(
+                  "supplierDebt.details.paymentHistory.createdBy",
+                  "Created By",
+                )}
+              </TableHead>
+              <TableHead className={isArabic ? "text-right" : "text-left"}>
+                {t("supplierDebt.details.paymentHistory.notes", "Notes")}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="text-xs font-medium">
@@ -40,7 +66,10 @@ export function SupplierDebtPaymentHistory({
                   colSpan={4}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  No payment transactions recorded yet.
+                  {t(
+                    "supplierDebt.details.paymentHistory.noPayments",
+                    "No payment transactions recorded yet.",
+                  )}
                 </TableCell>
               </TableRow>
             ) : (
@@ -54,7 +83,8 @@ export function SupplierDebtPaymentHistory({
                   </TableCell>
 
                   <TableCell className="font-mono font-bold text-emerald-500">
-                    +{payment.amount.toLocaleString()} YER
+                    +{payment.amount.toLocaleString()}{" "}
+                    {t("common.currency", "YER")}
                   </TableCell>
 
                   <TableCell className="text-foreground">
@@ -63,7 +93,7 @@ export function SupplierDebtPaymentHistory({
                       <span>
                         {payment.created_by
                           ? `${payment.created_by.first_name} ${payment.created_by.last_name}`
-                          : "System"}
+                          : t("common.system", "System")}
                       </span>
                     </div>
                   </TableCell>
