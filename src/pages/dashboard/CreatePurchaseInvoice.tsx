@@ -98,7 +98,6 @@ export default function CreatePurchaseInvoice() {
 
       {/* Live Alerts Zone */}
       <LiveAlerts
-        isArabic={isArabic}
         paymentMethod={paymentMethod}
         isCashBoxConfigured={isCashBoxConfigured}
         hasDuplicateBatches={hasDuplicateBatches}
@@ -110,7 +109,6 @@ export default function CreatePurchaseInvoice() {
         {/* Main Products Column */}
         <div className="lg:col-span-2 space-y-6">
           <SupplierForm
-            isArabic={isArabic}
             supplierId={supplierId}
             setSupplierId={setSupplierId}
             invoiceDate={invoiceDate}
@@ -136,7 +134,6 @@ export default function CreatePurchaseInvoice() {
             <CardContent className="pt-5 space-y-5">
               {/* POS Search Component */}
               <ProductSearchPOS
-                isArabic={isArabic}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 filteredProducts={filteredProducts}
@@ -147,7 +144,6 @@ export default function CreatePurchaseInvoice() {
 
               {/* Items Table */}
               <InvoiceItemsTable
-                isArabic={isArabic}
                 items={items}
                 updateItemField={updateItemField}
                 removeItem={removeItem}
@@ -159,11 +155,10 @@ export default function CreatePurchaseInvoice() {
         {/* Payment & Calculation Column */}
         <div className="space-y-6">
           {/* Summary Card */}
-          <InvoiceSummaryCard isArabic={isArabic} totals={totals} />
+          <InvoiceSummaryCard totals={totals} />
 
           {/* Payment Card */}
           <PaymentDetailsCard
-            isArabic={isArabic}
             paymentMethod={paymentMethod}
             setPaymentMethod={setPaymentMethod}
             amountPaid={amountPaid}

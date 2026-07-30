@@ -233,7 +233,8 @@
         "cashbox": "الخزنة",
         "purchases": "الفواتير",
         "newPurchase":"إنشاء فاتورة",
-        "supplierDebt": "ديون الموردين"
+        "supplierDebt": "ديون الموردين",
+        "supplierReturn":"مرتجعات الموردين"
     },
     "dashboard":{
         "addProduct": "إضافة منتج",

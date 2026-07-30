@@ -230,7 +230,8 @@
         "cashbox": "Cashbox",
         "purchases": "Purchases Invoices",
         "newPurchase":"Create Purchase Invoice",
-        "supplierDebt": "Supplier Debt"
+        "supplierDebt": "Supplier Debt",
+        "supplierReturn":"Supplier Return"
     },
   "dashboard":{
         "addProduct": "Add Product",

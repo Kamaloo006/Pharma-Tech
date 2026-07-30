@@ -12,6 +12,7 @@ import {
   ReceiptText,
   NotebookPen,
   WalletCards,
+  Repeat,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -88,6 +89,11 @@ export default function AppSidebar() {
           title: t("sidebar.supplierDebt"),
           icon: WalletCards,
           url: "/dashboard/supplier-debt",
+        },
+        {
+          title: t("sidebar.supplierReturn"),
+          icon: Repeat,
+          url: "/dashboard/supplier-return",
         },
       ],
     },

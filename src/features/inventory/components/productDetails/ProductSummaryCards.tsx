@@ -1,8 +1,9 @@
 // components/productDetails/ProductSummaryCards.tsx
 import { useTranslation } from "react-i18next";
+import type { Product } from "../../types/Product";
 
 interface ProductSummaryCardsProps {
-  product: any;
+  product: Product;
   isArabic: boolean;
 }
 

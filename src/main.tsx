@@ -40,6 +40,9 @@ import CreatePurchaseInvoice from "./pages/dashboard/CreatePurchaseInvoice.tsx";
 import PurchaseInvoiceDetails from "./pages/dashboard/PurchaseInvoiceDetails.tsx";
 import SupplierDebt from "./pages/dashboard/SupplierDebt.tsx";
 import SupplierDebtDetails from "./pages/dashboard/SupplierDebtDetails.tsx";
+import SupplierReturn from "./pages/dashboard/SupplierReturn.tsx";
+import CreateSupplierReturn from "./pages/dashboard/CreateSupplierReturn.tsx";
+import SupplierReturnDetails from "./pages/dashboard/SupplierReturnDetails.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -120,6 +123,18 @@ const router = createBrowserRouter([
           {
             path: "supplier-debt/:id",
             element: <SupplierDebtDetails />,
+          },
+          {
+            path: "supplier-return",
+            element: <SupplierReturn />,
+          },
+          {
+            path: "supplier-return/create",
+            element: <CreateSupplierReturn />,
+          },
+          {
+            path: "supplier-return/:id",
+            element: <SupplierReturnDetails />,
           },
         ],
       },
