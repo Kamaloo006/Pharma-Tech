@@ -46,8 +46,8 @@ export function PayDebtModal({
       setValidationError(
         t("supplierDebt.payModal.validation.exceedsRemaining", {
           amount: remainingAmount.toLocaleString(),
-          currency: t("common.currency", "YER"),
-          defaultValue: `Amount cannot exceed remaining debt (${remainingAmount.toLocaleString()} YER).`,
+          currency: t("common.currency", "SYR"),
+          defaultValue: `Amount cannot exceed remaining debt (${remainingAmount.toLocaleString()} SYR).`,
         }),
       );
       return;

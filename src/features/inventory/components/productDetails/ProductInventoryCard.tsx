@@ -7,9 +7,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import type { Product } from "../../types/Product";
 
 interface ProductInventoryCardProps {
-  product: any;
+  product: Product;
   isArabic: boolean;
   isOut: boolean;
   isLowStock: boolean;

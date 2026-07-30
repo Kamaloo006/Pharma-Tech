@@ -15,6 +15,7 @@ import type { ProductDetails } from "@/features/inventory/types/Product";
 import api from "@/lib/api";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import i18n from "@/utils/i18n";
 
 const createPurchaseInvoiceApi = async (
   payload: CreatePurchaseInvoicePayload
@@ -27,7 +28,7 @@ const createPurchaseInvoiceApi = async (
 };
 
 export function useCreatePurchaseInvoice() {
-  const [isArabic] = useState<boolean>(true);
+  const isArabic = i18n.language === "ar";
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();

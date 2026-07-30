@@ -134,7 +134,7 @@ const SupplierDebtDetails = () => {
 
   return (
     <div
-      className="p-6 space-y-6 max-w-6xl mx-auto"
+      className="space-y-6 max-w-8xl  px-6 mx-auto"
       dir={isArabic ? "rtl" : "ltr"}
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/60">

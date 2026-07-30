@@ -48,11 +48,7 @@ export default function SupplierDebtPage() {
   };
 
   return (
-    <div className="space-y-4">
-      {/* 
-        تمرير dataUpdatedAt كـ refreshKey يجعل الـ CountUp لا يعيد الحركة 
-        إلا عندما تُجلب داتا جديدة بالفعل من الـ API ولن يعيدها عند تغيير اللغة 
-      */}
+    <div className="space-y-6 max-w-8xl  px-6 mx-auto">
       <SupplierDebtHeader totals={totals} formatCurrency={formatCurrency} />
 
       <SupplierDebtFilters

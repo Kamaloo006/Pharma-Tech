@@ -8,6 +8,7 @@ const fetchPurchaseInvoiceDetails = async (
   const { data } = await api.get<{ data: PurchaseInvoice }>(
     `/purchase-invoices/${id}`
   );
+  console.log("Fetched purchase invoice details:", data.data);
   return data.data;
 };
 
@@ -35,7 +36,6 @@ export function useCancelPurchaseInvoice() {
   return useMutation({
     mutationFn: (id: number | string) => cancelPurchaseInvoice(id),
     onSuccess: (_, id) => {
-      // تحديث الكاش تلقائياً عند إلغاء الفاتورة
       queryClient.invalidateQueries({ queryKey: ["purchaseInvoice", id] });
       queryClient.invalidateQueries({ queryKey: ["purchaseInvoices"] });
     },

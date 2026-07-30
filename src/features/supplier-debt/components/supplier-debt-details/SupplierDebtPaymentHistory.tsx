@@ -84,7 +84,7 @@ export function SupplierDebtPaymentHistory({
 
                   <TableCell className="font-mono font-bold text-emerald-500">
                     +{payment.amount.toLocaleString()}{" "}
-                    {t("common.currency", "YER")}
+                    {t("common.currency", "SYR")}
                   </TableCell>
 
                   <TableCell className="text-foreground">
