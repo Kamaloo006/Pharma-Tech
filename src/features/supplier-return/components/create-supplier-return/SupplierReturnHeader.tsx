@@ -19,7 +19,7 @@ export function SupplierReturnHeader({ isArabic }: Props) {
           variant="outline"
           size="icon"
           className="h-9 w-9 rounded-xl border-border/80 hover:bg-muted"
-          onClick={() => navigate("/dashboard/supplier-return")}
+          onClick={() => navigate("/dashboard/supplier-returns")}
         >
           {isArabic ? (
             <ArrowRight className="h-4 w-4 text-muted-foreground" />
@@ -29,14 +29,11 @@ export function SupplierReturnHeader({ isArabic }: Props) {
         </Button>
         <div>
           <h1 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2">
-            {t("supplierReturn.create.title", "Create Supplier Return")}
+            {t("supplierReturn.create.title")}
             <RotateCcw className="w-5 h-5 text-primary" />
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            {t(
-              "supplierReturn.create.subtitle",
-              "Issue a return invoice to supplier for purchased goods",
-            )}
+            {t("supplierReturn.create.subtitle")}
           </p>
         </div>
       </div>

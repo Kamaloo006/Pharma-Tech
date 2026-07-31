@@ -43,10 +43,7 @@ export function SupplierReturnTable({
       <div className="flex flex-col items-center justify-center min-h-75 space-y-4">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <p className="text-xs text-muted-foreground">
-          {t(
-            "supplierReturn.table.loading",
-            "Loading supplier return invoices...",
-          )}
+          {t("supplierReturn.table.loading")}
         </p>
       </div>
     );
@@ -57,17 +54,14 @@ export function SupplierReturnTable({
       <div className="flex flex-col items-center justify-center min-h-75 text-center p-6">
         <AlertCircle className="h-10 w-10 text-destructive mb-2" />
         <p className="text-xs font-bold text-foreground">
-          {t(
-            "supplierReturn.table.error",
-            "An error occurred while loading data.",
-          )}
+          {t("supplierReturn.table.error")}
         </p>
         <Button
           onClick={() => refetch()}
           variant="outline"
           className="h-8 text-[11px] font-bold mt-3"
         >
-          {t("common.retry", "Retry")}
+          {t("common.retry")}
         </Button>
       </div>
     );
@@ -87,28 +81,28 @@ export function SupplierReturnTable({
           <TableHeader className="bg-muted/10">
             <TableRow className="border-b border-border/65">
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("supplierReturn.table.invoiceNo", "Invoice No")}
+                {t("supplierReturn.table.invoiceNo")}
               </TableHead>
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("supplierReturn.table.supplier", "Supplier")}
+                {t("supplierReturn.table.supplier")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.table.invoiceDate", "Invoice Date")}
+                {t("supplierReturn.table.invoiceDate")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.table.subtotal", "Subtotal")}
+                {t("supplierReturn.table.subtotal")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.table.refundTotal", "Refund Total")}
+                {t("supplierReturn.table.refundTotal")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.table.refundMethod", "Refund Method")}
+                {t("supplierReturn.table.refundMethod")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.table.status", "Status")}
+                {t("supplierReturn.table.status")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.table.actions", "Actions")}
+                {t("supplierReturn.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -119,10 +113,7 @@ export function SupplierReturnTable({
                   colSpan={8}
                   className="text-center py-12 text-muted-foreground font-semibold"
                 >
-                  {t(
-                    "supplierReturn.table.noData",
-                    "No supplier returns found to display.",
-                  )}
+                  {t("supplierReturn.table.noData")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -200,13 +191,13 @@ export function SupplierReturnTable({
                         }`}
                       >
                         {returnStatus === "completed" &&
-                          t("supplierReturn.status.completed", "Completed")}
+                          t("supplierReturn.status.completed")}
                         {returnStatus === "approved" &&
-                          t("supplierReturn.status.approved", "Approved")}
+                          t("supplierReturn.status.approved")}
                         {returnStatus === "pending" &&
-                          t("supplierReturn.status.pending", "Pending")}
+                          t("supplierReturn.status.pending")}
                         {returnStatus === "cancelled" &&
-                          t("supplierReturn.status.cancelled", "Cancelled")}
+                          t("supplierReturn.status.cancelled")}
                         {![
                           "completed",
                           "approved",
@@ -223,10 +214,7 @@ export function SupplierReturnTable({
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 hover:bg-muted"
-                          title={t(
-                            "supplierReturn.table.viewDetails",
-                            "View Details",
-                          )}
+                          title={t("supplierReturn.table.viewDetails")}
                         >
                           <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
                         </Button>

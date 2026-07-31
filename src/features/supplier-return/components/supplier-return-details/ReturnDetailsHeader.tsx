@@ -74,10 +74,7 @@ export function ReturnDetailsHeader({ details, isArabic }: Props) {
             </Badge>
           </div>
           <p className="text-xs text-muted-foreground mt-0.5">
-            {t(
-              "supplierReturn.details.subtitle",
-              "Supplier Return Invoice Details",
-            )}
+            {t("supplierReturn.details.subtitle")}
           </p>
         </div>
       </div>
@@ -88,7 +85,7 @@ export function ReturnDetailsHeader({ details, isArabic }: Props) {
             <AlertDialogTrigger asChild>
               <Button
                 size="sm"
-                className="h-9 bg-red-800 hover:bg-red-800/90 cursor-pointer  text-xs gap-1.5"
+                className="h-9 bg-red-800 hover:bg-red-800/90 cursor-pointer text-xs gap-1.5"
                 disabled={cancelMutation.isPending}
               >
                 {cancelMutation.isPending ? (
@@ -96,30 +93,31 @@ export function ReturnDetailsHeader({ details, isArabic }: Props) {
                 ) : (
                   <Ban className="w-3.5 h-3.5" />
                 )}
-                {t("supplierReturn.details.cancelReturn", "Cancel Return")}
+                {t("supplierReturn.details.cancelReturn")}
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent
+              className={`${isArabic && "flex flex-col items-start"}`}
+            >
               <AlertDialogHeader>
-                <AlertDialogTitle>
-                  {t("common.areYouSure", "Are you sure?")}
+                <AlertDialogTitle
+                  className={` w-full ${isArabic ? "text-right" : "text-left"} `}
+                >
+                  {t("common.areYouSure")}
                 </AlertDialogTitle>
-                <AlertDialogDescription>
-                  {t(
-                    "supplierReturn.details.cancelWarning",
-                    "This action will cancel the return invoice and restore quantities. This action cannot be undone.",
-                  )}
+                <AlertDialogDescription
+                  className={`${isArabic ? "text-right" : "text-left"}`}
+                >
+                  {t("supplierReturn.details.cancelWarning")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>
-                  {t("common.cancel", "Cancel")}
-                </AlertDialogCancel>
+                <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => cancelMutation.mutate(details.id)}
                   className="bg-red-800 text-red-800-foreground cursor-pointer hover:bg-red-800/90"
                 >
-                  {t("common.confirm", "Confirm Cancel")}
+                  {t("common.confirm")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -133,7 +131,7 @@ export function ReturnDetailsHeader({ details, isArabic }: Props) {
           className="h-9 text-xs gap-1.5 border-border/80"
         >
           <Printer className="w-3.5 h-3.5 text-muted-foreground" />
-          {t("common.print", "Print")}
+          {t("common.print")}
         </Button>
       </div>
     </div>

@@ -7,6 +7,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useSupplierReturns } from "@/features/supplier-return/hooks/useSupplierReturns";
 import type { SupplierReturnFilterParams } from "@/features/supplier-return/types/SupplierReturn";
 import { SupplierReturnSummaryCards } from "@/features/supplier-return/components/SupplierReturnSummaryCards";
@@ -15,6 +16,8 @@ import { SupplierReturnTable } from "@/features/supplier-return/components/Suppl
 
 export default function SupplierReturnsPage() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   const [filters, setFilters] = useState<SupplierReturnFilterParams>({
     status: "all",
@@ -45,40 +48,48 @@ export default function SupplierReturnsPage() {
 
   const formatDate = (dateString: string) => {
     if (!dateString) return "—";
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
+    return new Date(dateString).toLocaleDateString(
+      isArabic ? "ar-SA" : "en-US",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      },
+    );
   };
 
   const formatCurrency = (amount: number) => {
-    return `${amount.toLocaleString()} SYR`;
+    return `${amount.toLocaleString()} ${t("common.syr", "SYR")}`;
   };
 
   const meta = data?.meta;
 
   return (
-    <div className="p-6 space-y-6 max-w-8xl mx-auto">
+    <div
+      dir={isArabic ? "rtl" : "ltr"}
+      className="p-6 space-y-6 max-w-8xl mx-auto"
+    >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
-            Supplier Returns
+            {t("supplierReturn.list.title", "Supplier Returns")}
             <RotateCcw className="w-6 h-6 text-primary" />
           </h1>
           <p className="text-xs text-muted-foreground mt-1">
-            Manage product returns to suppliers, track refunds, and status
-            updates.
+            {t(
+              "supplierReturn.list.description",
+              "Manage product returns to suppliers, track refunds, and status updates.",
+            )}
           </p>
         </div>
 
         <button
           onClick={() => navigate("/dashboard/supplier-return/create")}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs shadow-xs transition-all"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs shadow-xs transition-all cursor-pointer"
         >
           <Plus className="w-4 h-4" />
-          <span>Create Return</span>
+          <span>{t("supplierReturn.list.createBtn", "Create Return")}</span>
         </button>
       </div>
 
@@ -86,8 +97,10 @@ export default function SupplierReturnsPage() {
         <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs flex items-center gap-2 font-medium">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>
-            Failed to load supplier return invoices. Please check your
-            connection or try again.
+            {t(
+              "supplierReturn.list.errorLoading",
+              "Failed to load supplier return invoices. Please check your connection or try again.",
+            )}
           </span>
         </div>
       )}
@@ -121,9 +134,10 @@ export default function SupplierReturnsPage() {
         {meta && meta.last_page > 1 && (
           <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs">
             <span className="text-muted-foreground font-mono">
-              Page{" "}
+              {t("common.pagination.page", "Page")}{" "}
               <strong className="text-foreground">{meta.current_page}</strong>{" "}
-              of <strong className="text-foreground">{meta.last_page}</strong>
+              {t("common.pagination.of", "of")}{" "}
+              <strong className="text-foreground">{meta.last_page}</strong>
             </span>
             <div className="flex items-center gap-2">
               <button
@@ -133,7 +147,11 @@ export default function SupplierReturnsPage() {
                 }
                 className="p-2 rounded-lg border border-border hover:bg-muted disabled:opacity-50 text-muted-foreground transition-colors cursor-pointer disabled:cursor-not-allowed"
               >
-                <ChevronLeft className="w-4 h-4" />
+                {isArabic ? (
+                  <ChevronRight className="w-4 h-4" />
+                ) : (
+                  <ChevronLeft className="w-4 h-4" />
+                )}
               </button>
               <button
                 disabled={meta.current_page >= meta.last_page || isFetching}
@@ -142,7 +160,11 @@ export default function SupplierReturnsPage() {
                 }
                 className="p-2 rounded-lg border border-border hover:bg-muted disabled:opacity-50 text-muted-foreground transition-colors cursor-pointer disabled:cursor-not-allowed"
               >
-                <ChevronRight className="w-4 h-4" />
+                {isArabic ? (
+                  <ChevronLeft className="w-4 h-4" />
+                ) : (
+                  <ChevronRight className="w-4 h-4" />
+                )}
               </button>
             </div>
           </div>

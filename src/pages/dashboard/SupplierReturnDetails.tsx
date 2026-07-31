@@ -21,21 +21,27 @@ export default function SupplierReturnDetailsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-100">
+      <div className="flex flex-col items-center justify-center min-h-100 gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <p className="text-sm text-muted-foreground">
+          {t("common.loading", "Loading...")}
+        </p>
       </div>
     );
   }
 
   if (isError || !returnDetails) {
     return (
-      <div className="p-6 text-center space-y-4">
+      <div
+        dir={isArabic ? "rtl" : "ltr"}
+        className="p-6 text-center space-y-4 max-w-md mx-auto my-12"
+      >
         <p className="text-destructive text-sm font-semibold">
           {t("supplierReturn.details.error", "Failed to load return details.")}
         </p>
         <Button
           variant="outline"
-          onClick={() => navigate("/dashboard/supplier-return")}
+          onClick={() => navigate("/dashboard/supplier-returns")}
         >
           {t("common.back", "Go Back")}
         </Button>
