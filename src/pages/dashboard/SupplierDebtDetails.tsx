@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { useSupplierDebtDetails } from "@/features/supplier-debt/hooks/useSupplierDebt";
 import type { SupplierDebtDetailsData } from "@/features/supplier-debt/types/SupplierDebt";
-import type { PayDebtPayload } from "@/features/supplier-debt/types/SupplierDebt";
 import { SupplierDebtPaymentHistory } from "@/features/supplier-debt/components/supplier-debt-details/SupplierDebtPaymentHistory";
 import { PayDebtModal } from "@/features/supplier-debt/components/supplier-debt-details/PayDebtModal";
 
@@ -27,12 +26,7 @@ const SupplierDebtDetails = () => {
   const isArabic = i18n.language === "ar";
   const [isPayModalOpen, setIsPayModalOpen] = useState(false);
 
-  const {
-    data: debt,
-    isLoading,
-    isError,
-    refetch,
-  } = useSupplierDebtDetails(id);
+  const { data: debt, isLoading, isError } = useSupplierDebtDetails(id);
 
   const handleBack = () => {
     if (window.history.length > 2) {
@@ -87,10 +81,10 @@ const SupplierDebtDetails = () => {
     );
   };
 
-  const handleRecordPaymentSuccess = (_payload: PayDebtPayload) => {
-    setIsPayModalOpen(false);
-    refetch();
-  };
+  // const handleRecordPaymentSuccess = (_payload: PayDebtPayload) => {
+  //   setIsPayModalOpen(false);
+  //   refetch();
+  // };
 
   if (isLoading) {
     return (

@@ -19,7 +19,7 @@ export function SupplierReturnHeader({ isArabic }: Props) {
           variant="outline"
           size="icon"
           className="h-9 w-9 rounded-xl border-border/80 hover:bg-muted"
-          onClick={() => navigate("/dashboard/supplier-returns")}
+          onClick={() => navigate("/dashboard/supplier-return")}
         >
           {isArabic ? (
             <ArrowRight className="h-4 w-4 text-muted-foreground" />

@@ -56,6 +56,22 @@ export default function AppSidebar() {
           url: "/dashboard",
         },
         {
+          title: t("sidebar.inventory"),
+          icon: Boxes,
+          url: "/dashboard/inventory",
+        },
+        {
+          title: t("sidebar.cashbox"),
+          icon: DollarSign,
+          url: "/dashboard/cashbox",
+        },
+      ],
+    },
+
+    {
+      label: t("sidebar.management"),
+      items: [
+        {
           title: t("sidebar.purchases"),
           icon: ReceiptText,
           url: "/dashboard/purchases",
@@ -68,22 +84,12 @@ export default function AppSidebar() {
       ],
     },
     {
-      label: t("sidebar.management"),
+      label: t("sidebar.suppliers"),
       items: [
         {
-          title: t("sidebar.inventory"),
-          icon: Boxes,
-          url: "/dashboard/inventory",
-        },
-        {
-          title: t("sidebar.suppliers"),
+          title: t("sidebar.suppliersList"),
           icon: Users,
           url: "/dashboard/suppliers",
-        },
-        {
-          title: t("sidebar.cashbox"),
-          icon: DollarSign,
-          url: "/dashboard/cashbox",
         },
         {
           title: t("sidebar.supplierDebt"),

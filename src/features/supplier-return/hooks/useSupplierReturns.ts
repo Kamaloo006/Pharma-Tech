@@ -7,6 +7,7 @@ import type {
   SupplierReturnFilterParams,
   SupplierReturnSingleApiResponse,
 } from "@/features/supplier-return/types/SupplierReturn";
+import { toast } from "sonner";
 
 const fetchSupplierReturnInvoices = async (
   filters: SupplierReturnFilterParams = {}
@@ -92,7 +93,37 @@ export function useSupplierReturnDetails(id: string | number | undefined) {
   return useQuery({
     queryKey: ["supplierReturnDetails", id],
     queryFn: () => getSupplierReturnDetails(id!),
-    enabled: !!id, // يعمل فقط عندما يكون الـ ID متوفراً
-    staleTime: 1000 * 60 * 5, // 5 دقائق كاش
+    enabled: !!id, 
+    staleTime: 1000 * 60 * 5, 
+  });
+}
+
+export const cancelSupplierReturnInvoice = async (id: string | number) => {
+  const response = await api.patch(
+    `supplier-return-invoices/${id}/cancel`
+  );
+  return response.data;
+};
+
+
+export function useCancelSupplierReturn() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string | number) => cancelSupplierReturnInvoice(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: ["supplierReturnDetails", String(id)],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["supplierReturnInvoices"],
+      });
+      toast.success("Supplier return cancelled successfully");
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message || "Failed to cancel supplier return"
+      );
+    },
   });
 }
