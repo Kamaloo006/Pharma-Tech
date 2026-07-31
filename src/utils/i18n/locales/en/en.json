@@ -231,7 +231,9 @@
         "purchases": "Purchases Invoices",
         "newPurchase":"Create Purchase Invoice",
         "supplierDebt": "Supplier Debt",
-        "supplierReturn":"Supplier Return"
+        "supplierReturn":"Supplier Return",
+        "suppliersList": "Suppliers List"
+        
     },
   "dashboard":{
         "addProduct": "Add Product",

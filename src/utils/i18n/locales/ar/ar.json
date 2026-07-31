@@ -234,7 +234,8 @@
         "purchases": "الفواتير",
         "newPurchase":"إنشاء فاتورة",
         "supplierDebt": "ديون الموردين",
-        "supplierReturn":"مرتجعات الموردين"
+        "supplierReturn":"مرتجعات الموردين",
+        "suppliersList": "قائمة الموردين"
     },
     "dashboard":{
         "addProduct": "إضافة منتج",
