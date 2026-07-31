@@ -1,6 +1,8 @@
+import { useTranslation } from "react-i18next";
 import { RotateCcw, CheckCircle2, XCircle, DollarSign } from "lucide-react";
 import type { SupplierReturnInvoice } from "@/features/supplier-return/types/SupplierReturn";
 import CountUpModule from "react-countup";
+
 interface SupplierReturnSummaryCardsProps {
   invoices: SupplierReturnInvoice[];
   totalRecords: number;
@@ -10,6 +12,8 @@ export function SupplierReturnSummaryCards({
   invoices,
   totalRecords,
 }: SupplierReturnSummaryCardsProps) {
+  const { t } = useTranslation();
+
   const completedCount = invoices.filter(
     (i) => i.status === "completed",
   ).length;
@@ -25,10 +29,11 @@ export function SupplierReturnSummaryCards({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Total Returns */}
       <div className="p-5 rounded-2xl border border-border bg-card shadow-xs flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Total Returns
+            {t("supplierReturn.cards.totalReturns")}
           </p>
           <p className="text-2xl font-bold font-mono text-foreground">
             <CountUp end={totalRecords} duration={1.2} preserveValue={true} />
@@ -39,10 +44,11 @@ export function SupplierReturnSummaryCards({
         </div>
       </div>
 
+      {/* Completed */}
       <div className="p-5 rounded-2xl border border-border bg-card shadow-xs flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Completed
+            {t("supplierReturn.cards.completed")}
           </p>
           <p className="text-2xl font-bold font-mono text-emerald-500">
             <CountUp end={completedCount} duration={1.2} preserveValue={true} />
@@ -53,10 +59,11 @@ export function SupplierReturnSummaryCards({
         </div>
       </div>
 
+      {/* Cancelled */}
       <div className="p-5 rounded-2xl border border-border bg-card shadow-xs flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Cancelled
+            {t("supplierReturn.cards.cancelled")}
           </p>
           <p className="text-2xl font-bold font-mono text-rose-500">
             {cancelledCount}
@@ -67,15 +74,16 @@ export function SupplierReturnSummaryCards({
         </div>
       </div>
 
+      {/* Total Refunded */}
       <div className="p-5 rounded-2xl border border-border bg-card shadow-xs flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Total Refunded
+            {t("supplierReturn.cards.totalRefunded")}
           </p>
           <p className="text-2xl font-bold font-mono text-foreground">
             <CountUp end={totalRefunded} duration={1.2} preserveValue={true} />
             <span className="text-xs font-normal text-muted-foreground ml-1">
-              SYR
+              {t("common.currency")}
             </span>
           </p>
         </div>

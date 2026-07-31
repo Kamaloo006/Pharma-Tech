@@ -12,9 +12,20 @@
         "serverError": "We are facing server issues, please try again later.",
         "loading": "Loading...",
         "currency": "SYP",
-    "cancel": "Cancel",
-    "save": "Save Changes",
-    "add": "Add"
+        "syr": "SYP",
+        "unknownProduct": "Unknown Product",
+        "pagination": {
+          "page": "Page",
+          "of": "of"
+        },
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "add": "Add",
+        "print": "Print",
+        "confirm":"Confirm",
+        "areYouSure":"? Are you sure",
+        "applyFilters":"Apply Filters",
+        "reset":"Reset"
     },
     "validation": {
         "invalidEmail": "Invalid email address",
@@ -803,6 +814,8 @@
     }
   },
   
+  
+  
   "supplierDebt": {
     "header": {
       "title": "Supplier Debts",
@@ -812,31 +825,30 @@
       "remainingDebt": "Total Remaining",
       "totalAmount": "Total Debt",
       "paidAmount": "Paid Amount",
-      "remainingAmount":"Remaining Amount:"
-
+      "remainingAmount": "Remaining Amount:"
     },
     "details": {
       "title": "Supplier Debt #{{id}}",
-      "purchaseInvoiceId": "Purchase Invoice ID:",
-      "createdDate": "Created:",
-      "payDebtBtn": "Pay Debt",
-      "notFoundTitle": "Debt Not Found",
-      "notFoundDesc": "Unable to load debt details. It might have been deleted.",
+      "notFoundTitle": "Debt Details Not Found",
+      "notFoundDesc": "Unable to load debt details. The requested record could not be found or may have been deleted.",
       "backToList": "Back to Debts List",
-      "supplierInfo": "Supplier Information",
+      "purchaseInvoiceId": "Purchase Invoice:",
+      "createdDate": "Created Date:",
+      "viewInvoice": "View Invoice",
+      "payDebtBtn": "Pay Debt",
+      "supplierInfo": "Supplier Details",
       "supplierName": "Supplier Name",
       "supplierCode": "Supplier Code",
       "phone": "Phone Number",
       "email": "Email",
       "dueDate": "Due Date",
-      "viewInvoice":"Show Invoice",
       "financialMetrics": {
         "totalDebt": "Total Debt",
-        "initialAmount": "SYR - Initial Debt Amount",
-        "paid": "Paid",
-        "totalPayments": "SYR - Total Payments Made",
-        "remaining": "Remaining",
-        "balanceLeft": "SYR - Balance Left to Pay"
+        "initialAmount": "Initial Total Debt Amount",
+        "paid": "Paid Amount",
+        "totalPayments": "Total Settled Amount",
+        "remaining": "Remaining Balance",
+        "balanceLeft": "Outstanding Debt Balance"
       },
       "paymentHistory": {
         "title": "Payment History",
@@ -876,7 +888,7 @@
     },
     "status": {
       "open": "Open",
-      "partial": "Partial",
+      "partial": "Partially Paid",
       "paid": "Paid",
       "overdue": "Overdue",
       "cancelled": "Cancelled"
@@ -894,6 +906,114 @@
       "loading": "Loading debts...",
       "noData": "No debts found matching the filters."
     }
+  },
+  "supplierReturn": {
+    "list": {
+      "title": "Supplier Returns",
+      "description": "Manage product returns to suppliers, track refunds, and status updates.",
+      "createBtn": "Create Return",
+      "errorLoading": "Failed to load supplier return invoices. Please check your connection or try again."
+    },
+    "filters": {
+    "supplier": "Supplier",
+    "allSuppliers": "All Suppliers",
+    "status": "Return Status",
+    "allStatuses": "All Statuses",
+    "dateFrom": "Date From",
+    "dateTo": "Date To",
+    "perPage": "Per Page"
+  },
+  "cards": {
+    "totalReturns": "Total Returns",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "totalRefunded": "Total Refunded"
+  },
+  "table": {
+    "loading": "Loading supplier return invoices...",
+    "error": "An error occurred while loading data.",
+    "invoiceNo": "Invoice No",
+    "supplier": "Supplier",
+    "invoiceDate": "Invoice Date",
+    "subtotal": "Subtotal",
+    "refundTotal": "Refund Total",
+    "refundMethod": "Refund Method",
+    "status": "Status",
+    "actions": "Actions",
+    "noData": "No supplier returns found to display.",
+    "viewDetails": "View Details"
+    },
+    "details": {
+      "error": "Failed to load return details.",
+      "title": "Return Details #{{id}}",
+      "subtitle": "Supplier Return Invoice Details",
+      "supplierInfo": "Supplier Information",
+      "returnSummary": "Return Summary",
+      "items": "Returned Items",
+      "financialSummary": "Financial Summary",
+      "summary": "Financial Summary",
+      "cancelReturn": "Cancel Return",
+      "cancelWarning": "This action will cancel the return invoice and restore quantities. This action cannot be undone",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "discount": "Discount",
+      "refundTotal": "Refund Total",
+      "reason": "Reason",
+      "returnedProducts": "Returned Products",
+      "product": "Product",
+      "qty": "Qty",
+      "unitPrice": "Unit Price",
+      "total": "Total",
+      "supplier": "Supplier",
+      "originalInvoice": "Original Invoice",
+      "returnDate": "Return Date",
+      "refundMethod": "Refund Method"
+    },
+    "create": {
+      "title": "Create Supplier Return",
+      "subtitle": "Issue a return invoice to supplier for purchased goods",
+      "description": "Issue a product return request against an existing purchase invoice.",
+      "supplier": "Supplier",
+      "selectSupplier": "Select Supplier",
+      "originalInvoice": "Original Purchase Invoice",
+      "selectInvoice": "Select Purchase Invoice",
+      "returnItems": "Return Items",
+      "product": "Product",
+      "purchased": "Purchased",
+      "returnQty": "Return Qty",
+      "unitPrice": "Unit Price",
+      "total": "Total",
+      "noItems": "Select a purchase invoice to load returnable items.",
+      "refundMethod": "Refund Method",
+      "cash": "Cash",
+      "credit": "Credit",
+      "reason": "Reason",
+      "reasonPlaceholder": "Enter return reason (e.g., Damaged products)...",
+      "notes": "Notes",
+      "notesPlaceholder": "Additional notes...",
+      "refundSummary": "Refund Summary",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "discount": "Discount",
+      "refundTotal": "Refund Total",
+      "submit": "Create Return",
+      "successToast": "Supplier return created successfully!",
+      "errors": {
+        "selectSupplier": "Please select a supplier",
+        "selectInvoice": "Please select an original purchase invoice",
+        "noQty": "Please specify at least one product quantity to return",
+        "failed": "Failed to create supplier return."
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled"
+    }
   }
+  
 }
+
 

@@ -36,7 +36,7 @@ export function ReturnItemsTable({
       <div className="flex items-center justify-between pb-2 border-b border-border/60">
         <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
           <PackageCheck className="w-4 h-4 text-primary" />
-          {t("supplierReturn.create.returnItems", "Return Items")}
+          {t("supplierReturn.create.returnItems")}
         </h2>
       </div>
 
@@ -45,19 +45,19 @@ export function ReturnItemsTable({
           <TableHeader className="bg-muted/30">
             <TableRow className="border-b border-border/60">
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("supplierReturn.create.product", "Product")}
+                {t("supplierReturn.create.product")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.create.purchased", "Purchased")}
+                {t("supplierReturn.create.purchased")}
               </TableHead>
               <TableHead className="text-center w-32">
-                {t("supplierReturn.create.returnQty", "Return Qty")}
+                {t("supplierReturn.create.returnQty")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.create.unitPrice", "Unit Price")}
+                {t("supplierReturn.create.unitPrice")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.create.total", "Total")}
+                {t("supplierReturn.create.total")}
               </TableHead>
               <TableHead className="text-center w-12"></TableHead>
             </TableRow>
@@ -69,10 +69,7 @@ export function ReturnItemsTable({
                   colSpan={6}
                   className="text-center py-8 text-muted-foreground font-semibold"
                 >
-                  {t(
-                    "supplierReturn.create.noItems",
-                    "Select a purchase invoice to load returnable items.",
-                  )}
+                  {t("supplierReturn.create.noItems")}
                 </TableCell>
               </TableRow>
             ) : (

@@ -44,7 +44,7 @@ export function SupplierReturnFormHeader({
         <div className="space-y-1.5">
           <Label className="text-xs font-bold text-muted-foreground flex items-center gap-1.5">
             <Building2 className="w-3.5 h-3.5 text-primary" />
-            {t("supplierReturn.create.supplier", "Supplier")}
+            {t("supplierReturn.create.supplier")}
           </Label>
           <Select
             value={supplierId}
@@ -55,11 +55,8 @@ export function SupplierReturnFormHeader({
               <SelectValue
                 placeholder={
                   loadingSuppliers
-                    ? t("common.loading", "Loading...")
-                    : t(
-                        "supplierReturn.create.selectSupplier",
-                        "Select Supplier",
-                      )
+                    ? t("common.loading")
+                    : t("supplierReturn.create.selectSupplier")
                 }
               />
             </SelectTrigger>
@@ -81,10 +78,7 @@ export function SupplierReturnFormHeader({
         <div className="space-y-1.5">
           <Label className="text-xs font-bold text-muted-foreground flex items-center gap-1.5">
             <FileText className="w-3.5 h-3.5 text-primary" />
-            {t(
-              "supplierReturn.create.originalInvoice",
-              "Original Purchase Invoice",
-            )}
+            {t("supplierReturn.create.originalInvoice")}
           </Label>
           <Select
             value={invoiceId}
@@ -95,11 +89,8 @@ export function SupplierReturnFormHeader({
               <SelectValue
                 placeholder={
                   loadingInvoices
-                    ? t("common.loading", "Loading...")
-                    : t(
-                        "supplierReturn.create.selectInvoice",
-                        "Select Purchase Invoice",
-                      )
+                    ? t("common.loading")
+                    : t("supplierReturn.create.selectInvoice")
                 }
               />
             </SelectTrigger>
@@ -108,7 +99,7 @@ export function SupplierReturnFormHeader({
                 <SelectItem
                   key={inv.id}
                   value={inv.id.toString()}
-                  className="text-xs flex items-center justify-between hover:bg-primary/70  hover:text-white"
+                  className="text-xs flex items-center justify-between hover:bg-primary/70 hover:text-white"
                 >
                   <span>{inv.invoice_number}</span>
                   {inv.total_amount && (

@@ -5,20 +5,31 @@
     "common": {
         "continue": "متابعة",
         "next": "التالي",
-        "back": "رجوع",
         "error": "خطأ",
         "appName": "فارماتيك",
         "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
         "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً.",
-        "loading": "جاري التحميل...",
         "currency": "ل.س",
-    "cancel": "إلغاء",
-    "save": "حفظ التغييرات",
-    "add": "إضافة",
+        "syr": "ل.س",
+        "loading": "جاري التحميل...",
+        "unknownProduct": "منتج غير معروف",
+        "back": "الرجوع",
+        "pagination": {
+          "page": "صفحة",
+          "of": "من"
+        },
+        "print":"طباعة",
+        "cancel": "إلغاء",
+        "save": "حفظ التغييرات",
+        "add": "إضافة",
         "buttons": {
-      "cancel": "إلغاء",
-      "confirmDelete": "تأكيد الحذف"
-    }
+          "cancel": "إلغاء",
+          "confirmDelete": "تأكيد الحذف"
+        },
+        "confirm": "تأكيد",
+        "areYouSure":"هل أنت متأكد؟",
+        "applyFilters":"تطبيق الفلاتر",
+        "reset":"إعادة ضبط"
     },
     "validation": {
         "invalidEmail": "البريد الإلكتروني غير صالح",
@@ -809,65 +820,65 @@
   "supplierDebt": {
     "header": {
       "title": "ديون الموردين",
-      "description": "متابعة أرصدة الذمم المترتبة للموردين والدفعات والتسويات المالية.",
+      "description": "تتبع المبالغ المستحقة، المدفوعات، والتسويات المالية مع الموردين.",
       "totalDebt": "إجمالي الديون",
-      "paidDebt": "إجمالي المبالغ المدفوعة",
+      "paidDebt": "إجمالي المدفوع",
       "remainingDebt": "إجمالي المتبقي",
-      "totalAmount":"إجمالي الدين:",
-      "paidAmount": "المبلغ المدفوع:",
-      "remainingAmount":"المبلغ المتبقي:"
+      "totalAmount": "إجمالي الدين",
+      "paidAmount": "المبلغ المدفوع",
+      "remainingAmount": "المبلغ المتبقي:"
     },
     "details": {
       "title": "دين المورد #{{id}}",
-      "purchaseInvoiceId": "رقم فاتورة الشراء:",
-      "createdDate": "تاريخ الإنشاء:",
-      "payDebtBtn": "تسديد دفعة",
-      "notFoundTitle": "لم يتم العثور على سجل الدين",
-      "notFoundDesc": "تعذر تحميل تفاصيل الدين، ربما تم حذفه أو غير موجود.",
+      "notFoundTitle": "لم يتم العثور على تفاصيل الدين",
+      "notFoundDesc": "تعذر تحميل تفاصيل الدين. لم نتمكن من العثور على السجل المطلوب أو ربما تم حذفه.",
       "backToList": "العودة لقائمة الديون",
-      "supplierInfo": "معلومات المورد",
+      "purchaseInvoiceId": "فاتورة الشراء:",
+      "createdDate": "تاريخ الإنشاء:",
+      "viewInvoice": "عرض الفاتورة",
+      "payDebtBtn": "سداد الدين",
+      "supplierInfo": "تفاصيل المورد",
       "supplierName": "اسم المورد",
-      "supplierCode": "كود المورد",
+      "supplierCode": "رمز المورد",
       "phone": "رقم الهاتف",
       "email": "البريد الإلكتروني",
       "dueDate": "تاريخ الاستحقاق",
-      "viewInvoice": "عرض الفاتورة",
       "financialMetrics": {
         "totalDebt": "إجمالي الدين",
-        "initialAmount": "ل.س - قيمة الدين الأصلية",
+        "initialAmount": "مبلغ الدين الأصلي",
         "paid": "المبلغ المدفوع",
-        "totalPayments": "ل.س - مجموع المسدد سابقاً",
+        "totalPayments": "إجمالي المبالغ المسددة",
         "remaining": "المبلغ المتبقي",
-        "balanceLeft": "ل.س - الرصيد المتبقي للتسديد"
+        "balanceLeft": "رصيد الدين المتبقي"
       },
       "paymentHistory": {
-        "title": "سجل الدفعات والتسديدات",
+        "title": "سجل الدفعات",
         "date": "التاريخ",
         "amount": "المبلغ",
-        "createdBy": "بواسطة",
+        "createdBy": "تم بواسطة",
         "notes": "ملاحظات",
-        "noPayments": "لا توجد حركة عمليات تسديد مسجلة لهذا الدين حتى الآن.",
+        "noPayments": "لا توجد عمليات سداد مسجلة حتى الآن.",
         "system": "النظام"
       }
     },
     "payModal": {
-      "title": "تسديد دين المورد",
+      "title": "سداد دين المورد",
       "remainingAmount": "المبلغ المتبقي:",
-      "amountLabel": "المبلغ المراد دفعه *",
-      "payFullBalance": "دفع كامل المتبقي",
+      "amountLabel": "المبلغ *",
+      "payFullBalance": "سداد كامل المبلغ",
       "amountPlaceholder": "0.00",
-      "paymentDateLabel": "تاريخ التسديد *",
+      "paymentDateLabel": "تاريخ السداد *",
       "notesLabel": "ملاحظات",
       "notesOptional": "(اختياري)",
       "notesPlaceholder": "مثال: دفعة جزئية عبر تحويل بنكي...",
       "cancel": "إلغاء",
-      "recordPayment": "تسجيل عملية الدفع",
+      "recordPayment": "تسجيل السداد",
       "processing": "جاري المعالجة...",
       "errors": {
-        "invalidAmount": "يرجى أدخال مبلغ صحيح أكبر من 0.",
-        "amountExceeded": "لا يمكن أن يتجاوز المبلغ المدفوع قيمة الدين المتبقية ({{max}} ل.س).",
-        "dateRequired": "تاريخ التسديد مطلوب.",
-        "failedToRecord": "فشل تسجيل دفعة الدين. يرجى المحاولة مرة أخرى."
+        "invalidAmount": "يرجى إدخال مبلغ صحيح أكبر من 0.",
+        "amountExceeded": "لا يمكن أن يتجاوز المبلغ الدين المتبقي ({{max}} ل.س).",
+        "dateRequired": "تاريخ السداد مطلوب.",
+        "failedToRecord": "فشل في تسجيل السداد. يرجى المحاولة مرة أخرى."
       }
     },
     "filters": {
@@ -877,26 +888,133 @@
       "allStatuses": "جميع الحالات"
     },
     "status": {
-      "open": "غير مدفوع",
+      "open": "مفتوح",
       "partial": "مدفوع جزئياً",
-      "paid": "مكتمل",
+      "paid": "مدفوع بالكامل",
       "overdue": "متأخر",
       "cancelled": "ملغى"
     },
     "table": {
       "invoiceNo": "رقم الفاتورة",
       "supplier": "المورد",
-      "totalAmount": "إجمالي الدين",
-      "paidAmount": "المدفوع",
-      "remainingAmount": "المتبقي",
+      "totalAmount": "المبلغ الإجمالي",
+      "paidAmount": "المبلغ المدفوع",
+      "remainingAmount": "الدين المتبقي",
       "dueDate": "تاريخ الاستحقاق",
       "status": "الحالة",
-      "actions": "خيارات",
+      "actions": "الإجراءات",
       "viewDetails": "عرض التفاصيل",
-      "loading": "جاري تحميل دين المورد...",
-      "noData": "لا توجد ديون تطابق الفلاتر النشطة حالياً."
+      "loading": "جاري تحميل الديون...",
+      "noData": "لم يتم العثور على ديون تطابق الفلاتر المحددة."
+    }
+  },
+  "supplierReturn": {
+    "list": {
+      "title": "مرتجعات الموردين",
+      "description": "إدارة إرجاع المنتجات إلى الموردين ومتابعة المبالغ المستردة وحالات الطلبات.",
+      "createBtn": "إنشاء مرتجع",
+      "errorLoading": "فشل في تحميل فواتير مرتجعات الموردين. يرجى التحقق من الاتصال أو المحاولة مرة أخرى."
+    },
+    "filters": {
+    "supplier": "المورد",
+    "allSuppliers": "جميع الموردين",
+    "status": "حالة المرتجع",
+    "allStatuses": "جميع الحالات",
+    "dateFrom": "من تاريخ",
+    "dateTo": "إلى تاريخ",
+    "perPage": "لكل صفحة"
+  },
+  "cards": {
+    "totalReturns": "إجمالي المرتجعات",
+    "completed": "المكتملة",
+    "cancelled": "الملغاة",
+    "totalRefunded": "إجمالي المسترد"
+  },
+  "table": {
+    "loading": "جاري تحميل فواتير مرتجع المورد...",
+    "error": "حدث خطأ أثناء تحميل البيانات.",
+    "invoiceNo": "رقم الفاتورة",
+    "supplier": "المورد",
+    "invoiceDate": "تاريخ الفاتورة",
+    "subtotal": "المجموع الفرعي",
+    "refundTotal": "إجمالي المسترد",
+    "refundMethod": "طريقة الاسترداد",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "noData": "لم يتم العثور على مرتجعات موردين للعرض.",
+    "viewDetails": "عرض التفاصيل"
+  },
+    "details": {
+      "error": "فشل في تحميل تفاصيل المرتجع.",
+      "title": "تفاصيل المرتجع #{{id}}",
+      "subtitle": "تفاصيل فاتورة مرتجع المورد",
+      "supplierInfo": "معلومات المورد",
+      "returnSummary": "ملخص المرتجع",
+      "items": "العناصر المرتجعة",
+      "financialSummary": "الملخص المالي",
+      "summary": "الملخص المالي",
+      "cancelReturn": "إلغاء المرتجع",
+      "cancelWarning": "سيؤدي هذا الإجراء إلى إلغاء فاتورة المرتجع واستعادة الكميات للمخزون. لا يمكن التراجع عن هذا الإجراء.",
+      "subtotal": "المجموع الفرعي",
+      "tax": "الضريبة",
+      "discount": "الخصم",
+      "refundTotal": "إجمالي المسترد",
+      "reason": "السبب",
+      "returnedProducts": "المنتجات المرجعة",
+      "product": "المنتج",
+      "qty": "الكمية",
+      "unitPrice": "سعر الوحدة",
+      "total": "الإجمالي",
+      "supplier": "المورد",
+      "originalInvoice": "الفاتورة الأصلية",
+      "returnDate": "تاريخ المرتجع",
+      "refundMethod": "طريقة الاسترداد"
+    },
+    "create": {
+      "title": "إنشاء مرتجع للمورد",
+      "subtitle": "إصدار فاتورة إرجاع للمورد عن البضائع المشتراة",
+      "description": "إصدار طلب إرجاع منتجات بناءً على فاتورة شراء سابقة.",
+      "supplier": "المورد",
+      "selectSupplier": "اختر المورد",
+      "originalInvoice": "فاتورة الشراء الأصلية",
+      "selectInvoice": "اختر فاتورة الشراء",
+      "returnItems": "المنتجات المرجعة",
+      "product": "المنتج",
+      "purchased": "الكمية المشتراة",
+      "returnQty": "كمية المرتجع",
+      "unitPrice": "سعر الوحدة",
+      "total": "الإجمالي",
+      "noItems": "اختر فاتورة شراء لتحميل المنتجات القابلة للإرجاع.",
+      "refundMethod": "طريقة الاسترداد",
+      "cash": "نقداً",
+      "credit": "آجل (ذمم)",
+      "reason": "السبب",
+      "reasonPlaceholder": "أدخل سبب الإرجاع (مثلاً: منتجات تالفة)...",
+      "notes": "ملاحظات",
+      "notesPlaceholder": "ملاحظات إضافية...",
+      "refundSummary": "ملخص المستردات",
+      "subtotal": "المجموع الفرعي",
+      "tax": "الضريبة",
+      "discount": "الخصم",
+      "refundTotal": "إجمالي المسترد",
+      "submit": "إنشاء المرتجع",
+      "successToast": "تم إنشاء مرتجع المورد بنجاح!",
+      "errors": {
+        "selectSupplier": "يرجى اختيار المورد",
+        "selectInvoice": "يرجى اختيار فاتورة الشراء الأصلية",
+        "noQty": "يرجى تحديد كمية منتج واحد على الأقل للإرجاع",
+        "failed": "فشل في إنشاء مرتجع المورد."
+      }
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "approved": "موافق عليه",
+      "completed": "مكتمل",
+      "rejected": "مرفوض",
+      "cancelled": "ملغى"
     }
   }
+  
 
   
 }

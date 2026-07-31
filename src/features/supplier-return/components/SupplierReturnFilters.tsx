@@ -43,7 +43,6 @@ export function SupplierReturnFilters({
     page: 1,
   });
 
-  // مزامنة الفلاتر المحلية مع الفلاتر الخارجية عند تغيرها
   useEffect(() => {
     setLocalFilters({
       supplier_id: filters.supplier_id || "all",
@@ -84,12 +83,11 @@ export function SupplierReturnFilters({
       dir={isArabic ? "rtl" : "ltr"}
     >
       <div className="flex flex-wrap items-end justify-between gap-4">
-        {/* حقول الفلترة */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 flex-1">
           {/* Supplier Select */}
           <div className="space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierReturn.filters.supplier", "Supplier")}
+              {t("supplierReturn.filters.supplier")}
             </label>
             <Select
               value={String(localFilters.supplier_id || "all")}
@@ -102,17 +100,14 @@ export function SupplierReturnFilters({
                 <SelectValue
                   placeholder={
                     isLoadingSuppliers
-                      ? t("common.loading", "Loading...")
-                      : t(
-                          "supplierReturn.filters.allSuppliers",
-                          "All Suppliers",
-                        )
+                      ? t("common.loading")
+                      : t("supplierReturn.filters.allSuppliers")
                   }
                 />
               </SelectTrigger>
               <SelectContent className="bg-muted text-popover-foreground border-border shadow-md">
                 <SelectItem value="all" className={selectItemStyles}>
-                  {t("supplierReturn.filters.allSuppliers", "All Suppliers")}
+                  {t("supplierReturn.filters.allSuppliers")}
                 </SelectItem>
                 {suppliers?.map((s: { id: string | number; name: string }) => (
                   <SelectItem
@@ -130,7 +125,7 @@ export function SupplierReturnFilters({
           {/* Status Select */}
           <div className="space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierReturn.filters.status", "Return Status")}
+              {t("supplierReturn.filters.status")}
             </label>
             <Select
               value={String(localFilters.status || "all")}
@@ -143,27 +138,24 @@ export function SupplierReturnFilters({
             >
               <SelectTrigger className={selectTriggerStyles}>
                 <SelectValue
-                  placeholder={t(
-                    "supplierReturn.filters.allStatuses",
-                    "All Statuses",
-                  )}
+                  placeholder={t("supplierReturn.filters.allStatuses")}
                 />
               </SelectTrigger>
               <SelectContent className="bg-muted text-popover-foreground border-border shadow-md">
                 <SelectItem value="all" className={selectItemStyles}>
-                  {t("supplierReturn.filters.allStatuses", "All Statuses")}
+                  {t("supplierReturn.filters.allStatuses")}
                 </SelectItem>
                 <SelectItem value="completed" className={selectItemStyles}>
-                  {t("supplierReturn.status.completed", "Completed")}
+                  {t("supplierReturn.status.completed")}
                 </SelectItem>
                 <SelectItem value="approved" className={selectItemStyles}>
-                  {t("supplierReturn.status.approved", "Approved")}
+                  {t("supplierReturn.status.approved")}
                 </SelectItem>
                 <SelectItem value="pending" className={selectItemStyles}>
-                  {t("supplierReturn.status.pending", "Pending")}
+                  {t("supplierReturn.status.pending")}
                 </SelectItem>
                 <SelectItem value="cancelled" className={selectItemStyles}>
-                  {t("supplierReturn.status.cancelled", "Cancelled")}
+                  {t("supplierReturn.status.cancelled")}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -172,7 +164,7 @@ export function SupplierReturnFilters({
           {/* Date From */}
           <div className="space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierReturn.filters.dateFrom", "Date From")}
+              {t("supplierReturn.filters.dateFrom")}
             </label>
             <Input
               type="date"
@@ -190,7 +182,7 @@ export function SupplierReturnFilters({
           {/* Date To */}
           <div className="space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierReturn.filters.dateTo", "Date To")}
+              {t("supplierReturn.filters.dateTo")}
             </label>
             <Input
               type="date"
@@ -208,7 +200,7 @@ export function SupplierReturnFilters({
           {/* Per Page Select */}
           <div className="space-y-1">
             <label className="text-[11px] font-bold text-muted-foreground">
-              {t("supplierReturn.filters.perPage", "Per Page")}
+              {t("supplierReturn.filters.perPage")}
             </label>
             <Select
               value={String(localFilters.per_page || 15)}
@@ -240,7 +232,7 @@ export function SupplierReturnFilters({
           </div>
         </div>
 
-        {/* أزرار التحكم */}
+        {/* Action Buttons */}
         <div className="flex items-center gap-2 pt-2 sm:pt-0">
           <Button
             onClick={handleReset}
@@ -250,7 +242,7 @@ export function SupplierReturnFilters({
             disabled={isLoading}
           >
             <RotateCcw className="h-3.5 w-3.5 me-1 text-muted-foreground" />
-            {t("common.reset", "Reset")}
+            {t("common.reset")}
           </Button>
 
           <Button
@@ -264,7 +256,7 @@ export function SupplierReturnFilters({
             ) : (
               <Filter className="h-3.5 w-3.5 me-1.5" />
             )}
-            {t("common.applyFilters", "Apply Filters")}
+            {t("common.applyFilters")}
           </Button>
         </div>
       </div>

@@ -23,7 +23,7 @@ export function ReturnItemsTable({ items, isArabic }: Props) {
     <div className="lg:col-span-2 bg-card border border-border/60 rounded-xl p-5 shadow-xs space-y-4">
       <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 pb-2 border-b border-border/60">
         <PackageCheck className="w-4 h-4 text-primary" />
-        {t("supplierReturn.details.returnedProducts", "Returned Products")}
+        {t("supplierReturn.details.returnedProducts")}
       </h2>
 
       <div className="overflow-x-auto">
@@ -31,16 +31,16 @@ export function ReturnItemsTable({ items, isArabic }: Props) {
           <TableHeader className="bg-muted/30">
             <TableRow className="border-b border-border/60">
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("supplierReturn.details.product", "Product")}
+                {t("supplierReturn.details.product")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.details.qty", "Qty")}
+                {t("supplierReturn.details.qty")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.details.unitPrice", "Unit Price")}
+                {t("supplierReturn.details.unitPrice")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.details.total", "Total")}
+                {t("supplierReturn.details.total")}
               </TableHead>
             </TableRow>
           </TableHeader>

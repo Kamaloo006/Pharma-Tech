@@ -26,7 +26,7 @@ export function ReturnMetadataGrid({ details, isArabic }: Props) {
       <div className="bg-card border border-border/60 rounded-xl p-4 shadow-xs space-y-1">
         <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
           <Building2 className="w-3.5 h-3.5 text-primary" />
-          {t("supplierReturn.details.supplier", "Supplier")}
+          {t("supplierReturn.details.supplier")}
         </span>
         <p className="text-xs font-bold text-foreground truncate">
           {details.supplier?.name}
@@ -37,7 +37,7 @@ export function ReturnMetadataGrid({ details, isArabic }: Props) {
       <div className="bg-card border border-border/60 rounded-xl p-4 shadow-xs space-y-1">
         <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
           <FileText className="w-3.5 h-3.5 text-primary" />
-          {t("supplierReturn.details.originalInvoice", "Original Invoice")}
+          {t("supplierReturn.details.originalInvoice")}
         </span>
         <button
           onClick={() =>
@@ -55,7 +55,7 @@ export function ReturnMetadataGrid({ details, isArabic }: Props) {
       <div className="bg-card border border-border/60 rounded-xl p-4 shadow-xs space-y-1">
         <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
           <Calendar className="w-3.5 h-3.5 text-primary" />
-          {t("supplierReturn.details.returnDate", "Return Date")}
+          {t("supplierReturn.details.returnDate")}
         </span>
         <p className="text-xs font-bold text-foreground font-mono">
           {formatDate(details.invoice_date)}
@@ -66,7 +66,7 @@ export function ReturnMetadataGrid({ details, isArabic }: Props) {
       <div className="bg-card border border-border/60 rounded-xl p-4 shadow-xs space-y-1">
         <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
           <CreditCard className="w-3.5 h-3.5 text-primary" />
-          {t("supplierReturn.details.refundMethod", "Refund Method")}
+          {t("supplierReturn.details.refundMethod")}
         </span>
         <p className="text-xs font-bold text-foreground capitalize">
           {details.refund_method}

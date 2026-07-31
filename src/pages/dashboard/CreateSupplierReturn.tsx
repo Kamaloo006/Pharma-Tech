@@ -40,8 +40,7 @@ export default function CreateSupplierReturnPage() {
   const rawPurchaseInvoices = invoicesData?.data || [];
   const purchaseInvoices = rawPurchaseInvoices.map((inv: PurchaseInvoice) => ({
     ...inv,
-
-    label: `${inv.invoice_number || inv.id} (${inv.grand_total ? inv.grand_total.toLocaleString() : 0} SYR)`,
+    label: `${inv.invoice_number || inv.id} (${inv.grand_total ? inv.grand_total.toLocaleString() : 0} ${t("common.syr", "SYR")})`,
   }));
 
   useEffect(() => {
@@ -57,12 +56,12 @@ export default function CreateSupplierReturnPage() {
         const productId = item.product_id || item.product?.id || item.id;
 
         const productName = isArabic
-          ? item.product?.brand_name ||
-            item.product?.ar_name ||
+          ? item.product?.ar_name ||
+            item.product?.brand_name ||
             item.product?.name ||
             item.name
-          : item.product?.ar_name ||
-            item.product?.brand_name ||
+          : item.product?.brand_name ||
+            item.product?.ar_name ||
             item.product?.name ||
             item.name;
 
@@ -139,7 +138,8 @@ export default function CreateSupplierReturnPage() {
   );
   const refundTotal = subtotal + taxTotal - discountTotal;
 
-  const formatCurrency = (amount: number) => `${amount.toLocaleString()} SYR`;
+  const formatCurrency = (amount: number) =>
+    `${amount.toLocaleString()} ${t("common.syr", "SYR")}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
