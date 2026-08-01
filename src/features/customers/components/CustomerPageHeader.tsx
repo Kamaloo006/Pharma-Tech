@@ -18,10 +18,10 @@ export function CustomerPageHeader({
       <div>
         <h1 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2">
           <Users className="w-5 h-5 text-primary" />
-          {t("customers.title", "Customers")}
+          {t("customers.title")}
         </h1>
         <p className="text-xs text-muted-foreground mt-0.5">
-          {t("customers.subtitle", "Manage your pharmacy customers")}
+          {t("customers.subtitle")}
         </p>
       </div>
 
@@ -33,7 +33,7 @@ export function CustomerPageHeader({
             className="h-9 text-xs gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            {t("customers.addCustomer", "Add Customer")}
+            {t("customers.addCustomer")}
           </Button>
         )}
       </div>

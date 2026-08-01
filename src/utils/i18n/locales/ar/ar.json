@@ -29,7 +29,15 @@
         "confirm": "تأكيد",
         "areYouSure":"هل أنت متأكد؟",
         "applyFilters":"تطبيق الفلاتر",
-        "reset":"إعادة ضبط"
+        "reset":"إعادة ضبط",
+        "delete": "نقل للمحذوفين",
+    "restore": "استعادة الزبون",
+    "edit": "تعديل",
+    "saveChanges": "حفظ التعديلات",
+    "retry": "إعادة المحاولة",
+    "showing": "عرض",
+    "to": "إلى",
+    "of": "من أصل"
     },
     "validation": {
         "invalidEmail": "البريد الإلكتروني غير صالح",
@@ -1015,6 +1023,46 @@
       "completed": "مكتمل",
       "rejected": "مرفوض",
       "cancelled": "ملغى"
+    }
+  },
+  "customers": {
+    "title": "الزبناء",
+    "subtitle": "إدارة زبناء الصيدلية",
+    "addCustomer": "إضافة زبون",
+    "searchPlaceholder": "بحث عن زبون...",
+    "listTitle": "قائمة الزبناء",
+    "deletedListTitle": "قائمة الزبناء المحذوفين",
+    "noResults": "لم يتم العثور على زبناء.",
+    "noDeletedResults": "لا يوجد زبناء محذوفون.",
+    "error": "فشل في تحميل بيانات الزبناء.",
+    "deleteConfirmTitle": "هل أنت تأكد من نقل الزبون لسلة المهملات؟",
+    "deleteConfirmDesc": "سيتم نقل الزبون \"{{name}}\" إلى قائمة المحذوفين ويمكنك استعادته لاحقاً.",
+    "restoreConfirmTitle": "هل تريد استعادة هذا الزبون؟",
+    "restoreConfirmDesc": "سيتم إعادة الزبون \"{{name}}\" إلى قائمة الزبناء النشطين.",
+    "table": {
+      "customer": "الزبون",
+      "phone": "الهاتف",
+      "notes": "الملاحظات",
+      "actions": "الإجراءات"
+    },
+    "modal": {
+      "addTitle": "إضافة زبون جديد",
+      "editTitle": "تعديل بيانات الزبون",
+      "addSubtitle": "أدخل بيانات الزبون الجديد لإضافته في النظام.",
+      "editSubtitle": "قم بتعديل بيانات الزبون المحددة أدناه.",
+      "fullName": "الاسم الكامل",
+      "fullNamePlaceholder": "مثال: أحمد علي",
+      "phone": "رقم الهاتف",
+      "phonePlaceholder": "مثال: 0935123456",
+      "notes": "ملاحظات",
+      "notesPlaceholder": "أي ملاحظات إضافية...",
+      "create": "إضافة الزبون"
+    },
+    "validation": {
+      "fullNameMin": "الاسم يجب أن يكون حرفين على الأقل",
+      "fullNameMax": "الاسم طويل جداً",
+      "phoneInvalid": "رقم الهاتف غير صالح",
+      "notesMax": "الملاحظات يجب ألا تتجاوز 500 حرف"
     }
   }
   

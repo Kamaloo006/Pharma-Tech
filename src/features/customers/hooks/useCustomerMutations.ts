@@ -5,7 +5,7 @@ import api from "@/lib/api";
 export function useCustomerMutations() {
   const queryClient = useQueryClient();
 
-  // 1. Create
+  
   const createCustomerMutation = useMutation({
     mutationFn: async (data: CustomerFormValues) => {
       const response = await api.post("/customers", data);
@@ -16,7 +16,7 @@ export function useCustomerMutations() {
     },
   });
 
-  // 2. Edit
+  
   const updateCustomerMutation = useMutation({
     mutationFn: async ({
       id,
@@ -33,10 +33,10 @@ export function useCustomerMutations() {
     },
   });
 
-  // 3. Delete (Soft Delete)
+  
   const deleteCustomerMutation = useMutation({
     mutationFn: async (id: number | string) => {
-      // إرسال طلب DELETE مباشر للـ Route: DELETE /customers/{customer}
+      
       const response = await api.delete(`/customers/${id}`);
       return response.data;
     },
@@ -45,10 +45,9 @@ export function useCustomerMutations() {
     },
   });
 
-  // 4. Restore
+  
   const restoreCustomerMutation = useMutation({
     mutationFn: async (id: number | string) => {
-      // الـ Route: Route::patch('customers/{customer}/restore', [CustomerController::class, 'restore'])->withTrashed();
       const response = await api.patch(`/customers/${id}/restore`);
       return response.data;
     },

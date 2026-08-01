@@ -39,30 +39,22 @@ export function CustomerConfirmDialog({
         <AlertDialogHeader>
           <AlertDialogTitle className="text-base font-bold">
             {type === "delete"
-              ? t(
-                  "customers.deleteConfirmTitle",
-                  "هل أنت تأكد من نقل الزبون لسلة المهملات؟",
-                )
-              : t(
-                  "customers.restoreConfirmTitle",
-                  "هل تريد استعادة هذا الزبون؟",
-                )}
+              ? t("customers.deleteConfirmTitle")
+              : t("customers.restoreConfirmTitle")}
           </AlertDialogTitle>
           <AlertDialogDescription className="text-xs text-muted-foreground">
             {type === "delete"
-              ? t(
-                  "customers.deleteConfirmDesc",
-                  `سيتم نقل الزبون "${customer?.full_name}" إلى قائمة المحذوفين ويمكنك استعادته لاحقاً.`,
-                )
-              : t(
-                  "customers.restoreConfirmDesc",
-                  `سيتم إعادة الزبون "${customer?.full_name}" إلى قائمة الزبناء النشطين.`,
-                )}
+              ? t("customers.deleteConfirmDesc", {
+                  name: customer?.full_name || "",
+                })
+              : t("customers.restoreConfirmDesc", {
+                  name: customer?.full_name || "",
+                })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2">
           <AlertDialogCancel disabled={isLoading} className="h-8 text-xs">
-            {t("common.cancel", "إلغاء")}
+            {t("common.cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
@@ -73,10 +65,8 @@ export function CustomerConfirmDialog({
                 : "bg-emerald-600 text-white hover:bg-emerald-700"
             }`}
           >
-            {isLoading && <Loader2 className="w-3.5 h-3.5 animate-spin ml-1" />}
-            {type === "delete"
-              ? t("common.delete", "نقل للمحذوفين")
-              : t("common.restore", "استعادة الزبون")}
+            {isLoading && <Loader2 className="w-3.5 h-3.5 animate-spin me-1" />}
+            {type === "delete" ? t("common.delete") : t("common.restore")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
