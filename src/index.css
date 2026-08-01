@@ -17,7 +17,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
-
+  --color-destructive: var(--destructive);
   --color-header-bg: var(--header-bg);
   --color-badge-border: var(--badge-border);
   --color-badge-text: var(--badge-text);
@@ -45,6 +45,7 @@
   --border: rgba(0, 0, 0, 0.1);
   --input: #f8fafc;
   --background-alpha: rgba(5, 150, 105, 0.03);
+  --destructive:#991b1b;
 
   --gradient-emerald-primary: radial-gradient(circle, rgba(5, 150, 105, 0.3), rgba(5, 150, 105, 0.1));
   --gradient-emerald-light: radial-gradient(circle, rgba(5, 150, 105, 0.15), rgba(5, 150, 105, 0.05));
@@ -101,8 +102,7 @@
   --muted-foreground: #94a3b8;
   --border: rgba(255, 255, 255, 0.1);
   --input: #1e293b;
-
-  /* Emerald gradient variants for dark mode */
+  --destructive:#991b1b;
   --gradient-emerald-primary: radial-gradient(circle, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.08));
   --gradient-emerald-light: radial-gradient(circle, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
   --gradient-emerald-dark: radial-gradient(circle, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.15));

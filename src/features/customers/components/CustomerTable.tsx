@@ -81,8 +81,8 @@ export function CustomerTable({
         <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
           <Users className="w-4 h-4 text-primary" />
           {showDeleted
-            ? t("customers.deletedListTitle", "قائمة الزبناء المحذوفين")
-            : t("customers.listTitle", "Customer List")}
+            ? t("customers.deletedListTitle")
+            : t("customers.listTitle")}
         </h2>
       </div>
 
@@ -97,16 +97,16 @@ export function CustomerTable({
           <TableHeader className="bg-muted/30">
             <TableRow className="border-b border-border/60">
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("customers.table.customer", "Customer")}
+                {t("customers.table.customer")}
               </TableHead>
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("customers.table.phone", "Phone")}
+                {t("customers.table.phone")}
               </TableHead>
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("customers.table.notes", "Notes")}
+                {t("customers.table.notes")}
               </TableHead>
               <TableHead className="text-center w-20">
-                {t("customers.table.actions", "Actions")}
+                {t("customers.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -117,7 +117,7 @@ export function CustomerTable({
                 <TableCell colSpan={4} className="text-center py-10">
                   <div className="flex justify-center items-center gap-2 text-xs text-muted-foreground">
                     <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                    {t("common.loading", "Loading customers...")}
+                    {t("common.loading")}
                   </div>
                 </TableCell>
               </TableRow>
@@ -126,16 +126,14 @@ export function CustomerTable({
                 <TableCell colSpan={4} className="text-center py-10">
                   <div className="flex flex-col items-center justify-center gap-2 text-destructive text-xs">
                     <AlertCircle className="w-5 h-5" />
-                    <span>
-                      {t("customers.error", "Failed to load customers.")}
-                    </span>
+                    <span>{t("customers.error")}</span>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={onRefetch}
                       className="mt-2 h-7 text-xs"
                     >
-                      {t("common.retry", "Retry")}
+                      {t("common.retry")}
                     </Button>
                   </div>
                 </TableCell>
@@ -211,7 +209,7 @@ export function CustomerTable({
                               className="gap-2 cursor-pointer hover:bg-primary/70"
                             >
                               <Pencil className="w-3.5 h-3.5 text-muted-foreground" />
-                              {t("common.edit", "Edit")}
+                              {t("common.edit")}
                             </DropdownMenuItem>
 
                             <DropdownMenuSeparator />
@@ -223,7 +221,7 @@ export function CustomerTable({
                               className="gap-2 cursor-pointer font-medium hover:bg-red-500/70"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
-                              {t("common.delete", "Delete")}
+                              {t("common.delete")}
                             </DropdownMenuItem>
                           </>
                         ) : (
@@ -236,7 +234,7 @@ export function CustomerTable({
                               className="gap-2 cursor-pointer text-emerald-600 dark:text-emerald-400 font-medium"
                             >
                               <RotateCcw className="w-3.5 h-3.5" />
-                              {t("common.restore", "استعادة")}
+                              {t("common.restore")}
                             </DropdownMenuItem>
                           </>
                         )}
@@ -252,8 +250,8 @@ export function CustomerTable({
                   className="text-center py-8 text-muted-foreground text-xs"
                 >
                   {showDeleted
-                    ? t("customers.noDeletedResults", "لا يوجد زبناء محذوفون.")
-                    : t("customers.noResults", "No customers found.")}
+                    ? t("customers.noDeletedResults")
+                    : t("customers.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -265,9 +263,8 @@ export function CustomerTable({
       {meta && meta.last_page > 1 && (
         <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs text-muted-foreground">
           <span>
-            {t("common.showing", "Showing")} {meta.from || 0}{" "}
-            {t("common.to", "to")} {meta.to || 0} {t("common.of", "of")}{" "}
-            {meta.total}
+            {t("common.showing")} {meta.from || 0} {t("common.to")}{" "}
+            {meta.to || 0} {t("common.of")} {meta.total}
           </span>
 
           <div className="flex items-center gap-2">

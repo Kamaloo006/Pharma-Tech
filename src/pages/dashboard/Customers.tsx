@@ -78,7 +78,7 @@ export default function CustomersPage() {
       }
       setIsModalOpen(false);
     } catch (error) {
-      console.error("فشلت عملية الحفظ:", error);
+      console.error("Save error:", error);
     }
   };
 
@@ -92,7 +92,7 @@ export default function CustomersPage() {
         await restoreCustomer.mutateAsync(confirmDialog.customer.id);
       }
     } catch (error) {
-      console.error("فشلت العملية:", error);
+      console.error("Action error:", error);
     } finally {
       setConfirmDialog({ isOpen: false, type: "delete", customer: null });
     }

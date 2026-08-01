@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 import {
-  customerSchema,
+  getCustomerSchema,
   type CustomerFormValues,
 } from "@/features/customers/schemas/CustomerSchema";
 import type { Customer } from "../types/Customer";
@@ -48,7 +48,7 @@ export function CustomerFormModal({
     reset,
     formState: { errors },
   } = useForm<CustomerFormValues>({
-    resolver: zodResolver(customerSchema),
+    resolver: zodResolver(getCustomerSchema(t)),
     defaultValues: {
       full_name: "",
       phone: "",
@@ -56,7 +56,6 @@ export function CustomerFormModal({
     },
   });
 
-  // إعادة تعبئة المودال عند التغيير بين حالة الإضافة والتعديل
   useEffect(() => {
     if (isOpen) {
       if (customer) {
@@ -83,25 +82,19 @@ export function CustomerFormModal({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
         dir={isArabic ? "rtl" : "ltr"}
-        className="sm:max-w-[425px] border-border/60"
+        className="sm:max-w-106.25 border-border/60"
       >
-        <DialogHeader>
+        <DialogHeader className="flex flex-col items-center">
           <DialogTitle className="text-base font-bold flex items-center gap-2">
             <User className="w-4 h-4 text-primary" />
             {isEditMode
-              ? t("customers.modal.editTitle", "تعديل بيانات الزبون")
-              : t("customers.modal.addTitle", "إضافة زبون جديد")}
+              ? t("customers.modal.editTitle")
+              : t("customers.modal.addTitle")}
           </DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground">
             {isEditMode
-              ? t(
-                  "customers.modal.editSubtitle",
-                  "قم بتعديل بيانات الزبون المحددة أدناه.",
-                )
-              : t(
-                  "customers.modal.addSubtitle",
-                  "أدخل بيانات الزبون الجديد لطرائقه في النظام.",
-                )}
+              ? t("customers.modal.editSubtitle")
+              : t("customers.modal.addSubtitle")}
           </DialogDescription>
         </DialogHeader>
 
@@ -112,7 +105,7 @@ export function CustomerFormModal({
           {/* Full Name Field */}
           <div className="space-y-1.5">
             <Label htmlFor="full_name" className="text-xs font-semibold">
-              {t("customers.modal.fullName", "الاسم الكامل")}{" "}
+              {t("customers.modal.fullName")}{" "}
               <span className="text-destructive">*</span>
             </Label>
             <div className="relative">
@@ -120,10 +113,7 @@ export function CustomerFormModal({
               <Input
                 id="full_name"
                 {...register("full_name")}
-                placeholder={t(
-                  "customers.modal.fullNamePlaceholder",
-                  "مثال: أحمد علي",
-                )}
+                placeholder={t("customers.modal.fullNamePlaceholder")}
                 className="pl-9 rtl:pr-9 rtl:pl-3 h-9 text-xs bg-card"
               />
             </div>
@@ -137,7 +127,7 @@ export function CustomerFormModal({
           {/* Phone Field */}
           <div className="space-y-1.5">
             <Label htmlFor="phone" className="text-xs font-semibold">
-              {t("customers.modal.phone", "رقم الهاتف")}
+              {t("customers.modal.phone")}
             </Label>
             <div className="relative">
               <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground rtl:right-3 rtl:left-auto" />
@@ -145,10 +135,7 @@ export function CustomerFormModal({
                 id="phone"
                 type="tel"
                 {...register("phone")}
-                placeholder={t(
-                  "customers.modal.phonePlaceholder",
-                  "مثال: 0935123456",
-                )}
+                placeholder={t("customers.modal.phonePlaceholder")}
                 className="pl-9 rtl:pr-9 rtl:pl-3 h-9 text-xs font-mono bg-card"
               />
             </div>
@@ -162,16 +149,13 @@ export function CustomerFormModal({
           {/* Notes Field */}
           <div className="space-y-1.5">
             <Label htmlFor="notes" className="text-xs font-semibold">
-              {t("customers.modal.notes", "ملاحظات")}
+              {t("customers.modal.notes")}
             </Label>
             <Textarea
               id="notes"
               rows={3}
               {...register("notes")}
-              placeholder={t(
-                "customers.modal.notesPlaceholder",
-                "أي ملاحظات إضافية...",
-              )}
+              placeholder={t("customers.modal.notesPlaceholder")}
               className="text-xs bg-card resize-none"
             />
             {errors.notes && (
@@ -181,7 +165,7 @@ export function CustomerFormModal({
             )}
           </div>
 
-          <DialogFooter className="pt-2 gap-2 sm:gap-0">
+          <DialogFooter className="pt-2 gap-4 sm:gap-2 ">
             <Button
               type="button"
               variant="outline"
@@ -190,7 +174,7 @@ export function CustomerFormModal({
               disabled={isLoading}
               className="h-8 text-xs"
             >
-              {t("common.cancel", "إلغاء")}
+              {t("common.cancel")}
             </Button>
             <Button
               type="submit"
@@ -200,8 +184,8 @@ export function CustomerFormModal({
             >
               {isLoading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {isEditMode
-                ? t("common.saveChanges", "حفظ التعديلات")
-                : t("customers.modal.create", "إضافة الزبون")}
+                ? t("common.saveChanges")
+                : t("customers.modal.create")}
             </Button>
           </DialogFooter>
         </form>

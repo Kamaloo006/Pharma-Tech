@@ -25,7 +25,15 @@
         "confirm":"Confirm",
         "areYouSure":"? Are you sure",
         "applyFilters":"Apply Filters",
-        "reset":"Reset"
+        "reset":"Reset",
+        "edit": "Edit",
+    "delete": "Delete",
+    "restore": "Restore",
+    "saveChanges": "Save Changes",
+    "retry": "Retry",
+    "showing": "Showing",
+    "to": "to",
+    "of": "of"
     },
     "validation": {
         "invalidEmail": "Invalid email address",
@@ -1013,6 +1021,46 @@
       "completed": "Completed",
       "rejected": "Rejected",
       "cancelled": "Cancelled"
+    }
+  },
+  "customers": {
+    "title": "Customers",
+    "subtitle": "Manage your pharmacy customers",
+    "addCustomer": "Add Customer",
+    "searchPlaceholder": "Search customers...",
+    "listTitle": "Customer List",
+    "deletedListTitle": "Deleted Customers List",
+    "noResults": "No customers found.",
+    "noDeletedResults": "No deleted customers.",
+    "error": "Failed to load customers.",
+    "deleteConfirmTitle": "Are you sure you want to move this customer to trash?",
+    "deleteConfirmDesc": "Customer \"{{name}}\" will be moved to deleted items and can be restored later.",
+    "restoreConfirmTitle": "Do you want to restore this customer?",
+    "restoreConfirmDesc": "Customer \"{{name}}\" will be restored to active customers list.",
+    "table": {
+      "customer": "Customer",
+      "phone": "Phone",
+      "notes": "Notes",
+      "actions": "Actions"
+    },
+    "modal": {
+      "addTitle": "Add New Customer",
+      "editTitle": "Edit Customer Details",
+      "addSubtitle": "Enter new customer details for the pharmacy system.",
+      "editSubtitle": "Modify selected customer details below.",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "e.g. John Doe",
+      "phone": "Phone Number",
+      "phonePlaceholder": "e.g. +1234567890",
+      "notes": "Notes",
+      "notesPlaceholder": "Any additional notes...",
+      "create": "Add Customer"
+    },
+    "validation": {
+      "fullNameMin": "Name must be at least 2 characters",
+      "fullNameMax": "Name is too long",
+      "phoneInvalid": "Invalid phone number",
+      "notesMax": "Notes must not exceed 500 characters"
     }
   }
   

@@ -19,7 +19,7 @@ export function CustomerSearch({
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground rtl:right-3 rtl:left-auto" />
         <Input
           type="text"
-          placeholder={t("customers.searchPlaceholder", "Search customers...")}
+          placeholder={t("customers.searchPlaceholder")}
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
           className="pl-9 rtl:pr-9 rtl:pl-3 h-9 text-xs bg-card border-border/60"
