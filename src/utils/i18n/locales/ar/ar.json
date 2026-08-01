@@ -246,7 +246,10 @@
         "newPurchase":"إنشاء فاتورة",
         "supplierDebt": "ديون الموردين",
         "supplierReturn":"مرتجعات الموردين",
-        "suppliersList": "قائمة الموردين"
+        "suppliersList": "قائمة الموردين",
+        "customers":"العملاء",
+        "customersList":"قائمة العملاء"
+        
     },
     "dashboard":{
         "addProduct": "إضافة منتج",
