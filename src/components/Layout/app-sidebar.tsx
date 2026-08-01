@@ -13,6 +13,7 @@ import {
   NotebookPen,
   WalletCards,
   Repeat,
+  Users2,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -100,6 +101,16 @@ export default function AppSidebar() {
           title: t("sidebar.supplierReturn"),
           icon: Repeat,
           url: "/dashboard/supplier-return",
+        },
+      ],
+    },
+    {
+      label: t("sidebar.customers"),
+      items: [
+        {
+          title: t("sidebar.customersList"),
+          icon: Users2,
+          url: "/dashboard/customers",
         },
       ],
     },

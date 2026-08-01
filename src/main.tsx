@@ -43,6 +43,7 @@ import SupplierDebtDetails from "./pages/dashboard/SupplierDebtDetails.tsx";
 import SupplierReturn from "./pages/dashboard/SupplierReturn.tsx";
 import CreateSupplierReturn from "./pages/dashboard/CreateSupplierReturn.tsx";
 import SupplierReturnDetails from "./pages/dashboard/SupplierReturnDetails.tsx";
+import Customers from "./pages/dashboard/Customers.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -135,6 +136,10 @@ const router = createBrowserRouter([
           {
             path: "supplier-return/:id",
             element: <SupplierReturnDetails />,
+          },
+          {
+            path: "customers",
+            element: <Customers />,
           },
         ],
       },
