@@ -256,7 +256,9 @@
         "supplierReturn":"مرتجعات الموردين",
         "suppliersList": "قائمة الموردين",
         "customers":"العملاء",
-        "customersList":"قائمة العملاء"
+        "customersList":"قائمة العملاء",
+        "customerDebt":"ديون العملاء",
+        "sales": "المبيعات"
         
     },
     "dashboard":{

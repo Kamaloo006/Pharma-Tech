@@ -44,6 +44,8 @@ import SupplierReturn from "./pages/dashboard/SupplierReturn.tsx";
 import CreateSupplierReturn from "./pages/dashboard/CreateSupplierReturn.tsx";
 import SupplierReturnDetails from "./pages/dashboard/SupplierReturnDetails.tsx";
 import Customers from "./pages/dashboard/Customers.tsx";
+import CustomerDebt from "./pages/dashboard/CustomerDebt.tsx";
+import SalesInvoicesPage from "./pages/dashboard/SalesInvoices.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -140,6 +142,14 @@ const router = createBrowserRouter([
           {
             path: "customers",
             element: <Customers />,
+          },
+          {
+            path: "customer-debt",
+            element: <CustomerDebt />,
+          },
+          {
+            path: "sales-invoice",
+            element: <SalesInvoicesPage />,
           },
         ],
       },

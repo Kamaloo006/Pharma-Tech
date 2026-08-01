@@ -68,7 +68,7 @@ export default function StatCards({ cashBox, statistics }: StatCardsProps) {
             {card.icon}
           </div>
           <p className={`text-xl font-bold font-mono ${card.textClass}`}>
-            <CountUp end={card.value} decimals={2} />
+            <CountUp end={card.value} />
           </p>
         </div>
       ))}
