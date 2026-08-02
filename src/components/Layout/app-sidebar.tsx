@@ -14,6 +14,9 @@ import {
   WalletCards,
   Repeat,
   Users2,
+  Wallet2,
+  Receipt,
+  BookText,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -82,6 +85,16 @@ export default function AppSidebar() {
           icon: NotebookPen,
           url: "/dashboard/purchases/new",
         },
+        {
+          title: t("sidebar.sales"),
+          icon: Receipt,
+          url: "/dashboard/sales-invoice",
+        },
+        {
+          title: t("sidebar.newSales"),
+          icon: BookText,
+          url: "/dashboard/sales-invoice/new",
+        },
       ],
     },
     {
@@ -111,6 +124,11 @@ export default function AppSidebar() {
           title: t("sidebar.customersList"),
           icon: Users2,
           url: "/dashboard/customers",
+        },
+        {
+          title: t("sidebar.customerDebt"),
+          icon: Wallet2,
+          url: "/dashboard/customer-debt",
         },
       ],
     },

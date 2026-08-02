@@ -253,7 +253,10 @@
         "supplierReturn":"Supplier Return",
         "suppliersList": "Suppliers List",
         "customers": "Customers",
-        "customersList": "Customers List"
+        "customersList": "Customers List",
+        "customerDebt": "Customer Debt",
+        "sales":"Sales",
+        "newSales":"Create Sales Invoice"
         
     },
   "dashboard":{
