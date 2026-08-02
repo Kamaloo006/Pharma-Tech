@@ -251,14 +251,15 @@
         "logOut": "تسجيل الخروج",
         "cashbox": "الخزنة",
         "purchases": "الفواتير",
-        "newPurchase":"إنشاء فاتورة",
+        "newPurchase":"إنشاء فاتورة شراء",
         "supplierDebt": "ديون الموردين",
         "supplierReturn":"مرتجعات الموردين",
         "suppliersList": "قائمة الموردين",
         "customers":"العملاء",
         "customersList":"قائمة العملاء",
         "customerDebt":"ديون العملاء",
-        "sales": "المبيعات"
+        "sales": "المبيعات",
+        "newSales": "إنشاء فاتورة مبيع"
         
     },
     "dashboard":{

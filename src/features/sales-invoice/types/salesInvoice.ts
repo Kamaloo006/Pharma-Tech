@@ -83,3 +83,32 @@ export interface SalesInvoiceFilters {
   date_from?: string;
   date_to?: string;
 }
+
+export interface SalesInvoiceItem {
+  id: string ;
+  product_id: number;
+  brand_name: string;
+  scientific_name: string;
+  strength: string;
+  selling_price: number;
+  quantity: number;
+  tax: number;
+  discount: number;
+  stock: number;
+}
+
+export interface CreateSalesInvoicePayload {
+  customer_id: number | null;
+  invoice_date?: string;
+  payment_method: "cash" | "credit" | "debt";
+  amount_paid: number;
+  due_date?: string | null;
+  notes?: string | null;
+  items: {
+    product_id: number;
+    quantity: number;
+    selling_price: number;
+    tax: number;
+    discount: number;
+  }[];
+}

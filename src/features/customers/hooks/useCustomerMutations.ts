@@ -32,6 +32,7 @@ export function useCustomerMutations() {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
     },
   });
+  
 
   
   const deleteCustomerMutation = useMutation({

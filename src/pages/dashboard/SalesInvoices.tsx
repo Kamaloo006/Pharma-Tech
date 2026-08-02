@@ -34,8 +34,11 @@ import {
   RotateCcw,
   Filter,
   Loader2,
+  Text,
+  BadgeDollarSign,
 } from "lucide-react";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const initialFilters: SalesInvoiceFilters = {
   page: 1,
@@ -118,7 +121,12 @@ export default function SalesInvoicesPage() {
   return (
     <div className="p-6 space-y-6 text-start">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold tracking-tight">Sales Invoices</h1>
+        <h1 className="text-2xl font-bold tracking-tight flex gap-2 items-center">
+          Sales Invoices <BadgeDollarSign className="text-primary" />
+        </h1>
+        <Link to="/dashboard/sales-invoice/new">
+          <Button>Create Sales Invoice</Button>
+        </Link>
       </div>
 
       <Card className="border-border/60 shadow-xs overflow-hidden">

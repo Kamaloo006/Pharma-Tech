@@ -255,7 +255,8 @@
         "customers": "Customers",
         "customersList": "Customers List",
         "customerDebt": "Customer Debt",
-        "sales":"Sales"
+        "sales":"Sales",
+        "newSales":"Create Sales Invoice"
         
     },
   "dashboard":{
