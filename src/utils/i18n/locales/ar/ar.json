@@ -1067,8 +1067,87 @@
       "phoneInvalid": "رقم الهاتف غير صالح",
       "notesMax": "الملاحظات يجب ألا تتجاوز 500 حرف"
     }
+  },
+  "salesInvoice": {
+    "title": "فواتير المبيعات",
+    "detailsTitle": "فاتورة مبيعات #{{number}}",
+    "createInvoice": "إنشاء فاتورة مبيعات",
+    "loading": "جاري تحميل الفواتير...",
+    "error": "تعذر جلب الفواتير.",
+    "errorLoading": "تعذر تحميل بيانات الفاتورة.",
+    "noResults": "لم يتم العثور على فواتير مبيعات.",
+    "walkInCustomer": "عميل نقدي",
+    "firstPage": "الصفحة الأولى",
+    "lastPage": "الصفحة الأخيرة",
+    "paginationResults": "نتائج",
+    "backToInvoices": "العودة إلى الفواتير",
+    "cancelButton": "إلغاء الفاتورة",
+    "statusCancelled": "الفاتورة ملغاة",
+    "notes": "ملاحظات",
+    "filters": {
+      "reset": "إعادة ضبط",
+      "apply": "تطبيق الفلاتر",
+      "paymentStatus": "حالة الدفع",
+      "allStatuses": "جميع الحالات",
+      "paymentMethod": "طريقة الدفع",
+      "allMethods": "جميع الطرق",
+      "fromDate": "من تاريخ",
+      "toDate": "إلى تاريخ"
+    },
+    "status": {
+      "paid": "مدفوع",
+      "partial": "جزئي",
+      "unpaid": "غير مدفوع"
+    },
+    "method": {
+      "cash": "نقداً",
+      "card": "بطاقة",
+      "debt": "آجل"
+    },
+    "table": {
+      "invoiceNumber": "رقم الفاتورة",
+      "date": "التاريخ",
+      "customer": "العميل",
+      "total": "الإجمالي",
+      "paid": "المدفوع",
+      "due": "المتبقي",
+      "method": "الطريقة",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "customer": {
+      "title": "العميل"
+    },
+    "items": {
+      "title": "المنتجات",
+      "product": "المنتج",
+      "qty": "الكمية",
+      "price": "السعر",
+      "tax": "الضريبة",
+      "discount": "الخصم",
+      "total": "الإجمالي"
+    },
+    "payment": {
+      "title": "الدفع"
+    },
+    "totals": {
+      "title": "ملخص المبالغ",
+      "subtotal": "المجموع الفرعي",
+      "tax": "الضريبة",
+      "discount": "الخصم",
+      "grandTotal": "الإجمالي الكلي"
+    },
+    "metadata": {
+      "createdBy": "تم الإنشاء بواسطة:",
+      "system": "النظام"
+    },
+    "dialog": {
+      "title": "إلغاء الفاتورة",
+      "description": "هل أنت تأكد من أنك تريد إلغاء الفاتورة رقم #{{number}}؟ لا يمكن التراجع عن هذا الإجراء بعد تنفيذه.",
+      "confirmAction": "تأكيد الإلغاء"
+    }
   }
-  
 
   
 }
