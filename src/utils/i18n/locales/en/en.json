@@ -1065,6 +1065,86 @@
       "phoneInvalid": "Invalid phone number",
       "notesMax": "Notes must not exceed 500 characters"
     }
+  },
+  "salesInvoice": {
+    "title": "Sales Invoices",
+    "detailsTitle": "Sales Invoice #{{number}}",
+    "createInvoice": "Create Sales Invoice",
+    "loading": "Loading invoices...",
+    "error": "Failed to fetch invoices.",
+    "errorLoading": "Failed to load invoice data.",
+    "noResults": "No sales invoices found.",
+    "walkInCustomer": "Walk-in Customer",
+    "firstPage": "First Page",
+    "lastPage": "Last Page",
+    "paginationResults": "results",
+    "backToInvoices": "Back to Invoices",
+    "cancelButton": "Cancel Invoice",
+    "statusCancelled": "Invoice Cancelled",
+    "notes": "Notes",
+    "filters": {
+      "reset": "Reset",
+      "apply": "Apply Filters",
+      "paymentStatus": "Payment Status",
+      "allStatuses": "All Statuses",
+      "paymentMethod": "Payment Method",
+      "allMethods": "All Methods",
+      "fromDate": "From Date",
+      "toDate": "To Date"
+    },
+    "status": {
+      "paid": "Paid",
+      "partial": "Partial",
+      "unpaid": "Unpaid"
+    },
+    "method": {
+      "cash": "Cash",
+      "card": "Card",
+      "debt": "Debt"
+    },
+    "table": {
+      "invoiceNumber": "Invoice #",
+      "date": "Date",
+      "customer": "Customer",
+      "total": "Total",
+      "paid": "Paid",
+      "due": "Due",
+      "method": "Method",
+      "status": "Status",
+      "actions": "Actions",
+      "viewDetails": "View Details"
+    },
+    "customer": {
+      "title": "Customer"
+    },
+    "items": {
+      "title": "Items",
+      "product": "Product",
+      "qty": "Qty",
+      "price": "Price",
+      "tax": "Tax",
+      "discount": "Discount",
+      "total": "Total"
+    },
+    "payment": {
+      "title": "Payment"
+    },
+    "totals": {
+      "title": "Totals Summary",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "discount": "Discount",
+      "grandTotal": "Grand Total"
+    },
+    "metadata": {
+      "createdBy": "Created by:",
+      "system": "System"
+    },
+    "dialog": {
+      "title": "Cancel Invoice",
+      "description": "Are you sure you want to cancel invoice #{{number}}? This action cannot be undone.",
+      "confirmAction": "Confirm Cancellation"
+    }
   }
   
 }

@@ -57,7 +57,8 @@ export default function SalesInvoicesPage() {
   const [draftFilters, setDraftFilters] =
     useState<SalesInvoiceFilters>(initialFilters);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   const { data, isLoading, isFetching, isError } = useSalesInvoices({
     ...appliedFilters,
@@ -102,17 +103,19 @@ export default function SalesInvoicesPage() {
       case "paid":
         return (
           <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25 border-emerald-500/30">
-            Paid
+            {t("salesInvoice.status.paid")}
           </Badge>
         );
       case "partial":
         return (
           <Badge className="bg-amber-500/15 text-amber-600 dark:text-amber-400 hover:bg-amber-500/25 border-amber-500/30">
-            Partial
+            {t("salesInvoice.status.partial")}
           </Badge>
         );
       case "unpaid":
-        return <Badge variant="destructive">Unpaid</Badge>;
+        return (
+          <Badge variant="destructive">{t("salesInvoice.status.unpaid")}</Badge>
+        );
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -125,10 +128,10 @@ export default function SalesInvoicesPage() {
     <div className="px-6 space-y-6 text-start">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold tracking-tight flex gap-2 items-center">
-          Sales Invoices <BadgeDollarSign className="text-primary" />
+          {t("salesInvoice.title")} <BadgeDollarSign className="text-primary" />
         </h1>
         <Link to="/dashboard/sales-invoice/new">
-          <Button>Create Sales Invoice</Button>
+          <Button>{t("salesInvoice.createInvoice")}</Button>
         </Link>
       </div>
 
@@ -146,7 +149,7 @@ export default function SalesInvoicesPage() {
                     className="h-9 px-3 text-xs font-bold text-destructive hover:bg-destructive/5 gap-1.5 rounded-xl transition-all"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
-                    <span>Reset</span>
+                    <span>{t("salesInvoice.filters.reset")}</span>
                   </Button>
                 )}
 
@@ -160,7 +163,7 @@ export default function SalesInvoicesPage() {
                   ) : (
                     <Filter className="h-3.5 w-3.5" />
                   )}
-                  <span>Apply Filters</span>
+                  <span>{t("salesInvoice.filters.apply")}</span>
                 </Button>
               </div>
             </div>
@@ -168,7 +171,7 @@ export default function SalesInvoicesPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-1">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
-                  Payment Status
+                  {t("salesInvoice.filters.paymentStatus")}
                 </span>
                 <Select
                   value={draftFilters.payment_status || "all"}
@@ -177,32 +180,34 @@ export default function SalesInvoicesPage() {
                   }
                 >
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
-                    <SelectValue placeholder="All Statuses" />
+                    <SelectValue
+                      placeholder={t("salesInvoice.filters.allStatuses")}
+                    />
                   </SelectTrigger>
                   <SelectContent className="bg-muted border-border shadow-md">
                     <SelectItem
                       value="all"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      All Statuses
+                      {t("salesInvoice.filters.allStatuses")}
                     </SelectItem>
                     <SelectItem
                       value="paid"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      Paid
+                      {t("salesInvoice.status.paid")}
                     </SelectItem>
                     <SelectItem
                       value="partial"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      Partial
+                      {t("salesInvoice.status.partial")}
                     </SelectItem>
                     <SelectItem
                       value="unpaid"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      Unpaid
+                      {t("salesInvoice.status.unpaid")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -210,7 +215,7 @@ export default function SalesInvoicesPage() {
 
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
-                  Payment Method
+                  {t("salesInvoice.filters.paymentMethod")}
                 </span>
                 <Select
                   value={draftFilters.payment_method || "all"}
@@ -219,32 +224,34 @@ export default function SalesInvoicesPage() {
                   }
                 >
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
-                    <SelectValue placeholder="All Methods" />
+                    <SelectValue
+                      placeholder={t("salesInvoice.filters.allMethods")}
+                    />
                   </SelectTrigger>
                   <SelectContent className="bg-muted border-border shadow-md">
                     <SelectItem
                       value="all"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      All Methods
+                      {t("salesInvoice.filters.allMethods")}
                     </SelectItem>
                     <SelectItem
                       value="cash"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      Cash
+                      {t("salesInvoice.method.cash")}
                     </SelectItem>
                     <SelectItem
                       value="card"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      Card
+                      {t("salesInvoice.method.card")}
                     </SelectItem>
                     <SelectItem
                       value="debt"
                       className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
-                      Debt
+                      {t("salesInvoice.method.debt")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -252,7 +259,7 @@ export default function SalesInvoicesPage() {
 
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
-                  From Date
+                  {t("salesInvoice.filters.fromDate")}
                 </span>
                 <Input
                   type="date"
@@ -266,7 +273,7 @@ export default function SalesInvoicesPage() {
 
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
-                  To Date
+                  {t("salesInvoice.filters.toDate")}
                 </span>
                 <Input
                   type="date"
@@ -289,51 +296,97 @@ export default function SalesInvoicesPage() {
         </div>
 
         <CardContent
-          className={`p-0 transition-opacity duration-200 ${isFetching ? "opacity-75" : "opacity-100"}`}
+          className={`p-0 transition-opacity duration-200 ${
+            isFetching ? "opacity-75" : "opacity-100"
+          }`}
         >
           <Table className="text-xs">
             <TableHeader className="bg-muted/30">
               <TableRow className="border-b border-border/60">
-                <TableHead className="font-bold py-3.5">Invoice #</TableHead>
-                <TableHead className="font-bold py-3.5">Date</TableHead>
-                <TableHead className="font-bold py-3.5">Customer</TableHead>
-                <TableHead className="text-right font-bold py-3.5">
-                  Total
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-right" : "text-left"
+                  }`}
+                >
+                  {t("salesInvoice.table.invoiceNumber")}
                 </TableHead>
-                <TableHead className="text-right font-bold py-3.5">
-                  Paid
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-right" : "text-left"
+                  }`}
+                >
+                  {t("salesInvoice.table.date")}
                 </TableHead>
-                <TableHead className="text-right font-bold py-3.5">
-                  Due
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-right" : "text-left"
+                  }`}
+                >
+                  {t("salesInvoice.table.customer")}
                 </TableHead>
-                <TableHead className="font-bold py-3.5">Method</TableHead>
-                <TableHead className="font-bold py-3.5">Status</TableHead>
-                <TableHead className="font-bold py-3.5">Actions</TableHead>
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-left" : "text-right"
+                  }`}
+                >
+                  {t("salesInvoice.table.total")}
+                </TableHead>
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-left" : "text-right"
+                  }`}
+                >
+                  {t("salesInvoice.table.paid")}
+                </TableHead>
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-left" : "text-right"
+                  }`}
+                >
+                  {t("salesInvoice.table.due")}
+                </TableHead>
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-right" : "text-left"
+                  }`}
+                >
+                  {t("salesInvoice.table.method")}
+                </TableHead>
+                <TableHead
+                  className={`font-bold py-3.5 ${
+                    isArabic ? "text-right" : "text-left"
+                  }`}
+                >
+                  {t("salesInvoice.table.status")}
+                </TableHead>
+                <TableHead className="font-bold py-3.5 text-center">
+                  {t("salesInvoice.table.actions")}
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-12">
-                    Loading invoices...
+                  <TableCell colSpan={9} className="text-center py-12">
+                    {t("salesInvoice.loading")}
                   </TableCell>
                 </TableRow>
               ) : isError ? (
                 <TableRow>
                   <TableCell
-                    colSpan={8}
+                    colSpan={9}
                     className="text-center py-12 text-destructive font-medium"
                   >
-                    Failed to fetch invoices.
+                    {t("salesInvoice.error")}
                   </TableCell>
                 </TableRow>
               ) : data?.data.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={8}
+                    colSpan={9}
                     className="text-center py-12 text-muted-foreground font-medium"
                   >
-                    No sales invoices found.
+                    {t("salesInvoice.noResults")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -351,7 +404,7 @@ export default function SalesInvoicesPage() {
                     <TableCell className="font-semibold">
                       {invoice.customer
                         ? invoice.customer.full_name
-                        : "Walk-in Customer"}
+                        : t("salesInvoice.walkInCustomer")}
                     </TableCell>
                     <TableCell className="text-right font-bold">
                       {invoice.grand_total.toLocaleString()}
@@ -363,24 +416,24 @@ export default function SalesInvoicesPage() {
                       {invoice.amount_due.toLocaleString()}
                     </TableCell>
                     <TableCell className="capitalize text-muted-foreground">
-                      {invoice.payment_method}
+                      {t(`salesInvoice.method.${invoice.payment_method}`, {
+                        defaultValue: invoice.payment_method,
+                      })}
                     </TableCell>
                     <TableCell>
                       {getStatusBadge(invoice.payment_status)}
                     </TableCell>
-                    <TableCell>
-                      <TableCell className="text-center">
-                        <Link to={`/dashboard/sales-details/${invoice.id}`}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 hover:bg-muted"
-                            title={t("purchaseInvoice.table.viewDetails")}
-                          >
-                            <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
-                          </Button>
-                        </Link>
-                      </TableCell>
+                    <TableCell className="text-center">
+                      <Link to={`/dashboard/sales-details/${invoice.id}`}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 hover:bg-muted"
+                          title={t("salesInvoice.table.viewDetails")}
+                        >
+                          <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))
@@ -391,8 +444,9 @@ export default function SalesInvoicesPage() {
           {data?.meta && lastPage > 1 && (
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 border-t border-border/60 bg-muted/10 text-xs">
               <span className="text-muted-foreground font-medium">
-                Showing {data.meta.from} to {data.meta.to} of {data.meta.total}{" "}
-                results
+                {t("common.showing")} {data.meta.from} {t("common.to")}{" "}
+                {data.meta.to} {t("common.of")} {data.meta.total}{" "}
+                {t("salesInvoice.paginationResults")}
               </span>
 
               <Pagination className="w-auto m-0">
@@ -404,9 +458,13 @@ export default function SalesInvoicesPage() {
                       className="h-8 w-8 rounded-lg"
                       onClick={() => handlePageChange(1)}
                       disabled={currentPage === 1 || isFetching}
-                      title="First Page"
+                      title={t("salesInvoice.firstPage")}
                     >
-                      <ChevronsLeft className="h-4 w-4" />
+                      {isArabic ? (
+                        <ChevronsRight className="h-4 w-4" />
+                      ) : (
+                        <ChevronsLeft className="h-4 w-4" />
+                      )}
                     </Button>
                   </PaginationItem>
 
@@ -458,9 +516,13 @@ export default function SalesInvoicesPage() {
                       className="h-8 w-8 rounded-lg"
                       onClick={() => handlePageChange(lastPage)}
                       disabled={currentPage === lastPage || isFetching}
-                      title="Last Page"
+                      title={t("salesInvoice.lastPage")}
                     >
-                      <ChevronsRight className="h-4 w-4" />
+                      {isArabic ? (
+                        <ChevronsLeft className="h-4 w-4" />
+                      ) : (
+                        <ChevronsRight className="h-4 w-4" />
+                      )}
                     </Button>
                   </PaginationItem>
                 </PaginationContent>
