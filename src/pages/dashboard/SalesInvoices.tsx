@@ -34,11 +34,12 @@ import {
   RotateCcw,
   Filter,
   Loader2,
-  Text,
   BadgeDollarSign,
+  Eye,
 } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const initialFilters: SalesInvoiceFilters = {
   page: 1,
@@ -55,6 +56,8 @@ export default function SalesInvoicesPage() {
 
   const [draftFilters, setDraftFilters] =
     useState<SalesInvoiceFilters>(initialFilters);
+
+  const { t } = useTranslation();
 
   const { data, isLoading, isFetching, isError } = useSalesInvoices({
     ...appliedFilters,
@@ -119,7 +122,7 @@ export default function SalesInvoicesPage() {
   const lastPage = data?.meta?.last_page || 1;
 
   return (
-    <div className="p-6 space-y-6 text-start">
+    <div className="px-6 space-y-6 text-start">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold tracking-tight flex gap-2 items-center">
           Sales Invoices <BadgeDollarSign className="text-primary" />
@@ -176,28 +179,28 @@ export default function SalesInvoicesPage() {
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
                     <SelectValue placeholder="All Statuses" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border shadow-md">
+                  <SelectContent className="bg-muted border-border shadow-md">
                     <SelectItem
                       value="all"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       All Statuses
                     </SelectItem>
                     <SelectItem
                       value="paid"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       Paid
                     </SelectItem>
                     <SelectItem
                       value="partial"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       Partial
                     </SelectItem>
                     <SelectItem
                       value="unpaid"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       Unpaid
                     </SelectItem>
@@ -218,28 +221,28 @@ export default function SalesInvoicesPage() {
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
                     <SelectValue placeholder="All Methods" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border shadow-md">
+                  <SelectContent className="bg-muted border-border shadow-md">
                     <SelectItem
                       value="all"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       All Methods
                     </SelectItem>
                     <SelectItem
                       value="cash"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       Cash
                     </SelectItem>
                     <SelectItem
                       value="card"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       Card
                     </SelectItem>
                     <SelectItem
                       value="debt"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       Debt
                     </SelectItem>
@@ -305,6 +308,7 @@ export default function SalesInvoicesPage() {
                 </TableHead>
                 <TableHead className="font-bold py-3.5">Method</TableHead>
                 <TableHead className="font-bold py-3.5">Status</TableHead>
+                <TableHead className="font-bold py-3.5">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -363,6 +367,20 @@ export default function SalesInvoicesPage() {
                     </TableCell>
                     <TableCell>
                       {getStatusBadge(invoice.payment_status)}
+                    </TableCell>
+                    <TableCell>
+                      <TableCell className="text-center">
+                        <Link to={`/dashboard/sales-details/${invoice.id}`}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 hover:bg-muted"
+                            title={t("purchaseInvoice.table.viewDetails")}
+                          >
+                            <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                          </Button>
+                        </Link>
+                      </TableCell>
                     </TableCell>
                   </TableRow>
                 ))

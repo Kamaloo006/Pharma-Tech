@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Trash2 } from "lucide-react";
-import type { SalesInvoiceItem } from "../types/salesInvoice";
+import type { SalesInvoiceItem } from "../../types/salesInvoice";
 
 interface SalesInvoiceItemsTableProps {
   isArabic: boolean;

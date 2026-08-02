@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
-import type { SalesInvoiceFilters, SalesInvoicesApiResponse } from "@/features/sales-invoice/types/salesInvoice";
+import type { SalesInvoiceFilters, SalesInvoicesApiResponse, SalesInvoiceSingleResponse } from "@/features/sales-invoice/types/salesInvoice";
 
 export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
   const {
@@ -35,5 +35,42 @@ export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
       return response.data;
     },
     staleTime: 5 * 60 * 1000,
+  });
+}
+
+
+const fetchSalesInvoice = async (id: string | number) => {
+  const response = await api.get<SalesInvoiceSingleResponse>(`/sales-invoices/${id}`);
+  return response.data.data;
+};
+
+export function useSalesInvoice(id: string | number) {
+  return useQuery({
+    queryKey: ["sales-invoice", id],
+    queryFn: () => fetchSalesInvoice(id),
+    enabled: Boolean(id),
+  });
+}
+
+export function useCancelSalesInvoice() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string | number) => {
+      const response = await api.patch<SalesInvoiceSingleResponse>(
+        `/sales-invoices/${id}/cancel`
+      );
+      return response.data.data;
+    },
+    onSuccess: (updatedInvoice) => {
+      
+      queryClient.setQueryData(
+        ["sales-invoice", String(updatedInvoice.id)],
+        updatedInvoice
+      );
+
+      
+      queryClient.invalidateQueries({ queryKey: ["sales-invoices"] });
+    },
   });
 }
