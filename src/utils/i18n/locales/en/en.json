@@ -1149,9 +1149,9 @@
     }
   },
   "customerDebt": {
-    "header": {
+   "header": {
       "title": "Customer Debts",
-      "description": "Track and manage receivables and remaining balances for customers.",
+      "description": "Track and manage receivables and remaining amounts from customers.",
       "totalAmount": "Total Customer Debts",
       "paidAmount": "Paid Amount",
       "remainingAmount": "Remaining Amount"
@@ -1178,8 +1178,49 @@
       "remainingAmount": "Remaining Amount",
       "status": "Status",
       "actions": "Actions",
-      "noData": "No debts found to display.",
+      "noData": "No debts to display.",
       "viewDetails": "View Details"
+    },
+    "details": {
+      "title": "Customer Debt #{{id}}",
+      "subtitle": "Debt details and payment history for sales invoice #{{invoiceId}}",
+      "payDebt": "Pay Debt",
+      "loading": "Loading debt details...",
+      "errorLoading": "An error occurred while loading debt details or data not found.",
+      "customer": "Customer",
+      "phone": "Phone",
+      "invoice": "Invoice",
+      "debtDate": "Debt Date",
+      "summary": "Debt Summary",
+      "totalAmount": "Total Amount",
+      "paidAmount": "Paid Amount",
+      "remaining": "Remaining",
+      "statusLabel": "Status",
+      "paymentHistory": "Payment History",
+      "paymentHistoryDesc": "All payments made toward this debt",
+      "historyTable": {
+        "date": "Date",
+        "amount": "Amount",
+        "createdBy": "Created By",
+        "notes": "Notes",
+        "noPayments": "No payments recorded yet."
+      }
+    },
+    "dialog": {
+      "title": "Pay Customer Debt",
+      "desc": "Enter a new payment for sales invoice INV-{{invoiceId}}",
+      "remainingBalance": "Remaining Amount to Pay",
+      "amount": "Amount",
+      "paymentDate": "Payment Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Add any additional notes regarding the payment here...",
+      "submitting": "Processing payment...",
+      "pay": "Pay"
+    },
+    "errors": {
+      "invalidAmount": "Please enter a valid amount greater than 0.",
+      "amountExceedsRemaining": "Entered amount exceeds the remaining balance ({{remaining}}).",
+      "paymentFailed": "An error occurred while submitting the payment."
     }
   }
   
