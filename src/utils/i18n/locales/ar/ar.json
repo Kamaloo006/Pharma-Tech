@@ -1182,6 +1182,47 @@
       "actions": "الإجراءات",
       "noData": "لا توجد ديون للعرض.",
       "viewDetails": "عرض التفاصيل"
+    },
+    "details": {
+      "title": "دين الزبون #{{id}}",
+      "subtitle": "تفاصيل الدين وسجل الدفعات الخاصة بالفاتورة رقم #{{invoiceId}}",
+      "payDebt": "تسديد دين",
+      "loading": "جاري تحميل تفاصيل الدين...",
+      "errorLoading": "حدث خطأ أثناء تحميل تفاصيل الدين أو البيانات غير موجودة.",
+      "customer": "الزبون",
+      "phone": "الهاتف",
+      "invoice": "الفاتورة",
+      "debtDate": "تاريخ الدين",
+      "summary": "ملخص الدين",
+      "totalAmount": "المبلغ الإجمالي",
+      "paidAmount": "المدفوع",
+      "remaining": "المتبقي",
+      "statusLabel": "الحالة",
+      "paymentHistory": "سجل الدفعات",
+      "paymentHistoryDesc": "جميع عمليات التسديد التي تمت على هذا الدين",
+      "historyTable": {
+        "date": "التاريخ",
+        "amount": "المبلغ",
+        "createdBy": "بواسطة",
+        "notes": "ملاحظات",
+        "noPayments": "لا توجد دفعات مسجلة بعد."
+      }
+    },
+    "dialog": {
+      "title": "تسديد دين زبون",
+      "desc": "إدخال دفعة جديدة للدين الخاص بالفاتورة INV-{{invoiceId}}",
+      "remainingBalance": "المبلغ المتبقي للدفعة",
+      "amount": "المبلغ",
+      "paymentDate": "تاريخ الدفعة",
+      "notes": "ملاحظات",
+      "notesPlaceholder": "أضف أي ملاحظات إضافية حول الدفعة هنا...",
+      "submitting": "جاري التسديد...",
+      "pay": "تسديد"
+    },
+    "errors": {
+      "invalidAmount": "يرجى إدخال مبلغ صحيح أكبر من 0.",
+      "amountExceedsRemaining": "المبلغ أدناه أكبر من المبلغ المتبقي ({{remaining}}).",
+      "paymentFailed": "حدث خطأ أثناء إرسال الدفعة."
     }
   }
   
