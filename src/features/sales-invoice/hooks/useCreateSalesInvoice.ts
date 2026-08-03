@@ -10,6 +10,7 @@ import api from "@/lib/api";
 import { toast } from "sonner";
 import i18n from "@/utils/i18n";
 import type { CreateSalesInvoicePayload, SalesInvoiceItem } from "../types/salesInvoice";
+import { useTranslation } from "react-i18next";
 
 const createSalesInvoiceApi = async (payload: CreateSalesInvoicePayload) => {
   const response = await api.post("/sales-invoices", payload);
@@ -26,7 +27,8 @@ export function useCreateSalesInvoice() {
   const paramProductId = searchParams.get("productId");
   const initialProductAdded = useRef<boolean>(false);
 
-  
+  const {t} = useTranslation();
+
   const { product: initialProduct, productLoading: isLoadingInitialProduct } =
     useProductDetails(paramProductId);
 
@@ -224,59 +226,62 @@ export function useCreateSalesInvoice() {
           ? "تم إنشاء فاتورة المبيعات بنجاح"
           : "Sales invoice created successfully"
       );
-      navigate("/dashboard/sales");
+      navigate("/dashboard/sales-invoice");
     },
     onError: (error: any) => {
       const errorMsg =
         error?.response?.data?.message ||
         (isArabic ? "حدث خطأ أثناء حفظ الفاتورة" : "Failed to save invoice");
-      alert(errorMsg);
+        if(errorMsg == "A customer must be selected when the invoice is not fully paid.")
+          toast.error(t("salesInvoice.errorMessage"));
+          
     },
   });
 
-  const isSaveDisabled =
-    isItemsEmpty ||
-    isAmountPaidExceeded ||
-    (paymentMethod === "debt" && !customerId) ||
-    (paymentMethod === "cash" && !cashBox) ||
-    createInvoiceMutation.isPending;
+ const isSaveDisabled =
+  isItemsEmpty ||
+  isAmountPaidExceeded ||
+  (paymentMethod === "debt" && !customerId) ||
+  ((paymentMethod === "cash" || amountPaid > 0) && !cashBox) ||
+  createInvoiceMutation.isPending;
 
   
   const handleSaveInvoice = () => {
-    if (paymentMethod === "debt" && !customerId) {
-      alert(
-        isArabic
-          ? "يرجى اختيار زبون لتسجيل الدين عليه"
-          : "Please select a customer for debt payment"
-      );
-      return;
-    }
-    if (items.length === 0) {
-      alert(
-        isArabic
-          ? "يرجى إضافة منتج واحد على الأقل للفاتورة"
-          : "Please add at least one product"
-      );
-      return;
-    }
+  if (paymentMethod === "debt" && !customerId) {
+    toast.error(
+      isArabic
+        ? "يرجى اختيار زبون لتسجيل الدين عليه"
+        : "Please select a customer for debt payment"
+    );
+    return;
+  }
 
-    const payload: CreateSalesInvoicePayload = {
-      customer_id: customerId ? Number(customerId) : null,
-      payment_method: paymentMethod,
-      amount_paid: Number(amountPaid),
-      invoice_date: invoiceDate,
-      notes: notes.trim() || null,
-      items: items.map((item) => ({
-        product_id: Number(item.product_id),
-        quantity: Number(item.quantity),
-        selling_price: Number(item.selling_price),
-        tax: Number(item.tax || 0),
-        discount: Number(item.discount || 0),
-      })),
-    };
+  if (items.length === 0) {
+    toast.error(
+      isArabic
+        ? "يرجى إضافة منتج واحد على الأقل للفاتورة"
+        : "Please add at least one product"
+    );
+    return;
+  }
 
-    createInvoiceMutation.mutate(payload);
+  const payload: CreateSalesInvoicePayload = {
+    customer_id: customerId ? Number(customerId) : null,
+    payment_method: paymentMethod,
+    amount_paid: Number(amountPaid),
+    invoice_date: invoiceDate,
+    notes: notes.trim() || null,
+    items: items.map((item) => ({
+      product_id: Number(item.product_id),
+      quantity: Number(item.quantity),
+      selling_price: Number(item.selling_price),
+      tax: Number(item.tax || 0),
+      discount: Number(item.discount || 0),
+    })),
   };
+
+  createInvoiceMutation.mutate(payload);
+};
 
   return {
     isArabic,
@@ -310,6 +315,6 @@ export function useCreateSalesInvoice() {
     isSaving: createInvoiceMutation.isPending,
     isSaveDisabled,
     handleSaveInvoice,
-    navigateToCashbox: () => navigate("dashboard/cashbox"),
+    navigateToCashbox: () => navigate("/dashboard/sales-invoice"),
   };
 }

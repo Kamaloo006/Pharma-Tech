@@ -20,6 +20,21 @@ export function SupplierDebtPaymentHistory({
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "—";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "—";
+
+    return new Intl.DateTimeFormat(isArabic ? "ar-EG" : "en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    }).format(date);
+  };
+
   return (
     <div
       className="p-6 rounded-2xl border border-border bg-card shadow-xs space-y-4"
@@ -78,7 +93,7 @@ export function SupplierDebtPaymentHistory({
                   <TableCell className="font-mono text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
-                      <span>{payment.payment_date}</span>
+                      <span>{formatDate(payment.payment_date)}</span>
                     </div>
                   </TableCell>
 

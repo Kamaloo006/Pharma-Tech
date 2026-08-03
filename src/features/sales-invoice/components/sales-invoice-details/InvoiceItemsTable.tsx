@@ -50,7 +50,7 @@ export function InvoiceItemsTable({ items }: { items?: SalesInvoiceItem[] }) {
             {items?.map((item) => (
               <TableRow key={item.id} className="border-b border-border/40">
                 <TableCell className="py-2.5 font-semibold text-foreground">
-                  {item.product?.brand_name || item.product?.ar_name || "-"}
+                  {item?.brand_name || "-"}
                 </TableCell>
                 <TableCell className="py-2.5 text-center font-mono font-medium">
                   {item.quantity}
@@ -65,7 +65,7 @@ export function InvoiceItemsTable({ items }: { items?: SalesInvoiceItem[] }) {
                   {item.discount}
                 </TableCell>
                 <TableCell className="py-2.5 text-right font-mono font-bold text-foreground">
-                  {item.line_total.toLocaleString()}
+                  {item.quantity.toLocaleString()}
                 </TableCell>
               </TableRow>
             ))}
