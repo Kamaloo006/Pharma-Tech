@@ -887,6 +887,7 @@
       "notesPlaceholder": "مثال: دفعة جزئية عبر تحويل بنكي...",
       "cancel": "إلغاء",
       "recordPayment": "تسجيل السداد",
+      "recordPaymentBtn": "تسجيل السداد",
       "processing": "جاري المعالجة...",
       "errors": {
         "invalidAmount": "يرجى إدخال مبلغ صحيح أكبر من 0.",
@@ -1084,6 +1085,7 @@
     "cancelButton": "إلغاء الفاتورة",
     "statusCancelled": "الفاتورة ملغاة",
     "notes": "ملاحظات",
+    "errorMessage":"يجب دفع الفاتورة كاملة",
     "filters": {
       "reset": "إعادة ضبط",
       "apply": "تطبيق الفلاتر",
@@ -1147,7 +1149,42 @@
       "description": "هل أنت تأكد من أنك تريد إلغاء الفاتورة رقم #{{number}}؟ لا يمكن التراجع عن هذا الإجراء بعد تنفيذه.",
       "confirmAction": "تأكيد الإلغاء"
     }
+  },
+  "customerDebt": {
+    "header": {
+      "title": "ديون الزبائن",
+      "description": "متابعة وإدارة المستحقات والمبالغ المتبقية على الزبائن.",
+      "totalAmount": "إجمالي ديون الزبائن",
+      "paidAmount": "المبلغ المدفوع",
+      "remainingAmount": "المبلغ المتبقي"
+    },
+    "filters": {
+      "customer": "الزبون",
+      "allCustomers": "جميع الزبائن",
+      "status": "حالة الدين",
+      "allStatuses": "جميع الحالات"
+    },
+    "status": {
+      "open": "غير مدفوع",
+      "partial": "مدفوع جزئياً",
+      "paid": "مكتمل",
+      "overdue": "متأخر",
+      "cancelled": "ملغى"
+    },
+    "table": {
+      "customer": "الزبون",
+      "invoiceNo": "رقم فاتورة المبيعات",
+      "dueDate": "تاريخ الاستحقاق",
+      "totalAmount": "المبلغ الإجمالي",
+      "paidAmount": "المبلغ المدفوع",
+      "remainingAmount": "المبلغ المتبقي",
+      "status": "حالة الدين",
+      "actions": "الإجراءات",
+      "noData": "لا توجد ديون للعرض.",
+      "viewDetails": "عرض التفاصيل"
+    }
   }
+  
 
   
 }

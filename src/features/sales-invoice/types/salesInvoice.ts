@@ -17,6 +17,23 @@ export interface Creator {
   is_verified?: boolean;
 }
 
+
+export interface CreateSalesInvoicePayload {
+  customer_id: number | null;
+  invoice_date?: string;
+  payment_method: "cash" | "credit" | "debt";
+  amount_paid: number;
+  due_date?: string | null;
+  notes?: string | null;
+  items: {
+    product_id: number;
+    quantity: number;
+    selling_price: number;
+    tax: number;
+    discount: number;
+  }[];
+}
+
 export interface Unit {
   id: number;
   name: string;
@@ -32,7 +49,7 @@ export interface Company {
 }
 
 export interface ProductDetails {
-  id: number;
+  id: number | string;
   barcode: string;
   brand_name: string;
   scientific_name: string;
@@ -51,15 +68,16 @@ export interface ProductDetails {
 }
 
 export interface SalesInvoiceItem {
-  id: number;
+  id: string ;
   product_id: number;
-  quantity: number;
+  brand_name: string;
+  scientific_name: string;
+  strength: string;
   selling_price: number;
+  quantity: number;
   tax: number;
   discount: number;
-  line_total: number;
-  product: ProductDetails;
-  created_at: string;
+  stock: number;
 }
 
 export interface SalesInvoiceDetails {
@@ -84,14 +102,27 @@ export interface SalesInvoiceDetails {
   updated_at: string;
 }
 
-// Response للفاتورة الواحدة
+
 export interface SalesInvoiceSingleResponse {
   data: SalesInvoiceDetails;
 }
 
-// قائمة الفواتير (List)
+
+export interface CreateInvoiceFormItem {
+  id: string; 
+  product_id: number;
+  brand_name: string;
+  scientific_name: string;
+  strength?: string;
+  selling_price: number;
+  quantity: number;
+  tax: number;
+  discount: number;
+  stock: number;
+}
+
 export interface SalesInvoice {
-  id: number;
+  id: number | string;
   invoice_number: string;
   invoice_date: string;
   subtotal: number;

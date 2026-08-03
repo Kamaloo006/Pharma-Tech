@@ -885,6 +885,7 @@
       "notesPlaceholder": "e.g. Partial payment via bank transfer...",
       "cancel": "Cancel",
       "recordPayment": "Record Payment",
+      "recordPaymentBtn":"Record Payment",
       "processing": "Processing...",
       "errors": {
         "invalidAmount": "Please enter a valid amount greater than 0.",
@@ -1082,6 +1083,7 @@
     "cancelButton": "Cancel Invoice",
     "statusCancelled": "Invoice Cancelled",
     "notes": "Notes",
+    "errorMessage":"Full Invoice Must be Paid",
     "filters": {
       "reset": "Reset",
       "apply": "Apply Filters",
@@ -1144,6 +1146,40 @@
       "title": "Cancel Invoice",
       "description": "Are you sure you want to cancel invoice #{{number}}? This action cannot be undone.",
       "confirmAction": "Confirm Cancellation"
+    }
+  },
+  "customerDebt": {
+    "header": {
+      "title": "Customer Debts",
+      "description": "Track and manage receivables and remaining balances for customers.",
+      "totalAmount": "Total Customer Debts",
+      "paidAmount": "Paid Amount",
+      "remainingAmount": "Remaining Amount"
+    },
+    "filters": {
+      "customer": "Customer",
+      "allCustomers": "All Customers",
+      "status": "Debt Status",
+      "allStatuses": "All Statuses"
+    },
+    "status": {
+      "open": "Unpaid",
+      "partial": "Partially Paid",
+      "paid": "Completed",
+      "overdue": "Overdue",
+      "cancelled": "Cancelled"
+    },
+    "table": {
+      "customer": "Customer",
+      "invoiceNo": "Sales Invoice No.",
+      "dueDate": "Due Date",
+      "totalAmount": "Total Amount",
+      "paidAmount": "Paid Amount",
+      "remainingAmount": "Remaining Amount",
+      "status": "Status",
+      "actions": "Actions",
+      "noData": "No debts found to display.",
+      "viewDetails": "View Details"
     }
   }
   
