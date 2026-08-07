@@ -4,8 +4,13 @@ import type {
   CreateCustomerReturnPayload,
   CustomerReturnApiResponse,
   CustomerReturnFilterParams,
+  CustomerReturnInvoiceDetail,
   CustomerReturnSingleApiResponse,
 } from "../types/CustomerReturn";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+
+
 
 const fetchCustomerReturnInvoices = async (
   filters: CustomerReturnFilterParams = {}
@@ -76,3 +81,42 @@ export function useCreateCustomerReturn() {
     },
   });
 }
+
+export const useCustomerReturnDetails = (id?: string) => {
+  return useQuery({
+    queryKey: ["customer-return-details", id],
+    queryFn: async () => {
+      if (!id) throw new Error("Invoice ID is required");
+      const { data } = await api.get<{ data: CustomerReturnInvoiceDetail }>(
+        `/customer-return-invoices/${id}`
+      );
+      return data;
+    },
+    enabled: !!id,
+  });
+};
+
+
+export const useCancelCustomerReturn = () => {
+  const queryClient = useQueryClient();
+  const {t} = useTranslation();
+  return useMutation({
+    mutationFn: async (id: number | string) => {
+      const { data } = await api.patch(
+        `/customer-return-invoices/${id}/cancel`
+      );
+      return data;
+    },
+    onSuccess: (_, id) => {
+      toast.info(t("customerReturn.details.cancelledSuccessfully"));
+      
+      queryClient.invalidateQueries({ queryKey: ["customer-return-details", String(id)] });
+      queryClient.invalidateQueries({ queryKey: ["customer-returns"] });
+    },
+    onError: (error: any) => {
+      const errorMessage =
+        error?.response?.data?.message || "فشل في إلغاء فاتورة المرتجع";
+      toast.error(errorMessage);
+    },
+  });
+};

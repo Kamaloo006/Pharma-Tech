@@ -33,7 +33,7 @@ export function SupplierReturnFormHeader({
   isPending,
   onSupplierChange,
   onInvoiceChange,
-  formatCurrency = (val) => `$${val}`,
+  formatCurrency = (val) => `SYP${val}`,
 }: Props) {
   const { t } = useTranslation();
 

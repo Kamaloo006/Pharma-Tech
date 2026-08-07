@@ -71,7 +71,7 @@ api.interceptors.response.use(
           // 🟢 إرسال طلب الـ Refresh بالمحددات المطلوبة تماماً من لارفيل
           const res = await axios.post(`${api.defaults.baseURL}/refresh`, {
             refresh_token: refreshToken,
-            device_name: "WebApp_Pharmacist", // ممرر اختيارياً كما يطلب الباك إند
+            device_name: "WebApp_Pharmacist", 
           }, {
             headers: {
               "Content-Type": "application/json",
