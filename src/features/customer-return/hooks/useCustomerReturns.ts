@@ -1,8 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import type {
+  CreateCustomerReturnPayload,
   CustomerReturnApiResponse,
   CustomerReturnFilterParams,
+  CustomerReturnSingleApiResponse,
 } from "../types/CustomerReturn";
 
 const fetchCustomerReturnInvoices = async (
@@ -46,5 +48,31 @@ export function useCustomerReturns(filters: CustomerReturnFilterParams = {}) {
     queryFn: () => fetchCustomerReturnInvoices(filters),
     placeholderData: (previousData) => previousData,
     staleTime: 1000 * 60 * 5,
+  });
+}
+
+const createCustomerReturn = async (
+  payload: CreateCustomerReturnPayload
+): Promise<CustomerReturnSingleApiResponse> => {
+  const { data } = await api.post<CustomerReturnSingleApiResponse>(
+    "/customer-return-invoices",
+    payload
+  );
+  return data;
+};
+
+export function useCreateCustomerReturn() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createCustomerReturn,
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["salesInvoice", String(variables.original_sales_invoice_id)],
+      });
+      queryClient.invalidateQueries({ queryKey: ["salesInvoices"] });
+      queryClient.invalidateQueries({ queryKey: ["salesInvoice"] });
+      queryClient.invalidateQueries({ queryKey: ["customerReturns"] });
+    },
   });
 }

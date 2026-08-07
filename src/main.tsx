@@ -50,6 +50,7 @@ import CreateSalesInvoice from "./pages/dashboard/CreateSalesInvoice.tsx";
 import SalesInvoiceDetails from "./pages/dashboard/SalesInvoiceDetails.tsx";
 import CustomerDebtDetails from "./pages/dashboard/CustomerDebtDetails.tsx";
 import CustomerReturn from "./pages/dashboard/CustomerReturn.tsx";
+import CreateCustomerReturn from "./pages/dashboard/CreateCustomerReturn.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -158,6 +159,10 @@ const router = createBrowserRouter([
           {
             path: "customer-return",
             element: <CustomerReturn />,
+          },
+          {
+            path: "customer-return/create",
+            element: <CreateCustomerReturn />,
           },
           {
             path: "sales-invoice",
