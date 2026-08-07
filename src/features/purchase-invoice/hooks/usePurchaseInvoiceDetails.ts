@@ -8,7 +8,6 @@ const fetchPurchaseInvoiceDetails = async (
   const { data } = await api.get<{ data: PurchaseInvoice }>(
     `/purchase-invoices/${id}`
   );
-  console.log("Fetched purchase invoice details:", data.data);
   return data.data;
 };
 

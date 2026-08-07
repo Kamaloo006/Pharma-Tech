@@ -151,12 +151,12 @@ export default function TransactionsFilters({
                 placeholder={t("cashbox.filters.placeholders.selectType")}
               />
             </SelectTrigger>
-            <SelectContent className="bg-slate-900 border border-border text-foreground z-50 shadow-xl max-h-75 overflow-y-auto">
+            <SelectContent className="bg-muted border border-border text-foreground z-50 shadow-xl max-h-75 overflow-y-auto">
               {TRANSACTION_TYPES.map((typeOption) => (
                 <SelectItem
                   key={typeOption.value}
                   value={typeOption.value}
-                  className="focus:bg-muted focus:text-foreground cursor-pointer text-xs"
+                  className="focus:bg-primary focus:text-white cursor-pointer text-xs"
                 >
                   {t(`cashbox.filters.types.${typeOption.key}`)}
                 </SelectItem>
@@ -207,22 +207,22 @@ export default function TransactionsFilters({
             <SelectTrigger className="h-10 text-xs bg-background border-border text-foreground w-full">
               <SelectValue placeholder="15" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-900 border border-border text-foreground z-50 shadow-xl">
+            <SelectContent className="bg-muted border border-border text-foreground z-50 shadow-xl">
               <SelectItem
                 value="15"
-                className="focus:bg-muted focus:text-foreground cursor-pointer"
+                className="focus:bg-primary focus:text-white cursor-pointer"
               >
                 15
               </SelectItem>
               <SelectItem
                 value="30"
-                className="focus:bg-muted focus:text-foreground cursor-pointer"
+                className="focus:bg-primary focus:text-white cursor-pointer"
               >
                 30
               </SelectItem>
               <SelectItem
                 value="50"
-                className="focus:bg-muted focus:text-foreground cursor-pointer"
+                className="focus:bg-primary focus:text-white cursor-pointer"
               >
                 50
               </SelectItem>

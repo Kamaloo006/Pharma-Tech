@@ -255,6 +255,7 @@
         "customers": "Customers",
         "customersList": "Customers List",
         "customerDebt": "Customer Debt",
+        "customerReturn":"Customer Return",
         "sales":"Sales",
         "newSales":"Create Sales Invoice"
         
@@ -1221,6 +1222,52 @@
       "invalidAmount": "Please enter a valid amount greater than 0.",
       "amountExceedsRemaining": "Entered amount exceeds the remaining balance ({{remaining}}).",
       "paymentFailed": "An error occurred while submitting the payment."
+    }
+  },
+  "customerReturn": {
+    "walkIn": "Walk-in Customer",
+    "list": {
+      "title": "Customer Returns",
+      "description": "Manage product returns from customers, track sales refunds, and invoice statuses.",
+      "createBtn": "Create Return",
+      "errorLoading": "Failed to load customer return invoices. Please check your connection or try again."
+    },
+    "cards": {
+      "totalReturns": "Total Customer Returns",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "totalRefunded": "Total Refunded"
+    },
+    "filters": {
+      "customer": "Customer",
+      "allCustomers": "All Customers",
+      "originalInvoice": "Sales Invoice #",
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "perPage": "Per Page"
+    },
+    "status": {
+      "completed": "Completed",
+      "approved": "Approved",
+      "pending": "Pending",
+      "cancelled": "Cancelled"
+    },
+    "table": {
+      "loading": "Loading customer returns...",
+      "error": "Failed to load returns.",
+      "invoiceNo": "Invoice Number",
+      "customer": "Customer",
+      "originalInvoice": "Original Sales Invoice",
+      "invoiceDate": "Invoice Date",
+      "refundTotal": "Refund Total",
+      "refundMethod": "Refund Method",
+      "status": "Status",
+      "createdBy": "Created By",
+      "actions": "Actions",
+      "noData": "No customer return invoices found",
+      "viewDetails": "View Details"
     }
   }
   

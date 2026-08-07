@@ -9,8 +9,8 @@
         "appName": "فارماتيك",
         "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
         "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً.",
-        "currency": "ل.س",
         "syr": "ل.س",
+    "currency": "ل.س",
         "loading": "جاري التحميل...",
         "unknownProduct": "منتج غير معروف",
         "back": "الرجوع",
@@ -255,9 +255,10 @@
         "supplierDebt": "ديون الموردين",
         "supplierReturn":"مرتجعات الموردين",
         "suppliersList": "قائمة الموردين",
-        "customers":"العملاء",
-        "customersList":"قائمة العملاء",
-        "customerDebt":"ديون العملاء",
+        "customers":"الزبائن",
+        "customersList":"قائمة الزبائن",
+        "customerDebt":"ديون الزبائن",
+        "customerReturn":"مرتجعات الزبائن",
         "sales": "المبيعات",
         "newSales": "إنشاء فاتورة مبيع"
         
@@ -1223,6 +1224,52 @@
       "invalidAmount": "يرجى إدخال مبلغ صحيح أكبر من 0.",
       "amountExceedsRemaining": "المبلغ أدناه أكبر من المبلغ المتبقي ({{remaining}}).",
       "paymentFailed": "حدث خطأ أثناء إرسال الدفعة."
+    }
+  },
+  "customerReturn": {
+    "walkIn": "زبون خارجي",
+    "list": {
+      "title": "مرتجعات المبيعات",
+      "description": "إدارة مرتجعات المنتجات من الزبائن، ومتابعة عمليات المبالغ المستردة وحالات الفواتير.",
+      "createBtn": "إنشاء مرتجع",
+      "errorLoading": "فشل في تحميل فواتير مرتجعات الزبائن. يرجى التحقق من الاتصال أو المحاولة مرة أخرى."
+    },
+    "cards": {
+      "totalReturns": "إجمالي المرتجعات",
+      "completed": "المكتملة",
+      "cancelled": "الملغاة",
+      "totalRefunded": "إجمالي المبالغ المستردة"
+    },
+    "filters": {
+      "customer": "الزبون",
+      "allCustomers": "جميع الزبائن",
+      "originalInvoice": "رقم فاتورة المبيعات",
+      "status": "الحالة",
+      "allStatuses": "جميع الحالات",
+      "dateFrom": "من تاريخ",
+      "dateTo": "إلى تاريخ",
+      "perPage": "لكل صفحة"
+    },
+    "status": {
+      "completed": "مكتملة",
+      "approved": "موافق عليها",
+      "pending": "قيد الانتظار",
+      "cancelled": "ملغاة"
+    },
+    "table": {
+      "loading": "جاري تحميل مرتجعات الزبائن...",
+      "error": "فشل في تحميل المرتجعات.",
+      "invoiceNo": "رقم الفاتورة",
+      "customer": "الزبون",
+      "originalInvoice": "فاتورة المبيعات الأصلية",
+      "invoiceDate": "تاريخ الفاتورة",
+      "refundTotal": "إجمالي المسترد",
+      "refundMethod": "طريقة الاسترداد",
+      "status": "الحالة",
+      "createdBy": "أنشئت بواسطة",
+      "actions": "الإجراءات",
+      "noData": "لم يتم العثور على فواتير مرتجعات زبائن",
+      "viewDetails": "عرض التفاصيل"
     }
   }
   
