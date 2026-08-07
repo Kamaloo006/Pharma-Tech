@@ -17,6 +17,7 @@ import {
   Wallet2,
   Receipt,
   BookText,
+  RotateCcw,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -129,6 +130,11 @@ export default function AppSidebar() {
           title: t("sidebar.customerDebt"),
           icon: Wallet2,
           url: "/dashboard/customer-debt",
+        },
+        {
+          title: t("sidebar.customerReturn"),
+          icon: RotateCcw,
+          url: "/dashboard/customer-return",
         },
       ],
     },

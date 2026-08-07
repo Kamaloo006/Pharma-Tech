@@ -1,0 +1,178 @@
+import { useState } from "react";
+import {
+  RotateCcw,
+  Plus,
+  AlertCircle,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { CustomerReturnSummaryCards } from "@/features/customer-return/components/CustomerReturnSummaryCards";
+import { CustomerReturnFilters } from "@/features/customer-return/components/CustomerReturnFilters";
+import { CustomerReturnTable } from "@/features/customer-return/components/CustomerReturnTable";
+import type { CustomerReturnFilterParams } from "@/features/customer-return/types/CustomerReturn";
+import { useCustomerReturns } from "@/features/customer-return/hooks/useCustomerReturns";
+
+export default function CustomerReturnsPage() {
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
+  const [filters, setFilters] = useState<CustomerReturnFilterParams>({
+    status: "all",
+    customer_id: "all",
+    original_sales_invoice_id: "",
+    date_from: "",
+    date_to: "",
+    per_page: 15,
+    page: 1,
+  });
+
+  const { data, isLoading, isError, isFetching, refetch } =
+    useCustomerReturns(filters);
+
+  const invoices = data?.data || [];
+  const meta = data?.meta;
+
+  const handleFilterChange = (updated: Partial<CustomerReturnFilterParams>) => {
+    setFilters((prev) => ({ ...prev, ...updated }));
+  };
+
+  const handleResetFilters = () => {
+    setFilters({
+      status: "all",
+      customer_id: "all",
+      original_sales_invoice_id: "",
+      date_from: "",
+      date_to: "",
+      per_page: 15,
+      page: 1,
+    });
+  };
+
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "—";
+    return new Date(dateString).toLocaleDateString(
+      isArabic ? "ar-SA" : "en-US",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      },
+    );
+  };
+
+  const formatCurrency = (amount: number) => {
+    return `${amount.toLocaleString()} ${t("common.syr", "SYR")}`;
+  };
+
+  return (
+    <div
+      dir={isArabic ? "rtl" : "ltr"}
+      className="p-6 space-y-6 max-w-8xl mx-auto"
+    >
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
+            {t("customerReturn.list.title", "Customer Returns")}
+            <RotateCcw className="w-6 h-6 text-primary" />
+          </h1>
+          <p className="text-xs text-muted-foreground mt-1">
+            {t(
+              "customerReturn.list.description",
+              "Manage product returns from customers, track sales refunds, and invoice statuses.",
+            )}
+          </p>
+        </div>
+
+        <button
+          onClick={() => navigate("/dashboard/customer-return/create")}
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs shadow-xs transition-all cursor-pointer"
+        >
+          <Plus className="w-4 h-4" />
+          <span>{t("customerReturn.list.createBtn", "Create Return")}</span>
+        </button>
+      </div>
+
+      {isError && (
+        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs flex items-center gap-2 font-medium">
+          <AlertCircle className="w-4 h-4 shrink-0" />
+          <span>
+            {t(
+              "customerReturn.list.errorLoading",
+              "Failed to load customer return invoices. Please check your connection or try again.",
+            )}
+          </span>
+        </div>
+      )}
+
+      {/* Summary Cards */}
+      <CustomerReturnSummaryCards
+        invoices={invoices}
+        totalRecords={meta?.total || 0}
+      />
+
+      {/* Filters */}
+      <CustomerReturnFilters
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        onReset={handleResetFilters}
+        isLoading={isFetching}
+      />
+
+      {/* Table & Pagination Wrapper */}
+      <div className="p-6 rounded-2xl border border-border bg-card shadow-xs space-y-4">
+        <CustomerReturnTable
+          invoices={invoices}
+          isLoading={isLoading}
+          isError={isError}
+          showFilterLoading={isFetching && !isLoading}
+          refetch={refetch}
+          formatDate={formatDate}
+          formatCurrency={formatCurrency}
+        />
+
+        {meta && meta.last_page > 1 && (
+          <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs">
+            <span className="text-muted-foreground font-mono">
+              {t("common.pagination.page", "Page")}{" "}
+              <strong className="text-foreground">{meta.current_page}</strong>{" "}
+              {t("common.pagination.of", "of")}{" "}
+              <strong className="text-foreground">{meta.last_page}</strong>
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                disabled={meta.current_page <= 1 || isFetching}
+                onClick={() =>
+                  handleFilterChange({ page: meta.current_page - 1 })
+                }
+                className="p-2 rounded-lg border border-border hover:bg-muted disabled:opacity-50 text-muted-foreground transition-colors cursor-pointer disabled:cursor-not-allowed"
+              >
+                {isArabic ? (
+                  <ChevronRight className="w-4 h-4" />
+                ) : (
+                  <ChevronLeft className="w-4 h-4" />
+                )}
+              </button>
+              <button
+                disabled={meta.current_page >= meta.last_page || isFetching}
+                onClick={() =>
+                  handleFilterChange({ page: meta.current_page + 1 })
+                }
+                className="p-2 rounded-lg border border-border hover:bg-muted disabled:opacity-50 text-muted-foreground transition-colors cursor-pointer disabled:cursor-not-allowed"
+              >
+                {isArabic ? (
+                  <ChevronLeft className="w-4 h-4" />
+                ) : (
+                  <ChevronRight className="w-4 h-4" />
+                )}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
