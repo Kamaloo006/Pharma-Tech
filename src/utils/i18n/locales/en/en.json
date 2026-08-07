@@ -1254,6 +1254,19 @@
       "pending": "Pending",
       "cancelled": "Cancelled"
     },
+    "create": {
+      "title": "Create Customer Return",
+      "subtitle": "Process a return for sales invoices",
+      "customer": "Customer",
+      "selectCustomer": "Select Customer",
+      "originalInvoice": "Original Sales Invoice",
+      "selectInvoice": "Select Original Invoice",
+      "errors":{
+        "selectCustomer":"Select Customer",
+        "selectInvoice":"Select Original Invoice",
+        "noQty":"Please specify at least one product quantity to return"
+      }
+    },
     "table": {
       "loading": "Loading customer returns...",
       "error": "Failed to load returns.",

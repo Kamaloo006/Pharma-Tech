@@ -43,7 +43,7 @@ export function ReturnSummaryForm({
       <div className="bg-card border border-border/60 rounded-xl p-5 shadow-xs space-y-4">
         <div className="space-y-2">
           <Label className="text-xs font-bold text-muted-foreground">
-            {t("supplierReturn.create.refundMethod")}
+            {t("customerReturn.create.refundMethod", "Refund Method")}
           </Label>
           <RadioGroup
             value={refundMethod}
@@ -58,7 +58,7 @@ export function ReturnSummaryForm({
                 htmlFor="cash"
                 className="text-xs font-semibold cursor-pointer"
               >
-                {t("supplierReturn.create.cash")}
+                {t("customerReturn.create.cash", "Cash")}
               </Label>
             </div>
             <div className="flex items-center gap-2">
@@ -67,7 +67,7 @@ export function ReturnSummaryForm({
                 htmlFor="credit"
                 className="text-xs font-semibold cursor-pointer"
               >
-                {t("supplierReturn.create.credit")}
+                {t("customerReturn.create.credit", "Credit Account")}
               </Label>
             </div>
           </RadioGroup>
@@ -75,10 +75,13 @@ export function ReturnSummaryForm({
 
         <div className="space-y-1.5 pt-2">
           <Label className="text-xs font-bold text-muted-foreground">
-            {t("supplierReturn.create.reason")}
+            {t("customerReturn.create.reason", "Return Reason")}
           </Label>
           <Textarea
-            placeholder={t("supplierReturn.create.reasonPlaceholder")}
+            placeholder={t(
+              "customerReturn.create.reasonPlaceholder",
+              "Enter reason for return...",
+            )}
             value={reason}
             onChange={(e) => onReasonChange(e.target.value)}
             disabled={isPending}
@@ -88,10 +91,13 @@ export function ReturnSummaryForm({
 
         <div className="space-y-1.5">
           <Label className="text-xs font-bold text-muted-foreground">
-            {t("supplierReturn.create.notes")}
+            {t("customerReturn.create.notes", "Notes")}
           </Label>
           <Textarea
-            placeholder={t("supplierReturn.create.notesPlaceholder")}
+            placeholder={t(
+              "customerReturn.create.notesPlaceholder",
+              "Additional notes...",
+            )}
             value={notes}
             onChange={(e) => onNotesChange(e.target.value)}
             disabled={isPending}
@@ -104,31 +110,31 @@ export function ReturnSummaryForm({
         <div className="space-y-3">
           <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground pb-2 border-b border-border/60 flex items-center gap-1.5">
             <DollarSign className="w-4 h-4 text-emerald-500" />
-            {t("supplierReturn.create.refundSummary")}
+            {t("customerReturn.create.refundSummary", "Refund Summary")}
           </h2>
 
           <div className="space-y-2 text-xs pt-1">
             <div className="flex justify-between items-center text-muted-foreground">
-              <span>{t("supplierReturn.create.subtotal")}</span>
+              <span>{t("customerReturn.create.subtotal", "Subtotal")}</span>
               <span className="font-mono font-semibold text-foreground">
                 {formatCurrency(subtotal)}
               </span>
             </div>
             <div className="flex justify-between items-center text-muted-foreground">
-              <span>{t("supplierReturn.create.tax")}</span>
+              <span>{t("customerReturn.create.tax", "Tax")}</span>
               <span className="font-mono font-semibold text-foreground">
                 {formatCurrency(taxTotal)}
               </span>
             </div>
             <div className="flex justify-between items-center text-muted-foreground">
-              <span>{t("supplierReturn.create.discount")}</span>
+              <span>{t("customerReturn.create.discount", "Discount")}</span>
               <span className="font-mono font-semibold text-foreground">
                 {formatCurrency(discountTotal)}
               </span>
             </div>
             <div className="pt-3 border-t border-border/80 flex justify-between items-center text-sm">
               <span className="font-bold text-foreground">
-                {t("supplierReturn.create.refundTotal")}
+                {t("customerReturn.create.refundTotal", "Total Refund")}
               </span>
               <span className="font-mono font-extrabold text-emerald-500 text-base">
                 {formatCurrency(refundTotal)}
@@ -143,10 +149,10 @@ export function ReturnSummaryForm({
             variant="outline"
             size="sm"
             disabled={isPending}
-            onClick={() => navigate("/dashboard/customer-return")}
+            onClick={() => navigate("/dashboard/customer-returns")}
             className="h-9 px-4 text-xs font-semibold hover:bg-muted"
           >
-            {t("common.cancel")}
+            {t("common.cancel", "Cancel")}
           </Button>
 
           <Button
@@ -156,7 +162,7 @@ export function ReturnSummaryForm({
             className="h-9 px-5 text-xs font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs flex items-center gap-2"
           >
             {isPending && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-            {t("supplierReturn.create.submit")}
+            {t("customerReturn.create.submit", "Create Return")}
           </Button>
         </div>
       </div>

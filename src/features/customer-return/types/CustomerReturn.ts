@@ -1,3 +1,4 @@
+import type { ProductDetails } from "@/features/sales-invoice/types/salesInvoice";
 import { z } from "zod";
 
 // Customer Schema & Type
@@ -52,6 +53,72 @@ export const CustomerReturnInvoiceSchema = z.object({
 });
 
 export type CustomerReturnInvoice = z.infer<typeof CustomerReturnInvoiceSchema>;
+
+
+export interface ReturnItemUI {
+  product_id: number;
+  productName: string;
+  purchasedQty: number;
+  quantity: number;
+  unit_price: number;
+  tax: number;
+  discount: number;
+}
+
+export interface CustomerReturnItemPayload {
+  product_id: number;
+  quantity: number;
+  unit_price: number;
+  tax: number;
+  discount: number;
+}
+
+export interface CreateCustomerReturnPayload {
+  customer_id: number | null; 
+  original_sales_invoice_id: number;
+  invoice_date?: string;
+  refund_method: "cash" | "credit";
+  reason?: string;
+  notes?: string;
+  items: CustomerReturnItemPayload[];
+}
+
+export interface CustomerReturnItem {
+  id: number;
+  product_id: number;
+  quantity: number;
+  unit_price: number;
+  tax: number;
+  discount: number;
+  line_total: number;
+  product: ProductDetails ;
+  created_at: string;
+}
+
+export interface CustomerReturnInvoiceDetail {
+  id: number;
+  invoice_number: string;
+  invoice_date: string;
+  subtotal: number;
+  tax_total: number;
+  discount_total: number;
+  refund_total: number;
+  refund_method: string;
+  status: string;
+  reason: string;
+  notes: string | null;
+  customer: Customer | null;
+  original_sales_invoice_id: number;
+  items: CustomerReturnItem[];
+  created_by: CreatedBy;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CustomerReturnSingleApiResponse {
+  data: CustomerReturnInvoiceDetail;
+}
+
 
 // Filter Parameters Interface
 export interface CustomerReturnFilterParams {
