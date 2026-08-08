@@ -1085,6 +1085,13 @@
     "statusCancelled": "Invoice Cancelled",
     "notes": "Notes",
     "errorMessage":"Full Invoice Must be Paid",
+    "customerDebt":{
+      "title":"Customer Debt",
+      "remainingDebt":"Remaining Debt",
+      "status":"Status",
+      "statusOpen":"Open Debt",
+      "openDebtRecord":"Open Customer Debt"
+    },
     "filters": {
       "reset": "Reset",
       "apply": "Apply Filters",
@@ -1246,7 +1253,9 @@
       "allStatuses": "All Statuses",
       "dateFrom": "Date From",
       "dateTo": "Date To",
-      "perPage": "Per Page"
+      "perPage": "Per Page",
+      "walkIn" :"Walk-in Customer"
+      
     },
     "status": {
       "completed": "Completed",
@@ -1265,8 +1274,9 @@
       "errors":{
         "selectCustomer":"Select Customer",
         "selectInvoice":"Select Original Invoice",
-        "noQty":"Please specify at least one product quantity to return"
-      }
+        "noQty":"Please specify at least one product quantity to return",
+        "cannotReturnUnits": "Cannot return the specified quantity this products because this quantity exceeds the quantity sold in the original invoice"
+}
     },
     "details":{
       "error": "Failed to load return details",

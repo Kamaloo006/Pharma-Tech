@@ -129,6 +129,7 @@ export interface CustomerReturnFilterParams {
   date_to?: string;
   per_page?: number;
   page?: number;
+  walk_in?:boolean | string;
 }
 
 // Pagination Meta & Links

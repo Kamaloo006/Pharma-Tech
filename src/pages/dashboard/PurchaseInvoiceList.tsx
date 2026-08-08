@@ -55,6 +55,11 @@ export default function PurchaseInvoiceList() {
 
   const invoices = data?.data || [];
 
+  // إجبار إعادة جلب البيانات فور الدخول إلى الصفحة
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   useEffect(() => {
     if (!isFetching) {
       setIsSubmittingFilters(false);

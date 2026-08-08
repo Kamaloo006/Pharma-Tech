@@ -17,9 +17,20 @@ const fetchCustomerReturnInvoices = async (
 ): Promise<CustomerReturnApiResponse> => {
   const params: Record<string, any> = {};
 
-  if (filters.customer_id && filters.customer_id !== "all") {
-  params.customer_id = filters.customer_id === "walk_in" ? "null" : filters.customer_id;
-}
+  
+  if (filters.customer_id === "walk_in") {
+    params.walk_in = 1;
+  } else if (filters.customer_id === "registered") {
+    params.walk_in = 0;
+  } else if (filters.customer_id && filters.customer_id !== "all") {
+    params.customer_id = filters.customer_id;
+  }
+
+  
+  if (filters.walk_in !== undefined && !params.walk_in) {
+    params.walk_in = filters.walk_in ? 1 : 0;
+  }
+
   if (filters.original_sales_invoice_id) {
     params.original_sales_invoice_id = filters.original_sales_invoice_id;
   }

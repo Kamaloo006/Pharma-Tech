@@ -30,6 +30,9 @@ export function PaymentSummaryCard({
   notes,
   setNotes,
 }: PaymentSummaryCardProps) {
+  const isAutoFullPayment =
+    paymentMethod === "cash" || paymentMethod === "credit";
+
   return (
     <Card className="border-border/60 shadow-xs rounded-2xl overflow-hidden">
       <CardHeader className="bg-muted/20 border-b border-border/60 pb-3">
@@ -99,9 +102,11 @@ export function PaymentSummaryCard({
           <Input
             type="number"
             min={0}
+            max={totals.grandTotal}
             value={amountPaid}
             onChange={(e) => setAmountPaid(e.target.value)}
-            className="h-9 text-xs font-mono font-bold rounded-xl"
+            disabled={isAutoFullPayment}
+            className="h-9 text-xs font-mono font-bold rounded-xl disabled:bg-muted disabled:opacity-80"
             placeholder="0"
           />
         </div>

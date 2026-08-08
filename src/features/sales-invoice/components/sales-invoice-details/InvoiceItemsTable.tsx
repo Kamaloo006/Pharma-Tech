@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/table";
 import { FileText } from "lucide-react";
 import type { SalesInvoiceItem } from "../../types/salesInvoice";
+import i18n from "@/utils/i18n";
 
 export function InvoiceItemsTable({ items }: { items?: SalesInvoiceItem[] }) {
   const { t } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   return (
     <Card className="border-border/60 shadow-xs rounded-2xl overflow-hidden">
@@ -26,7 +28,9 @@ export function InvoiceItemsTable({ items }: { items?: SalesInvoiceItem[] }) {
         <Table className="text-xs">
           <TableHeader className="bg-muted/30">
             <TableRow className="border-b border-border/60">
-              <TableHead className="font-bold py-2.5">
+              <TableHead
+                className={`font-bold py-2.5 ${isArabic ? "text-right" : "text-left"}`}
+              >
                 {t("salesInvoice.items.product")}
               </TableHead>
               <TableHead className="font-bold py-2.5 text-center">
@@ -50,7 +54,7 @@ export function InvoiceItemsTable({ items }: { items?: SalesInvoiceItem[] }) {
             {items?.map((item) => (
               <TableRow key={item.id} className="border-b border-border/40">
                 <TableCell className="py-2.5 font-semibold text-foreground">
-                  {item?.brand_name || "-"}
+                  {item?.product?.brand_name || "-"}
                 </TableCell>
                 <TableCell className="py-2.5 text-center font-mono font-medium">
                   {item.quantity}
@@ -65,7 +69,8 @@ export function InvoiceItemsTable({ items }: { items?: SalesInvoiceItem[] }) {
                   {item.discount}
                 </TableCell>
                 <TableCell className="py-2.5 text-right font-mono font-bold text-foreground">
-                  {item.quantity.toLocaleString()}
+                  {(item.selling_price + item.tax - item.discount) *
+                    item.quantity}
                 </TableCell>
               </TableRow>
             ))}

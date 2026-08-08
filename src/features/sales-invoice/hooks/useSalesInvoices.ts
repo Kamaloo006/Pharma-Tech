@@ -10,6 +10,7 @@ export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
     payment_status,
     payment_method,
     customer_id,
+    walk_in,
     date_from,
     date_to,
   } = filters;
@@ -17,7 +18,7 @@ export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
   return useQuery({
     queryKey: [
       "sales-invoices",
-      { page, per_page, status, payment_status, payment_method, customer_id, date_from, date_to },
+      { page, per_page, status, payment_status, payment_method, customer_id, walk_in, date_from, date_to },
     ],
     queryFn: async () => {
       const response = await api.get<SalesInvoicesApiResponse>("/sales-invoices", {
@@ -28,6 +29,7 @@ export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
           payment_status: payment_status || undefined,
           payment_method: payment_method || undefined,
           customer_id: customer_id || undefined,
+          walk_in: walk_in !== undefined ? walk_in : undefined,
           date_from: date_from || undefined,
           date_to: date_to || undefined,
         },

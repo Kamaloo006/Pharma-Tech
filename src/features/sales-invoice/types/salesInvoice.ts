@@ -1,4 +1,6 @@
+import type { CustomerDebtItem } from "@/features/customer-debt/types/customerDebt";
 import type { Customer } from "@/features/customers/types/Customer";
+import type { Product } from "@/features/inventory/types/Product";
 
 export type PaymentStatus = "paid" | "partial" | "unpaid";
 export type PaymentMethod = "cash" | "card" | "debt" | string;
@@ -75,6 +77,7 @@ export interface SalesInvoiceItem {
   strength: string;
   selling_price: number;
   quantity: number;
+  product: Product;
   tax: number;
   discount: number;
   stock: number;
@@ -130,7 +133,7 @@ export interface SalesInvoice {
   discount_total: number;
   grand_total: number;
   amount_paid: number;
-  amount_due: number;
+  amount_due: number; 
   payment_method: PaymentMethod;
   payment_status: PaymentStatus;
   status: InvoiceStatus;
@@ -139,6 +142,7 @@ export interface SalesInvoice {
   created_by: Creator;
   created_at: string;
   updated_at: string;
+  customer_debt: CustomerDebtItem | null;
 }
 
 export interface SalesInvoicesApiResponse {
@@ -169,4 +173,5 @@ export interface SalesInvoiceFilters {
   customer_id?: number | string;
   date_from?: string;
   date_to?: string;
+  walk_in?: number | boolean; 
 }

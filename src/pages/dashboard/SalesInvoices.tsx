@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSalesInvoices } from "@/features/sales-invoice/hooks/useSalesInvoices";
 import type { SalesInvoiceFilters } from "@/features/sales-invoice/types/salesInvoice";
+import { useCustomers } from "@/features/customers/hooks/useCustomers";
+import type { Customer } from "@/features/customers/types/Customer";
 import {
   Table,
   TableBody,
@@ -36,6 +38,7 @@ import {
   Loader2,
   BadgeDollarSign,
   Eye,
+  UserX,
 } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
@@ -46,6 +49,8 @@ const initialFilters: SalesInvoiceFilters = {
   per_page: 15,
   payment_status: "all",
   payment_method: "all",
+  customer_id: "all",
+  walk_in: undefined,
   date_from: "",
   date_to: "",
 };
@@ -60,6 +65,12 @@ export default function SalesInvoicesPage() {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
+  const { data: customersData, isLoading: isLoadingCustomers } = useCustomers({
+    page: 1,
+    per_page: 100,
+  });
+  const customers = customersData?.data || [];
+
   const { data, isLoading, isFetching, isError } = useSalesInvoices({
     ...appliedFilters,
     payment_status:
@@ -70,6 +81,18 @@ export default function SalesInvoicesPage() {
       appliedFilters.payment_method === "all"
         ? undefined
         : appliedFilters.payment_method,
+    customer_id:
+      appliedFilters.customer_id === "all" ||
+      appliedFilters.customer_id === "walk_in" ||
+      appliedFilters.customer_id === "registered"
+        ? undefined
+        : appliedFilters.customer_id,
+    walk_in:
+      appliedFilters.customer_id === "walk_in"
+        ? 1
+        : appliedFilters.customer_id === "registered"
+          ? 0
+          : undefined,
   });
 
   const handleDraftChange = (key: keyof SalesInvoiceFilters, value: any) => {
@@ -139,7 +162,7 @@ export default function SalesInvoicesPage() {
         <form onSubmit={handleApplyFilters}>
           <div className="p-4 bg-muted/20 border-b border-border/60 space-y-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div className="flex items-center gap-2 self-end md:self-auto">
+              <div className="flex items-center gap-2 self-end md:self-auto ms-auto">
                 {hasActiveFilters && (
                   <Button
                     type="button"
@@ -168,7 +191,65 @@ export default function SalesInvoicesPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-1">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-1">
+              {/* Customer Select Filter */}
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  {t("salesInvoice.filters.customer", "Customer")}
+                </span>
+                <Select
+                  value={String(draftFilters.customer_id || "all")}
+                  onValueChange={(val) => handleDraftChange("customer_id", val)}
+                  disabled={isLoadingCustomers}
+                >
+                  <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
+                    <SelectValue
+                      placeholder={
+                        isLoadingCustomers
+                          ? t("common.loading", "Loading...")
+                          : t(
+                              "salesInvoice.filters.allCustomers",
+                              "All Customers",
+                            )
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-muted text-popover-foreground border-border shadow-md max-h-60">
+                    <SelectItem
+                      value="all"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
+                    >
+                      {t("salesInvoice.filters.allCustomers", "All Customers")}
+                    </SelectItem>
+
+                    {/* Walk-in Customer Filter */}
+                    <SelectItem
+                      value="walk_in"
+                      className="text-xs font-semibold cursor-pointer  hover:bg-primary/70"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <UserX className="w-3.5 h-3.5" />
+                        {t("salesInvoice.filters.walkIn", "Walk-in Customer")}
+                      </div>
+                    </SelectItem>
+
+                    {/* All Registered Customers Filter */}
+
+                    {/* Specific Customers List */}
+                    {customers.map((c: Customer) => (
+                      <SelectItem
+                        key={c.id}
+                        value={String(c.id)}
+                        className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
+                      >
+                        {c.full_name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Payment Status Select Filter */}
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
                   {t("salesInvoice.filters.paymentStatus")}
@@ -213,6 +294,7 @@ export default function SalesInvoicesPage() {
                 </Select>
               </div>
 
+              {/* Payment Method Select Filter */}
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
                   {t("salesInvoice.filters.paymentMethod")}
@@ -257,6 +339,7 @@ export default function SalesInvoicesPage() {
                 </Select>
               </div>
 
+              {/* From Date Input */}
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
                   {t("salesInvoice.filters.fromDate")}
@@ -271,6 +354,7 @@ export default function SalesInvoicesPage() {
                 />
               </div>
 
+              {/* To Date Input */}
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-muted-foreground">
                   {t("salesInvoice.filters.toDate")}
@@ -326,21 +410,21 @@ export default function SalesInvoicesPage() {
                 </TableHead>
                 <TableHead
                   className={`font-bold py-3.5 ${
-                    isArabic ? "text-left" : "text-right"
+                    isArabic ? "text-right" : "text-left"
                   }`}
                 >
                   {t("salesInvoice.table.total")}
                 </TableHead>
                 <TableHead
                   className={`font-bold py-3.5 ${
-                    isArabic ? "text-left" : "text-right"
+                    isArabic ? "text-right" : "text-left"
                   }`}
                 >
                   {t("salesInvoice.table.paid")}
                 </TableHead>
                 <TableHead
                   className={`font-bold py-3.5 ${
-                    isArabic ? "text-left" : "text-right"
+                    isArabic ? "text-right" : "text-left"
                   }`}
                 >
                   {t("salesInvoice.table.due")}

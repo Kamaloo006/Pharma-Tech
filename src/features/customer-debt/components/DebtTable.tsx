@@ -13,10 +13,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { DebtStatus } from "@/features/customer-debt/types/customerDebt";
+import type {
+  CustomerDebtItem,
+  DebtStatus,
+} from "@/features/customer-debt/types/customerDebt";
 
 interface DebtTableProps {
-  debtsList: any[];
+  debtsList: CustomerDebtItem[];
   isLoading: boolean;
   isArabic: boolean;
   formatCurrency: (amt: number) => string;

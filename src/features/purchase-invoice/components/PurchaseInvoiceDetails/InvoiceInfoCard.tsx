@@ -51,7 +51,11 @@ export function InvoiceInfoCard({ invoice }: InvoiceInfoCardProps) {
             {t("purchaseInvoiceDetails.info.date")}
           </span>
           <p className="text-xs font-bold text-foreground font-mono">
-            {invoice.invoice_date}
+            {new Date(invoice.invoice_date).toLocaleDateString("en", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}
           </p>
         </div>
 
