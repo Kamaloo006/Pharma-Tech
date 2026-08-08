@@ -52,6 +52,7 @@ import CustomerDebtDetails from "./pages/dashboard/CustomerDebtDetails.tsx";
 import CustomerReturn from "./pages/dashboard/CustomerReturn.tsx";
 import CreateCustomerReturn from "./pages/dashboard/CreateCustomerReturn.tsx";
 import CustomerReturnDetails from "./pages/dashboard/CustomerReturnDetails.tsx";
+import Dashboard from "./pages/dashboard/Dashboard.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,7 +66,7 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/dashboard/inventory" replace />,
+    element: <Navigate to="/dashboard" replace />,
   },
 
   {
@@ -96,7 +97,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout />,
         children: [
-          { path: "", element: <Navigate to="inventory" replace /> },
+          { path: "", element: <Dashboard /> },
           {
             path: "inventory",
             element: <Inventory />,
