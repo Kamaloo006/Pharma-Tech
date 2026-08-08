@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { type PurchaseInvoice } from "../../types/purchase-invoice";
+import { useEffect } from "react";
 
 interface ReceivedProductsCardProps {
   items: PurchaseInvoice["items"];
@@ -17,6 +18,9 @@ interface ReceivedProductsCardProps {
 
 export function ReceivedProductsCard({ items }: ReceivedProductsCardProps) {
   const { t } = useTranslation();
+  useEffect(() => {
+    console.log(items);
+  }, []);
 
   return (
     <DetailCard

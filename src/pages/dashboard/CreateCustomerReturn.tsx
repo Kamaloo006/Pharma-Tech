@@ -33,7 +33,6 @@ export default function CreateCustomerReturnPage() {
   const [notes, setNotes] = useState<string>("");
   const [items, setItems] = useState<ReturnItemUI[]>([]);
 
-  // 1. جلب قائمة العملاء
   const { data: customersResponse, isLoading: loadingCustomers } = useCustomers(
     {
       page: 1,
@@ -42,22 +41,18 @@ export default function CreateCustomerReturnPage() {
 
   const customers = customersResponse?.data || [];
 
-  // 2. فلترة وتحديد إعدادات البحث للفواتير حسب العميل المختار
   const salesInvoiceFilters = customerId
     ? { customer_id: customerId === "walk_in" ? "walk_in" : customerId }
     : undefined;
 
-  // تمرير الفلاتر لطلب فواتير المبيعات الخاصة بالعميل المحدد فقط
   const { data: invoicesData, isLoading: loadingInvoices } = useSalesInvoices({
     page: 1,
     ...salesInvoiceFilters,
   });
 
-  // 3. جلب تفاصيل الفاتورة المختارة
   const { data: invoiceDetails, isLoading: loadingSingleInvoice } =
     useSalesInvoice(String(invoiceId));
 
-  // 4. Mutation لإنشاء المرجوع
   const createReturnMutation = useCreateCustomerReturn();
 
   const rawSalesInvoices = invoicesData?.data || [];
@@ -66,7 +61,6 @@ export default function CreateCustomerReturnPage() {
     label: `${inv.invoice_number || inv.id} (${inv.grand_total ? inv.grand_total.toLocaleString() : 0} ${t("common.syr", "SYR")})`,
   }));
 
-  // تحويل عناصر الفاتورة الأصلية إلى قائمة المرجوع
   useEffect(() => {
     if (!invoiceId || !invoiceDetails) {
       if (!invoiceId) setItems([]);
@@ -220,13 +214,29 @@ export default function CreateCustomerReturnPage() {
         );
       },
       onError: (error: any) => {
-        const apiErrorMessage =
-          error?.response?.data?.message ||
+        const status = error?.response?.status;
+
+        if (status === 422) {
+          toast.error(
+            t(
+              "customerReturn.create.errors.cannotReturnUnits",
+              "الكمية المطلوبة للإرجاع تتجاوز الكمية المتاحة لهذه الفاتورة.",
+            ),
+          );
+
+          setTimeout(() => {
+            navigate("/dashboard/customer-return");
+          }, 1000);
+
+          return;
+        }
+
+        toast.error(
           t(
             "customerReturn.create.errors.failed",
-            "Failed to create customer return.",
-          );
-        toast.error(apiErrorMessage);
+            "حدث خطأ أثناء إنشاء المرجوع. يرجى المحاولة لاحقاً.",
+          ),
+        );
       },
     });
   };

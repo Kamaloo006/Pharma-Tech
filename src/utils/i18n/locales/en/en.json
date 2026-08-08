@@ -8,8 +8,8 @@
         "back": "Back",
         "error": "Error",
         "appName": "PharmaTech",
-        "networkError": "No internet connection. Please check your network.",
-        "serverError": "We are facing server issues, please try again later.",
+        "networkError": "No internet connection. Please check your network",
+        "serverError": "We are facing server issues, please try again later",
         "loading": "Loading...",
         "currency": "SYP",
         "syr": "SYP",
@@ -64,7 +64,7 @@
         "statUptime": "Uptime Reliability",
         "statEncryption": "AES Encryption",
         "statCompliance": "Global Compliance",
-        "tagline": "Precision in every prescription.",
+        "tagline": "Precision in every prescription",
         "cardTitle": "Pharmacist Login",
         "cardDescription": "Pharmacy Portal Access",
         "roleTag": "Pharmacist",
@@ -134,13 +134,13 @@
         "haveAccount": "Already have an account",
         "loginNow": "Sign in",
         "registrationSuccess": "Registration successful",
-        "checkEmailMessage": "Check your email to verify your account.",
-        "registrationFailed": "Registration failed. Please try again."
+        "checkEmailMessage": "Check your email to verify your account",
+        "registrationFailed": "Registration failed. Please try again"
     },
     "completeProfile": {
         "badge": "Finish your setup",
         "title": "Complete your profile",
-        "description": "Add your pharmacy details to unlock the dashboard.",
+        "description": "Add your pharmacy details to unlock the dashboard",
         "cardTitle": "Complete Profile",
         "cardDescription": "Fill in the missing pharmacy information to continue",
         "roleTag": "Setup",
@@ -162,8 +162,8 @@
         "addressPlaceholder": "next to alakram mosque",
         "submit": "Save and continue",
         "successTitle": "Profile completed",
-        "successDesc": "Your pharmacy information has been saved successfully.",
-        "failed": "We couldn't complete your profile. Please try again."
+        "successDesc": "Your pharmacy information has been saved successfully",
+        "failed": "We couldn't complete your profile. Please try again"
     },
     "adminLogin": {
         "badge": "Administrative Access",
@@ -187,7 +187,7 @@
         "emailPlaceholder": "name@example.com",
         "passwordPlaceholder": "••••••••",
         "logoutSuccessful": "Logged out successfully",
-        "logoutSuccessDesc": "You have been logged out successfully.",
+        "logoutSuccessDesc": "You have been logged out successfully",
         "orContinueWith": "Or continue with",
         "verifyEmailCardTitle": "Confirm Your Email",
         "verifyEmailCardDesc": "One last step to secure your workspace",
@@ -196,45 +196,45 @@
         "linkExpirationNotice": "The link will expire shortly for your security",
         "resendEmailBtn": "Resend Verification Email",
         "sending": "Sending",
-        "tooManyAttempts":"Too many attempts. Please wait before trying again.",
+        "tooManyAttempts":"Too many attempts. Please wait before trying again",
         "backToLogin": "Back to Login",
         "resendSuccessTitle": "Email Sent Successfully",
         "resendSuccessDesc": "Please check your inbox or spam folder for the new link",
-        "resendFailed": "Too Many Attempts. Please wait before trying again.",
+        "resendFailed": "Too Many Attempts. Please wait before trying again",
         "forgotPasswordTitle": "Forgot Password",
         "forgotPasswordDesc": "No worries, enter your email and we will send you a secure link to reset it",
         "emailLabel": "Email Address",
-        "emailInvalid":"The email you entered is incorrect or not registered.",
+        "emailInvalid":"The email you entered is incorrect or not registered",
         "sendResetLinkBtn": "Send Reset Link",
         "forgotPasswordSuccessTitle": "Reset Link Sent",
         "forgotPasswordSuccessDesc": "Please check your inbox for instructions to reset your password",
         "forgotPasswordFailed": "We couldn't find an account with that email address",
         "resetPasswordTitle": "Reset Password",
-        "resetPasswordDesc": "Please enter your new strong password below to secure your account.",
+        "resetPasswordDesc": "Please enter your new strong password below to secure your account",
         "newPasswordLabel": "New Password",
         "confirmNewPasswordLabel": "Confirm New Password",
         "resetPasswordBtn": "Update Password",
         "resetPasswordSuccessTitle": "Password Updated Successfully",
         "resetPasswordSuccessDesc": "Your password has been changed. Redirecting to login...",
-        "resetPasswordFailed": "Invalid or expired token. Please request a new link.",
+        "resetPasswordFailed": "Invalid or expired token. Please request a new link",
         "saving": "Saving",
         "emailVerifiedSuccessfully": "Email Verified Successfully!",
-        "youCanLoginNow": "Your account is now secure. You can log in to your workspace now.",
-        "invalidCredentials": "Email or password is incorrect. Please try again.",
-        "passwordMismatch": "Passwords do not match.",
-        "passwordMismatchToast": "Passwords do not match. Please verify and try again.",
-        "tokenInvalid": "This password reset token is invalid or expired.",
-        "emailNotVerified": "Please verify your email first. A new verification link has been sent to your email.",
+        "youCanLoginNow": "Your account is now secure. You can log in to your workspace now",
+        "invalidCredentials": "Email or password is incorrect. Please try again",
+        "passwordMismatch": "Passwords do not match",
+        "passwordMismatchToast": "Passwords do not match. Please verify and try again",
+        "tokenInvalid": "This password reset token is invalid or expired",
+        "emailNotVerified": "Please verify your email first. A new verification link has been sent to your email",
         "emailAlreadyVerified": "Email is already verified",
-        "invalidResetToken": "This password reset link is invalid or expired.",
+        "invalidResetToken": "This password reset link is invalid or expired",
         "invalidVerificationLink": "Invalid link",
-        "invalidVerificationLinkDescription": "The link you used is invalid or expired.",
-        "linkExpiredPleaseRequestNewOne": "The link has expired, please request a new one."
+        "invalidVerificationLinkDescription": "The link you used is invalid or expired",
+        "linkExpiredPleaseRequestNewOne": "The link has expired, please request a new one"
     }, 
     "errors": {
         "invalidEmail": "Please enter a valid email address",
-        "passwordMinLength": "Password must be at least 8 characters long.",
-        "passwordsDoNotMatch": "The password confirmation does not match."
+        "passwordMinLength": "Password must be at least 8 characters long",
+        "passwordsDoNotMatch": "The password confirmation does not match"
   },
     "sidebar": {
         "mainMenu": "Main Menu",
@@ -278,7 +278,7 @@
         "search_placeholder": "Search by brand name, scientific name or barcode...",
         "all_categories": "All Categories",
         "include_deleted": "Include Deleted / Archived Products",
-        "no_products": "No products matched your server filter criteria.",
+        "no_products": "No products matched your server filter criteria",
         "select_company": "Select a company",
         "company": "Product Company",
         "all_companies": "All Companies",
@@ -330,9 +330,9 @@
         "productDetails": {
             "generalInformation": "GENERAL INFORMATION",
             "availableBatches": "AVAILABLE BATCHES",
-            "batchesLoadError": "Couldn't load stock batches.",
+            "batchesLoadError": "Couldn't load stock batches",
             "movementLog": "MOVEMENT LOG",
-            "movementsLoadError": "Unable to load stock movement log.",
+            "movementsLoadError": "Unable to load stock movement log",
             "retry": "Retry"
         },
         "productHeader": {
@@ -345,7 +345,7 @@
             "delete": "Delete",
             "deleteModal": {
                 "title": "Are you absolutely sure?",
-                "description": "This action cannot be undone. This will permanently delete the product \"{{brand_name}}\" from the system.",
+                "description": "This action cannot be undone. This will permanently delete the product \"{{brand_name}}\" from the system",
                 "cancel": "Cancel",
                 "deleting": "Deleting...",
                 "confirm": "Delete"
@@ -354,7 +354,7 @@
         "medicalInfo": {
             "title": "MEDICAL INFORMATION",
             "addBtn": "Add Medical Info",
-            "noData": "No clinical medical information setup for this product yet.",
+            "noData": "No clinical medical information setup for this product yet",
             "fields": {
                 "dosage": "Dosage",
                 "contraindications": "Contraindications",
@@ -401,7 +401,7 @@
                 "lowStock": "Low Stock Alert",
                 "available": "Available"
             },
-            "outOfStockWarning": "This product is currently out of stock. You can create a purchase invoice to replenish it, or use manual adjustment for exceptional cases only.",
+            "outOfStockWarning": "This product is currently out of stock. You can create a purchase invoice to replenish it, or use manual adjustment for exceptional cases only",
             "createInvoice": "Create Purchase Invoice",
             "manualAdjustment": "Manual Adjustment",
             "receivePurchase": "Receive New Purchase"
@@ -417,10 +417,10 @@
         "batchesCard": {
             "title": "AVAILABLE STOCK BATCHES",
             "confirmExpired": "Are you sure you want to mark this batch as expired?",
-            "noBatches": "No available batches found.",
+            "noBatches": "No available batches found",
             "currency": "SYP",
             "tableHeaders": {
-                "batchNo": "Batch No.",
+                "batchNo": "Batch No",
                 "qtyHand": "Qty Hand",
                 "purchase": "Purchase",
                 "selling": "Selling",
@@ -438,7 +438,7 @@
 
         "movementsLog": {
             "title": "STOCK MOVEMENTS LOG",
-            "noMovements": "No stock movements recorded yet.",
+            "noMovements": "No stock movements recorded yet",
             "tableHeaders": {
                 "date": "Date",
                 "type": "Type",
@@ -482,19 +482,19 @@
         },
         "add_modal": {
             "title": "Add New Product",
-            "description": "Enter the details of the new pharmaceutical medicine to register it in the inventory.",
+            "description": "Enter the details of the new pharmaceutical medicine to register it in the inventory",
             "submit": "Save Product",
             "canceling": "Cancel",
             "saving": "Saving Product..."
         },
         "edit_modal": {
             "title": "Edit Product",
-            "description": "Update the details of the selected pharmaceutical product here, then save.",
+            "description": "Update the details of the selected pharmaceutical product here, then save",
             "submit_btn": "Save Changes"
         },
         "delete_modal": {
             "title": "Confirm Product Deletion",
-            "description": "Are you sure you want to delete this product? This action cannot be undone.",
+            "description": "Are you sure you want to delete this product? This action cannot be undone",
             "confirm_btn": "Yes, Delete",
             "cancel_btn": "Cancel",
             "delete": "Delete Product",
@@ -527,7 +527,7 @@
     },
     "dialogs": {
       "deleteTitle": "Are you sure you want to delete?",
-      "deleteDescription": "The current supplier will be moved to the trash. You can restore them later at any time."
+      "deleteDescription": "The current supplier will be moved to the trash. You can restore them later at any time"
     },
     "messages": {
       "deleteSuccess": "Supplier successfully moved to trash",
@@ -592,7 +592,7 @@
       "subtitleMonth": "Showing continuous data for the last 30 days",
       "subtitleWeek": "Showing continuous data for the last 7 days",
       "loading": "Processing cash flows...",
-      "noData": "No transaction data available for this period.",
+      "noData": "No transaction data available for this period",
       "periods": {
         "month": "Current Month",
         "week": "Current Week"
@@ -604,7 +604,7 @@
     },
     "form": {
       "title": "💰 Cash Box Setup",
-      "description": "No active cash box found for this pharmacy. Please set the opening balance to initialize the cash box.",
+      "description": "No active cash box found for this pharmacy. Please set the opening balance to initialize the cash box",
       "label": "Cash Box Opening Balance",
       "submit": "Confirm & Open Box",
       "validation": {
@@ -652,7 +652,7 @@
       }
     },
     "table": {
-      "noData": "No transactions found matching filters.",
+      "noData": "No transactions found matching filters",
       "headers": {
         "time": "Transaction Time",
         "type": "Type",
@@ -674,7 +674,7 @@
   "purchaseInvoice": {
     "header": {
       "title": "Purchase Invoices",
-      "description": "Manage and track warehouse supply invoices, payments, and debts.",
+      "description": "Manage and track warehouse supply invoices, payments, and debts",
       "newInvoice": "New Purchase Invoice"
     },
     "filters": {
@@ -710,15 +710,15 @@
       "buyingPrice": "Buying Price",
       "tax": "Tax %",
       "discount": "Discount",
-      "batchNumber": "Batch No.",
+      "batchNumber": "Batch No",
       "expiryDate": "Expiry",
       "sellingPrice": "Selling Price",
       "total": "Total",
-      "empty": "No products added to the invoice yet.",
+      "empty": "No products added to the invoice yet",
       "loading": "Loading invoices...",
       "error": "Failed to load data",
-      "noData": "No invoices match your selected filters.",
-      "invoiceNo": "Invoice No.",
+      "noData": "No invoices match your selected filters",
+      "invoiceNo": "Invoice No",
       "supplier": "Supplier",
       "date": "Date",
       "grandTotal": "Grand Total",
@@ -739,10 +739,10 @@
     },
     "alerts": {
       "cashBoxNotConfiguredTitle": "Cash Box is not configured!",
-      "cashBoxNotConfiguredDesc": "You cannot process cash transactions without configuring an active Cash Box.",
+      "cashBoxNotConfiguredDesc": "You cannot process cash transactions without configuring an active Cash Box",
       "createCashBoxBtn": "Create Cash Box",
       "duplicateBatchesTitle": "Duplicate Batch Numbers Detected!",
-      "duplicateBatchesDesc": "You've used the batch number ({{batches}}) multiple times in this invoice. Please resolve."
+      "duplicateBatchesDesc": "You've used the batch number ({{batches}}) multiple times in this invoice. Please resolve"
     },
     "payment": {
       "title": "Payment Method & Settlement",
@@ -833,7 +833,7 @@
   "supplierDebt": {
     "header": {
       "title": "Supplier Debts",
-      "description": "Track outstanding balances, payments, and settlements with suppliers.",
+      "description": "Track outstanding balances, payments, and settlements with suppliers",
       "totalDebt": "Total Debts",
       "paidDebt": "Total Paid",
       "remainingDebt": "Total Remaining",
@@ -844,7 +844,7 @@
     "details": {
       "title": "Supplier Debt #{{id}}",
       "notFoundTitle": "Debt Details Not Found",
-      "notFoundDesc": "Unable to load debt details. The requested record could not be found or may have been deleted.",
+      "notFoundDesc": "Unable to load debt details. The requested record could not be found or may have been deleted",
       "backToList": "Back to Debts List",
       "purchaseInvoiceId": "Purchase Invoice:",
       "createdDate": "Created Date:",
@@ -870,7 +870,7 @@
         "amount": "Amount",
         "createdBy": "Created By",
         "notes": "Notes",
-        "noPayments": "No payment transactions recorded yet.",
+        "noPayments": "No payment transactions recorded yet",
         "system": "System"
       }
     },
@@ -889,10 +889,10 @@
       "recordPaymentBtn":"Record Payment",
       "processing": "Processing...",
       "errors": {
-        "invalidAmount": "Please enter a valid amount greater than 0.",
-        "amountExceeded": "Amount cannot exceed remaining debt ({{max}} SYR).",
-        "dateRequired": "Payment date is required.",
-        "failedToRecord": "Failed to record payment. Please try again."
+        "invalidAmount": "Please enter a valid amount greater than 0",
+        "amountExceeded": "Amount cannot exceed remaining debt ({{max}} SYR)",
+        "dateRequired": "Payment date is required",
+        "failedToRecord": "Failed to record payment. Please try again"
       }
     },
     "filters": {
@@ -909,7 +909,7 @@
       "cancelled": "Cancelled"
     },
     "table": {
-      "invoiceNo": "Invoice No.",
+      "invoiceNo": "Invoice No",
       "supplier": "Supplier",
       "totalAmount": "Total Amount",
       "paidAmount": "Paid Amount",
@@ -919,15 +919,15 @@
       "actions": "Actions",
       "viewDetails": "View Details",
       "loading": "Loading debts...",
-      "noData": "No debts found matching the filters."
+      "noData": "No debts found matching the filters"
     }
   },
   "supplierReturn": {
     "list": {
       "title": "Supplier Returns",
-      "description": "Manage product returns to suppliers, track refunds, and status updates.",
+      "description": "Manage product returns to suppliers, track refunds, and status updates",
       "createBtn": "Create Return",
-      "errorLoading": "Failed to load supplier return invoices. Please check your connection or try again."
+      "errorLoading": "Failed to load supplier return invoices. Please check your connection or try again"
     },
     "filters": {
     "supplier": "Supplier",
@@ -946,7 +946,7 @@
   },
   "table": {
     "loading": "Loading supplier return invoices...",
-    "error": "An error occurred while loading data.",
+    "error": "An error occurred while loading data",
     "invoiceNo": "Invoice No",
     "supplier": "Supplier",
     "invoiceDate": "Invoice Date",
@@ -955,11 +955,11 @@
     "refundMethod": "Refund Method",
     "status": "Status",
     "actions": "Actions",
-    "noData": "No supplier returns found to display.",
+    "noData": "No supplier returns found to display",
     "viewDetails": "View Details"
     },
     "details": {
-      "error": "Failed to load return details.",
+      "error": "Failed to load return details",
       "title": "Return Details #{{id}}",
       "subtitle": "Supplier Return Invoice Details",
       "supplierInfo": "Supplier Information",
@@ -987,7 +987,7 @@
     "create": {
       "title": "Create Supplier Return",
       "subtitle": "Issue a return invoice to supplier for purchased goods",
-      "description": "Issue a product return request against an existing purchase invoice.",
+      "description": "Issue a product return request against an existing purchase invoice",
       "supplier": "Supplier",
       "selectSupplier": "Select Supplier",
       "originalInvoice": "Original Purchase Invoice",
@@ -998,7 +998,7 @@
       "returnQty": "Return Qty",
       "unitPrice": "Unit Price",
       "total": "Total",
-      "noItems": "Select a purchase invoice to load returnable items.",
+      "noItems": "Select a purchase invoice to load returnable items",
       "refundMethod": "Refund Method",
       "cash": "Cash",
       "credit": "Credit",
@@ -1017,7 +1017,7 @@
         "selectSupplier": "Please select a supplier",
         "selectInvoice": "Please select an original purchase invoice",
         "noQty": "Please specify at least one product quantity to return",
-        "failed": "Failed to create supplier return."
+        "failed": "Failed to create supplier return"
       }
     },
     "status": {
@@ -1035,13 +1035,13 @@
     "searchPlaceholder": "Search customers...",
     "listTitle": "Customer List",
     "deletedListTitle": "Deleted Customers List",
-    "noResults": "No customers found.",
-    "noDeletedResults": "No deleted customers.",
-    "error": "Failed to load customers.",
+    "noResults": "No customers found",
+    "noDeletedResults": "No deleted customers",
+    "error": "Failed to load customers",
     "deleteConfirmTitle": "Are you sure you want to move this customer to trash?",
-    "deleteConfirmDesc": "Customer \"{{name}}\" will be moved to deleted items and can be restored later.",
+    "deleteConfirmDesc": "Customer \"{{name}}\" will be moved to deleted items and can be restored later",
     "restoreConfirmTitle": "Do you want to restore this customer?",
-    "restoreConfirmDesc": "Customer \"{{name}}\" will be restored to active customers list.",
+    "restoreConfirmDesc": "Customer \"{{name}}\" will be restored to active customers list",
     "table": {
       "customer": "Customer",
       "phone": "Phone",
@@ -1051,8 +1051,8 @@
     "modal": {
       "addTitle": "Add New Customer",
       "editTitle": "Edit Customer Details",
-      "addSubtitle": "Enter new customer details for the pharmacy system.",
-      "editSubtitle": "Modify selected customer details below.",
+      "addSubtitle": "Enter new customer details for the pharmacy system",
+      "editSubtitle": "Modify selected customer details below",
       "fullName": "Full Name",
       "fullNamePlaceholder": "e.g. John Doe",
       "phone": "Phone Number",
@@ -1073,9 +1073,9 @@
     "detailsTitle": "Sales Invoice #{{number}}",
     "createInvoice": "Create Sales Invoice",
     "loading": "Loading invoices...",
-    "error": "Failed to fetch invoices.",
-    "errorLoading": "Failed to load invoice data.",
-    "noResults": "No sales invoices found.",
+    "error": "Failed to fetch invoices",
+    "errorLoading": "Failed to load invoice data",
+    "noResults": "No sales invoices found",
     "walkInCustomer": "Walk-in Customer",
     "firstPage": "First Page",
     "lastPage": "Last Page",
@@ -1085,6 +1085,13 @@
     "statusCancelled": "Invoice Cancelled",
     "notes": "Notes",
     "errorMessage":"Full Invoice Must be Paid",
+    "customerDebt":{
+      "title":"Customer Debt",
+      "remainingDebt":"Remaining Debt",
+      "status":"Status",
+      "statusOpen":"Open Debt",
+      "openDebtRecord":"Open Customer Debt"
+    },
     "filters": {
       "reset": "Reset",
       "apply": "Apply Filters",
@@ -1145,14 +1152,14 @@
     },
     "dialog": {
       "title": "Cancel Invoice",
-      "description": "Are you sure you want to cancel invoice #{{number}}? This action cannot be undone.",
+      "description": "Are you sure you want to cancel invoice #{{number}}? This action cannot be undone",
       "confirmAction": "Confirm Cancellation"
     }
   },
   "customerDebt": {
    "header": {
       "title": "Customer Debts",
-      "description": "Track and manage receivables and remaining amounts from customers.",
+      "description": "Track and manage receivables and remaining amounts from customers",
       "totalAmount": "Total Customer Debts",
       "paidAmount": "Paid Amount",
       "remainingAmount": "Remaining Amount"
@@ -1172,14 +1179,14 @@
     },
     "table": {
       "customer": "Customer",
-      "invoiceNo": "Sales Invoice No.",
+      "invoiceNo": "Sales Invoice No",
       "dueDate": "Due Date",
       "totalAmount": "Total Amount",
       "paidAmount": "Paid Amount",
       "remainingAmount": "Remaining Amount",
       "status": "Status",
       "actions": "Actions",
-      "noData": "No debts to display.",
+      "noData": "No debts to display",
       "viewDetails": "View Details"
     },
     "details": {
@@ -1187,7 +1194,7 @@
       "subtitle": "Debt details and payment history for sales invoice #{{invoiceId}}",
       "payDebt": "Pay Debt",
       "loading": "Loading debt details...",
-      "errorLoading": "An error occurred while loading debt details or data not found.",
+      "errorLoading": "An error occurred while loading debt details or data not found",
       "customer": "Customer",
       "phone": "Phone",
       "invoice": "Invoice",
@@ -1204,7 +1211,7 @@
         "amount": "Amount",
         "createdBy": "Created By",
         "notes": "Notes",
-        "noPayments": "No payments recorded yet."
+        "noPayments": "No payments recorded yet"
       }
     },
     "dialog": {
@@ -1219,18 +1226,18 @@
       "pay": "Pay"
     },
     "errors": {
-      "invalidAmount": "Please enter a valid amount greater than 0.",
-      "amountExceedsRemaining": "Entered amount exceeds the remaining balance ({{remaining}}).",
-      "paymentFailed": "An error occurred while submitting the payment."
+      "invalidAmount": "Please enter a valid amount greater than 0",
+      "amountExceedsRemaining": "Entered amount exceeds the remaining balance ({{remaining}})",
+      "paymentFailed": "An error occurred while submitting the payment"
     }
   },
   "customerReturn": {
     "walkIn": "Walk-in Customer",
     "list": {
       "title": "Customer Returns",
-      "description": "Manage product returns from customers, track sales refunds, and invoice statuses.",
+      "description": "Manage product returns from customers, track sales refunds, and invoice statuses",
       "createBtn": "Create Return",
-      "errorLoading": "Failed to load customer return invoices. Please check your connection or try again."
+      "errorLoading": "Failed to load customer return invoices. Please check your connection or try again"
     },
     "cards": {
       "totalReturns": "Total Customer Returns",
@@ -1246,7 +1253,9 @@
       "allStatuses": "All Statuses",
       "dateFrom": "Date From",
       "dateTo": "Date To",
-      "perPage": "Per Page"
+      "perPage": "Per Page",
+      "walkIn" :"Walk-in Customer"
+      
     },
     "status": {
       "completed": "Completed",
@@ -1261,15 +1270,40 @@
       "selectCustomer": "Select Customer",
       "originalInvoice": "Original Sales Invoice",
       "selectInvoice": "Select Original Invoice",
+      "successToast":"Products returned successfully!",
       "errors":{
         "selectCustomer":"Select Customer",
         "selectInvoice":"Select Original Invoice",
-        "noQty":"Please specify at least one product quantity to return"
-      }
+        "noQty":"Please specify at least one product quantity to return",
+        "cannotReturnUnits": "Cannot return the specified quantity this products because this quantity exceeds the quantity sold in the original invoice"
+}
+    },
+    "details":{
+      "error": "Failed to load return details",
+      "subtitle": "Sales return invoice details",
+      "cancelReturn": "Cancel Return",
+      "cancelWarning": "This action cannot be undone. This customer return will be cancelled and quantities will be restored to inventory",
+      "summary": "Refund Summary",
+      "subtotal": "Subtotal",
+      "tax": "Tax Total",
+      "discount": "Discount Total",
+      "refundMethod": "Refund Method",
+      "refundTotal": "Refund Total",
+      "reason": "Reason",
+      "notes": "Notes",
+      "returnedProducts": "Returned Products",
+      "product": "Product",
+      "qty": "Qty",
+      "unitPrice": "Unit Price",
+      "total": "Line Total",
+      "customer": "Customer",
+      "originalInvoice": "Original Sales Invoice",
+      "returnDate": "Return Date",
+      "cancelledSuccessfully":"Customer return cancelled successfully"
     },
     "table": {
       "loading": "Loading customer returns...",
-      "error": "Failed to load returns.",
+      "error": "Failed to load returns",
       "invoiceNo": "Invoice Number",
       "customer": "Customer",
       "originalInvoice": "Original Sales Invoice",

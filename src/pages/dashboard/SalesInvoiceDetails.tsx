@@ -29,6 +29,7 @@ import {
   TotalsBreakdownCard,
   CreatedByCard,
 } from "@/features/sales-invoice/components/sales-invoice-details/PaymentAndTotalsCards";
+import { CustomerDebtCard } from "@/features/sales-invoice/components/sales-invoice-details/CustomerDebtCard";
 
 const formatDate = (dateString: string) => {
   if (!dateString) return "-";
@@ -55,6 +56,8 @@ export default function SalesInvoiceDetailsPage() {
     error,
   } = useSalesInvoice(id || "");
 
+  const hasCustomerDebt = (invoice?.amount_due ?? 0) > 0;
+  const isCompleted = invoice?.status === "completed";
   const { mutate: cancelInvoice, isPending: isCancelling } =
     useCancelSalesInvoice();
 
@@ -115,6 +118,9 @@ export default function SalesInvoiceDetailsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
         <div className="space-y-5">
           <CustomerCard customer={invoice.customer} />
+          {hasCustomerDebt && isCompleted && (
+            <CustomerDebtCard invoice={invoice} />
+          )}
           <InvoiceItemsTable items={invoice.items} />
 
           {invoice.notes && (

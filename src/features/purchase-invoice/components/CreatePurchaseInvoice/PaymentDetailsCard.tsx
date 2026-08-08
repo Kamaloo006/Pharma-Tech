@@ -18,7 +18,6 @@ interface PaymentDetailsCardProps {
   setAmountPaid: (val: number) => void;
   grandTotal: number;
   isAmountPaidExceeded: boolean;
-  remainingAmount: number;
   paymentStatus: string;
   isSaveDisabled: boolean;
   onSaveInvoice: () => void;
@@ -31,12 +30,20 @@ export function PaymentDetailsCard({
   setAmountPaid,
   grandTotal,
   isAmountPaidExceeded,
-  remainingAmount,
   paymentStatus,
   isSaveDisabled,
   onSaveInvoice,
 }: PaymentDetailsCardProps) {
   const { t } = useTranslation();
+
+  const isInputDisabled =
+    paymentMethod === "cash" || paymentMethod === "credit";
+
+  const calculatedRemaining = Math.max(0, grandTotal - amountPaid);
+
+  const handleMethodChange = (val: "cash" | "credit" | "debt") => {
+    setPaymentMethod(val);
+  };
 
   return (
     <Card className="border-border bg-card shadow-sm rounded-2xl">
@@ -52,14 +59,7 @@ export function PaymentDetailsCard({
           <label className="text-xs font-semibold text-muted-foreground">
             {t("purchaseInvoice.payment.methodLabel")}
           </label>
-          <Select
-            value={paymentMethod}
-            onValueChange={(val: "cash" | "credit" | "debt") => {
-              setPaymentMethod(val);
-              if (val === "cash") setAmountPaid(grandTotal);
-              if (val === "debt") setAmountPaid(0);
-            }}
-          >
+          <Select value={paymentMethod} onValueChange={handleMethodChange}>
             <SelectTrigger className="h-10 text-xs bg-background border-border">
               <SelectValue />
             </SelectTrigger>
@@ -99,6 +99,7 @@ export function PaymentDetailsCard({
               step="0.01"
               min="0"
               value={amountPaid}
+              disabled={isInputDisabled}
               onChange={(e) => setAmountPaid(Number(e.target.value))}
               className={`h-10 pl-9 font-bold text-sm bg-background border-border ${
                 isAmountPaidExceeded
@@ -109,7 +110,7 @@ export function PaymentDetailsCard({
           </div>
 
           {/* رسالة الخطأ المباشرة */}
-          {isAmountPaidExceeded && (
+          {!isInputDisabled && isAmountPaidExceeded && (
             <p className="text-[11px] font-medium text-destructive mt-1 flex items-center gap-1">
               ⚠️ {t("purchaseInvoice.payment.amountExceededError")}
             </p>
@@ -124,10 +125,12 @@ export function PaymentDetailsCard({
             </span>
             <span
               className={`font-extrabold font-mono text-sm ${
-                remainingAmount > 0 ? "text-destructive" : "text-emerald-500"
+                calculatedRemaining > 0
+                  ? "text-destructive"
+                  : "text-emerald-500"
               }`}
             >
-              {remainingAmount.toFixed(2)} {t("common.currency")}
+              {calculatedRemaining.toFixed(2)} {t("common.currency")}
             </span>
           </div>
 
@@ -141,7 +144,6 @@ export function PaymentDetailsCard({
           </div>
         </div>
 
-        {/* زر الحفظ */}
         <Button
           onClick={onSaveInvoice}
           disabled={isSaveDisabled}

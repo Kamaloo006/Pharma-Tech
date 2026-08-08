@@ -54,13 +54,10 @@ export default function SupplierReturnDetailsPage() {
       dir={isArabic ? "rtl" : "ltr"}
       className="space-y-6 max-w-8xl px-6 mx-auto"
     >
-      {/* 1. Header */}
       <ReturnDetailsHeader details={returnDetails} isArabic={isArabic} />
 
-      {/* 2. Metadata Grid */}
       <ReturnMetadataGrid details={returnDetails} isArabic={isArabic} />
 
-      {/* 3. Items Table & Financial Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <ReturnItemsTable items={returnDetails.items} isArabic={isArabic} />
         <ReturnFinancialSummary details={returnDetails} />

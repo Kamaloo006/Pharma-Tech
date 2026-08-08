@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Filter, RotateCcw, Loader2 } from "lucide-react";
+import { Filter, RotateCcw, Loader2, UserX, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -45,6 +45,7 @@ export function CustomerReturnFilters({
     date_to: filters.date_to || "",
     per_page: filters.per_page || 15,
     page: 1,
+    walk_in: filters.walk_in !== undefined ? filters.walk_in : "all",
   });
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export function CustomerReturnFilters({
       date_to: filters.date_to || "",
       per_page: filters.per_page || 15,
       page: filters.page || 1,
+      walk_in: filters.walk_in !== undefined ? filters.walk_in : "all",
     });
   }, [filters]);
 
@@ -72,6 +74,7 @@ export function CustomerReturnFilters({
       date_to: "",
       per_page: 15,
       page: 1,
+      walk_in: "all",
     };
     setLocalFilters(resetValues);
     onReset();
@@ -118,6 +121,36 @@ export function CustomerReturnFilters({
                 <SelectItem value="all" className={selectItemStyles}>
                   {t("customerReturn.filters.allCustomers", "All Customers")}
                 </SelectItem>
+
+                {/* Walk-in Filter Option (walk_in = 1) */}
+                <SelectItem
+                  value="walk_in"
+                  className={`${selectItemStyles} font-bold text-amber-600`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <UserX className="w-3.5 h-3.5" />
+                    {t(
+                      "customerReturn.filters.walkInCustomers",
+                      "Walk-in Customers (غير مسجل)",
+                    )}
+                  </div>
+                </SelectItem>
+
+                {/* All Registered Filter Option (walk_in = 0) */}
+                <SelectItem
+                  value="registered"
+                  className={`${selectItemStyles} font-bold text-primary`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5" />
+                    {t(
+                      "customerReturn.filters.allRegistered",
+                      "All Registered (كل المسجلين)",
+                    )}
+                  </div>
+                </SelectItem>
+
+                {/* Specific Registered Customers */}
                 {customers.map((c: Customer) => (
                   <SelectItem
                     key={c.id}

@@ -38,7 +38,6 @@ export default function CreatePurchaseInvoice() {
     amountPaid,
     setAmountPaid,
     isAmountPaidExceeded,
-    remainingAmount,
     paymentStatus,
     duplicateBatchNumbers,
     hasDuplicateBatches,
@@ -165,7 +164,6 @@ export default function CreatePurchaseInvoice() {
             setAmountPaid={setAmountPaid}
             grandTotal={totals.grandTotal}
             isAmountPaidExceeded={isAmountPaidExceeded}
-            remainingAmount={remainingAmount}
             paymentStatus={paymentStatus}
             isSaveDisabled={isSaveDisabled}
             onSaveInvoice={handleSaveInvoice}

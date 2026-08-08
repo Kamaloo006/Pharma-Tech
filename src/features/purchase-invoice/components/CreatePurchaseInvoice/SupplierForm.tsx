@@ -80,7 +80,7 @@ export function SupplierForm({
                   <SelectItem
                     key={supplier.id}
                     value={String(supplier.id)}
-                    className="focus:bg-background focus:text-foreground text-xs cursor-pointer"
+                    className="focus:bg-primary focus:text-white text-xs cursor-pointer"
                   >
                     {supplier.name}
                   </SelectItem>
@@ -98,6 +98,7 @@ export function SupplierForm({
             <CalendarIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
             <Input
               type="date"
+              disabled
               value={invoiceDate}
               onChange={(e) => setInvoiceDate(e.target.value)}
               className="h-10 pl-10 text-xs bg-background border-border"

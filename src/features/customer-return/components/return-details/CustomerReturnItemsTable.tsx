@@ -8,14 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { type SupplierReturnItem } from "../../types/SupplierReturn";
+import { type CustomerReturnItem } from "../../types/CustomerReturn";
 
 interface Props {
-  items: SupplierReturnItem[];
+  items: CustomerReturnItem[];
   isArabic: boolean;
 }
 
-export function ReturnItemsTable({ items, isArabic }: Props) {
+export function CustomerReturnItemsTable({ items, isArabic }: Props) {
   const { t } = useTranslation();
   const formatCurrency = (amount: number) =>
     `${amount.toLocaleString()} ${isArabic ? "ل.س" : "SYP"}`;
@@ -24,7 +24,7 @@ export function ReturnItemsTable({ items, isArabic }: Props) {
     <div className="lg:col-span-2 bg-card border border-border/60 rounded-xl p-5 shadow-xs space-y-4">
       <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 pb-2 border-b border-border/60">
         <PackageCheck className="w-4 h-4 text-primary" />
-        {t("supplierReturn.details.returnedProducts")}
+        {t("customerReturn.details.returnedProducts", "Returned Products")}
       </h2>
 
       <div className="overflow-x-auto">
@@ -32,22 +32,28 @@ export function ReturnItemsTable({ items, isArabic }: Props) {
           <TableHeader className="bg-muted/30">
             <TableRow className="border-b border-border/60">
               <TableHead className={isArabic ? "text-right" : "text-left"}>
-                {t("supplierReturn.details.product")}
+                {t("customerReturn.details.product", "Product")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.details.qty")}
+                {t("customerReturn.details.qty", "Qty")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.details.unitPrice")}
+                {t("customerReturn.details.unitPrice", "Unit Price")}
               </TableHead>
               <TableHead className="text-center">
-                {t("supplierReturn.details.total")}
+                {t("customerReturn.details.tax", "Tax")}
+              </TableHead>
+              <TableHead className="text-center">
+                {t("customerReturn.details.discount", "Discount")}
+              </TableHead>
+              <TableHead className="text-center">
+                {t("customerReturn.details.total", "Line Total")}
               </TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {items.map((item) => (
+            {items?.map((item) => (
               <TableRow
                 key={item.id}
                 className="border-b border-border/40 hover:bg-muted/10"
@@ -68,6 +74,14 @@ export function ReturnItemsTable({ items, isArabic }: Props) {
 
                 <TableCell className="text-center font-mono">
                   {formatCurrency(item.unit_price)}
+                </TableCell>
+
+                <TableCell className="text-center font-mono text-muted-foreground">
+                  {formatCurrency(item.tax || 0)}
+                </TableCell>
+
+                <TableCell className="text-center font-mono text-muted-foreground">
+                  {formatCurrency(item.discount || 0)}
                 </TableCell>
 
                 <TableCell className="text-center font-mono font-bold text-foreground">

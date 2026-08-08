@@ -8,7 +8,7 @@ interface Props {
 
 export function ReturnFinancialSummary({ details }: Props) {
   const { t } = useTranslation();
-  const formatCurrency = (amount: number) => `$${amount.toLocaleString()}`;
+  const formatCurrency = (amount: number) => `${amount.toLocaleString()} ل.س`;
 
   return (
     <div className="space-y-4">

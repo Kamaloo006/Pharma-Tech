@@ -130,7 +130,7 @@ export function CustomerReturnTable({
                 return (
                   <TableRow
                     key={item.id}
-                    className="border-b border-border/40 hover:bg-muted/10 cursor-pointer"
+                    className="border-b border-border/40 hover:bg-muted/10 "
                   >
                     {/* Invoice Number */}
                     <TableCell
@@ -235,7 +235,7 @@ export function CustomerReturnTable({
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 hover:bg-muted"
+                          className="h-8 w-8 hover:bg-muted cursor-pointer"
                           title={t(
                             "customerReturn.table.viewDetails",
                             "View Details",

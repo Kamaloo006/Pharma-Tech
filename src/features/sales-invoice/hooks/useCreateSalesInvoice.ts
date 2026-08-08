@@ -199,6 +199,13 @@ export function useCreateSalesInvoice() {
     return diff > 0 ? diff : 0;
   }, [totals.grandTotal, amountPaid]);
 
+  useEffect(() => {
+  if (paymentMethod === "cash" || paymentMethod === "credit") {
+    setAmountPaid(totals.grandTotal);
+  }
+}, [paymentMethod, totals.grandTotal]);
+
+
   const paymentStatus = useMemo(() => {
     if (totals.grandTotal <= 0) return isArabic ? "غير مدفوع" : "Unpaid";
     if (amountPaid >= totals.grandTotal)

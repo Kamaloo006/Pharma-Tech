@@ -117,6 +117,8 @@ export function useCreatePurchaseInvoice() {
     setSearchQuery("");
   };
 
+  
+
   // 2. إضافة المنتج الممرر عبر URL أوتوماتيكياً فور تحميل بياناته
   useEffect(() => {
     if (initialProduct && !initialProductAdded.current) {
@@ -205,6 +207,16 @@ export function useCreatePurchaseInvoice() {
     return isArabic ? "غير مدفوع" : "Unpaid";
   }, [amountPaid, totals.grandTotal, isArabic]);
 
+
+  useEffect(() => {
+  if (paymentMethod === "cash" || paymentMethod === "credit") {
+    setAmountPaid(totals.grandTotal);
+  } else if (paymentMethod === "debt") {
+    setAmountPaid(0);
+  }
+}, [paymentMethod, totals.grandTotal]);
+
+
   // Validations
   const duplicateBatchNumbers = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -225,16 +237,11 @@ export function useCreatePurchaseInvoice() {
     mutationFn: createPurchaseInvoiceApi,
     
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["cashbox"] });
-      queryClient.invalidateQueries({
-      queryKey: ["purchase-invoices"],
-      refetchType: "all", 
-    });
+      queryClient.invalidateQueries({ queryKey: ["products"] }),
+      queryClient.invalidateQueries({ queryKey: ["cashbox"] }),
+      queryClient.invalidateQueries({ queryKey: ["purchase-invoices"] }),
 
-      toast.success(t("createPurchase.success"), {
-        description: t("createPurchase.successDescription"),
-      });
+      toast.success(t("createPurchase.success"));
       navigate("/dashboard/purchases");
     },
     onError: (error: any) => {
