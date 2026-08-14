@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { format, subDays } from "date-fns";
+import { format, subDays, startOfMonth } from "date-fns";
 
 import {
   AreaChart,
@@ -42,9 +42,11 @@ import {
   ArrowUp,
   ArrowDown,
   Receipt,
+  Percent,
 } from "lucide-react";
 
 import { useSalesReports } from "@/features/dashboard-home/hooks/useSalesReports";
+import { useProfitReport } from "@/features/dashboard-home/hooks/useProfitReports";
 import { type ReportPeriod } from "@/features/dashboard-home/types/SalesReports";
 import CountUpModule from "react-countup";
 
@@ -58,12 +60,33 @@ export default function DashboardHome() {
 
   const dateParams = useMemo(() => {
     const today = new Date();
-    const pastDate = subDays(today, 7);
-    return {
-      date_from: format(pastDate, "yyyy-MM-dd"),
-      date_to: format(today, "yyyy-MM-dd"),
-    };
-  }, []);
+
+    switch (period) {
+      case "daily":
+        return {
+          date_from: format(today, "yyyy-MM-dd"),
+          date_to: format(today, "yyyy-MM-dd"),
+        };
+
+      case "weekly":
+        return {
+          date_from: format(subDays(today, 6), "yyyy-MM-dd"),
+          date_to: format(today, "yyyy-MM-dd"),
+        };
+
+      case "monthly":
+        return {
+          date_from: format(startOfMonth(today), "yyyy-MM-dd"),
+          date_to: format(today, "yyyy-MM-dd"),
+        };
+
+      default:
+        return {
+          date_from: format(today, "yyyy-MM-dd"),
+          date_to: format(today, "yyyy-MM-dd"),
+        };
+    }
+  }, [period]);
 
   const {
     data: salesData,
@@ -76,9 +99,35 @@ export default function DashboardHome() {
     date_to: dateParams.date_to,
   });
 
+  const {
+    data: profitData,
+    isLoading: isProfitLoading,
+    isRefetching: isProfitRefetching,
+    refetch: refetchProfit,
+  } = useProfitReport({
+    date_from: dateParams.date_from,
+    date_to: dateParams.date_to,
+  });
+
+  const handleRefresh = () => {
+    refetchSales();
+    refetchProfit();
+  };
+
   const report = salesData?.data;
   const summary = report?.summary;
   const breakdown = report?.breakdown || [];
+
+  const profitReport = profitData?.data;
+  const profitSummary = profitReport?.summary;
+  const profitProducts = profitReport?.products || [];
+
+  const profitChartData = useMemo(() => {
+    return (profitProducts || []).slice(0, 5).map((product) => ({
+      ...product,
+      display_name: isArabic ? product.ar_name : product.brand_name,
+    }));
+  }, [profitProducts, isArabic]);
 
   useEffect(() => {
     AOS.init({
@@ -88,41 +137,7 @@ export default function DashboardHome() {
     });
   }, []);
 
-  const handleRefresh = () => {
-    refetchSales();
-  };
-
-  const profitChartData = [
-    { month: "Jan", profit: 4200 },
-    { month: "Feb", profit: 5300 },
-    { month: "Mar", profit: 4800 },
-    { month: "Apr", profit: 6100 },
-    { month: "May", profit: 5900 },
-    { month: "Jun", profit: 6100 },
-  ];
-
-  const topProducts = [
-    {
-      name: isArabic ? "باراسيتامول 500ملغ" : "Paracetamol 500mg",
-      sales: 840,
-      percent: 85,
-    },
-    {
-      name: isArabic ? "أموكسيسيلين 500ملغ" : "Amoxicillin 500mg",
-      sales: 620,
-      percent: 65,
-    },
-    {
-      name: isArabic ? "إيبوبروفين 400ملغ" : "Ibuprofen 400mg",
-      sales: 490,
-      percent: 50,
-    },
-    {
-      name: isArabic ? "فيتامين C 1000ملغ" : "Vitamin C 1000mg",
-      sales: 380,
-      percent: 40,
-    },
-  ];
+  const isAnyRefetching = isSalesRefetching || isProfitRefetching;
 
   const stockHealthData = [
     {
@@ -283,11 +298,11 @@ export default function DashboardHome() {
             variant="outline"
             size="sm"
             onClick={handleRefresh}
-            disabled={isSalesRefetching}
+            disabled={isAnyRefetching}
             className="h-9 gap-2 text-xs rounded-xl font-medium"
           >
             <RefreshCw
-              className={`h-3.5 w-3.5 ${isSalesRefetching ? "animate-spin" : ""}`}
+              className={`h-3.5 w-3.5 ${isAnyRefetching ? "animate-spin" : ""}`}
             />
             {isArabic ? "تحديث" : "Refresh"}
           </Button>
@@ -316,11 +331,11 @@ export default function DashboardHome() {
             </div>
             <div className="mt-3">
               <div className="text-xl font-bold font-mono">
-                {summary?.total_revenue ? (
-                  <CountUp end={summary.total_revenue} />
-                ) : (
-                  "0"
-                )}{" "}
+                <CountUp
+                  end={summary?.total_revenue ?? 0}
+                  duration={0.8}
+                  separator=","
+                />{" "}
                 SYP
               </div>
               <div className="flex items-center gap-1.5 mt-1">
@@ -341,6 +356,11 @@ export default function DashboardHome() {
           data-aos-delay="100"
           className="border-border shadow-xs rounded-2xl relative overflow-hidden"
         >
+          {isProfitLoading && (
+            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500/20 overflow-hidden z-10">
+              <div className="h-full bg-emerald-500 animate-pulse w-full" />
+            </div>
+          )}
           <CardContent className="p-4 flex flex-col justify-between h-full">
             <div className="flex justify-between items-start">
               <span className="text-xs font-bold text-muted-foreground">
@@ -352,15 +372,20 @@ export default function DashboardHome() {
             </div>
             <div className="mt-3">
               <div className="text-xl font-bold font-mono text-emerald-500">
-                32,400 SYP
+                <CountUp
+                  end={profitSummary?.total_profit ?? 0}
+                  duration={0.8}
+                  separator=","
+                />{" "}
+                SYP
               </div>
               <div className="flex items-center gap-1.5 mt-1">
                 <span className="flex items-center gap-0.5 text-[11px] font-semibold text-emerald-500">
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                  <span>8.2%</span>
+                  <Percent className="h-3 w-3" />
+                  <span>{profitSummary?.overall_margin ?? 0}%</span>
                 </span>
                 <span className="text-[11px] text-muted-foreground">
-                  {isArabic ? "مقارنة بالفترة السابقة" : "vs previous period"}
+                  {isArabic ? "هامش الربح الإجمالي" : "Overall Profit Margin"}
                 </span>
               </div>
             </div>
@@ -417,10 +442,10 @@ export default function DashboardHome() {
             </div>
             <div className="mt-3">
               <div className="text-xl font-bold font-mono">
-                {summary?.total_invoices ?? 16}
+                {summary?.total_invoices ?? 0}
               </div>
               <div className="text-[11px] text-muted-foreground mt-1 font-medium">
-                {summary?.units_sold ?? 67}{" "}
+                {summary?.units_sold ?? 0}{" "}
                 {isArabic ? "قطعة مباعة" : "units sold"}
               </div>
             </div>
@@ -491,7 +516,7 @@ export default function DashboardHome() {
                     }}
                     formatter={(val: any) => [
                       `${Number(val).toLocaleString()} SYP`,
-                      "Revenue",
+                      isArabic ? "الإيرادات" : "Revenue",
                     ]}
                   />
                   <Area
@@ -501,6 +526,14 @@ export default function DashboardHome() {
                     fillOpacity={1}
                     fill="url(#salesGrad)"
                     strokeWidth={2}
+                    /* --- إظهار نقطة واضحة ومكشوفة دائماً في حال وجود نقطة واحدة أو عدة نقاط --- */
+                    dot={{
+                      r: breakdown?.length === 1 ? 6 : 0,
+                      fill: "var(--primary, #10b981)",
+                      stroke: "#fff",
+                      strokeWidth: 2,
+                    }}
+                    activeDot={{ r: 7, strokeWidth: 0 }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -512,17 +545,22 @@ export default function DashboardHome() {
           data-aos="fade-left"
           className="lg:col-span-1 border-border shadow-xs rounded-2xl relative overflow-hidden"
         >
+          {isProfitLoading && (
+            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500/20 overflow-hidden z-10">
+              <div className="h-full bg-emerald-500 animate-pulse w-full" />
+            </div>
+          )}
           <CardHeader className="pb-2 border-b border-border/40">
             <CardTitle className="text-sm font-bold">
-              {isArabic ? "نظرة عامة على الأرباح" : "Profit Overview"}
+              {isArabic ? "أعلى المنتجات ربحية" : "Top Profit Products"}
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-4">
-            <div className="w-full h-72 font-mono text-xs" dir="ltr">
+            <div className="w-full h-80 font-mono text-xs" dir="ltr">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={profitChartData}
-                  margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                  margin={{ top: 10, right: 10, left: -15, bottom: 45 }}
                 >
                   <CartesianGrid
                     strokeDasharray="3 3"
@@ -530,10 +568,43 @@ export default function DashboardHome() {
                     className="stroke-border/50"
                   />
                   <XAxis
-                    dataKey="month"
+                    dataKey="display_name"
                     tickLine={false}
                     axisLine={false}
-                    className="fill-muted-foreground"
+                    interval={0}
+                    height={65}
+                    tick={({ x, y, payload }) => {
+                      const rawText = payload.value || "";
+
+                      const maxLength = 13;
+                      const isTruncated = rawText.length > maxLength;
+                      const formattedText = isTruncated
+                        ? `${rawText.substring(0, maxLength)}...`
+                        : rawText;
+
+                      const angle = isArabic ? 35 : -35;
+                      const textAnchor = isArabic ? "start" : "end";
+
+                      return (
+                        <g transform={`translate(${x},${y})`}>
+                          <text
+                            x={isArabic ? 40 : 0}
+                            y={isArabic ? -20 : 0}
+                            dy={isArabic ? 50 : 10}
+                            dx={isArabic ? 1 : 0}
+                            textAnchor={textAnchor}
+                            transform={`rotate(${angle})`}
+                            className="fill-muted-foreground text-[10px] font-sans "
+                            style={{
+                              direction: isArabic ? "rtl" : "ltr",
+                              unicodeBidi: "plaintext",
+                            }}
+                          >
+                            {formattedText}
+                          </text>
+                        </g>
+                      );
+                    }}
                   />
                   <YAxis
                     tickFormatter={formatYAxis}
@@ -549,8 +620,17 @@ export default function DashboardHome() {
                       borderRadius: "12px",
                       color: "var(--foreground)",
                     }}
+                    labelFormatter={(label) => label}
+                    formatter={(val: any) => [
+                      `${Number(val).toLocaleString()} ${isArabic ? `ل.س` : "SYP"}`,
+                      isArabic ? "الربح" : "Profit",
+                    ]}
                   />
-                  <Bar dataKey="profit" fill="#10b981" radius={[6, 6, 0, 0]} />
+                  <Bar
+                    dataKey="total_profit"
+                    fill="#10b981"
+                    radius={[6, 6, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -561,35 +641,81 @@ export default function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card
           data-aos="fade-right"
-          className="lg:col-span-2 border-border shadow-xs rounded-2xl relative overflow-hidden"
+          className="lg:col-span-2 border-border shadow-xs rounded-2xl relative overflow-hidden flex flex-col justify-between"
         >
-          <CardHeader className="pb-3 border-b border-border/40">
+          {isProfitLoading && (
+            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500/20 overflow-hidden z-10">
+              <div className="h-full bg-emerald-500 animate-pulse w-full" />
+            </div>
+          )}
+
+          <CardHeader className="pb-3 border-b border-border/40 shrink-0">
             <CardTitle className="text-sm font-bold">
-              {isArabic ? "الأدوية الأكثر مبيعاً" : "Top Selling Products"}
+              {isArabic
+                ? "تفاصيل أرباح المنتجات"
+                : "Product Profitability Details"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-5 space-y-4">
-            {topProducts.map((prod, idx) => (
-              <div key={idx} className="space-y-1.5">
-                <div className="flex justify-between text-xs font-semibold">
-                  <span className="flex items-center gap-2">
-                    <span className="text-muted-foreground font-mono w-4">
-                      {idx + 1}.
-                    </span>
-                    {prod.name}
-                  </span>
-                  <span className="font-mono text-muted-foreground">
-                    {prod.sales} sold
-                  </span>
-                </div>
-                <div className="h-2.5 w-full bg-muted/60 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-primary rounded-full transition-all duration-500"
-                    style={{ width: `${prod.percent}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+
+          <CardContent className="p-0 flex-1">
+            <div
+              className={`overflow-x-auto ${
+                profitProducts.length > 5
+                  ? "max-h-70 overflow-y-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent"
+                  : ""
+              }`}
+            >
+              <table className="w-full text-xs text-left rtl:text-right relative border-collapse">
+                <thead className="bg-muted/80 backdrop-blur-xs sticky top-0 z-10 text-muted-foreground uppercase text-[10px] tracking-wider border-b border-border/40">
+                  <tr>
+                    <th className="p-3 px-4 bg-muted/80">
+                      {isArabic ? "المنتج" : "Product"}
+                    </th>
+                    <th className="p-3 px-4 bg-muted/80">
+                      {isArabic ? "الوحدات المباعة" : "Sold Units"}
+                    </th>
+                    <th className="p-3 px-4 bg-muted/80">
+                      {isArabic ? "الإيرادات" : "Revenue"}
+                    </th>
+                    <th className="p-3 px-4 bg-muted/80">
+                      {isArabic ? "الربح" : "Profit"}
+                    </th>
+                    <th className="p-3 px-4 bg-muted/80">
+                      {isArabic ? "هامش الربح" : "Margin"}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/30 font-medium">
+                  {profitProducts.map((p) => (
+                    <tr
+                      key={p.product_id}
+                      className="hover:bg-muted/20 transition-colors"
+                    >
+                      <td className="p-3 px-4 font-semibold">
+                        {isArabic ? p.ar_name : p.brand_name}
+                        <span className="block text-[10px] text-muted-foreground font-normal">
+                          {p.category}
+                        </span>
+                      </td>
+                      <td className="p-3 px-4 font-mono">
+                        {p.total_units_sold}
+                      </td>
+                      <td className="p-3 px-4 font-mono">
+                        {p.total_revenue.toLocaleString()} SYP
+                      </td>
+                      <td className="p-3 px-4 font-mono font-bold text-emerald-500">
+                        {p.total_profit.toLocaleString()} SYP
+                      </td>
+                      <td className="p-3 px-4 font-mono">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-500">
+                          {p.profit_margin}%
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </CardContent>
         </Card>
 
@@ -658,7 +784,7 @@ export default function DashboardHome() {
                 <Tooltip
                   formatter={(val: any) => [
                     `${Number(val).toLocaleString()} SYP`,
-                    "Value",
+                    isArabic ? "القيمة" : "Value",
                   ]}
                   contentStyle={{
                     backgroundColor: "var(--card, #0B132B)",
