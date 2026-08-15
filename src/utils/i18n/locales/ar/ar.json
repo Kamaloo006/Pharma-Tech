@@ -3,42 +3,41 @@
     "switchLanguage": "تبديل اللغة",
     "addMedicine": "إضافة دواء",
     "common": {
-        "continue": "متابعة",
-        "next": "التالي",
-        "error": "خطأ",
-        "appName": "فارماتيك",
-        "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
-        "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً.",
-        "syr": "ل.س",
+    "continue": "متابعة",
+    "next": "التالي",
+    "back": "الرجوع",
+    "error": "خطأ",
+    "appName": "فارماتيك",
+    "networkError": "لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.",
+    "serverError": "نواجه مشكلة في السيرفر حالياً، يرجى المحاولة لاحقاً.",
+    "loading": "جاري التحميل...",
     "currency": "ل.س",
-        "loading": "جاري التحميل...",
-        "unknownProduct": "منتج غير معروف",
-        "back": "الرجوع",
-        "pagination": {
-          "page": "صفحة",
-          "of": "من"
-        },
-        "print":"طباعة",
-        "cancel": "إلغاء",
-        "save": "حفظ التغييرات",
-        "add": "إضافة",
-        "buttons": {
-          "cancel": "إلغاء",
-          "confirmDelete": "تأكيد الحذف"
-        },
-        "confirm": "تأكيد",
-        "areYouSure":"هل أنت متأكد؟",
-        "applyFilters":"تطبيق الفلاتر",
-        "reset":"إعادة ضبط",
-        "delete": "نقل للمحذوفين",
-    "restore": "استعادة الزبون",
+    "syr": "ل.س",
+    "unknownProduct": "منتج غير معروف",
+    "search": "بحث...",
+    "noResults": "لا توجد نتائج",
+    "noData": "لا توجد بيانات متاحة",
+    "pagination": {
+      "page": "صفحة",
+      "of": "من"
+    },
+    "cancel": "إلغاء",
+    "save": "حفظ التغييرات",
+    "add": "إضافة",
+    "print": "طباعة",
+    "confirm": "تأكيد",
+    "areYouSure": "هل أنت متأكد؟",
+    "applyFilters": "تطبيق الفلاتر",
+    "reset": "إعادة ضبط",
     "edit": "تعديل",
+    "delete": "نقل للمحذوفين",
+    "restore": "استعادة العميل",
     "saveChanges": "حفظ التعديلات",
     "retry": "إعادة المحاولة",
     "showing": "عرض",
     "to": "إلى",
     "of": "من أصل"
-    },
+  },
     "validation": {
         "invalidEmail": "البريد الإلكتروني غير صالح",
         "passwordMinLength": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
@@ -295,6 +294,13 @@
         "max_price": "الأعلى",
         "prescription": "الوصفة الطبية",
         "showDetails":"عرض التفاصيل",
+        "inventoryByProduct": "المخزون حسب المنتج",
+        "allCategories": "جميع الفئات",
+        "product": "المنتج",
+        "quantity": "الكمية",
+        "costValue": "قيمة التكلفة",
+        "sellingValue": "قيمة البيع",
+        "potentialProfit": "الربح المحتمل",
         "manageBatches":"إدارة الدفعات",
         "prescription_status": {
             "all": "الكل",
@@ -1326,6 +1332,50 @@
       "noData": "لم يتم العثور على فواتير مرتجعات زبائن",
       "viewDetails": "عرض التفاصيل"
     }
+  },
+  "reports": {
+    "header": {
+      "welcomeBack": "مرحباً بعودتك",
+      "subtitle": "إليك ما يحدث في صيدليتك اليوم",
+      "refresh": "تحديث",
+      "periods": {
+        "daily": "يومي",
+        "weekly": "أسبوعي",
+        "monthly": "شهري"
+      }
+    },
+
+    "cards": {
+      "totalSales": "إجمالي المبيعات",
+      "vsPreviousPeriod": "مقارنة بالفترة السابقة",
+      "netProfit": "صافي الأرباح",
+      "overallProfitMargin": "هامش الربح الإجمالي",
+      "inventoryValue": "قيمة المخزون",
+      "inventoryMargin": "هامش المخزون",
+      "invoices": "الفواتير",
+      "unitsSold": "قطعة مباعة"
+    },
+
+    "salesOverview": "نظرة عامة على المبيعات",
+    "revenue": "الإيرادات",
+    "topProfitProducts": "أعلى المنتجات ربحية",
+    "profit": "الربح",
+    "productProfitabilityDetails": "تفاصيل أرباح المنتجات",
+    "product": "المنتج",
+    "soldUnits": "الوحدات المباعة",
+    "margin": "هامش الربح",
+
+    "expiringProducts": "منتجات قريبة الانتهاء",
+    "noExpiringProducts": "لا توجد منتجات قريبة من تاريخ الانتهاء",
+    "stock": "الكمية بالمخزن",
+
+    "topSellingProducts": "المنتجات الأكثر مبيعاً (حسب الوحدات)",
+    "units": "قطعة",
+
+    "supplierPriceAnalysis": "تحليل أسعار الموردين",
+    "supplier": "المورد",
+    "price": "السعر",
+    "change": "التغير"
   }
   
 

@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FormattedProduct {
   product_id: string | number;
@@ -13,15 +14,15 @@ interface FormattedProduct {
 }
 
 interface ProductProfitabilityTableProps {
-  products: FormattedProduct[];
+  products?: FormattedProduct[];
   isLoading: boolean;
 }
 
 export function ProductProfitabilityTable({
-  products,
+  products = [],
   isLoading,
 }: ProductProfitabilityTableProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   return (
@@ -29,15 +30,9 @@ export function ProductProfitabilityTable({
       data-aos="fade-right"
       className="lg:col-span-2 border-border shadow-xs rounded-2xl relative overflow-hidden flex flex-col justify-between"
     >
-      {isLoading && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500/20 overflow-hidden z-10">
-          <div className="h-full bg-emerald-500 animate-pulse w-full" />
-        </div>
-      )}
-
       <CardHeader className="pb-3 border-b border-border/40 shrink-0">
         <CardTitle className="text-sm font-bold">
-          {isArabic ? "تفاصيل أرباح المنتجات" : "Product Profitability Details"}
+          {t("reports.productProfitabilityDetails")}
         </CardTitle>
       </CardHeader>
 
@@ -52,51 +47,78 @@ export function ProductProfitabilityTable({
           <table className="w-full text-xs text-left rtl:text-right relative border-collapse">
             <thead className="bg-muted/80 backdrop-blur-xs sticky top-0 z-10 text-muted-foreground uppercase text-[10px] tracking-wider border-b border-border/40">
               <tr>
+                <th className="p-3 px-4 bg-muted/80">{t("reports.product")}</th>
+
                 <th className="p-3 px-4 bg-muted/80">
-                  {isArabic ? "المنتج" : "Product"}
+                  {t("reports.soldUnits")}
                 </th>
-                <th className="p-3 px-4 bg-muted/80">
-                  {isArabic ? "الوحدات المباعة" : "Sold Units"}
-                </th>
-                <th className="p-3 px-4 bg-muted/80">
-                  {isArabic ? "الإيرادات" : "Revenue"}
-                </th>
-                <th className="p-3 px-4 bg-muted/80">
-                  {isArabic ? "الربح" : "Profit"}
-                </th>
-                <th className="p-3 px-4 bg-muted/80">
-                  {isArabic ? "هامش الربح" : "Margin"}
-                </th>
+
+                <th className="p-3 px-4 bg-muted/80">{t("reports.revenue")}</th>
+
+                <th className="p-3 px-4 bg-muted/80">{t("reports.profit")}</th>
+
+                <th className="p-3 px-4 bg-muted/80">{t("reports.margin")}</th>
               </tr>
             </thead>
+
             <tbody className="divide-y divide-border/30 font-medium">
-              {products.map((p) => (
-                <tr
-                  key={p.product_id}
-                  className="hover:bg-muted/20 transition-colors"
-                >
-                  <td className="p-3 px-4 font-semibold">
-                    {isArabic ? p.ar_name : p.brand_name}
-                    <span className="block text-[10px] text-muted-foreground font-normal">
-                      {p.category}
-                    </span>
-                  </td>
-                  <td className="p-3 px-4 font-mono text-foreground">
-                    {p.total_units_sold}
-                  </td>
-                  <td className="p-3 px-4 font-mono">
-                    {p.total_revenue.toLocaleString()} SYP
-                  </td>
-                  <td className="p-3 px-4 font-mono font-bold text-emerald-500">
-                    {p.total_profit.toLocaleString()} SYP
-                  </td>
-                  <td className="p-3 px-4 font-mono">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-500">
-                      {p.profit_margin}%
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {isLoading
+                ? Array.from({ length: 5 }).map((_, i) => (
+                    <tr key={i} className="animate-pulse">
+                      <td className="p-3 px-4">
+                        <Skeleton className="h-4 w-28 mb-1 bg-muted-foreground/20" />
+                        <Skeleton className="h-3 w-16 bg-muted-foreground/20" />
+                      </td>
+
+                      <td className="p-3 px-4">
+                        <Skeleton className="h-4 w-12 bg-muted-foreground/20" />
+                      </td>
+
+                      <td className="p-3 px-4">
+                        <Skeleton className="h-4 w-20 bg-muted-foreground/20" />
+                      </td>
+
+                      <td className="p-3 px-4">
+                        <Skeleton className="h-4 w-20 bg-muted-foreground/20" />
+                      </td>
+
+                      <td className="p-3 px-4">
+                        <Skeleton className="h-5 w-12 rounded-full bg-muted-foreground/20" />
+                      </td>
+                    </tr>
+                  ))
+                : products.map((p) => (
+                    <tr
+                      key={p.product_id}
+                      className="hover:bg-muted/20 transition-colors"
+                    >
+                      <td className="p-3 px-4 font-semibold">
+                        {isArabic ? p.ar_name : p.brand_name}
+
+                        <span className="block text-[10px] text-muted-foreground font-normal">
+                          {p.category}
+                        </span>
+                      </td>
+
+                      <td className="p-3 px-4 font-mono text-foreground">
+                        {p.total_units_sold}
+                      </td>
+
+                      <td className="p-3 px-4 font-mono">
+                        {p.total_revenue?.toLocaleString()} {t("common.syp")}
+                      </td>
+
+                      <td className="p-3 px-4 font-mono font-bold text-emerald-500">
+                        {p.total_profit?.toLocaleString()} {t("common.syp")}
+                      </td>
+
+                      <td className="p-3 px-4 font-mono">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-500">
+                          {p.profit_margin}%
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

@@ -8,25 +8,29 @@
         "back": "Back",
         "error": "Error",
         "appName": "PharmaTech",
-        "networkError": "No internet connection. Please check your network",
-        "serverError": "We are facing server issues, please try again later",
-        "loading": "Loading...",
-        "currency": "SYP",
-        "syr": "SYP",
-        "unknownProduct": "Unknown Product",
-        "pagination": {
-          "page": "Page",
-          "of": "of"
-        },
-        "cancel": "Cancel",
-        "save": "Save Changes",
-        "add": "Add",
-        "print": "Print",
-        "confirm":"Confirm",
-        "areYouSure":"? Are you sure",
-        "applyFilters":"Apply Filters",
-        "reset":"Reset",
-        "edit": "Edit",
+        "networkError":  "No internet connection. Please check your network.",
+    "serverError": "We are facing server issues, please try again later.",
+    "loading": "Loading...",
+    "currency": "SYP",
+    "syr": "SYP",
+    "syp":"SYP",
+    "unknownProduct": "Unknown Product",
+    "search": "Search...",
+    "noResults": "No results found",
+    "noData": "No data available",
+    "pagination": {
+      "page": "Page",
+      "of": "of"
+    },
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "add": "Add",
+    "print": "Print",
+    "confirm": "Confirm",
+    "areYouSure": "Are you sure?",
+    "applyFilters": "Apply Filters",
+    "reset": "Reset",
+    "edit": "Edit",
     "delete": "Delete",
     "restore": "Restore",
     "saveChanges": "Save Changes",
@@ -288,6 +292,13 @@
         "more_filters": "More Filters",
         "apply_filters": "Apply Filters",
         "reset_filters": "Reset Filters",
+        "inventoryByProduct": "Inventory by Product",
+        "allCategories": "All Categories",
+        "product": "Product",
+        "quantity": "Quantity",
+        "costValue": "Cost Value",
+        "sellingValue": "Selling Value",
+        "potentialProfit": "Potential Profit",
         "price_range": "Price Range",
         "min_price": "Min",
         "max_price": "Max",
@@ -1318,6 +1329,50 @@
       "noData": "No customer return invoices found",
       "viewDetails": "View Details"
     }
+  },
+  "reports": {
+    "header": {
+      "welcomeBack": "Welcome back",
+      "subtitle": "Here's what's happening in your pharmacy",
+      "refresh": "Refresh",
+      "periods": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      }
+    },
+
+    "cards": {
+      "totalSales": "Total Sales",
+      "vsPreviousPeriod": "vs previous period",
+      "netProfit": "Net Profit",
+      "overallProfitMargin": "Overall Profit Margin",
+      "inventoryValue": "Inventory Value",
+      "inventoryMargin": "Inventory Margin",
+      "invoices": "Invoices",
+      "unitsSold": "units sold"
+    },
+
+    "salesOverview": "Sales Overview",
+    "revenue": "Revenue",
+    "topProfitProducts": "Top Profit Products",
+    "profit": "Profit",
+    "productProfitabilityDetails": "Product Profitability Details",
+    "product": "Product",
+    "soldUnits": "Sold Units",
+    "margin": "Profit Margin",
+
+    "expiringProducts": "Expiring Products",
+    "noExpiringProducts": "No products expiring soon",
+    "stock": "Stock",
+
+    "topSellingProducts": "Top Selling Products (By Units)",
+    "units": "units",
+
+    "supplierPriceAnalysis": "Supplier Price Analysis",
+    "supplier": "Supplier",
+    "price": "Price",
+    "change": "Δ Change"
   }
   
 }
