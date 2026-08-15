@@ -18,6 +18,7 @@ import {
   Receipt,
   BookText,
   RotateCcw,
+  ChartColumn,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -59,6 +60,11 @@ export default function AppSidebar() {
           title: t("sidebar.dashboard"),
           icon: LayoutDashboard,
           url: "/dashboard",
+        },
+        {
+          title: t("sidebar.reports"),
+          icon: ChartColumn,
+          url: "/dashboard/reports",
         },
         {
           title: t("sidebar.inventory"),

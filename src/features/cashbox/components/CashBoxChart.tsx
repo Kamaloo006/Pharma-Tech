@@ -1,4 +1,3 @@
-// features/cashbox/components/CashBoxChart.tsx
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LineChart as ChartIcon, Loader2 } from "lucide-react";
@@ -44,14 +43,12 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
     };
   }, [period]);
 
-  // جلب البيانات الحية للحركات المالية (تتحدث تلقائياً عند تغير تواريخ الـ period)
   const { data: transactions = [], isLoading } = useCashBoxChartData(
     dateFrom,
     dateTo,
     !!cashBoxId,
   );
 
-  // تجميع البيانات وعمل تنظيف وملء للأيام الفارغة (Zero-Filling)
   const chartData = useMemo(() => {
     const groups: Record<
       string,

@@ -260,7 +260,8 @@
         "customerDebt":"ديون الزبائن",
         "customerReturn":"مرتجعات الزبائن",
         "sales": "المبيعات",
-        "newSales": "إنشاء فاتورة مبيع"
+        "newSales": "إنشاء فاتورة مبيع",
+        "reports":"التقارير"
         
     },
     "dashboard":{

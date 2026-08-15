@@ -10,18 +10,13 @@ export default function DashboardLayout() {
   const currentDir = isArabic ? "rtl" : "ltr";
 
   return (
-    // تمرير الاتجاه ديناميكياً للـ Provider لمنع مشاكل الفراغات المخفية
     <SidebarProvider dir={currentDir} style={{ direction: currentDir }}>
       <div className="flex min-h-screen w-full bg-background text-foreground">
-        {/* 1️⃣ استدعاء السايدبار الجانبي */}
         <AppSidebar />
 
-        {/* الحاوية اليمنى/اليسرى للمحتوى والنافبار */}
         <div className="flex flex-col flex-1 min-w-0">
-          {/* 2️⃣ استدعاء الهيدر العلوي (النافبار) */}
           <DashboardHeader />
 
-          {/* 3️⃣ مساحة عرض الصفحات الديناميكية (مثل صفحة الـ Inventory) */}
           <main className="flex-1 p-4 md:p-6 max-w-400 w-full mx-auto animate-fadeIn">
             <Outlet />
           </main>
