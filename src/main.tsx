@@ -53,6 +53,7 @@ import CustomerReturn from "./pages/dashboard/CustomerReturn.tsx";
 import CreateCustomerReturn from "./pages/dashboard/CreateCustomerReturn.tsx";
 import CustomerReturnDetails from "./pages/dashboard/CustomerReturnDetails.tsx";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
+import Reports from "./pages/dashboard/Reports.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
           {
             path: "inventory",
             element: <Inventory />,
+          },
+          {
+            path: "reports",
+            element: <Reports />,
           },
           {
             path: "product-details/:id",

@@ -257,7 +257,9 @@
         "customerDebt": "Customer Debt",
         "customerReturn":"Customer Return",
         "sales":"Sales",
-        "newSales":"Create Sales Invoice"
+        "newSales":"Create Sales Invoice",
+        "reports":"Reports"
+
         
     },
   "dashboard":{
