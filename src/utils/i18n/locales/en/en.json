@@ -266,10 +266,7 @@
 
         
     },
-  "dashboard":{
-        "addProduct": "Add Product",
-        "searchPlaceholder": "Search for anything..."
-    },
+  
     "header": {
         "closeSidebar": "Close sidebar",
         "collapseSidebar": "Collapse sidebar",
@@ -1373,7 +1370,65 @@
     "supplier": "Supplier",
     "price": "Price",
     "change": "Δ Change"
+  },
+  "dashboard": {
+    "header": {
+      "greeting": "Good morning",
+      "subheading": "Here's what's happening in your pharmacy today."
+    },
+    "sections": {
+      "today": "Today"
+    },
+    "kpis": {
+      "revenue": "Revenue",
+      "invoices": "Invoices",
+      "avg_invoice": "Avg Invoice",
+      "units_sold": "Units Sold",
+      "yesterday_revenue": "Yesterday Revenue",
+      "products": "Products",
+      "in_stock": "{{count}} in stock",
+      "low_stock": "Low Stock",
+      "out_of_stock": "{{count}} out of stock",
+      "sales": "Sales"
+    },
+    "chart": {
+      "weekly_revenue": "Weekly Revenue",
+      "tooltip_revenue": "Revenue"
+    },
+    "transactions": {
+      "title": "Recent Transactions",
+      "no_data": "No transactions found."
+    },
+    "tabs": {
+      "all": "All",
+      "sales": "Sales",
+      "purchases": "Purchases",
+      "customer_returns": "Customer Returns",
+      "supplier_returns": "Supplier Returns"
+    },
+    "types": {
+      "sale": "Sale",
+      "purchase": "Purchase",
+      "customer_return": "Customer Return",
+      "supplier_return": "Supplier Return"
+    },
+    "table": {
+      "type": "Type",
+      "reference": "Reference",
+      "date_time": "Date & Time",
+      "amount": "Amount",
+      "status": "Status"
+    },
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "cancelled": "Cancelled"
+    },
+    "common": {
+      "not_available": "N/A"
+    }
   }
+  
   
 }
 

@@ -263,10 +263,7 @@
         "reports":"التقارير"
         
     },
-    "dashboard":{
-        "addProduct": "إضافة منتج",
-        "searchPlaceholder": "ابحث عن أي شيء..."
-    },
+    
     "header": {
         "closeSidebar": "إغلاق الشريط الجانبي",
         "collapseSidebar": "طي الشريط الجانبي",
@@ -1376,6 +1373,63 @@
     "supplier": "المورد",
     "price": "السعر",
     "change": "التغير"
+  },
+  "dashboard": {
+    "header": {
+      "greeting": "صباح الخير",
+      "subheading": "إليك ما يحدث في صيدليتك اليوم."
+    },
+    "sections": {
+      "today": "اليوم"
+    },
+    "kpis": {
+      "revenue": "الإيرادات",
+      "invoices": "الفواتير",
+      "avg_invoice": "معدل الفاتورة",
+      "units_sold": "القطع المباعة",
+      "yesterday_revenue": "إيرادات الأمس",
+      "products": "المنتجات",
+      "in_stock": "{{count}} متوفر بالخزينة",
+      "low_stock": "مخزون منخفض",
+      "out_of_stock": "{{count}} نفد من المخزون",
+      "sales": "المبيعات"
+    },
+    "chart": {
+      "weekly_revenue": "الإيرادات الأسبوعية",
+      "tooltip_revenue": "الإيرادات"
+    },
+    "transactions": {
+      "title": "أحدث المعاملات",
+      "no_data": "لم يتم العثور على معاملات."
+    },
+    "tabs": {
+      "all": "الكل",
+      "sales": "المبيعات",
+      "purchases": "المشتريات",
+      "customer_returns": "مرتجعات العملاء",
+      "supplier_returns": "مرتجعات الموردين"
+    },
+    "types": {
+      "sale": "مبيعات",
+      "purchase": "مشتريات",
+      "customer_return": "مرتجع عميل",
+      "supplier_return": "مرتجع مورد"
+    },
+    "table": {
+      "type": "النوع",
+      "reference": "المرجع",
+      "date_time": "التاريخ والوقت",
+      "amount": "المبلغ",
+      "status": "الحالة"
+    },
+    "status": {
+      "completed": "مكتمل",
+      "pending": "قيد الانتظار",
+      "cancelled": "ملغى"
+    },
+    "common": {
+      "not_available": "غير محدد"
+    }
   }
   
 
