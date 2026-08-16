@@ -54,9 +54,7 @@ export function ReportsHeader({
           {isArabic ? "مرحباً بعودتك" : "Welcome back"}
         </h1>
         <p className="text-xs text-muted-foreground mt-0.5">
-          {isArabic
-            ? "إليك ما يحدث في صيدليتك اليوم"
-            : "Here's what's happening in your pharmacy"}
+          {isArabic ? "إحصائيات اليـوم" : "Today's statistics"}
         </p>
       </div>
 
