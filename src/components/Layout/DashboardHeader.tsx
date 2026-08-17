@@ -28,7 +28,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { type NotificationItem } from "@/types/Notification";
 
 const DashboardHeader = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
   const navigate = useNavigate();
 
@@ -115,8 +115,8 @@ const DashboardHeader = () => {
         return <FileText className="size-4 text-emerald-500" />;
       case "purchase_invoice_created":
         return <ShoppingBag className="size-4 text-blue-500" />;
-      case "customer_debt_created":
-      case "supplier_debt_created":
+      case "customer_debt_payment":
+      case "supplier_debt_payment":
         return <CreditCard className="size-4 text-amber-500" />;
       case "customer_return_created":
       case "supplier_return_created":
@@ -136,13 +136,13 @@ const DashboardHeader = () => {
       (now.getTime() - date.getTime()) / (1000 * 60),
     );
 
-    if (diffInMinutes < 1) return isArabic ? "الآن" : "Just now";
+    if (diffInMinutes < 1) return t("notifications.time.just_now");
     if (diffInMinutes < 60)
-      return isArabic ? `منذ ${diffInMinutes} دقيقة` : `${diffInMinutes}m ago`;
+      return t("notifications.time.minutes_ago", { count: diffInMinutes });
 
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24)
-      return isArabic ? `منذ ${diffInHours} ساعة` : `${diffInHours}h ago`;
+      return t("notifications.time.hours_ago", { count: diffInHours });
 
     return date.toLocaleDateString(isArabic ? "ar-EG" : "en-US", {
       month: "short",
@@ -170,6 +170,7 @@ const DashboardHeader = () => {
             src="/logo.png"
             loading="lazy"
             className="w-20 h-20 cursor-pointer"
+            alt="Logo"
           />
         </h1>
       </div>
@@ -204,11 +205,11 @@ const DashboardHeader = () => {
             <div className="flex items-center justify-between border-b border-border/50 px-4 py-3 bg-muted/20">
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-sm">
-                  {isArabic ? "الإشعارات" : "Notifications"}
+                  {t("notifications.title")}
                 </span>
                 {unreadCount > 0 && (
                   <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
-                    {unreadCount} {isArabic ? "جديد" : "new"}
+                    {unreadCount} {t("notifications.new")}
                   </span>
                 )}
               </div>
@@ -221,9 +222,7 @@ const DashboardHeader = () => {
                   className="h-auto p-1.5 text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
                 >
                   <CheckCheck className="size-3.5" />
-                  <span>
-                    {isArabic ? "تحديد الكل كمقروء" : "Mark all as read"}
-                  </span>
+                  <span>{t("notifications.mark_all_read")}</span>
                 </Button>
               )}
             </div>
@@ -233,11 +232,11 @@ const DashboardHeader = () => {
               {isLoading ? (
                 <div className="py-8 flex justify-center items-center gap-2 text-xs text-muted-foreground">
                   <Loader2 className="size-4 animate-spin text-primary" />
-                  <span>{isArabic ? "جاري التحميل..." : "Loading..."}</span>
+                  <span>{t("notifications.loading")}</span>
                 </div>
               ) : notifications.length === 0 ? (
                 <div className="py-8 text-center text-xs text-muted-foreground">
-                  {isArabic ? "لا يوجد إشعارات حالياً" : "No notifications yet"}
+                  {t("notifications.empty")}
                 </div>
               ) : (
                 notifications.map((item: NotificationItem) => {
@@ -285,7 +284,7 @@ const DashboardHeader = () => {
                           {item.body}
                         </p>
 
-                        {/* زر التفاصيل المضاف */}
+                        {/* Details Button */}
                         {hasRoute && (
                           <div className="pt-1.5 flex justify-end">
                             <Button
@@ -294,7 +293,7 @@ const DashboardHeader = () => {
                               onClick={(e) => handleNavigateToDetails(e, item)}
                               className="h-7 px-2.5 text-[11px] font-medium gap-1 bg-background/50 hover:bg-background cursor-pointer hover:foreground transition-all shadow-xs rounded-lg border-border/80"
                             >
-                              <span>{isArabic ? "التفاصيل" : "Details"}</span>
+                              <span>{t("notifications.details")}</span>
                               <ExternalLink className="size-3" />
                             </Button>
                           </div>
@@ -317,9 +316,7 @@ const DashboardHeader = () => {
                 }}
                 className="w-full text-xs text-muted-foreground hover:text-foreground justify-center gap-1 rounded-xl"
               >
-                <span>
-                  {isArabic ? "عرض كل الإشعارات" : "View all notifications"}
-                </span>
+                <span>{t("notifications.view_all")}</span>
                 {isArabic ? (
                   <ArrowLeft className="size-3.5" />
                 ) : (

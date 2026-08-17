@@ -851,7 +851,7 @@
       "title": "دين المورد #{{id}}",
       "notFoundTitle": "لم يتم العثور على تفاصيل الدين",
       "notFoundDesc": "تعذر تحميل تفاصيل الدين. لم نتمكن من العثور على السجل المطلوب أو ربما تم حذفه.",
-      "backToList": "العودة لقائمة الديون",
+      "backToList": "العودة إلى الخلف",
       "purchaseInvoiceId": "فاتورة الشراء:",
       "createdDate": "تاريخ الإنشاء:",
       "viewInvoice": "عرض الفاتورة",
@@ -1088,7 +1088,7 @@
     "firstPage": "الصفحة الأولى",
     "lastPage": "الصفحة الأخيرة",
     "paginationResults": "نتائج",
-    "backToInvoices": "العودة إلى الفواتير",
+    "backToInvoices": "العودة إلى الخلف",
     "cancelButton": "إلغاء الفاتورة",
     "statusCancelled": "الفاتورة ملغاة",
     "notes": "ملاحظات",
@@ -1429,6 +1429,51 @@
     },
     "common": {
       "not_available": "غير محدد"
+    }
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "page_title": "كل الإشعارات",
+    "new": "جديد",
+    "mark_all_read": "تحديد الكل كمقروء",
+    "mark_as_read": "تحديد كمقروء",
+    "loading": "جاري التحميل...",
+    "loading_full": "جاري تحميل الإشعارات...",
+    "empty": "لا يوجد إشعارات حالياً",
+    "details": "التفاصيل",
+    "view_details": "عرض التفاصيل",
+    "view_all": "عرض كل الإشعارات",
+    "search_placeholder": "بحث في الإشعارات أو رقم الفاتورة...",
+    "filter_by_type": "تصفية حسب النوع:",
+    "no_match_title": "لا توجد إشعارات مطابقة",
+    "no_match_desc": "لم نجد أي إشعارات تتطابق مع معايير البحث أو الفلترة الحالية.",
+    "time": {
+      "just_now": "الآن",
+      "minutes_ago": "منذ {{count}} دقيقة",
+      "hours_ago": "منذ {{count}} ساعة"
+    },
+    "status": {
+      "all": "الكل",
+      "unread": "غير مقروء",
+      "read": "مقروء"
+    },
+    "types": {
+      "sale_invoice_created": "فاتورة مبيعات",
+      "purchase_invoice_created": "فاتورة مشتريات",
+      "debt_record": "ديون وتكاليف",
+      "return_record": "مرتجع",
+      "low_stock_alert": "تنبيه مخزون",
+      "general": "إشعار عام"
+    },
+    "filters": {
+      "all_types": "الجميع",
+      "sales": "مبيعات",
+      "purchases": "مشتريات",
+      "stock": "مخزون",
+      "customer_debts": "ديون عملاء",
+      "supplier_debts": "ديون موردين",
+      "supplier_returns": "مرتجعات موردين",
+      "customer_returns": "مرتجعات الزبائن"
     }
   }
   

@@ -26,7 +26,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { type NotificationItem } from "@/types/Notification";
 
 const Notifications = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
   const navigate = useNavigate();
 
@@ -92,40 +92,40 @@ const Notifications = () => {
         return {
           icon: <FileText className="size-5 text-emerald-500" />,
           bgColor: "bg-emerald-500/10 border-emerald-500/20",
-          label: isArabic ? "فاتورة مبيعات" : "Sales Invoice",
+          label: t("notifications.types.sale_invoice_created"),
         };
       case "purchase_invoice_created":
         return {
           icon: <ShoppingBag className="size-5 text-blue-500" />,
           bgColor: "bg-blue-500/10 border-blue-500/20",
-          label: isArabic ? "فاتورة مشتريات" : "Purchase Invoice",
+          label: t("notifications.types.purchase_invoice_created"),
         };
       case "customer_debt_created":
       case "supplier_debt_created":
         return {
           icon: <CreditCard className="size-5 text-amber-500" />,
           bgColor: "bg-amber-500/10 border-amber-500/20",
-          label: isArabic ? "ديون وتكاليف" : "Debt Record",
+          label: t("notifications.types.debt_record"),
         };
       case "customer_return_created":
       case "supplier_return_created":
         return {
           icon: <RotateCcw className="size-5 text-purple-500" />,
           bgColor: "bg-purple-500/10 border-purple-500/20",
-          label: isArabic ? "مرتجع" : "Return Record",
+          label: t("notifications.types.return_record"),
         };
       case "low_stock_alert":
       case "product_alert":
         return {
           icon: <AlertTriangle className="size-5 text-rose-500" />,
           bgColor: "bg-rose-500/10 border-rose-500/20",
-          label: isArabic ? "تنبيه مخزون" : "Stock Alert",
+          label: t("notifications.types.low_stock_alert"),
         };
       default:
         return {
           icon: <Bell className="size-5 text-primary" />,
           bgColor: "bg-primary/10 border-primary/20",
-          label: isArabic ? "إشعار عام" : "General",
+          label: t("notifications.types.general"),
         };
     }
   };
@@ -137,13 +137,13 @@ const Notifications = () => {
       (now.getTime() - date.getTime()) / (1000 * 60),
     );
 
-    if (diffInMinutes < 1) return isArabic ? "الآن" : "Just now";
+    if (diffInMinutes < 1) return t("notifications.time.just_now");
     if (diffInMinutes < 60)
-      return isArabic ? `منذ ${diffInMinutes} دقيقة` : `${diffInMinutes}m ago`;
+      return t("notifications.time.minutes_ago", { count: diffInMinutes });
 
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24)
-      return isArabic ? `منذ ${diffInHours} ساعة` : `${diffInHours}h ago`;
+      return t("notifications.time.hours_ago", { count: diffInHours });
 
     return date.toLocaleDateString(isArabic ? "ar-EG" : "en-US", {
       year: "numeric",
@@ -206,6 +206,32 @@ const Notifications = () => {
     }
   };
 
+  const filterTypes = [
+    { key: "all", label: t("notifications.filters.all_types") },
+    { key: "sale_invoice_created", label: t("notifications.filters.sales") },
+    {
+      key: "purchase_invoice_created",
+      label: t("notifications.filters.purchases"),
+    },
+    { key: "low_stock_alert", label: t("notifications.filters.stock") },
+    {
+      key: "customer_debt_created",
+      label: t("notifications.filters.customer_debts"),
+    },
+    {
+      key: "supplier_debt_created",
+      label: t("notifications.filters.supplier_debts"),
+    },
+    {
+      key: "supplier_return_created",
+      label: t("notifications.filters.supplier_returns"),
+    },
+    {
+      key: "customer_return_created",
+      label: t("notifications.filters.customer_returns"),
+    },
+  ];
+
   return (
     <div
       className="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto min-h-[calc(100vh-80px)]"
@@ -219,7 +245,7 @@ const Notifications = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-foreground">
-                {isArabic ? "كل الإشعارات" : "All Notifications"}
+                {t("notifications.page_title")}
               </h1>
             </div>
           </div>
@@ -233,8 +259,7 @@ const Notifications = () => {
           >
             <CheckCheck className="size-4" />
             <span>
-              {isArabic ? "تحديد الكل كمقروء" : "Mark all as read"} (
-              {unreadCount})
+              {t("notifications.mark_all_read")} ({unreadCount})
             </span>
           </Button>
         )}
@@ -246,11 +271,7 @@ const Notifications = () => {
             <div className="relative w-full md:w-80">
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground rtl:right-3 rtl:left-auto ltr:left-3 ltr:right-auto" />
               <Input
-                placeholder={
-                  isArabic
-                    ? "بحث في الإشعارات أو رقم الفاتورة..."
-                    : "Search notifications or invoice #..."
-                }
+                placeholder={t("notifications.search_placeholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="rtl:pr-9 ltr:pl-9 bg-background/80 border-border/70 rounded-xl text-xs h-10 focus-visible:ring-primary/30"
@@ -264,7 +285,7 @@ const Notifications = () => {
                 onClick={() => setFilterStatus("all")}
                 className="rounded-xl text-xs h-9 px-3.5"
               >
-                {isArabic ? "الكل" : "All"} ({notifications.length})
+                {t("notifications.status.all")} ({notifications.length})
               </Button>
               <Button
                 size="sm"
@@ -272,7 +293,7 @@ const Notifications = () => {
                 onClick={() => setFilterStatus("unread")}
                 className="rounded-xl text-xs h-9 px-3.5 gap-1.5"
               >
-                <span>{isArabic ? "غير مقروء" : "Unread"}</span>
+                <span>{t("notifications.status.unread")}</span>
                 {unreadCount > 0 && (
                   <Badge className="bg-primary-foreground text-primary hover:bg-primary-foreground text-[10px] px-1.5 py-0 h-4 rounded-full">
                     {unreadCount}
@@ -285,7 +306,7 @@ const Notifications = () => {
                 onClick={() => setFilterStatus("read")}
                 className="rounded-xl text-xs h-9 px-3.5"
               >
-                {isArabic ? "مقروء" : "Read"}
+                {t("notifications.status.read")}
               </Button>
             </div>
           </div>
@@ -293,37 +314,10 @@ const Notifications = () => {
           <div className="flex items-center gap-2 pt-2 border-t border-border/40 overflow-x-auto text-xs">
             <span className="text-muted-foreground shrink-0 font-medium flex items-center gap-1">
               <Filter className="size-3.5" />
-              {isArabic ? "تصفية حسب النوع:" : "Filter by type:"}
+              {t("notifications.filter_by_type")}
             </span>
             <div className="flex items-center gap-1.5">
-              {[
-                { key: "all", label: isArabic ? "الجميع" : "All Types" },
-                {
-                  key: "sale_invoice_created",
-                  label: isArabic ? "مبيعات" : "Sales",
-                },
-                {
-                  key: "purchase_invoice_created",
-                  label: isArabic ? "مشتريات" : "Purchases",
-                },
-                { key: "low_stock_alert", label: isArabic ? "مخزون" : "Stock" },
-                {
-                  key: "customer_debt_created",
-                  label: isArabic ? "ديون عملاء" : "Customer Debts",
-                },
-                {
-                  key: "supplier_debt_created",
-                  label: isArabic ? "ديون موردين" : "Supplier Debts",
-                },
-                {
-                  key: "supplier_return_created",
-                  label: isArabic ? "مرتجعات موردين" : "Suppliers Returns",
-                },
-                {
-                  key: "customer_return_created",
-                  label: isArabic ? "مرتجعات الزبائن" : "Customers Returns",
-                },
-              ].map((typeItem) => (
+              {filterTypes.map((typeItem) => (
                 <button
                   key={typeItem.key}
                   type="button"
@@ -348,9 +342,7 @@ const Notifications = () => {
           <div className="py-20 flex flex-col items-center justify-center gap-3 text-muted-foreground">
             <Loader2 className="size-8 animate-spin text-primary" />
             <span className="text-xs font-medium">
-              {isArabic
-                ? "جاري تحميل الإشعارات..."
-                : "Loading notifications..."}
+              {t("notifications.loading_full")}
             </span>
           </div>
         ) : filteredNotifications.length === 0 ? (
@@ -361,14 +353,10 @@ const Notifications = () => {
               </div>
               <div className="space-y-1">
                 <h3 className="text-base font-semibold text-foreground">
-                  {isArabic
-                    ? "لا توجد إشعارات مطابقة"
-                    : "No notifications found"}
+                  {t("notifications.no_match_title")}
                 </h3>
                 <p className="text-xs text-muted-foreground max-w-sm">
-                  {isArabic
-                    ? "لم نجد أي إشعارات تتطابق مع معايير البحث أو الفلترة الحالية."
-                    : "No notifications match your current search or filter criteria."}
+                  {t("notifications.no_match_desc")}
                 </p>
               </div>
             </CardContent>
@@ -414,7 +402,7 @@ const Notifications = () => {
                         </Badge>
                         {isUnread && (
                           <Badge className="bg-primary text-primary-foreground text-[10px] px-2 py-0.5 rounded-full font-medium">
-                            {isArabic ? "جديد" : "New"}
+                            {t("notifications.new")}
                           </Badge>
                         )}
                       </div>
@@ -446,9 +434,7 @@ const Notifications = () => {
                         onClick={(e) => handleNavigateDetails(e, item)}
                         className="rounded-xl text-xs h-9 px-3.5 gap-1.5 shadow-xs transition-all"
                       >
-                        <span>
-                          {isArabic ? "عرض التفاصيل" : "View Details"}
-                        </span>
+                        <span>{t("notifications.view_details")}</span>
                         <ExternalLink className="size-3.5" />
                       </Button>
                     )}
@@ -462,7 +448,7 @@ const Notifications = () => {
                           markAsRead(item.id);
                         }}
                         className="rounded-xl text-xs h-9 px-2.5 text-muted-foreground hover:text-primary hover:bg-primary/10"
-                        title={isArabic ? "تحديد كمقروء" : "Mark as read"}
+                        title={t("notifications.mark_as_read")}
                       >
                         <CheckCircle2 className="size-4" />
                       </Button>

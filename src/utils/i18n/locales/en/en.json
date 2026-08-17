@@ -855,7 +855,7 @@
       "title": "Supplier Debt #{{id}}",
       "notFoundTitle": "Debt Details Not Found",
       "notFoundDesc": "Unable to load debt details. The requested record could not be found or may have been deleted",
-      "backToList": "Back to Debts List",
+      "backToList": "Go Back",
       "purchaseInvoiceId": "Purchase Invoice:",
       "createdDate": "Created Date:",
       "viewInvoice": "View Invoice",
@@ -1090,7 +1090,7 @@
     "firstPage": "First Page",
     "lastPage": "Last Page",
     "paginationResults": "results",
-    "backToInvoices": "Back to Invoices",
+    "backToInvoices": "Go Back",
     "cancelButton": "Cancel Invoice",
     "statusCancelled": "Invoice Cancelled",
     "notes": "Notes",
@@ -1426,6 +1426,51 @@
     },
     "common": {
       "not_available": "N/A"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "page_title": "All Notifications",
+    "new": "new",
+    "mark_all_read": "Mark all as read",
+    "mark_as_read": "Mark as read",
+    "loading": "Loading...",
+    "loading_full": "Loading notifications...",
+    "empty": "No notifications yet",
+    "details": "Details",
+    "view_details": "View Details",
+    "view_all": "View all notifications",
+    "search_placeholder": "Search notifications or invoice #...",
+    "filter_by_type": "Filter by type:",
+    "no_match_title": "No notifications found",
+    "no_match_desc": "No notifications match your current search or filter criteria.",
+    "time": {
+      "just_now": "Just now",
+      "minutes_ago": "{{count}}m ago",
+      "hours_ago": "{{count}}h ago"
+    },
+    "status": {
+      "all": "All",
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "types": {
+      "sale_invoice_created": "Sales Invoice",
+      "purchase_invoice_created": "Purchase Invoice",
+      "debt_record": "Debt Record",
+      "return_record": "Return Record",
+      "low_stock_alert": "Stock Alert",
+      "general": "General"
+    },
+    "filters": {
+      "all_types": "All Types",
+      "sales": "Sales",
+      "purchases": "Purchases",
+      "stock": "Stock",
+      "customer_debts": "Customer Debts",
+      "supplier_debts": "Supplier Debts",
+      "supplier_returns": "Suppliers Returns",
+      "customer_returns": "Customers Returns"
     }
   }
   
