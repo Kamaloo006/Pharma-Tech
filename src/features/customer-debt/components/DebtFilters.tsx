@@ -20,7 +20,7 @@ interface DebtFiltersProps {
   setLocalFilters: React.Dispatch<
     React.SetStateAction<CustomerDebtsFilterParams>
   >;
-  customersList: any[];
+  customersList: unknown[];
   isLoadingCustomers: boolean;
   onApplyFilters: () => void;
   onResetFilters: () => void;

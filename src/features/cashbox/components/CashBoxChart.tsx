@@ -93,7 +93,7 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
     );
   }, [transactions, dateFrom, dateTo, isArabic]);
 
-  const formatYAxis = (value: any) => {
+  const formatYAxis = (value: unknown) => {
     const num = Number(value);
     if (isNaN(num)) return String(value);
     if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;

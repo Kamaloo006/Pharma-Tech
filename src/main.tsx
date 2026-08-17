@@ -54,6 +54,7 @@ import CreateCustomerReturn from "./pages/dashboard/CreateCustomerReturn.tsx";
 import CustomerReturnDetails from "./pages/dashboard/CustomerReturnDetails.tsx";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import Reports from "./pages/dashboard/Reports.tsx";
+import Notifications from "./pages/dashboard/Notifications.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -186,6 +187,10 @@ const router = createBrowserRouter([
           {
             path: "sales-details/:id",
             element: <SalesInvoiceDetails />,
+          },
+          {
+            path: "notifications",
+            element: <Notifications />,
           },
         ],
       },
