@@ -7,7 +7,7 @@ export const CASH_BOX_QUERY_KEYS = {
   all: ["cashBox"] as const,
   details: () => [...CASH_BOX_QUERY_KEYS.all, "details"] as const,
   statistics: () => [...CASH_BOX_QUERY_KEYS.all, "statistics"] as const,
-  transactions: (params: any) => [...CASH_BOX_QUERY_KEYS.all, "transactions", params] as const,
+  transactions: (params: unknown) => [...CASH_BOX_QUERY_KEYS.all, "transactions", params] as const,
   chartData: (dateFrom: string, dateTo: string) => [...CASH_BOX_QUERY_KEYS.all, "chart", { dateFrom, dateTo }] as const, 
 };
 
@@ -23,8 +23,8 @@ export function useCashBox() {
       if (response.data && response.data.active_box) return response.data.active_box;
       return null;
     },
-    retry: (failureCount, error: any) => {
-      if (error.response?.status === 404) return false; 
+    retry: (failureCount, error: unknown) => {
+      if ((error as { response?: { status?: number } }).response?.status === 404) return false; 
       return failureCount < 2;
     },
     staleTime: 5 * 60 * 1000,

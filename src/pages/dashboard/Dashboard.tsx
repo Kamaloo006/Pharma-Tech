@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import { DashboardHeader } from "@/features/dashboard/components/DashboardHeader";
-import { DashboardKpis } from "@/features/dashboard/components/DashboardKPIs";
+import { DashboardKpis } from "@/features/dashboard/components/DashboardKpis";
 import { WeeklyRevenueChart } from "@/features/dashboard/components/WeeklyRevenueChart";
 import { RecentTransactionsTable } from "@/features/dashboard/components/RecentTransactionsTable";
 
@@ -14,7 +14,7 @@ export default function DashboardHome() {
   }, []);
 
   return (
-    <div className="space-y-6 p-6 pb-12 max-w-7xl mx-auto overflow-hidden">
+    <div className="space-y-6 p-6 pb-12 max-w-8xl mx-auto overflow-hidden">
       <DashboardHeader />
       <DashboardKpis />
       <WeeklyRevenueChart />

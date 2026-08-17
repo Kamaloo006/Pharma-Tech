@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
-import { type Supplier } from "../../features/suppliers/types/Supplier";
+import {
+  type Supplier,
+  type SupplierFormData,
+} from "../../features/suppliers/types/Supplier";
 import { SupplierFormModal } from "@/features/suppliers/components/SupplierFormModal";
 import SuppliersTable from "@/features/suppliers/components/SuppliersTable";
 import { Loader2, Plus, Users } from "lucide-react";
@@ -62,7 +65,7 @@ export default function SuppliersPage() {
     }
   };
 
-  const handleFormSubmit = async (formData: any) => {
+  const handleFormSubmit = async (formData: SupplierFormData) => {
     if (selectedSupplier) {
       await updateSupplier({ id: selectedSupplier.id, data: formData });
     } else {

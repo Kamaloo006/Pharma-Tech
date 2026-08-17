@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DebtStatusBadge } from "./DebtStatusBadge";
+import type { DebtStatus } from "../../types/customerDebt";
 
 interface Customer {
   full_name: string;
@@ -20,7 +21,7 @@ interface DebtDetails {
   total_amount: number;
   paid_amount: number;
   remaining_amount: number;
-  status: any;
+  status: DebtStatus;
   customer: Customer;
 }
 

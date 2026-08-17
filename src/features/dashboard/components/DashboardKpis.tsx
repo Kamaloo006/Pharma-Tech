@@ -1,4 +1,3 @@
-// features/dashboard/components/DashboardKpis.tsx
 import { useTranslation } from "react-i18next";
 import CountUp from "react-countup";
 import {
@@ -16,6 +15,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardHeader } from "@/features/dashboard/hooks/useDashboardHeader";
 import { useDashboardCards } from "@/features/dashboard/hooks/useDashboardCards";
+
+// معالجة مشكلة Interop لـ react-countup مع Vite/ESM
+const SafeCountUp = (CountUp as any).default || CountUp;
 
 function KpiSkeleton() {
   return (
@@ -57,8 +59,8 @@ export function DashboardKpis() {
                   </div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-bold font-mono">
-                      SYP
-                      <CountUp
+                      SYP{" "}
+                      <SafeCountUp
                         end={headerData?.today_revenue ?? 0}
                         decimals={2}
                         separator=","
@@ -76,7 +78,7 @@ export function DashboardKpis() {
                       ) : (
                         <ArrowDownRight className="h-3 w-3 mr-0.5" />
                       )}
-                      <CountUp
+                      <SafeCountUp
                         end={Math.abs(
                           headerData?.today_revenue_change_percent ?? 0,
                         )}
@@ -108,7 +110,7 @@ export function DashboardKpis() {
                   </div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-bold font-mono">
-                      <CountUp
+                      <SafeCountUp
                         end={headerData?.today_invoice_count ?? 0}
                         separator=","
                       />
@@ -137,8 +139,8 @@ export function DashboardKpis() {
                   </div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-bold font-mono">
-                      SYP
-                      <CountUp
+                      SYP{" "}
+                      <SafeCountUp
                         end={headerData?.today_avg_invoice ?? 0}
                         decimals={2}
                         separator=","
@@ -168,7 +170,7 @@ export function DashboardKpis() {
                   </div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-bold font-mono">
-                      <CountUp
+                      <SafeCountUp
                         end={headerData?.today_units_sold ?? 0}
                         separator=","
                       />
@@ -198,8 +200,8 @@ export function DashboardKpis() {
                 </span>
                 <div className="flex items-baseline justify-between">
                   <span className="text-xl font-bold font-mono">
-                    SYP
-                    <CountUp
+                    SYP{" "}
+                    <SafeCountUp
                       end={cardsData?.yesterday_revenue ?? 0}
                       decimals={2}
                       separator=","
@@ -217,7 +219,7 @@ export function DashboardKpis() {
                     ) : (
                       <ArrowDownRight className="h-3 w-3 mr-0.5" />
                     )}
-                    <CountUp
+                    <SafeCountUp
                       end={Math.abs(
                         cardsData?.yesterday_week_change_percent ?? 0,
                       )}
@@ -245,7 +247,10 @@ export function DashboardKpis() {
                   {t("dashboard.kpis.products")}
                 </span>
                 <div className="text-xl font-bold font-mono">
-                  <CountUp end={cardsData?.total_products ?? 0} separator="," />
+                  <SafeCountUp
+                    end={cardsData?.total_products ?? 0}
+                    separator=","
+                  />
                 </div>
                 <p className="text-[11px] text-emerald-500 font-medium">
                   {t("dashboard.kpis.in_stock", {
@@ -272,7 +277,7 @@ export function DashboardKpis() {
                 </span>
                 <div className="flex items-center gap-1.5 text-xl font-bold font-mono text-amber-500">
                   <AlertTriangle className="h-4 w-4" />{" "}
-                  <CountUp
+                  <SafeCountUp
                     end={cardsData?.stock_alerts_count ?? 0}
                     separator=","
                   />
@@ -303,7 +308,7 @@ export function DashboardKpis() {
                 </span>
                 <div className="flex items-baseline justify-between">
                   <span className="text-xl font-bold font-mono">
-                    <CountUp
+                    <SafeCountUp
                       end={cardsData?.today_sales_count ?? 0}
                       separator=","
                     />
@@ -320,7 +325,7 @@ export function DashboardKpis() {
                     ) : (
                       <ArrowDownRight className="h-3 w-3 mr-0.5" />
                     )}
-                    <CountUp
+                    <SafeCountUp
                       end={Math.abs(cardsData?.today_sales_change_percent ?? 0)}
                       decimals={1}
                     />
