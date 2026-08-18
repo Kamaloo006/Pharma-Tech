@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { type InvoiceFilters } from "../types/purchase-invoice";
+import type { Supplier } from "@/features/suppliers/types/Supplier";
 
 interface InvoiceFiltersFormProps {
   control: Control<InvoiceFilters>;
@@ -27,7 +28,7 @@ interface InvoiceFiltersFormProps {
   isFiltersChanged: boolean;
   showFilterLoading: boolean;
   isLoadingSuppliers: boolean;
-  suppliers: any[];
+  suppliers: Supplier[];
   isArabic: boolean;
   fromDateValue?: string;
 }
@@ -116,10 +117,10 @@ export function InvoiceFiltersForm({
                       placeholder={t("purchaseInvoice.filters.selectSupplier")}
                     />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border shadow-md">
+                  <SelectContent className="bg-muted border-border shadow-md">
                     <SelectItem
                       value="all"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {isLoadingSuppliers
                         ? t("common.loading")
@@ -129,7 +130,7 @@ export function InvoiceFiltersForm({
                       <SelectItem
                         key={s.id}
                         value={s.id.toString()}
-                        className="text-xs font-semibold cursor-pointer"
+                        className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                       >
                         {s.name}
                       </SelectItem>
@@ -155,16 +156,16 @@ export function InvoiceFiltersForm({
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border shadow-md">
+                  <SelectContent className="bg-muted border-border shadow-md">
                     <SelectItem
                       value="all"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {t("purchaseInvoice.filters.allStatuses")}
                     </SelectItem>
                     <SelectItem
                       value="completed"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {t("purchaseInvoice.status.completed")}
                     </SelectItem>
@@ -195,28 +196,28 @@ export function InvoiceFiltersForm({
                   <SelectTrigger className="h-9 w-full rounded-xl border border-input bg-muted hover:bg-secondary/80 text-foreground text-xs font-semibold focus:ring-1 focus:ring-primary">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border shadow-md">
+                  <SelectContent className="bg-muted border-border shadow-md ">
                     <SelectItem
                       value="all"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {t("purchaseInvoice.filters.allPayments")}
                     </SelectItem>
                     <SelectItem
                       value="paid"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {t("purchaseInvoice.paymentStatus.paid")}
                     </SelectItem>
                     <SelectItem
                       value="partial"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {t("purchaseInvoice.paymentStatus.partial")}
                     </SelectItem>
                     <SelectItem
                       value="unpaid"
-                      className="text-xs font-semibold cursor-pointer"
+                      className="text-xs font-semibold cursor-pointer hover:bg-primary/70"
                     >
                       {t("purchaseInvoice.paymentStatus.unpaid")}
                     </SelectItem>

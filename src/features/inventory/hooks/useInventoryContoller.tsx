@@ -10,6 +10,7 @@ export const useInventoryController = () => {
 
   const {
     register,
+    control, // <-- استخراج control من الهوك الخاص بالفلاتر
     debouncedSearch,
     currentPage,
     setCurrentPage,
@@ -71,6 +72,7 @@ export const useInventoryController = () => {
     t,
     isArabic,
     register,
+    control, // <-- تصدير control هنا حتى يتسنى لمكون الصفحة استخدامه مع <Controller />
     categories,
     companies,
     products,
@@ -85,7 +87,6 @@ export const useInventoryController = () => {
     handleNextPage,
     handlePreviousPage,
 
-    // تصدير الوظائف الجديدة لاستعمالها في الـ UI
     applyMoreFilters,
     resetMoreFilters,
   };

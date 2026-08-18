@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, Receipt, Loader2 } from "lucide-react";
+import { Package, Receipt, Loader2, BrainCircuit } from "lucide-react";
 
 import { SupplierForm } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/SupplierForm";
 import { LiveAlerts } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/LiveAlerts";
@@ -10,6 +11,8 @@ import { InvoiceSummaryCard } from "@/features/purchase-invoice/components/Creat
 import { PaymentDetailsCard } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/PaymentDetailsCard";
 
 import { useCreatePurchaseInvoice } from "@/features/purchase-invoice/hooks/useCreatePurchaseInvoice";
+import { useCheckDrugInteractions } from "@/hooks/useCheckDrugInteractions";
+import DrugInteractionsModal from "@/components/Layout/DrugInteractionsModal";
 
 export default function CreatePurchaseInvoice() {
   const {
@@ -46,6 +49,25 @@ export default function CreatePurchaseInvoice() {
     handleSaveInvoice,
     navigateToCashbox,
   } = useCreatePurchaseInvoice();
+
+  const [isInteractionsModalOpen, setIsInteractionsModalOpen] = useState(false);
+  const {
+    mutate: checkInteractions,
+    data: interactionsData,
+    isPending: isCheckingInteractions,
+    isError: isInteractionsError,
+  } = useCheckDrugInteractions();
+
+  const handleCheckInteractions = () => {
+    if (items.length < 2) return;
+
+    const productIds: number[] = items
+      .map((item) => Number(item.product_id || item.product_id))
+      .filter((id) => !isNaN(id) && id > 0);
+
+    setIsInteractionsModalOpen(true);
+    checkInteractions({ product_ids: productIds });
+  };
 
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-400 mx-auto text-start dir-rtl">
@@ -147,6 +169,22 @@ export default function CreatePurchaseInvoice() {
                 updateItemField={updateItemField}
                 removeItem={removeItem}
               />
+
+              {/* زر الـ AI الخاص بالتداخلات الدوائية تحت الجدول */}
+              {items.length >= 2 && (
+                <div className="pt-2 flex justify-end border-t border-border/40">
+                  <Button
+                    type="button"
+                    onClick={handleCheckInteractions}
+                    className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-bold transition-all shadow-md"
+                  >
+                    <BrainCircuit className="h-4 w-4" />
+                    {isArabic
+                      ? "فحص التداخلات الدوائية (AI)"
+                      : "Check Drug Interactions (AI)"}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -170,6 +208,17 @@ export default function CreatePurchaseInvoice() {
           />
         </div>
       </div>
+
+      {/* Modal التداخلات الدوائية */}
+      <DrugInteractionsModal
+        isOpen={isInteractionsModalOpen}
+        onClose={() => setIsInteractionsModalOpen(false)}
+        isArabic={isArabic}
+        isLoading={isCheckingInteractions}
+        data={interactionsData}
+        isError={isInteractionsError}
+        onRetry={handleCheckInteractions}
+      />
     </div>
   );
 }

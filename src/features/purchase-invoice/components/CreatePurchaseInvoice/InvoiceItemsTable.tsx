@@ -17,7 +17,7 @@ interface InvoiceItemsTableProps {
   updateItemField: (
     rowId: string,
     field: keyof InvoiceItem,
-    value: any,
+    value: unknown,
   ) => void;
   removeItem: (rowId: string) => void;
 }

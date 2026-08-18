@@ -298,23 +298,23 @@ export default function InventoryTable({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="w-40 bg-muted/20 backdrop-blur-sm border border-border/60 text-xs"
+                        className="w-40 bg-muted backdrop-blur-sm border border-border/60 text-xs"
                       >
                         <Link to={`/dashboard/product-details/${med.id}`}>
-                          <DropdownMenuItem className="cursor-pointer gap-2 hover:bg-muted/70">
+                          <DropdownMenuItem className="hover:bg-primary/70 cursor-pointer gap-2 ">
                             <Eye className="size-3.5 text-muted-foreground" />
                             <span>{t("inventory.showDetails")}</span>
                           </DropdownMenuItem>
                         </Link>
                         <Link to={`/dashboard/products/${med.id}/batches`}>
-                          <DropdownMenuItem className="cursor-pointer gap-2 hover:bg-muted/70">
+                          <DropdownMenuItem className="hover:bg-primary/70 cursor-pointer gap-2 ">
                             <Package className="size-3.5 text-muted-foreground" />
                             <span>{t("inventory.manageBatches")}</span>
                           </DropdownMenuItem>
                         </Link>
 
                         <DropdownMenuItem
-                          className="cursor-pointer gap-2 hover:bg-muted/70"
+                          className="cursor-pointer gap-2 hover:bg-primary/70"
                           onClick={() => onEdit(med)}
                         >
                           <Pencil className="size-3.5 text-muted-foreground" />
