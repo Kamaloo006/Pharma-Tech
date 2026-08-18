@@ -25,7 +25,7 @@ interface AddProductModalProps {
   categories: Array<{ id: number; name: string }>;
   t: (key: string) => string;
   isArabic: boolean;
-  productToEdit?: Product;
+  productToEdit?: Product | null;
   companies: Company[];
   onSuccess: () => void;
 }

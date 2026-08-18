@@ -1373,7 +1373,7 @@
   },
   "dashboard": {
     "header": {
-      "greeting": "Good morning",
+      "greeting": "Hello",
       "subheading": "Here's what's happening in your pharmacy today."
     },
     "sections": {

@@ -1376,7 +1376,7 @@
   },
   "dashboard": {
     "header": {
-      "greeting": "صباح الخير",
+      "greeting": "مرحباً",
       "subheading": "إليك ما يحدث في صيدليتك اليوم."
     },
     "sections": {

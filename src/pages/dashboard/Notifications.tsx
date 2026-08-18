@@ -1,6 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import {
   Bell,
   CheckCheck,
@@ -38,6 +41,19 @@ const Notifications = () => {
     "all",
   );
   const [filterType, setFilterType] = useState<string>("all");
+
+  useEffect(() => {
+    AOS.init({
+      duration: 600,
+      once: true,
+      easing: "ease-out-cubic",
+    });
+  }, []);
+
+  // Refresh AOS elements whenever notifications list changes
+  useEffect(() => {
+    AOS.refresh();
+  }, [notifications, filterStatus, filterType, searchTerm]);
 
   const getNotificationRoute = (item: NotificationItem): string | null => {
     const data = item.data;
@@ -237,7 +253,11 @@ const Notifications = () => {
       className="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto min-h-[calc(100vh-80px)]"
       dir={isArabic ? "rtl" : "ltr"}
     >
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-border/40">
+      {/* Header Section */}
+      <div
+        data-aos="fade-down"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-border/40"
+      >
         <div>
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-primary/10 border border-primary/20 text-primary">
@@ -265,7 +285,12 @@ const Notifications = () => {
         )}
       </div>
 
-      <Card className="border-border/60 shadow-xs bg-card/60 backdrop-blur-xs rounded-2xl overflow-hidden">
+      {/* Search and Filters Card */}
+      <Card
+        data-aos="fade-up"
+        data-aos-delay="100"
+        className="border-border/60 shadow-xs bg-card/60 backdrop-blur-xs rounded-2xl overflow-hidden"
+      >
         <CardContent className="p-4 sm:p-5 space-y-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="relative w-full md:w-80">
@@ -337,6 +362,7 @@ const Notifications = () => {
         </CardContent>
       </Card>
 
+      {/* Notifications List */}
       <div className="space-y-3">
         {isLoading ? (
           <div className="py-20 flex flex-col items-center justify-center gap-3 text-muted-foreground">
@@ -346,7 +372,10 @@ const Notifications = () => {
             </span>
           </div>
         ) : filteredNotifications.length === 0 ? (
-          <Card className="border-dashed border-border/80 bg-card/30">
+          <Card
+            data-aos="zoom-in"
+            className="border-dashed border-border/80 bg-card/30"
+          >
             <CardContent className="py-16 flex flex-col items-center justify-center text-center space-y-3">
               <div className="p-4 rounded-full bg-muted/30 border border-border/50">
                 <Inbox className="size-8 text-muted-foreground" />
@@ -362,7 +391,7 @@ const Notifications = () => {
             </CardContent>
           </Card>
         ) : (
-          filteredNotifications.map((item) => {
+          filteredNotifications.map((item, index) => {
             const isUnread = item.read_at === null;
             const details = getNotificationDetails(item.data?.type);
             const route = getNotificationRoute(item);
@@ -370,6 +399,8 @@ const Notifications = () => {
             return (
               <Card
                 key={item.id}
+                data-aos="fade-up"
+                data-aos-delay={Math.min(index * 50, 300)}
                 onClick={() => handleItemClick(item)}
                 className={clsx(
                   "border transition-all duration-200 cursor-pointer overflow-hidden group hover:shadow-md",

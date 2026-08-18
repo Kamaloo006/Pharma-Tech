@@ -35,8 +35,9 @@ export const useInventoryFilters = () => {
     sort_by: "",
   });
 
-  const { register, watch, reset, getValues } = useForm<InventoryFilterInput, unknown, InventoryFilterValues>({
+  const { register, watch, reset, getValues, control } = useForm<InventoryFilterInput, unknown, InventoryFilterValues>({
     resolver: zodResolver(filterSchema),
+    
     defaultValues: {
       search: "",
       category_id: "all",
@@ -118,7 +119,7 @@ export const useInventoryFilters = () => {
     selectedCompany,
     stockStatusFilter,
     withTrashedFilter,
-    
+    control,
     appliedMoreFilters, 
     applyMoreFilters,
     resetMoreFilters,
