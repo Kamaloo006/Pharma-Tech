@@ -55,6 +55,8 @@ import CustomerReturnDetails from "./pages/dashboard/CustomerReturnDetails.tsx";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import Reports from "./pages/dashboard/Reports.tsx";
 import Notifications from "./pages/dashboard/Notifications.tsx";
+import Unauthorized from "./components/Layout/UnAuthorized.tsx";
+import AddPharmacist from "./pages/dashboard/AddPharmacist.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -88,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "/complete-profile",
         element: <CompleteProfile />,
+      },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized />,
       },
     ],
   },
@@ -191,6 +197,10 @@ const router = createBrowserRouter([
           {
             path: "notifications",
             element: <Notifications />,
+          },
+          {
+            path: "pharmacists/new",
+            element: <AddPharmacist />,
           },
         ],
       },

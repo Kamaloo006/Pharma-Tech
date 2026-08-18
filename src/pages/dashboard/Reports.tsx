@@ -1,9 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { format, subDays } from "date-fns";
 
+import { useAuth } from "@/context/AuthContext";
 import { useSalesReports } from "@/features/reports/hooks/useSalesReports";
 import { useProfitReport } from "@/features/reports/hooks/useProfitReports";
 import { useTopProductReports } from "@/features/reports/hooks/useTopProductReports";
@@ -21,10 +23,23 @@ import { SupplierPriceAnalysisTable } from "@/features/reports/components/Suppli
 import { useSupplierPricesReport } from "@/features/reports/hooks/useSupplierPricesReport";
 
 export default function Reports() {
+  const { user, isLoading: isAuthLoading } = useAuth();
   const { i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   const [period, setPeriod] = useState<ReportPeriod>("daily");
+
+  const isAuthorized = user?.role === "pharmacy_owner";
+
+  useEffect(() => {
+    if (isAuthorized) {
+      AOS.init({
+        duration: 500,
+        once: true,
+        easing: "ease-out-cubic",
+      });
+    }
+  }, [isAuthorized]);
 
   const dateParams = useMemo(() => {
     const today = new Date();
@@ -147,6 +162,12 @@ export default function Reports() {
     return formattedProducts.slice(0, 5);
   }, [formattedProducts]);
 
+  const RANK_COLORS: Record<number, string> = {
+    1: "#f59e0b",
+    2: "#94a3b8",
+    3: "#d97706",
+  };
+
   const generatePodiumOrder = <T extends Record<string, any>>(
     data: T[],
     valueKey: keyof T,
@@ -179,12 +200,6 @@ export default function Reports() {
     return [...left, ranked[0], ...right].filter(Boolean);
   };
 
-  const RANK_COLORS: Record<number, string> = {
-    1: "#f59e0b",
-    2: "#94a3b8",
-    3: "#d97706",
-  };
-
   const topSalesChartData = useMemo(() => {
     if (!formattedProducts || formattedProducts.length === 0) return [];
 
@@ -192,14 +207,6 @@ export default function Reports() {
 
     return generatePodiumOrder(topItems, "total_units_sold");
   }, [formattedProducts]);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 500,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
 
   const isAnyRefetching =
     isSalesRefetching ||
@@ -209,6 +216,14 @@ export default function Reports() {
     isSupplierPricesRefetching;
 
   const supplierProducts = supplierPricesData?.data?.products || [];
+
+  if (isAuthLoading) {
+    return null;
+  }
+
+  if (!isAuthorized) {
+    return <Navigate to="/unauthorized" replace />;
+  }
 
   return (
     <div className="space-y-6 overflow-hidden">
@@ -234,7 +249,7 @@ export default function Reports() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <SalesOverviewChart breakdown={breakdown} isLoading={isSalesLoading} />{" "}
+        <SalesOverviewChart breakdown={breakdown} isLoading={isSalesLoading} />
         <TopProfitChart
           data={profitChartData}
           isLoading={isTopProductsLoading}
