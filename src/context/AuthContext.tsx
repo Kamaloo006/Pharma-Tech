@@ -53,7 +53,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (storedUser && storedRefreshToken && storedAccessToken) {
         try {
-          // 1. شحن البيانات المبدئية في الـ State فوراً لتقليل الـ Flicker
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
           setAccessToken(storedAccessToken);
@@ -64,11 +63,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
         } catch (error) {
           console.error("Auth initialization failed:", error);
-          // إذا كانت البيانات تالفة في الـ Storage، نقوم بالتنظيف
           logout();
         }
       } else {
-        // إذا لم يجد توكنز، يتأكد من تصفير الـ States
         setUser(null);
         setAccessToken(null);
         setPharmacy(null);
@@ -150,7 +147,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         accessToken,
         pharmacy,
-        // ✨ التصحيح الجوهري: نعتمد على وجود كائن المستخدم والتوكن الفعليين في الذاكرة الحية للتطبيق
         isAuthenticated: !!accessToken && !!user,
         isLoading,
         login,

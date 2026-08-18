@@ -262,7 +262,8 @@
         "customerReturn":"Customer Return",
         "sales":"Sales",
         "newSales":"Create Sales Invoice",
-        "reports":"Reports"
+        "reports":"Reports",
+        "addPharmacist":"Add Pharmacist"
 
         
     },

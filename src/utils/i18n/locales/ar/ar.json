@@ -260,8 +260,8 @@
         "customerReturn":"مرتجعات الزبائن",
         "sales": "المبيعات",
         "newSales": "إنشاء فاتورة مبيع",
-        "reports":"التقارير"
-        
+        "reports":"التقارير",
+        "addPharmacist":"إضافة صيدلي"
     },
     
     "header": {

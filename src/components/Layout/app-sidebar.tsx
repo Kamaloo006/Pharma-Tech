@@ -19,6 +19,7 @@ import {
   BookText,
   RotateCcw,
   ChartColumn,
+  Plus,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -314,13 +315,16 @@ export default function AppSidebar() {
                   align={isArabic ? "start" : "end"}
                   className="w-56 rounded-2xl border-border/70 bg-card p-1 shadow-xl shadow-slate-950/20"
                 >
-                  <DropdownMenuItem
-                    dir={isArabic ? "rtl" : "ltr"}
-                    className="cursor-pointer gap-2 rounded-xl"
-                  >
-                    <Settings className="size-4" />
-                    <span>{t("sidebar.profileSettings")}</span>
-                  </DropdownMenuItem>
+                  {user?.role === "pharmacy_owner" && (
+                    <DropdownMenuItem
+                      dir={isArabic ? "rtl" : "ltr"}
+                      onClick={() => navigate("/dashboard/pharmacists/new")}
+                      className="cursor-pointer gap-2 rounded-xl text-primary focus:bg-primary/10 focus:text-primary"
+                    >
+                      <Plus className="size-4" />
+                      <span>{t("sidebar.addPharmacist")}</span>
+                    </DropdownMenuItem>
+                  )}
 
                   <DropdownMenuItem
                     dir={isArabic ? "rtl" : "ltr"}
