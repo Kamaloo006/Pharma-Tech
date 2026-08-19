@@ -32,6 +32,14 @@ export default function ProductDetailsPage() {
     isEditModalOpen,
     refetchProduct,
     setIsEditModalOpen,
+    batchesMeta,
+    batchPage,
+    setBatchPage,
+    movementPage,
+    movementsMeta,
+    setMovementPage,
+    isMarkingExpired,
+    markBatchExpired,
     t,
   } = useProductDetails();
 
@@ -123,9 +131,15 @@ export default function ProductDetailsPage() {
             </div>
           ) : (
             <StockBatchesCard
+              onMarkExpired={markBatchExpired}
+              isMarkingExpired={isMarkingExpired}
               batches={batches}
               baseUnitName={product?.base_unit?.name || ""}
               isArabic={isArabic}
+              currentPage={batchPage}
+              lastPage={batchesMeta?.last_page}
+              totalItems={batchesMeta?.total}
+              onPageChange={(newPage) => setBatchPage(newPage)}
             />
           )}
 
@@ -144,7 +158,14 @@ export default function ProductDetailsPage() {
               </button>
             </div>
           ) : (
-            <StockMovementsCard movements={movements} isArabic={isArabic} />
+            <StockMovementsCard
+              movements={movements}
+              isArabic={isArabic}
+              currentPage={movementPage}
+              lastPage={movementsMeta?.last_page}
+              totalItems={movementsMeta?.total}
+              onPageChange={(newPage) => setMovementPage(newPage)}
+            />
           )}
         </div>
       </div>
