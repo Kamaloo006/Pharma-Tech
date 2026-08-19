@@ -2,10 +2,10 @@ import { ShoppingCart, AlertCircle, PackageCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import type { Product } from "../../types/Product";
+import type { ProductDetails } from "../../types/Product";
 
 interface ProductInventoryCardProps {
-  product: Product;
+  product: ProductDetails;
   isArabic: boolean;
   isOut: boolean;
   isLowStock: boolean;

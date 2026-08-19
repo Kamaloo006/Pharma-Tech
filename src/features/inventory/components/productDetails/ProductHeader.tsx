@@ -16,10 +16,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import type { Product } from "../../types/Product";
+import type { ProductDetails } from "../../types/Product";
 
 interface ProductHeaderProps {
-  product: Product;
+  product: ProductDetails;
   isArabic: boolean;
   isOut: boolean;
   isLowStock: boolean;

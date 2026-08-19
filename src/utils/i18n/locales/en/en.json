@@ -512,6 +512,10 @@
                 "expiryDate": "Expiry Date",
                 "status": "Status"
             },
+            "dialog": {
+              "title": "Mark this batch as expired?",
+              "description": "This will remove the remaining quantity from available stock."
+            },
             "statusValues": {
                 "active": "Active",
                 "expired": "Expired"
