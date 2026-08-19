@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 // السياقات (Contexts) والـ Utils
 import { ThemeProvider } from "@/context/theme-provider.tsx";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import "./utils/i18n/index.ts";
 import "./index.css";
 
@@ -56,7 +56,8 @@ import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import Reports from "./pages/dashboard/Reports.tsx";
 import Notifications from "./pages/dashboard/Notifications.tsx";
 import Unauthorized from "./components/Layout/UnAuthorized.tsx";
-import AddPharmacist from "./pages/dashboard/AddPharmacist.tsx";
+import ProfileSettings from "./pages/dashboard/ProfileSettings.tsx";
+import ManagePharmacist from "./pages/dashboard/ManagePharmacist.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -67,12 +68,21 @@ const queryClient = new QueryClient({
   },
 });
 
+function DashboardHome() {
+  const { user } = useAuth();
+
+  if (user?.role === "pharmacist") {
+    return <Navigate to="/dashboard/inventory" replace />;
+  }
+
+  return <Dashboard />;
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/dashboard" replace />,
+    element: <DashboardHome />,
   },
-
   {
     element: <PublicRoute />,
     children: [
@@ -109,6 +119,10 @@ const router = createBrowserRouter([
           {
             path: "inventory",
             element: <Inventory />,
+          },
+          {
+            path: "profile-settings",
+            element: <ProfileSettings />,
           },
           {
             path: "reports",
@@ -200,7 +214,7 @@ const router = createBrowserRouter([
           },
           {
             path: "pharmacists/new",
-            element: <AddPharmacist />,
+            element: <ManagePharmacist />,
           },
         ],
       },

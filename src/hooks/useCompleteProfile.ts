@@ -58,7 +58,12 @@ export const useCompleteProfile = () => {
         description: t("completeProfile.successDesc"),
       });
 
-      navigate("/dashboard", { replace: true });
+      navigate(
+        updatedUser?.role === "pharmacy_owner"
+          ? "/dashboard"
+          : "/dashboard/inventory",
+        { replace: true }
+      );
     },
     onError: (error: unknown) => {
       const errMsg = getErrorMessage(error, t("completeProfile.failed"));

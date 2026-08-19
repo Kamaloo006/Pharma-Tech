@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 
 export default function PublicRoute() {
-  const { isAuthenticated, isLoading, pharmacy } = useAuth();
+  const { isAuthenticated, isLoading, pharmacy, user } = useAuth();
 
   if (isLoading) {
     return (
@@ -16,7 +16,16 @@ export default function PublicRoute() {
     if (!pharmacy) {
       return <Navigate to="/complete-profile" replace />;
     }
-    return <Navigate to="/dashboard" replace />;
+    return (
+      <Navigate
+        to={
+          user?.role === "pharmacy_owner"
+            ? "/dashboard"
+            : "/dashboard/inventory"
+        }
+        replace
+      />
+    );
   }
 
   return <Outlet />;

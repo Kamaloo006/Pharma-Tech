@@ -2,6 +2,21 @@
     "welcomeMessage": "Welcome to PharmaTech",
     "switchLanguage": "Switch Language",
     "addMedicine": "Add Medicine",
+    "add_pharmacist": "Add New Pharmacist",
+    "add_pharmacist_desc": "Fill in the details below to add a new user to the system",
+    "back": "Back",
+    "personal_and_job_info": "Personal & Professional Information",
+    "first_name": "First Name",
+    "enter_first_name": "Enter first name",
+    "father_name": "Father's Name (Optional)",
+    "enter_father_name": "Enter father's name",
+    "last_name": "Last Name",
+    "enter_last_name": "Enter last name",
+    "email": "Email Address",
+    "phone_number": "Phone Number",
+    "cancel": "Cancel",
+    "save_data": "Save Data",
+  
     "common": {
         "continue": "Continue",
         "next": "Next",
@@ -58,7 +73,11 @@
         "pharmacyNameTooLong": "Pharmacy name is too long",
         "cityRequired": "Please select a city",
         "addressTooLong": "Address is too long",
-        "passwordsDoNotMatch": "Passwords do not match"
+        "passwordsDoNotMatch": "Passwords do not match",
+        "first_name_required": "First name is required (at least 2 characters)",
+        "last_name_required": "Last name is required",
+        "email_invalid": "Please enter a valid email address",
+        "phone_min": "Phone number must be at least 8 digits"
     },
     "pharmacistLogin": {
         "badge": "High Grade Security",
@@ -274,6 +293,60 @@
         "expandSidebar": "Expand sidebar",
         "searchPlaceholder": "Search for anything..."
     },
+    "pharmacists": {
+    "title": "Manage Pharmacists",
+    "subtitle": "View and manage registered pharmacist accounts in the pharmacy",
+    "add_button": "Add New Pharmacist",
+    "list_title": "Pharmacists List",
+    "search_placeholder": "Search by name, email, or phone...",
+    "loading": "Loading data...",
+    "empty": "No pharmacists matching your search criteria",
+    "role_badge": "Pharmacist",
+    "table": {
+      "full_name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "role": "Role",
+      "created_at": "Date Added",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "first_name": "First Name",
+      "first_name_placeholder": "John",
+      "father_name": "Father Name",
+      "father_name_placeholder": "Michael",
+      "last_name": "Last Name",
+      "last_name_placeholder": "Doe",
+      "email": "Email",
+      "phone": "Phone Number",
+      "password": "Password",
+      "password_edit_placeholder": "Leave empty to keep current password"
+    },
+    "modal": {
+      "add_title": "Add New Pharmacist",
+      "edit_title": "Edit Pharmacist Information",
+      "cancel": "Cancel",
+      "save_add": "Add",
+      "save_edit": "Update"
+    },
+    "delete_dialog": {
+      "title": "Confirm Delete Pharmacist",
+      "description": "Are you sure you want to remove this pharmacist from the system? They will no longer have access to the dashboard after deletion.",
+      "cancel": "Cancel",
+      "confirm": "Confirm Delete"
+    },
+    "toast": {
+      "updated": "Pharmacist information updated successfully",
+      "created": "Pharmacist created successfully. Verification email sent.",
+      "error": "An error occurred while saving data",
+      "deleted": "Pharmacist deleted successfully",
+      "delete_error": "An error occurred during deletion"
+    }
+  },
     "inventory": {
         "title": "Inventory Management",
         "registered_products": "Products Registered",
@@ -293,6 +366,7 @@
         "inventoryByProduct": "Inventory by Product",
         "allCategories": "All Categories",
         "product": "Product",
+        "drug_suggestion":"Drug Suggestion (AI)",
         "quantity": "Quantity",
         "costValue": "Cost Value",
         "sellingValue": "Selling Value",
@@ -771,7 +845,7 @@
     },
     "search": {
       "label": "Search medicine / product by name or barcode",
-      "placeholder": "Search medicine...",
+      "placeholder": "Search by product name or barcode...",
       "minCharsMessage": "Please type 2 or more characters to search",
       "searching": "Searching...",
       "sellingPriceLabel": "Selling Price",

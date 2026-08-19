@@ -21,6 +21,25 @@
       "page": "صفحة",
       "of": "من"
     },
+    "add_pharmacist": "إضافة صيدلاني جديد",
+  "add_pharmacist_desc": "قم بملء البيانات التالية لإضافة مستخدم جديد إلى النظام",
+  
+  "personal_and_job_info": "المعلومات الشخصية والوظيفية",
+  "first_name": "الاسم الأول",
+  "enter_first_name": "أدخل الاسم الأول",
+  "father_name": "اسم الأب (اختياري)",
+  "enter_father_name": "أدخل اسم الأب",
+  "last_name": "اللقب / العائلة",
+  "enter_last_name": "أدخل اللقب",
+  "email": "البريد الإلكتروني",
+  "phone_number": "رقم الهاتف",
+    "save_data": "حفظ البيانات",
+    "validation": {
+      "first_name_required": "الاسم الأول مطلوب (حرفين على الأقل)",
+      "last_name_required": "اللقب/اسم العائلة مطلوب",
+      "email_invalid": "يرجى إدخال بريد إلكتروني صحيح",
+      "phone_min": "رقم الهاتف يجب أن يتكون من 8 أرقام على الأقل"
+    },
     "cancel": "إلغاء",
     "save": "حفظ التغييرات",
     "add": "إضافة",
@@ -57,7 +76,11 @@
         "pharmacyNameTooLong": "اسم الصيدلية طويل جدًا",
         "cityRequired": "يرجى اختيار مدينة",
         "addressTooLong": "العنوان طويل جدًا",
-        "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين"
+        "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+        "first_name_required": "الاسم الأول مطلوب (حرفين على الأقل)",
+        "last_name_required": "اللقب/اسم العائلة مطلوب",
+        "email_invalid": "يرجى إدخال بريد إلكتروني صحيح",
+        "phone_min": "رقم الهاتف يجب أن يتكون من 8 أرقام على الأقل"
     },
     "pharmacistLogin": {
         "badge": "أمان بمستوى عالي",
@@ -270,6 +293,60 @@
         "expandSidebar": "توسيع الشريط الجانبي",
         "searchPlaceholder": "ابحث عن أي شيء..."
     },
+    "pharmacists": {
+    "title": "إدارة الصيادلة",
+    "subtitle": "عرض وإدارة حسابات الصيادلة المسجلين في الصيدلية",
+    "add_button": "إضافة صيدلي جديد",
+    "list_title": "قائمة الصيادلة",
+    "search_placeholder": "بحث بالاسم، البريد، أو رقم الهاتف...",
+    "loading": "جاري تحميل البيانات...",
+    "empty": "لا يوجد صيادلة مطبق عليهم البحث حالياً",
+    "role_badge": "صيدلي (Pharmacist)",
+    "table": {
+      "full_name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "role": "الدور",
+      "created_at": "تاريخ الإضافة",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "form": {
+      "first_name": "الاسم الأول",
+      "first_name_placeholder": "أحمد",
+      "father_name": "اسم الأب",
+      "father_name_placeholder": "محمد",
+      "last_name": "اللقب",
+      "last_name_placeholder": "العلي",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور",
+      "password_edit_placeholder": "اتركه فارغاً لإبقاء كلمة المرور القديمة"
+    },
+    "modal": {
+      "add_title": "إضافة صيدلي جديد",
+      "edit_title": "تعديل بيانات صيدلي",
+      "cancel": "إلغاء",
+      "save_add": "إضافة",
+      "save_edit": "تعديل"
+    },
+    "delete_dialog": {
+      "title": "تأكيد حذف الصيدلي",
+      "description": "هل أنت تأكد من إزالة هذا الصيدلي من النظام؟ لن يتمكن من الوصول إلى لوحة التحكم بعد الحذف.",
+      "cancel": "إلغاء",
+      "confirm": "تأكيد الحذف"
+    },
+    "toast": {
+      "updated": "تم تعديل بيانات الصيدلي بنجاح",
+      "created": "تم إنشاء حساب الصيدلي بنجاح وإرسال بريد التحقق.",
+      "error": "حدث خطأ أثناء حفظ البيانات",
+      "deleted": "تم حذف الصيدلي بنجاح",
+      "delete_error": "حدث خطأ أثناء الحذف"
+    }
+  },
     "inventory": {
         "title": "إدارة المستودع",
         "registered_products": "منتج مسجل",
@@ -281,6 +358,7 @@
         "no_products": "لم يتم العثور على منتجات تطابق فلاتر البحث الحالية.",
         "select_company": "اختر الشركة",
         "company": "شركة المنتج",
+        "drug_suggestion":"إقتراح الأدوية (AI)",
         "all_companies": "كل الشركات",
         "products":"منتجات",
         "more_filters": "المزيد من الفلاتر",
@@ -767,7 +845,7 @@
     },
     "search": {
       "label": "ابحث عن دواء / منتج بالاسم أو الـ Barcode",
-      "placeholder": "ابحث عن الدواء...",
+      "placeholder": "ابحث باسم المنتج أو الباركود...",
       "minCharsMessage": "يرجى كتابة حرفين أو أكثر للبحث",
       "searching": "جاري البحث...",
       "sellingPriceLabel": "سعر البيع",

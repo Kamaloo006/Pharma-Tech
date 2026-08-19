@@ -1,9 +1,4 @@
-import {
-  ShoppingCart,
-  PlusCircle,
-  AlertCircle,
-  PackageCheck,
-} from "lucide-react";
+import { ShoppingCart, AlertCircle, PackageCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -22,7 +17,6 @@ export default function ProductInventoryCard({
   isArabic,
   isOut,
   isLowStock,
-  onManualAdjustClick,
 }: ProductInventoryCardProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -101,15 +95,6 @@ export default function ProductInventoryCard({
             >
               <ShoppingCart className="h-3.5 w-3.5" />
               {t("inventory.inventoryCard.createInvoice")}
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={onManualAdjustClick}
-              className="w-full h-9 rounded-xl border-border bg-transparent text-muted-foreground hover:text-foreground text-xs gap-1.5 transition-colors"
-            >
-              <PlusCircle className="h-3.5 w-3.5" />
-              {t("inventory.inventoryCard.manualAdjustment")}
             </Button>
           </div>
         </div>

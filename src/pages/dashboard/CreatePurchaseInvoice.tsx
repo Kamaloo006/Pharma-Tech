@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, Receipt, Loader2, BrainCircuit } from "lucide-react";
+import { Package, Receipt, Loader2 } from "lucide-react";
 
 import { SupplierForm } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/SupplierForm";
 import { LiveAlerts } from "@/features/purchase-invoice/components/CreatePurchaseInvoice/LiveAlerts";
@@ -71,7 +71,6 @@ export default function CreatePurchaseInvoice() {
 
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-400 mx-auto text-start dir-rtl">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border/60 pb-4">
         <div>
           <h1 className="text-xl md:text-2xl font-black text-foreground flex items-center gap-2.5">
@@ -95,7 +94,6 @@ export default function CreatePurchaseInvoice() {
         )}
       </div>
 
-      {/* CashBox Alert Banner */}
       {paymentMethod === "cash" && !isCheckingCashBox && !cashBox && (
         <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-600 dark:text-amber-400">
           <div className="flex items-center gap-2.5 text-sm font-semibold">
@@ -117,7 +115,6 @@ export default function CreatePurchaseInvoice() {
         </div>
       )}
 
-      {/* Live Alerts Zone */}
       <LiveAlerts
         paymentMethod={paymentMethod}
         isCashBoxConfigured={isCashBoxConfigured}
@@ -125,9 +122,7 @@ export default function CreatePurchaseInvoice() {
         duplicateBatchNumbers={duplicateBatchNumbers}
       />
 
-      {/* Main Layout Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Products Column */}
         <div className="lg:col-span-2 space-y-6">
           <SupplierForm
             supplierId={supplierId}
@@ -153,7 +148,6 @@ export default function CreatePurchaseInvoice() {
             </CardHeader>
 
             <CardContent className="pt-5 space-y-5">
-              {/* POS Search Component */}
               <ProductSearchPOS
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
@@ -163,38 +157,18 @@ export default function CreatePurchaseInvoice() {
                 isDebouncing={isDebouncing}
               />
 
-              {/* Items Table */}
               <InvoiceItemsTable
                 items={items}
                 updateItemField={updateItemField}
                 removeItem={removeItem}
               />
-
-              {/* زر الـ AI الخاص بالتداخلات الدوائية تحت الجدول */}
-              {items.length >= 2 && (
-                <div className="pt-2 flex justify-end border-t border-border/40">
-                  <Button
-                    type="button"
-                    onClick={handleCheckInteractions}
-                    className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-bold transition-all shadow-md"
-                  >
-                    <BrainCircuit className="h-4 w-4" />
-                    {isArabic
-                      ? "فحص التداخلات الدوائية (AI)"
-                      : "Check Drug Interactions (AI)"}
-                  </Button>
-                </div>
-              )}
             </CardContent>
           </Card>
         </div>
 
-        {/* Payment & Calculation Column */}
         <div className="space-y-6">
-          {/* Summary Card */}
           <InvoiceSummaryCard totals={totals} />
 
-          {/* Payment Card */}
           <PaymentDetailsCard
             paymentMethod={paymentMethod}
             setPaymentMethod={setPaymentMethod}
@@ -209,7 +183,6 @@ export default function CreatePurchaseInvoice() {
         </div>
       </div>
 
-      {/* Modal التداخلات الدوائية */}
       <DrugInteractionsModal
         isOpen={isInteractionsModalOpen}
         onClose={() => setIsInteractionsModalOpen(false)}

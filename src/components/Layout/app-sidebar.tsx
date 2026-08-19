@@ -154,7 +154,6 @@ export default function AppSidebar() {
 
   return (
     <>
-      {/* الـ Overlay والـ Blur للشاشات الكبيرة كما طلبته */}
       {open && !isMobile && (
         <button
           type="button"
@@ -167,7 +166,7 @@ export default function AppSidebar() {
       <Sidebar
         collapsible="icon"
         side={isArabic ? "right" : "left"}
-        className="z-50 border-r border-sidebar-border/80 bg-sidebar text-sidebar-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_50px_rgba(2,6,23,0.28)] transition-transform duration-300 ease-in-out"
+        className="z-50 border-r border-sidebar-border/80 bg-sidebar text-sidebar-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_50px_rgba(2,6,23,0.28)] transition-transform duration-500 ease-in-out"
       >
         <SidebarHeader className="border-b border-sidebar-border/70 px-3 py-3">
           {open || isMobile ? (
@@ -236,7 +235,7 @@ export default function AppSidebar() {
                       isActive={location.pathname === item.url}
                       tooltip={item.title}
                       className={clsx(
-                        "group h-11 rounded-2xl px-3 text-sm font-medium text-sidebar-foreground/75 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-foreground data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20",
+                        "group h-11 rounded-2xl px-3 text-sm font-medium text-sidebar-foreground/75 transition-all duration-600 hover:bg-sidebar-accent hover:text-sidebar-foreground data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20",
                         !open && !isMobile && "justify-center",
                       )}
                     >
@@ -286,7 +285,8 @@ export default function AppSidebar() {
                     >
                       <Avatar className="size-10 shrink-0 border border-sidebar-border/70">
                         <AvatarImage
-                          src="https://github.com/shadcn.png"
+                          src="/sidebar.jpg"
+                          loading="lazy"
                           alt="Pharmacist"
                         />
                         <AvatarFallback>
@@ -326,6 +326,14 @@ export default function AppSidebar() {
                     </DropdownMenuItem>
                   )}
 
+                  <DropdownMenuItem
+                    dir={isArabic ? "rtl" : "ltr"}
+                    onClick={() => navigate("/dashboard/profile-settings")}
+                    className="cursor-pointer gap-2 rounded-xl text-gray-500 focus:bg-gray-500/10 focus:text-gray-500"
+                  >
+                    <Settings className="size-4" />
+                    <span>{t("sidebar.profileSettings")}</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem
                     dir={isArabic ? "rtl" : "ltr"}
                     onClick={handleLogout}

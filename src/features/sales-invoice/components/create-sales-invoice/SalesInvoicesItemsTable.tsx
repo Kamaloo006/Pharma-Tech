@@ -67,7 +67,7 @@ export function SalesInvoiceItemsTable({
           className="h-8 gap-2 rounded-lg border-violet-500/30 bg-violet-500/10 text-violet-600 hover:bg-violet-500/20 hover:text-violet-700 dark:text-violet-400 dark:hover:bg-violet-500/30 text-xs font-semibold transition-all"
         >
           <Sparkles className="size-3.5 text-violet-500 animate-pulse" />
-          {isArabic ? "فحص التداخلات الدوائية (AI)" : "Check AI Interactions"}
+          {isArabic ? "فحص التداخلات الدوائية (AI)" : "Check Drug Interactions"}
         </Button>
       </div>
 
