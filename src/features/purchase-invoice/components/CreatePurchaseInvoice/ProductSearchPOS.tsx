@@ -75,6 +75,9 @@ export function ProductSearchPOS({
                       {product.category?.name || "N/A"}
                       {product.strength && ` • ${product.strength}`}
                     </p>
+                    <p className="text-[10px] text-muted-foreground font-mono mt-0.5">
+                      {product.barcode}
+                    </p>
                   </div>
                 </div>
 

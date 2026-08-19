@@ -1,10 +1,4 @@
-import {
-  Search,
-  Plus,
-  Loader2,
-  AlertTriangle,
-  BrainCircuit,
-} from "lucide-react";
+import { Search, Plus, Loader2, AlertTriangle, Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useInventoryController } from "@/features/inventory/hooks/useInventoryContoller";
 import AddProductModal from "@/features/inventory/components/AddProductModal";
@@ -132,8 +126,8 @@ export default function Inventory() {
             onClick={() => setIsWeatherModalOpen(true)}
             className="flex h-9 items-center justify-center gap-1.5 rounded-xl bg-violet-600 cursor-pointer px-4 text-xs font-medium hover:bg-violet-700 hover:shadow-2xl transition-all text-white shadow-md"
           >
-            Check Weather
-            <BrainCircuit className="w-5" />
+            {t("inventory.drug_suggestion")}
+            <Brain className="w-5" />
           </button>
         </div>
       </div>

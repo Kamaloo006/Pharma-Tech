@@ -39,7 +39,9 @@ export function ProductSearchPopover({
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder={
-              isArabic ? "ابحث عن منتج بالاسم..." : "Search product by name..."
+              isArabic
+                ? "ابحث عن منتج بالاسم أو الباركود..."
+                : "Search product by name or barcode..."
             }
             value={searchQuery}
             onFocus={() => setIsOpen(true)}
@@ -96,6 +98,9 @@ export function ProductSearchPopover({
                     </div>
                     <div className="text-[10px] text-muted-foreground font-mono">
                       {product.strength || ""}
+                    </div>
+                    <div className="text-[10px] text-muted-foreground font-mono">
+                      {product.barcode}
                     </div>
                   </div>
 
