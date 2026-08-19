@@ -293,6 +293,60 @@
         "expandSidebar": "Expand sidebar",
         "searchPlaceholder": "Search for anything..."
     },
+    "pharmacists": {
+    "title": "Manage Pharmacists",
+    "subtitle": "View and manage registered pharmacist accounts in the pharmacy",
+    "add_button": "Add New Pharmacist",
+    "list_title": "Pharmacists List",
+    "search_placeholder": "Search by name, email, or phone...",
+    "loading": "Loading data...",
+    "empty": "No pharmacists matching your search criteria",
+    "role_badge": "Pharmacist",
+    "table": {
+      "full_name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "role": "Role",
+      "created_at": "Date Added",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "first_name": "First Name",
+      "first_name_placeholder": "John",
+      "father_name": "Father Name",
+      "father_name_placeholder": "Michael",
+      "last_name": "Last Name",
+      "last_name_placeholder": "Doe",
+      "email": "Email",
+      "phone": "Phone Number",
+      "password": "Password",
+      "password_edit_placeholder": "Leave empty to keep current password"
+    },
+    "modal": {
+      "add_title": "Add New Pharmacist",
+      "edit_title": "Edit Pharmacist Information",
+      "cancel": "Cancel",
+      "save_add": "Add",
+      "save_edit": "Update"
+    },
+    "delete_dialog": {
+      "title": "Confirm Delete Pharmacist",
+      "description": "Are you sure you want to remove this pharmacist from the system? They will no longer have access to the dashboard after deletion.",
+      "cancel": "Cancel",
+      "confirm": "Confirm Delete"
+    },
+    "toast": {
+      "updated": "Pharmacist information updated successfully",
+      "created": "Pharmacist created successfully. Verification email sent.",
+      "error": "An error occurred while saving data",
+      "deleted": "Pharmacist deleted successfully",
+      "delete_error": "An error occurred during deletion"
+    }
+  },
     "inventory": {
         "title": "Inventory Management",
         "registered_products": "Products Registered",

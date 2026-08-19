@@ -3,12 +3,14 @@ import { useAuth } from "@/context/AuthContext";
 
 interface ProtectedRouteProps {
   requirePharmacy?: boolean;
+  allowedRoles?: Array<"pharmacy_owner">;
 }
 
 export default function ProtectedRoute({
   requirePharmacy = true,
+  allowedRoles,
 }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading, pharmacy } = useAuth();
+  const { isAuthenticated, isLoading, pharmacy, user } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -34,7 +36,13 @@ export default function ProtectedRoute({
     pharmacy &&
     location.pathname === "/complete-profile"
   ) {
-    return <Navigate to="/dashboard" replace />;
+    const targetPath =
+      user?.role === "pharmacy_owner" ? "/dashboard" : "/dashboard/inventory";
+    return <Navigate to={targetPath} replace />;
+  }
+
+  if (allowedRoles && user && !allowedRoles.includes(user.role as any)) {
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return <Outlet />;

@@ -68,20 +68,20 @@ const queryClient = new QueryClient({
   },
 });
 
-function RootRedirect() {
+function DashboardHome() {
   const { user } = useAuth();
 
-  return user?.role === "pharmacy_owner" ? (
-    <Navigate to="/dashboard" />
-  ) : (
-    <Navigate to="/dashboard/inventory" />
-  );
+  if (user?.role === "pharmacist") {
+    return <Navigate to="/dashboard/inventory" replace />;
+  }
+
+  return <Dashboard />;
 }
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootRedirect />,
+    element: <DashboardHome />,
   },
   {
     element: <PublicRoute />,

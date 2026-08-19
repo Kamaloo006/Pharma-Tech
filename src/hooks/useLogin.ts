@@ -47,7 +47,12 @@ export const useLogin = () => {
       if (!pharmacyData) {
         navigate("/complete-profile", { replace: true });
       } else {
-        navigate("/dashboard", { replace: true });
+        navigate(
+          userData.role === "pharmacy_owner"
+            ? "/dashboard"
+            : "/dashboard/inventory",
+          { replace: true }
+        );
       }
     },
     onError: (error: unknown) => {

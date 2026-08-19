@@ -44,7 +44,12 @@ export const useGoogleLogin = () => {
         return;
       }
 
-      navigate("/dashboard", { replace: true });
+      navigate(
+        userData.role === "pharmacy_owner"
+          ? "/dashboard"
+          : "/dashboard/inventory",
+        { replace: true }
+      );
     },
     onError: (error) => {
       const errMsg = getErrorMessage(error, "auth.invalidCredentials");

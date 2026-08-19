@@ -293,7 +293,60 @@
         "expandSidebar": "توسيع الشريط الجانبي",
         "searchPlaceholder": "ابحث عن أي شيء..."
     },
-    
+    "pharmacists": {
+    "title": "إدارة الصيادلة",
+    "subtitle": "عرض وإدارة حسابات الصيادلة المسجلين في الصيدلية",
+    "add_button": "إضافة صيدلي جديد",
+    "list_title": "قائمة الصيادلة",
+    "search_placeholder": "بحث بالاسم، البريد، أو رقم الهاتف...",
+    "loading": "جاري تحميل البيانات...",
+    "empty": "لا يوجد صيادلة مطبق عليهم البحث حالياً",
+    "role_badge": "صيدلي (Pharmacist)",
+    "table": {
+      "full_name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "role": "الدور",
+      "created_at": "تاريخ الإضافة",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "form": {
+      "first_name": "الاسم الأول",
+      "first_name_placeholder": "أحمد",
+      "father_name": "اسم الأب",
+      "father_name_placeholder": "محمد",
+      "last_name": "اللقب",
+      "last_name_placeholder": "العلي",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور",
+      "password_edit_placeholder": "اتركه فارغاً لإبقاء كلمة المرور القديمة"
+    },
+    "modal": {
+      "add_title": "إضافة صيدلي جديد",
+      "edit_title": "تعديل بيانات صيدلي",
+      "cancel": "إلغاء",
+      "save_add": "إضافة",
+      "save_edit": "تعديل"
+    },
+    "delete_dialog": {
+      "title": "تأكيد حذف الصيدلي",
+      "description": "هل أنت تأكد من إزالة هذا الصيدلي من النظام؟ لن يتمكن من الوصول إلى لوحة التحكم بعد الحذف.",
+      "cancel": "إلغاء",
+      "confirm": "تأكيد الحذف"
+    },
+    "toast": {
+      "updated": "تم تعديل بيانات الصيدلي بنجاح",
+      "created": "تم إنشاء حساب الصيدلي بنجاح وإرسال بريد التحقق.",
+      "error": "حدث خطأ أثناء حفظ البيانات",
+      "deleted": "تم حذف الصيدلي بنجاح",
+      "delete_error": "حدث خطأ أثناء الحذف"
+    }
+  },
     "inventory": {
         "title": "إدارة المستودع",
         "registered_products": "منتج مسجل",
