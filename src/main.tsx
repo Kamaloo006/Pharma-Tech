@@ -8,13 +8,11 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 
-// السياقات (Contexts) والـ Utils
 import { ThemeProvider } from "@/context/theme-provider.tsx";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import "./utils/i18n/index.ts";
 import "./index.css";
 
-// المكونات والصفحات
 import PharmacistLogin from "./pages/auth/PharmacistLogin.tsx";
 import PharmacistSignUp from "./pages/auth/PharmacistSignUp.tsx";
 import VerifyEmailPage from "./pages/auth/VerifyEmailPage.tsx";
@@ -25,7 +23,6 @@ import CompleteProfile from "./pages/auth/CompleteProfile.tsx";
 import DashboardLayout from "./pages/dashboard/DashboardLayout.tsx";
 import Inventory from "./pages/dashboard/Inventory.tsx";
 
-// (Guards)
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
 
@@ -68,7 +65,17 @@ const queryClient = new QueryClient({
   },
 });
 
-function DashboardHome() {
+function RootRedirect() {
+  const { user } = useAuth();
+
+  if (user?.role === "pharmacy_owner") {
+    return <Navigate to="/dashboard" replace />;
+  } else {
+    return <Navigate to="/dashboard/inventory" replace />;
+  }
+}
+
+function DashboardMainHome() {
   const { user } = useAuth();
 
   if (user?.role === "pharmacist") {
@@ -81,7 +88,7 @@ function DashboardHome() {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardHome />,
+    element: <RootRedirect />,
   },
   {
     element: <PublicRoute />,
@@ -115,7 +122,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout />,
         children: [
-          { path: "", element: <Dashboard /> },
+          { path: "", element: <DashboardMainHome /> },
           {
             path: "inventory",
             element: <Inventory />,
