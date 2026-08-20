@@ -50,6 +50,8 @@
     "restore": "Restore",
     "saveChanges": "Save Changes",
     "retry": "Retry",
+    "save_changes": "Save Changes",
+    "saving": "Saving...",
     "showing": "Showing",
     "to": "to",
     "of": "of"
@@ -1551,7 +1553,26 @@
       "supplier_returns": "Suppliers Returns",
       "customer_returns": "Customers Returns"
     }
-  }
+  },
+  "profile": {
+    "title": "Profile Details",
+    "description": "View and update your personal account information",
+    "full_name": "Full Name",
+    "email": "Email Address",
+    "phone_number": "Phone Number",
+    "edit_button": "Edit Profile",
+    "edit_title": "Update Profile",
+    "edit_description": "Modify your personal information and save changes",
+    "first_name": "First Name",
+    "first_name_placeholder": "Enter first name",
+    "father_name": "Father Name",
+    "father_name_placeholder": "Enter father name",
+    "last_name": "Last Name",
+    "last_name_placeholder": "Enter last name",
+    "update_success": "Profile updated successfully",
+    "update_error": "An error occurred while updating profile"
+}
+  
   
   
 }
