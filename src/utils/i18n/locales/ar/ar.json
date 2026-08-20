@@ -14,6 +14,8 @@
     "currency": "ل.س",
     "syr": "ل.س",
     "unknownProduct": "منتج غير معروف",
+    "save_changes": "حفظ التغييرات",
+    "saving": "جاري الحفظ...",
     "search": "بحث...",
     "noResults": "لا توجد نتائج",
     "noData": "لا توجد بيانات متاحة",
@@ -1557,6 +1559,24 @@
       "supplier_returns": "مرتجعات موردين",
       "customer_returns": "مرتجعات الزبائن"
     }
+  },
+  "profile": {
+    "title": "تفاصيل الملف الشخصي",
+    "description": "استعراض وتحديث بيانات حسابك الشخصي",
+    "full_name": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone_number": "رقم الهاتف",
+    "edit_button": "تعديل البيانات",
+    "edit_title": "تحديث الملف الشخصي",
+    "edit_description": "قم بتعديل بياناتك الشخصية ثم اضغط حفظ التغييرات",
+    "first_name": "الاسم الأول",
+    "first_name_placeholder": "أدخل الاسم الأول",
+    "father_name": "اسم الأب",
+    "father_name_placeholder": "أدخل اسم الأب",
+    "last_name": "النسبة / الكنية",
+    "last_name_placeholder": "أدخل الكنية",
+    "update_success": "تم تحديث الملف الشخصي بنجاح",
+    "update_error": "حدث خطأ أثناء تحديث البيانات"
   }
   
 
