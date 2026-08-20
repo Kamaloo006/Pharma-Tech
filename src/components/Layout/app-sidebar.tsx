@@ -19,7 +19,7 @@ import {
   BookText,
   RotateCcw,
   ChartColumn,
-  Plus,
+  Pill,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -321,7 +321,7 @@ export default function AppSidebar() {
                       onClick={() => navigate("/dashboard/pharmacists/new")}
                       className="cursor-pointer gap-2 rounded-xl text-primary focus:bg-primary/10 focus:text-primary"
                     >
-                      <Plus className="size-4" />
+                      <Pill className="size-4" />
                       <span>{t("sidebar.addPharmacist")}</span>
                     </DropdownMenuItem>
                   )}

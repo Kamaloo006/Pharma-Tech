@@ -46,7 +46,6 @@ export default function ManagePharmacist() {
       last_name: "",
       email: "",
       phone_number: "",
-      password: "",
     },
   });
 
@@ -58,7 +57,6 @@ export default function ManagePharmacist() {
       last_name: "",
       email: "",
       phone_number: "",
-      password: "",
     });
     setIsModalOpen(true);
   };
@@ -71,7 +69,6 @@ export default function ManagePharmacist() {
       last_name: pharmacist.last_name,
       email: pharmacist.email,
       phone_number: pharmacist.phone_number || "",
-      password: "",
     });
     setIsModalOpen(true);
   };

@@ -7,11 +7,6 @@ export const pharmacistSchema = z.object({
   last_name: z.string().min(2, "اللقب مطلوب"),
   email: z.string().email("البريد الإلكتروني غير صحيح"),
   phone_number: z.string().min(8, "رقم الهاتف غير صحيح"),
-  password: z
-    .string()
-    .min(6, "كلمة المرور يجب أن تكون 6 أحرف على الأقل")
-    .optional()
-    .or(z.literal("")),
   pharmacy_id: z.number().optional(),
   role: z.literal("pharmacist").optional(),
   created_at: z.string().optional(),

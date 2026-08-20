@@ -1,15 +1,6 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type UseFormReturn } from "react-hook-form";
-import {
-  Loader2,
-  Lock,
-  Mail,
-  Phone,
-  User as UserIcon,
-  EyeOff,
-  Eye,
-} from "lucide-react";
+import { Loader2, Mail, Phone, User as UserIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,7 +44,6 @@ export function PharmacistFormModal({
 }: PharmacistFormModalProps) {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -198,51 +188,6 @@ export function PharmacistFormModal({
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">
-                    {t("pharmacists.form.password")}{" "}
-                    {!editingPharmacist && (
-                      <span className="text-rose-500">*</span>
-                    )}
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Lock className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground rtl:right-3 rtl:left-auto ltr:left-3 ltr:right-auto pointer-events-none" />
-
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        placeholder={
-                          editingPharmacist
-                            ? t("pharmacists.form.password_edit_placeholder")
-                            : "••••••••"
-                        }
-                        className="rtl:pr-9 rtl:pl-10 ltr:pl-9 ltr:pr-10 rounded-xl text-xs h-9"
-                        {...field}
-                      />
-
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors rtl:left-3 rtl:right-auto ltr:right-3 ltr:left-auto"
-                        tabIndex={-1}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="size-4" />
-                        ) : (
-                          <Eye className="size-4" />
-                        )}
-                      </button>
-                    </div>
-                  </FormControl>
-                  <FormMessage className="text-[10px]" />
-                </FormItem>
-              )}
-            />
 
             <DialogFooter className="pt-4 border-t border-border/40 gap-2">
               <Button
