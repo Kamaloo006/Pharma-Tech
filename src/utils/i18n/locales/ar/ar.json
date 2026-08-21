@@ -349,6 +349,36 @@
       "delete_error": "حدث خطأ أثناء الحذف"
     }
   },
+
+  "stock_adjustment": {
+    "title": "تسوية المخزون اليدوية",
+    "product": "المنتج",
+    "adjustment_type": "نوع التسوية",
+    "add_stock": "إضافة مخزون (+)",
+    "remove_stock": "خصم مخزون (-)",
+    "batch": "الباتش المستهدف",
+    "loading_batches": "جاري جلب الباتشات...",
+    "select_batch_placeholder": "اختر الباتش",
+    "units": "وحدة",
+    "available_quantity": "الكمية المتاحة في الباتش:",
+    "quantity_to_remove": "الكمية المراد خصمها",
+    "quantity": "الكمية المضافة",
+    "purchase_price": "سعر الشراء",
+    "selling_price": "سعر البيع",
+    "batch_number": "رقم الباتش",
+    "expiry_date": "تاريخ الانتهاء",
+    "notes_reason": "سبب التسوية / ملاحظات",
+    "error_posting": "حدث خطأ أثناء حفظ التسوية",
+    "cancel": "إلغاء",
+    "posting": "جاري الترحيل...",
+    "add_stock_btn": "إضافة المخزون",
+    "remove_stock_btn": "خصم المخزون",
+    "validation": {
+      "invalid_quantity": "يرجى إدخال كمية صحيحة أكبر من الصفر",
+      "select_batch": "يرجى اختيار الباتش المراد الخصم منه",
+      "quantity_exceeds": "الكمية المدخلة تتجاوز المتاح في الباتش ({{available}})"
+    },
+
     "inventory": {
         "title": "إدارة المستودع",
         "registered_products": "منتج مسجل",
@@ -430,6 +460,8 @@
             },
             "editProduct": "تعديل المنتج",
             "delete": "حذف",
+            "adjustStock": "تعديل المخزون",
+
             "deleteModal": {
                 "title": "هل أنت متأكد تماماً؟",
                 "description": "سيتم حذف المنتج \"{{brand_name}}\" نهائياً من النظام ولا يمكن التراجع عن هذا الإجراء.",
@@ -1579,6 +1611,6 @@
     "update_error": "حدث خطأ أثناء تحديث البيانات"
   }
   
-
+  }
   
 }
