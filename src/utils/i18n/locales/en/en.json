@@ -54,7 +54,11 @@
     "saving": "Saving...",
     "showing": "Showing",
     "to": "to",
-    "of": "of"
+    "of": "of",
+    "buttons":{
+      "confirmDelete":"Confirm Delete",
+      "cancel":"Cancel"
+    }
     },
     "validation": {
         "invalidEmail": "Invalid email address",
@@ -350,7 +354,13 @@
     }
   },
 
-  "stock_adjustment": {
+ 
+  
+
+    "inventory": {
+        "title": "Inventory Management",
+        "registered_products": "Products Registered",
+         "stock_adjustment": {
     "title": "تسوية المخزون اليدوية",
     "product": "المنتج",
     "adjustment_type": "نوع التسوية",
@@ -377,11 +387,8 @@
       "invalid_quantity": "يرجى إدخال كمية صحيحة أكبر من الصفر",
       "select_batch": "يرجى اختيار الباتش المراد الخصم منه",
       "quantity_exceeds": "الكمية المدخلة تتجاوز المتاح في الباتش ({{available}})"
-    },
-
-    "inventory": {
-        "title": "Inventory Management",
-        "registered_products": "Products Registered",
+    }
+  },
         "export_report": "Export Report",
         "add_product": "Add Product",
         "search_placeholder": "Search by brand name, scientific name or barcode...",
@@ -642,6 +649,8 @@
             "partial_selling": "Allow Partial Selling (Break Pack)"
         }
     },
+
+
     "suppliers": {
     "title": "Suppliers Management",
     "buttons": {
@@ -702,7 +711,9 @@
       "updateSuccess": "Supplier details updated successfully",
       "errorOccurred": "An unexpected error occurred, please try again later"
     }
-  },
+    },
+
+
   "cashbox": {
     "page": {
       "loading": "Loading cash box data...",
@@ -789,6 +800,8 @@
       }
     }
   },
+
+
   "createPurchase":{
     "successDescription": "Purchase invoice completed and saved successfully",
     "success": "Purchase invoice created successfully"
@@ -1044,6 +1057,8 @@
       "noData": "No debts found matching the filters"
     }
   },
+
+
   "supplierReturn": {
     "list": {
       "title": "Supplier Returns",
@@ -1150,6 +1165,8 @@
       "cancelled": "Cancelled"
     }
   },
+
+
   "customers": {
     "title": "Customers",
     "subtitle": "Manage your pharmacy customers",
@@ -1190,6 +1207,8 @@
       "notesMax": "Notes must not exceed 500 characters"
     }
   },
+
+
   "salesInvoice": {
     "title": "Sales Invoices",
     "detailsTitle": "Sales Invoice #{{number}}",
@@ -1278,6 +1297,8 @@
       "confirmAction": "Confirm Cancellation"
     }
   },
+
+
   "customerDebt": {
    "header": {
       "title": "Customer Debts",
@@ -1353,6 +1374,8 @@
       "paymentFailed": "An error occurred while submitting the payment"
     }
   },
+
+
   "customerReturn": {
     "walkIn": "Walk-in Customer",
     "list": {
@@ -1439,6 +1462,8 @@
       "viewDetails": "View Details"
     }
   },
+
+
   "reports": {
     "header": {
       "welcomeBack": "Welcome back",
@@ -1483,6 +1508,8 @@
     "price": "Price",
     "change": "Δ Change"
   },
+
+
   "dashboard": {
     "header": {
       "greeting": "Hello",
@@ -1540,6 +1567,8 @@
       "not_available": "N/A"
     }
   },
+
+
   "notifications": {
     "title": "Notifications",
     "page_title": "All Notifications",
@@ -1585,6 +1614,8 @@
       "customer_returns": "Customers Returns"
     }
   },
+
+
   "profile": {
     "title": "Profile Details",
     "description": "View and update your personal account information",
@@ -1602,10 +1633,44 @@
     "last_name_placeholder": "Enter last name",
     "update_success": "Profile updated successfully",
     "update_error": "An error occurred while updating profile"
-}
-  
-  
-  
-}
+  },
 
+
+  "medical_info": {
+    "title": "Medical & Drug Information",
+    "subtitle": "Manage indications, contraindications, and clinical warnings for this product",
+    "fields": {
+      "indications": "Indications",
+      "contraindications": "Contraindications",
+      "overdose": "Overdose Management",
+      "pregnancy_safety": "Pregnancy Safety",
+      "lactation_safety": "Lactation Safety",
+      "warnings": "Warnings & Precautions",
+      "side_effects": "Side Effects",
+      "drug_interactions": "Drug Interactions",
+      "dose_info": "Dosage & Administration"
+    },
+    "placeholders": {
+      "indications": "Enter medical indications...",
+      "contraindications": "Enter contraindications...",
+      "overdose": "Enter overdose warnings and protocols...",
+      "pregnancy_safety": "Enter pregnancy category and safety details...",
+      "lactation_safety": "Enter lactation safety details...",
+      "warnings": "Enter clinical warnings...",
+      "side_effects": "Enter common and rare side effects...",
+      "drug_interactions": "Enter known drug-drug interactions...",
+      "dose_info": "Enter dosage guidelines and administration notes..."
+    },
+    "delete_dialog": {
+      "title": "Delete Medical Info",
+      "description": "Are you sure you want to delete all medical details for this product? This action cannot be undone."
+    },
+    "toast": {
+      "save_success": "Medical information saved successfully",
+      "save_error": "Failed to save medical information",
+      "delete_success": "Medical information deleted successfully",
+      "delete_error": "Failed to delete medical information"
+    }
+  }
 }
+  

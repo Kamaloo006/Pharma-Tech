@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useProductDetails } from "@/features/inventory/hooks/useProductDetails";
 import ProductErrorState from "./ProductErrorState";
 import ProductHeaderCardSkeleton from "@/features/inventory/components/productDetails/skeletons/ProductHeaderCardSkeleton";
@@ -14,8 +15,11 @@ import ProductSummaryCards from "@/features/inventory/components/productDetails/
 import ProductInformationCard from "@/features/inventory/components/productDetails/ProductInformationCard";
 
 import AddProductModal from "@/features/inventory/components/AddProductModal";
+import MedicalInfoModal from "@/features/inventory/components/productDetails/MedicalInfoModal";
 
 export default function ProductDetailsPage() {
+  const [isMedicalModalOpen, setIsMedicalModalOpen] = useState(false);
+
   const {
     product,
     productLoading,
@@ -102,7 +106,11 @@ export default function ProductDetailsPage() {
           {productLoading ? (
             <InventoryCardSkeleton />
           ) : product ? (
-            <MedicalInformationCard product={product} isArabic={isArabic} />
+            <MedicalInformationCard
+              product={product}
+              isArabic={isArabic}
+              onOpenModal={() => setIsMedicalModalOpen(true)}
+            />
           ) : null}
         </div>
 
@@ -183,6 +191,14 @@ export default function ProductDetailsPage() {
           setIsEditModalOpen(false);
         }}
       />
+
+      {product && (
+        <MedicalInfoModal
+          isOpen={isMedicalModalOpen}
+          onClose={() => setIsMedicalModalOpen(false)}
+          productId={product.id}
+        />
+      )}
     </div>
   );
 }

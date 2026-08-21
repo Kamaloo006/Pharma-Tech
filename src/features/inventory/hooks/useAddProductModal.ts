@@ -5,7 +5,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useCreateProduct, useUpdateProduct } from "../hooks/UseProducts"; 
 import { useUnits } from "../hooks/useUnits"; 
-import { type AddProductInput, addProductSchema, type ProductDetails } from "../types/Product";
+import { type AddProductInput, addProductSchema } from "../types/Product";
+
+type EditableProductRef = { id: number };
 
 const PACKAGING_TO_UNITS_MAP: Record<string, string[]> = {
   "Ampoule": ["Dose", "Ml", "Piece"],
@@ -25,7 +27,7 @@ const PACKAGING_TO_UNITS_MAP: Record<string, string[]> = {
 interface UseAddProductModalProps {
   isOpen: boolean;
   onClose: () => void;
-  productToEdit?: ProductDetails | null;
+  productToEdit?: EditableProductRef | null;
   onSuccess: () => void;
 }
 

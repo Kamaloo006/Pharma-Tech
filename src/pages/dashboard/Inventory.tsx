@@ -288,7 +288,7 @@ export default function Inventory() {
 
                 <PopoverContent
                   align={isArabic ? "start" : "end"}
-                  className="w-85 rounded-xl p-5 space-y-5 bg-background"
+                  className="w-85 rounded-xl p-5 space-y-5 flex flex-col  bg-background"
                   dir={isArabic ? "rtl" : "ltr"}
                 >
                   <div className="space-y-2">
@@ -313,52 +313,57 @@ export default function Inventory() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 w-full">
                     <Label className="text-xs font-semibold">
                       {t("inventory.prescription")}
                     </Label>
 
-                    <Controller
-                      name="prescription_required"
-                      control={control}
-                      defaultValue="all"
-                      render={({ field }) => (
-                        <Select
-                          value={field.value}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger className="h-9 text-xs rounded-lg">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent
-                            className="bg-muted"
-                            dir={isArabic ? "rtl" : "ltr"}
+                    <div className="w-full">
+                      <Controller
+                        name="prescription_required"
+                        control={control}
+                        defaultValue="all"
+                        render={({ field }) => (
+                          <Select
+                            value={field.value}
+                            onValueChange={field.onChange}
                           >
-                            <SelectItem
-                              className="hover:bg-primary/70"
-                              value="all"
+                            <SelectTrigger className="h-9 text-xs rounded-lg w-full">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent
+                              className="bg-muted"
+                              dir={isArabic ? "rtl" : "ltr"}
                             >
-                              {t("inventory.prescription_status.all")}
-                            </SelectItem>
-                            <SelectItem
-                              className="hover:bg-primary/70"
-                              value="true"
-                            >
-                              {t("inventory.prescription_status.required")}
-                            </SelectItem>
-                            <SelectItem
-                              className="hover:bg-primary/70"
-                              value="false"
-                            >
-                              {t("inventory.prescription_status.not_required")}
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    />
+                              <SelectItem
+                                className="hover:bg-primary/70"
+                                value="all"
+                              >
+                                {t("inventory.prescription_status.all")}
+                              </SelectItem>
+                              <SelectItem
+                                className="hover:bg-primary/70"
+                                value="true"
+                              >
+                                {t("inventory.prescription_status.required")}
+                              </SelectItem>
+                              <SelectItem
+                                className="hover:bg-primary/70"
+                                value="false"
+                              >
+                                {t(
+                                  "inventory.prescription_status.not_required",
+                                )}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
+                  {/* تاريخ الانتهاء */}
+                  <div className="space-y-2 w-full">
                     <Label className="text-xs font-semibold">
                       {t("inventory.expiry_title")}
                     </Label>
@@ -374,7 +379,7 @@ export default function Inventory() {
                             field.onChange(val === "all" ? "" : val)
                           }
                         >
-                          <SelectTrigger className="h-9 text-xs rounded-lg">
+                          <SelectTrigger className="h-9 text-xs rounded-lg w-full">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent
@@ -423,7 +428,8 @@ export default function Inventory() {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  {/* الكمية */}
+                  <div className="space-y-2 w-full">
                     <Label className="text-xs font-semibold">
                       {t("inventory.quantity_title")}
                     </Label>
@@ -439,7 +445,7 @@ export default function Inventory() {
                             field.onChange(val === "all" ? "" : val)
                           }
                         >
-                          <SelectTrigger className="h-9 text-xs rounded-lg">
+                          <SelectTrigger className="h-9 text-xs rounded-lg w-full">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent
@@ -488,7 +494,8 @@ export default function Inventory() {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  {/* الترتيب */}
+                  <div className="space-y-2 w-full">
                     <Label className="text-xs font-semibold">
                       {t("inventory.sort_title")}
                     </Label>
@@ -504,7 +511,7 @@ export default function Inventory() {
                             field.onChange(val === "default" ? "" : val)
                           }
                         >
-                          <SelectTrigger className="h-9 text-xs rounded-lg">
+                          <SelectTrigger className="h-9 text-xs rounded-lg w-full">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent
