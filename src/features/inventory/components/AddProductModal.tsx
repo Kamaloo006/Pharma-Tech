@@ -17,7 +17,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { Company } from "../hooks/useCompanies";
 import { Controller } from "react-hook-form";
-import type { ProductDetails } from "../types/Product";
+
+type EditableProductRef = { id: number };
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -25,7 +26,7 @@ interface AddProductModalProps {
   categories: Array<{ id: number; name: string }>;
   t: (key: string) => string;
   isArabic: boolean;
-  productToEdit?: ProductDetails | null;
+  productToEdit?: EditableProductRef | null;
   companies: Company[];
   onSuccess: () => void;
 }

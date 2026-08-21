@@ -96,18 +96,22 @@ export default function AdjustStockModal({
 
     const parsedQty = parseFloat(quantity);
     if (!parsedQty || parsedQty <= 0) {
-      setValidationError(t("stock_adjustment.validation.invalid_quantity"));
+      setValidationError(
+        t("inventory.stock_adjustment.validation.invalid_quantity"),
+      );
       return;
     }
 
     if (adjustmentType === "remove") {
       if (!selectedBatchId) {
-        setValidationError(t("stock_adjustment.validation.select_batch"));
+        setValidationError(
+          t("inventory.stock_adjustment.validation.select_batch"),
+        );
         return;
       }
       if (parsedQty > availableQuantity) {
         setValidationError(
-          t("stock_adjustment.validation.quantity_exceeds", {
+          t("inventory.stock_adjustment.validation.quantity_exceeds", {
             available: availableQuantity,
           }),
         );
@@ -160,7 +164,7 @@ export default function AdjustStockModal({
       >
         <DialogHeader className="border-b border-border pb-3 flex justify-between items-center">
           <DialogTitle className="text-sm font-bold text-foreground">
-            {t("stock_adjustment.title")}
+            {t("inventory.stock_adjustment.title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -169,7 +173,7 @@ export default function AdjustStockModal({
           {product && (
             <div className="bg-muted/50 p-3 rounded-xl border border-border space-y-0.5">
               <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
-                {t("stock_adjustment.product")}
+                {t("inventory.stock_adjustment.product")}
               </span>
               <p className="font-semibold text-foreground">{product.name}</p>
             </div>
@@ -178,7 +182,7 @@ export default function AdjustStockModal({
           {/* Adjustment Type Selection */}
           <div className="space-y-1.5 text-start">
             <label className="text-muted-foreground font-medium">
-              {t("stock_adjustment.adjustment_type")}
+              {t("inventory.stock_adjustment.adjustment_type")}
             </label>
             <div className="grid grid-cols-2 gap-2">
               <Button
@@ -194,7 +198,7 @@ export default function AdjustStockModal({
                   setValidationError(null);
                 }}
               >
-                {t("stock_adjustment.add_stock")}
+                {t("inventory.stock_adjustment.add_stock")}
               </Button>
 
               <Button
@@ -210,7 +214,7 @@ export default function AdjustStockModal({
                   setValidationError(null);
                 }}
               >
-                {t("stock_adjustment.remove_stock")}
+                {t("inventory.stock_adjustment.remove_stock")}
               </Button>
             </div>
           </div>
@@ -220,7 +224,7 @@ export default function AdjustStockModal({
             <>
               <div className="space-y-1.5 text-start">
                 <label className="text-muted-foreground font-medium">
-                  {t("stock_adjustment.batch")}
+                  {t("inventory.stock_adjustment.batch")}
                 </label>
                 <Select
                   value={selectedBatchId}
@@ -234,8 +238,10 @@ export default function AdjustStockModal({
                     <SelectValue
                       placeholder={
                         isLoadingBatches
-                          ? t("stock_adjustment.loading_batches")
-                          : t("stock_adjustment.select_batch_placeholder")
+                          ? t("inventory.stock_adjustment.loading_batches")
+                          : t(
+                              "inventory.stock_adjustment.select_batch_placeholder",
+                            )
                       }
                     />
                   </SelectTrigger>
@@ -247,7 +253,7 @@ export default function AdjustStockModal({
                         className="text-xs focus:bg-primary/70 cursor-pointer"
                       >
                         {b.batch_number} — ({b.quantity_on_hand}{" "}
-                        {t("stock_adjustment.units")})
+                        {t("inventory.stock_adjustment.units")})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -257,17 +263,17 @@ export default function AdjustStockModal({
               {selectedBatch && (
                 <div className="flex justify-between items-center bg-muted/30 px-3 py-2 rounded-lg border border-border/50 text-xs">
                   <span className="text-muted-foreground">
-                    {t("stock_adjustment.available_quantity")}
+                    {t("inventory.stock_adjustment.available_quantity")}
                   </span>
                   <span className="font-mono font-bold text-foreground">
-                    {availableQuantity} {t("stock_adjustment.units")}
+                    {availableQuantity} {t("inventory.stock_adjustment.units")}
                   </span>
                 </div>
               )}
 
               <div className="space-y-1.5 text-start">
                 <label className="text-muted-foreground font-medium">
-                  {t("stock_adjustment.quantity_to_remove")}
+                  {t("inventory.stock_adjustment.quantity_to_remove")}
                 </label>
                 <Input
                   type="number"
@@ -285,7 +291,7 @@ export default function AdjustStockModal({
             <>
               <div className="space-y-1.5 text-start">
                 <label className="text-muted-foreground font-medium">
-                  {t("stock_adjustment.quantity")}
+                  {t("inventory.stock_adjustment.quantity")}
                 </label>
                 <Input
                   type="number"
@@ -300,7 +306,7 @@ export default function AdjustStockModal({
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5 text-start">
                   <label className="text-muted-foreground font-medium">
-                    {t("stock_adjustment.purchase_price")}
+                    {t("inventory.stock_adjustment.purchase_price")}
                   </label>
                   <Input
                     type="number"
@@ -314,7 +320,7 @@ export default function AdjustStockModal({
 
                 <div className="space-y-1.5 text-start">
                   <label className="text-muted-foreground font-medium">
-                    {t("stock_adjustment.selling_price")}
+                    {t("inventory.stock_adjustment.selling_price")}
                   </label>
                   <Input
                     type="number"
@@ -330,7 +336,7 @@ export default function AdjustStockModal({
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5 text-start">
                   <label className="text-muted-foreground font-medium">
-                    {t("stock_adjustment.batch_number")}
+                    {t("inventory.stock_adjustment.batch_number")}
                   </label>
                   <Input
                     type="text"
@@ -343,7 +349,7 @@ export default function AdjustStockModal({
 
                 <div className="space-y-1.5 text-start">
                   <label className="text-muted-foreground font-medium">
-                    {t("stock_adjustment.expiry_date")}
+                    {t("inventory.stock_adjustment.expiry_date")}
                   </label>
                   <Input
                     type="date"
@@ -360,7 +366,7 @@ export default function AdjustStockModal({
           {/* Reason / Notes Field */}
           <div className="space-y-1.5 text-start">
             <label className="text-muted-foreground font-medium">
-              {t("stock_adjustment.notes_reason")}
+              {t("inventory.stock_adjustment.notes_reason")}
             </label>
             <Textarea
               rows={2}
@@ -375,7 +381,7 @@ export default function AdjustStockModal({
             <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs text-start">
               {validationError ||
                 (createAdjustment.error as any)?.response?.data?.message ||
-                t("stock_adjustment.error_posting")}
+                t("inventory.stock_adjustment.error_posting")}
             </div>
           )}
 
@@ -387,7 +393,7 @@ export default function AdjustStockModal({
               onClick={onClose}
               className="rounded-xl border-border hover:bg-muted text-muted-foreground text-xs font-medium px-4 h-9"
             >
-              {t("stock_adjustment.cancel")}
+              {t("inventory.stock_adjustment.cancel")}
             </Button>
             <Button
               type="submit"
@@ -402,10 +408,10 @@ export default function AdjustStockModal({
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
               )}
               {createAdjustment.isPending
-                ? t("stock_adjustment.posting")
+                ? t("inventory.stock_adjustment.posting")
                 : adjustmentType === "add"
-                  ? t("stock_adjustment.add_stock_btn")
-                  : t("stock_adjustment.remove_stock_btn")}
+                  ? t("inventory.stock_adjustment.add_stock_btn")
+                  : t("inventory.stock_adjustment.remove_stock_btn")}
             </Button>
           </DialogFooter>
         </form>

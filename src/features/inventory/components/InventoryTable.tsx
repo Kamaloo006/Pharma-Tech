@@ -6,7 +6,6 @@ import {
   Pencil,
   Trash2,
   Eye,
-  Package,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -304,12 +303,6 @@ export default function InventoryTable({
                           <DropdownMenuItem className="hover:bg-primary/70 cursor-pointer gap-2 ">
                             <Eye className="size-3.5 text-muted-foreground" />
                             <span>{t("inventory.showDetails")}</span>
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link to={`/dashboard/products/${med.id}/batches`}>
-                          <DropdownMenuItem className="hover:bg-primary/70 cursor-pointer gap-2 ">
-                            <Package className="size-3.5 text-muted-foreground" />
-                            <span>{t("inventory.manageBatches")}</span>
                           </DropdownMenuItem>
                         </Link>
 
