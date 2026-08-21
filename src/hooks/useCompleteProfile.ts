@@ -17,13 +17,13 @@ import { useState } from "react";
 export const useCompleteProfile = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { accessToken, user, setAuthData } = useAuth();
-    const [rememberMe, setRememberMe] = useState(false);
-  
+  const { accessToken ,user, setAuthData } = useAuth(); 
+  const [rememberMe, setRememberMe] = useState(false);
 
   const form = useForm<CompleteProfileInput>({
     resolver: zodResolver(completeProfileSchema),
     defaultValues: {
+      role: "pharmacy_owner", 
       first_name: user?.first_name ?? "",
       last_name: user?.last_name ?? "",
       phone_number: user?.phone_number ?? "",
@@ -40,7 +40,9 @@ export const useCompleteProfile = () => {
     onSuccess: (response) => {
       const payload = response?.data?.data ?? response?.data ?? response;
       const updatedUser = payload?.user ?? user;
-      const updatedPharmacy = payload?.pharmacy ?? null;
+      const updatedPharmacy = payload?.pharmacy ?? payload?.data?.pharmacy ?? null;
+      
+      
       const nextAccessToken =
         updatedUser?.access_token ?? payload?.access_token ?? payload?.token ?? accessToken;
       const nextRefreshToken =
@@ -48,23 +50,28 @@ export const useCompleteProfile = () => {
         payload?.refresh_token ??
         localStorage.getItem("refresh_token");
 
-      if (updatedUser && nextAccessToken && nextRefreshToken) {
-        setAuthData(nextAccessToken, nextRefreshToken, updatedUser, updatedPharmacy, rememberMe);
-      } else if (updatedPharmacy) {
-        localStorage.setItem("pharmacy", JSON.stringify(updatedPharmacy));
+      
+      if (updatedUser && nextAccessToken) {
+        setAuthData(
+          nextAccessToken,
+          nextRefreshToken || "",
+          updatedUser,
+          updatedPharmacy,
+          rememberMe
+        );
       }
 
       toast.success(t("completeProfile.successTitle"), {
         description: t("completeProfile.successDesc"),
       });
 
-      navigate("/dashboard/inventory", { replace: true });
-      // navigate(
-      //   updatedUser?.role === "pharmacy_owner"
-      //     ? "/dashboard"
-      //     : "/dashboard/inventory",
-      //   { replace: true }
-      // );
+      
+      const targetPath =
+        updatedUser?.role === "pharmacy_owner"
+          ? "/dashboard"
+          : "/dashboard/inventory";
+
+      navigate(targetPath, { replace: true });
     },
     onError: (error: unknown) => {
       const errMsg = getErrorMessage(error, t("completeProfile.failed"));
@@ -80,7 +87,11 @@ export const useCompleteProfile = () => {
   });
 
   const onSubmit = form.handleSubmit((values) => {
-    completeProfileMutation.mutate(values);
+    
+    completeProfileMutation.mutate({
+      ...values,
+      role: "pharmacy_owner",
+    });
   });
 
   return {
