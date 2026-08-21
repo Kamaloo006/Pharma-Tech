@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useProducts } from "@/features/inventory/hooks/UseProducts";
 import { useProductDetails } from "@/features/inventory/hooks/useProductDetails";
-import { useCashBox } from "@/features/cashbox/hooks/useCashbox";
+import { CASH_BOX_QUERY_KEYS, useCashBox } from "@/features/cashbox/hooks/useCashbox";
 import { useDebounce } from "@/hooks/useDebounce";
 import type {
   InvoiceItem,
@@ -238,7 +238,7 @@ export function useCreatePurchaseInvoice() {
     
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] }),
-      queryClient.invalidateQueries({ queryKey: ["cashbox"] }),
+      queryClient.invalidateQueries({ queryKey: [CASH_BOX_QUERY_KEYS.all] }),
       queryClient.invalidateQueries({ queryKey: ["purchase-invoices"] }),
 
       toast.success(t("createPurchase.success"));

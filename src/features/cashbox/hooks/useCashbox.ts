@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api"; 
-import type { CashBox, CashBoxStats, Transaction, PaginationMeta, TransactionsFilterParams } from "../types/cashBox" 
-
+import type { CashBox, CashBoxStats, Transaction, PaginationMeta, TransactionsFilterParams } from "../types/cashBox";
 
 export const CASH_BOX_QUERY_KEYS = {
   all: ["cashBox"] as const,
@@ -13,6 +12,11 @@ export const CASH_BOX_QUERY_KEYS = {
 
 export function useCashBox() {
   const queryClient = useQueryClient();
+
+  
+  const invalidateCashBox = () => {
+    queryClient.invalidateQueries({ queryKey: CASH_BOX_QUERY_KEYS.all });
+  };
 
   const cashBoxQuery = useQuery<CashBox | null>({
     queryKey: CASH_BOX_QUERY_KEYS.details(),
@@ -38,6 +42,7 @@ export function useCashBox() {
     enabled: !!cashBoxQuery.data, 
   });
 
+  
   const createCashBoxMutation = useMutation({
     mutationFn: async (openingBalance: number) => {
       const response = await api.post("cash-boxes", {
@@ -46,11 +51,32 @@ export function useCashBox() {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: CASH_BOX_QUERY_KEYS.all });
+      invalidateCashBox();
     }
   });
 
-  // 🛠️ تعديل دالة الإنشـاء لتطابق التوقع وتمرير الأخطاء بشكل صحيح
+  
+  const addTransactionMutation = useMutation({
+    mutationFn: async (data: { type: "deposit" | "withdrawal"; amount: number; description?: string }) => {
+      const response = await api.post("cash-boxes/transactions", data);
+      return response.data;
+    },
+    onSuccess: () => {
+      invalidateCashBox();
+    }
+  });
+
+  
+  const closeCashBoxMutation = useMutation({
+    mutationFn: async (data: { actual_balance: number; notes?: string }) => {
+      const response = await api.post("cash-boxes/close", data);
+      return response.data;
+    },
+    onSuccess: () => {
+      invalidateCashBox();
+    }
+  });
+
   const handleCreateCashBox = async (openingBalance: number) => {
     try {
       await createCashBoxMutation.mutateAsync(openingBalance);
@@ -67,11 +93,13 @@ export function useCashBox() {
     cashBox: cashBoxQuery.data ?? null,
     statistics: statsQuery.data ?? null,
     isLoading: cashBoxQuery.isLoading || (!!cashBoxQuery.data && statsQuery.isLoading),
-    isSubmitting: createCashBoxMutation.isPending,
-    createCashBox: handleCreateCashBox, // <-- تم التحديث هنا
+    isSubmitting: createCashBoxMutation.isPending || addTransactionMutation.isPending || closeCashBoxMutation.isPending,
+    createCashBox: handleCreateCashBox, 
+    addTransaction: addTransactionMutation.mutateAsync,
+    closeCashBox: closeCashBoxMutation.mutateAsync,
+    invalidateCashBox, 
   };
 }
-
 
 export function useCashBoxTransactions(params: TransactionsFilterParams, enabled: boolean) {
   return useQuery<{ data: Transaction[]; meta: PaginationMeta }>({
@@ -91,7 +119,7 @@ export function useCashBoxTransactions(params: TransactionsFilterParams, enabled
     },
     enabled: enabled,
     staleTime: 5 * 60 * 1000,
-    placeholderData: (previousData) => previousData, // يمنع اختفاء الجدول أثناء الانتقال
+    placeholderData: (previousData) => previousData, 
   });
 }
 
@@ -106,6 +134,8 @@ export function useCashBoxChartData(dateFrom: string, dateTo: string, enabled: b
           per_page: 500, 
         }
       });
+
+      console.log(response)
       return response.data?.data || [];
     },
     enabled: enabled,

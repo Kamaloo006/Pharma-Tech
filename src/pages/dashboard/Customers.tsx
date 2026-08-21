@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useCustomers } from "@/features/customers/hooks/useCustomers";
 import { useCustomerMutations } from "@/features/customers/hooks/useCustomerMutations";
-import { useDebounce } from "@/hooks/useDebounce";
 import { CustomerFormModal } from "@/features/customers/components/CustomerFormModal";
 import { type CustomerFormValues } from "@/features/customers/schemas/CustomerSchema";
 import { type Customer } from "@/features/customers/types/Customer";
@@ -37,34 +36,50 @@ export default function CustomersPage() {
     customer: null,
   });
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 400);
-
+  // إعادة ضبط الصفحة للأولى فقط عند تغير البحث بالفعل (بعد الـ Debounce)
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearchTerm, showDeleted]);
+  }, [searchTerm, showDeleted]);
 
   const { data, isLoading, isFetching, isError, refetch } = useCustomers({
     page,
     per_page: perPage,
-    search: debouncedSearchTerm,
+    search: searchTerm,
     trashed: showDeleted,
   });
 
   const { createCustomer, updateCustomer, deleteCustomer, restoreCustomer } =
     useCustomerMutations();
 
-  const customers = data?.data || [];
+  // 👈 1. تثبيت مرجع المصفوفة للجدول
+  const customers = useMemo(() => data?.data || [], [data?.data]);
   const meta = data?.meta;
 
-  const handleOpenAddModal = () => {
+  // 👈 2. تثبيت مرجع دوال التعامل لمنع Re-render الجدول
+  const handleOpenAddModal = useCallback(() => {
     setSelectedCustomer(null);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleOpenEditModal = (customer: Customer) => {
+  const handleOpenEditModal = useCallback((customer: Customer) => {
     setSelectedCustomer(customer);
     setIsModalOpen(true);
-  };
+  }, []);
+
+  const handleConfirmActionTrigger = useCallback(
+    (type: "delete" | "restore", customer: Customer) => {
+      setConfirmDialog({ isOpen: true, type, customer });
+    },
+    [],
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const handleCloseConfirmDialog = useCallback(() => {
+    setConfirmDialog({ isOpen: false, type: "delete", customer: null });
+  }, []);
 
   const handleFormSubmit = async (formData: CustomerFormValues) => {
     try {
@@ -111,6 +126,7 @@ export default function CustomersPage() {
         onOpenAddModal={handleOpenAddModal}
       />
 
+      {/* 👈 أصبح يتلقى التحديث فقط عندما يكتمل البحث */}
       <CustomerSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
       <CustomerTable
@@ -123,15 +139,13 @@ export default function CustomersPage() {
         meta={meta}
         onRefetch={refetch}
         onEdit={handleOpenEditModal}
-        onConfirmAction={(type, customer) =>
-          setConfirmDialog({ isOpen: true, type, customer })
-        }
+        onConfirmAction={handleConfirmActionTrigger}
         onPageChange={setPage}
       />
 
       <CustomerFormModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         onSubmit={handleFormSubmit}
         customer={selectedCustomer}
         isLoading={isSubmitting}
@@ -142,9 +156,7 @@ export default function CustomersPage() {
         type={confirmDialog.type}
         customer={confirmDialog.customer}
         isLoading={isActionLoading}
-        onClose={() =>
-          setConfirmDialog({ isOpen: false, type: "delete", customer: null })
-        }
+        onClose={handleCloseConfirmDialog}
         onConfirm={handleConfirmAction}
       />
     </div>
