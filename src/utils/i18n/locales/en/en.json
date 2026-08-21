@@ -1365,7 +1365,7 @@
       "paymentDate": "Payment Date",
       "notes": "Notes",
       "notesPlaceholder": "Add any additional notes regarding the payment here...",
-      "submitting": "Processing payment...",
+      "submitting": "Processing...",
       "pay": "Pay"
     },
     "errors": {

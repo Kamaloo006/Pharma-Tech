@@ -40,6 +40,8 @@ export function PayDebtDialog({
   const [notes, setNotes] = useState<string>("");
   const [formError, setFormError] = useState<string | null>(null);
 
+  const todayStr = new Date().toISOString().split("T")[0];
+
   useEffect(() => {
     if (isOpen) {
       setAmount(String(remainingAmount));
@@ -131,17 +133,18 @@ export function PayDebtDialog({
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 flex justify-between">
               <Label htmlFor="payment_date">
                 {t("customerDebt.dialog.paymentDate")}
               </Label>
-              <Input
+              {/* <Input
                 id="payment_date"
                 type="date"
                 value={paymentDate}
                 onChange={(e) => setPaymentDate(e.target.value)}
                 required
-              />
+              /> */}
+              <p className="text-sm font-semibold text-primary">{todayStr}</p>
             </div>
 
             <div className="space-y-2">

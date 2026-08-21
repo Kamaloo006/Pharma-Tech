@@ -163,17 +163,11 @@ export function PayDebtModal({
             />
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 flex justify-between">
             <label className="text-xs font-semibold text-foreground">
               {t("supplierDebt.payModal.paymentDateLabel", "Payment Date *")}
             </label>
-            <input
-              type="date"
-              disabled={payDebtMutation.isPending}
-              value={paymentDate}
-              onChange={(e) => setPaymentDate(e.target.value)}
-              className="w-full h-10 px-3 bg-background border border-border rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
-            />
+            <p className="text-sm font-semibold text-primary">{todayStr}</p>
           </div>
 
           <div className="space-y-1.5">

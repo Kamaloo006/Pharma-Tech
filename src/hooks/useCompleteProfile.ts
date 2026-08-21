@@ -58,12 +58,13 @@ export const useCompleteProfile = () => {
         description: t("completeProfile.successDesc"),
       });
 
-      navigate(
-        updatedUser?.role === "pharmacy_owner"
-          ? "/dashboard"
-          : "/dashboard/inventory",
-        { replace: true }
-      );
+      navigate("/dashboard/inventory", { replace: true });
+      // navigate(
+      //   updatedUser?.role === "pharmacy_owner"
+      //     ? "/dashboard"
+      //     : "/dashboard/inventory",
+      //   { replace: true }
+      // );
     },
     onError: (error: unknown) => {
       const errMsg = getErrorMessage(error, t("completeProfile.failed"));
