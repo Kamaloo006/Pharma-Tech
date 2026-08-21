@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { usePurchaseInvoices } from "@/features/purchase-invoice/hooks/usePurchaseInvoices";
 import { type InvoiceFilters } from "@/features/purchase-invoice/types/purchase-invoice";
 import { useSuppliers } from "@/features/suppliers/hooks/useSuppliers";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 import { InvoiceHeader } from "@/features/purchase-invoice/components/InvoiceHeader";
 import { InvoiceFiltersForm } from "@/features/purchase-invoice/components/InvoiceFiltersForm";
@@ -37,6 +38,7 @@ export default function PurchaseInvoiceList() {
     });
 
   const fromDateValue = watch("from_date");
+  const toDateValue = watch("to_date");
   const searchTerm = watch("search") || "";
 
   const [activeFilters, setActiveFilters] = useState<ExtendedInvoiceFilters>({
@@ -73,14 +75,30 @@ export default function PurchaseInvoiceList() {
   const onSubmit = (formData: ExtendedInvoiceFilters) => {
     setIsSubmittingFilters(true);
 
+    const normalizedDateRange = sanitizeDateRange(
+      formData,
+      "from_date",
+      "to_date",
+    );
+
+    if (normalizedDateRange.to_date !== formData.to_date) {
+      setValue("to_date", "", { shouldValidate: true, shouldDirty: true });
+    }
+
     const cleanedFilters: ExtendedInvoiceFilters = {
-      search: formData.search?.trim() || "",
-      supplier_id: formData.supplier_id === "all" ? "" : formData.supplier_id,
-      status: formData.status === "all" ? "" : formData.status,
+      search: normalizedDateRange.search?.trim() || "",
+      supplier_id:
+        normalizedDateRange.supplier_id === "all"
+          ? ""
+          : normalizedDateRange.supplier_id,
+      status:
+        normalizedDateRange.status === "all" ? "" : normalizedDateRange.status,
       payment_status:
-        formData.payment_status === "all" ? "" : formData.payment_status,
-      from_date: formData.from_date || "",
-      to_date: formData.to_date || "",
+        normalizedDateRange.payment_status === "all"
+          ? ""
+          : normalizedDateRange.payment_status,
+      from_date: normalizedDateRange.from_date || "",
+      to_date: normalizedDateRange.to_date || "",
     };
 
     setActiveFilters(cleanedFilters);
@@ -153,6 +171,7 @@ export default function PurchaseInvoiceList() {
           suppliers={suppliers}
           isArabic={isArabic}
           fromDateValue={fromDateValue}
+          toDateValue={toDateValue}
         />
 
         <CardContent className="p-0">

@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { type TransactionsFilterParams } from "../types/cashBox";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 interface TransactionsFiltersProps {
   defaultFilters: TransactionsFilterParams;
@@ -37,11 +38,11 @@ export default function TransactionsFilters({
     value: any,
   ) => {
     setTempFilters((prev) => {
-      if (key === "date_from" && prev.date_to && value > prev.date_to) {
+      if (key === "date_from" && prev.date_to && prev.date_to <= value) {
         return { ...prev, [key]: value, date_to: "" };
       }
-      if (key === "date_to" && prev.date_from && value < prev.date_from) {
-        return { ...prev, [key]: value, date_from: "" };
+      if (key === "date_to" && prev.date_from && value <= prev.date_from) {
+        return { ...prev, [key]: "" };
       }
       return { ...prev, [key]: value };
     });
@@ -60,7 +61,7 @@ export default function TransactionsFilters({
   ] as const;
 
   const handleApply = () => {
-    onApply(tempFilters);
+    onApply(sanitizeDateRange(tempFilters, "date_from", "date_to"));
   };
 
   const handleReset = () => {

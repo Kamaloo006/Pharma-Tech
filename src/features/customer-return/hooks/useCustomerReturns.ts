@@ -9,45 +9,50 @@ import type {
 } from "../types/CustomerReturn";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 
 
 const fetchCustomerReturnInvoices = async (
   filters: CustomerReturnFilterParams = {}
 ): Promise<CustomerReturnApiResponse> => {
+  const normalizedFilters = sanitizeDateRange(filters, "date_from", "date_to");
   const params: Record<string, any> = {};
 
   
-  if (filters.customer_id === "walk_in") {
+  if (normalizedFilters.customer_id === "walk_in") {
     params.walk_in = 1;
-  } else if (filters.customer_id === "registered") {
+  } else if (normalizedFilters.customer_id === "registered") {
     params.walk_in = 0;
-  } else if (filters.customer_id && filters.customer_id !== "all") {
-    params.customer_id = filters.customer_id;
+  } else if (
+    normalizedFilters.customer_id &&
+    normalizedFilters.customer_id !== "all"
+  ) {
+    params.customer_id = normalizedFilters.customer_id;
   }
 
   
-  if (filters.walk_in !== undefined && !params.walk_in) {
-    params.walk_in = filters.walk_in ? 1 : 0;
+  if (normalizedFilters.walk_in !== undefined && !params.walk_in) {
+    params.walk_in = normalizedFilters.walk_in ? 1 : 0;
   }
 
-  if (filters.original_sales_invoice_id) {
-    params.original_sales_invoice_id = filters.original_sales_invoice_id;
+  if (normalizedFilters.original_sales_invoice_id) {
+    params.original_sales_invoice_id = normalizedFilters.original_sales_invoice_id;
   }
-  if (filters.status && filters.status !== "all") {
-    params.status = filters.status;
+  if (normalizedFilters.status && normalizedFilters.status !== "all") {
+    params.status = normalizedFilters.status;
   }
-  if (filters.date_from) {
-    params.date_from = filters.date_from;
+  if (normalizedFilters.date_from) {
+    params.date_from = normalizedFilters.date_from;
   }
-  if (filters.date_to) {
-    params.date_to = filters.date_to;
+  if (normalizedFilters.date_to) {
+    params.date_to = normalizedFilters.date_to;
   }
-  if (filters.per_page) {
-    params.per_page = filters.per_page;
+  if (normalizedFilters.per_page) {
+    params.per_page = normalizedFilters.per_page;
   }
-  if (filters.page) {
-    params.page = filters.page;
+  if (normalizedFilters.page) {
+    params.page = normalizedFilters.page;
   }
 
   const { data } = await api.get<CustomerReturnApiResponse>(

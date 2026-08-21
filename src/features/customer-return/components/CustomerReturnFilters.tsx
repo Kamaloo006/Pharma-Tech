@@ -13,6 +13,7 @@ import {
 import type { CustomerReturnFilterParams } from "../types/CustomerReturn";
 import { useCustomers } from "@/features/customers/hooks/useCustomers";
 import type { Customer } from "@/features/customers/types/Customer";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 interface CustomerReturnFiltersProps {
   filters: CustomerReturnFilterParams;
@@ -62,7 +63,10 @@ export function CustomerReturnFilters({
   }, [filters]);
 
   const handleApply = () => {
-    onFilterChange({ ...localFilters, page: 1 });
+    onFilterChange({
+      ...sanitizeDateRange(localFilters, "date_from", "date_to"),
+      page: 1,
+    });
   };
 
   const handleReset = () => {
@@ -237,6 +241,10 @@ export function CustomerReturnFilters({
                 setLocalFilters((prev) => ({
                   ...prev,
                   date_from: e.target.value,
+                  date_to:
+                    prev.date_to && prev.date_to <= e.target.value
+                      ? ""
+                      : prev.date_to,
                 }))
               }
               className="h-9 text-xs bg-muted/80 hover:bg-muted font-mono border-border/80 focus:bg-background"
@@ -254,7 +262,10 @@ export function CustomerReturnFilters({
               onChange={(e) =>
                 setLocalFilters((prev) => ({
                   ...prev,
-                  date_to: e.target.value,
+                  date_to:
+                    prev.date_from && e.target.value <= prev.date_from
+                      ? ""
+                      : e.target.value,
                 }))
               }
               className="h-9 text-xs bg-muted/80 hover:bg-muted font-mono border-border/80 focus:bg-background"

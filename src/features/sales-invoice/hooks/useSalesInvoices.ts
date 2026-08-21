@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import type { SalesInvoiceFilters, SalesInvoicesApiResponse, SalesInvoiceSingleResponse } from "@/features/sales-invoice/types/salesInvoice";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
+  const normalizedFilters = sanitizeDateRange(filters, "date_from", "date_to");
   const {
     page = 1,
     per_page = 15,
@@ -13,7 +15,7 @@ export function useSalesInvoices(filters: SalesInvoiceFilters = {}) {
     walk_in,
     date_from,
     date_to,
-  } = filters;
+  } = normalizedFilters;
 
   return useQuery({
     queryKey: [

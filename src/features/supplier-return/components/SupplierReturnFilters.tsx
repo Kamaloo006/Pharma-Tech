@@ -15,6 +15,7 @@ import type {
   SupplierReturnFilterParams,
   ReturnStatus,
 } from "@/features/supplier-return/types/SupplierReturn";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 interface SupplierReturnFiltersProps {
   filters: SupplierReturnFilterParams;
@@ -55,7 +56,10 @@ export function SupplierReturnFilters({
   }, [filters]);
 
   const handleApply = () => {
-    onFilterChange({ ...localFilters, page: 1 });
+    onFilterChange({
+      ...sanitizeDateRange(localFilters, "date_from", "date_to"),
+      page: 1,
+    });
   };
 
   const handleReset = () => {
@@ -173,6 +177,10 @@ export function SupplierReturnFilters({
                 setLocalFilters((prev) => ({
                   ...prev,
                   date_from: e.target.value,
+                  date_to:
+                    prev.date_to && prev.date_to <= e.target.value
+                      ? ""
+                      : prev.date_to,
                 }))
               }
               className="h-9 text-xs bg-muted/80 hover:bg-muted font-mono border-border/80 focus:bg-background"
@@ -190,7 +198,10 @@ export function SupplierReturnFilters({
               onChange={(e) =>
                 setLocalFilters((prev) => ({
                   ...prev,
-                  date_to: e.target.value,
+                  date_to:
+                    prev.date_from && e.target.value <= prev.date_from
+                      ? ""
+                      : e.target.value,
                 }))
               }
               className="h-9 text-xs bg-muted/80 hover:bg-muted font-mono border-border/80 focus:bg-background"
