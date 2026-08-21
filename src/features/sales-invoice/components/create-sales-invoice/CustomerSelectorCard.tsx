@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ interface CustomerSelectorCardProps {
   setIsOpen: (open: boolean) => void;
 }
 
-export function CustomerSelectorCard({
+export const CustomerSelectorCard = React.memo(function CustomerSelectorCard({
   isArabic,
   customerId,
   setCustomerId,
@@ -41,6 +42,25 @@ export function CustomerSelectorCard({
   isOpen,
   setIsOpen,
 }: CustomerSelectorCardProps) {
+  // 👈 1. State محلي للـ Input لمنع إرسال التحديث للأب مع كل keystroke
+  const [localSearch, setLocalSearch] = useState(customerSearch);
+
+  // تحديث النص المحلي إذا تغير من الخارجي
+  useEffect(() => {
+    setLocalSearch(customerSearch);
+  }, [customerSearch]);
+
+  // 👈 2. Debounce: إرسال البحث للأب فقط بعد توقف المستخدم عن الكتابة بـ 300ms
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (localSearch !== customerSearch) {
+        setCustomerSearch(localSearch);
+      }
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [localSearch, customerSearch, setCustomerSearch]);
+
   return (
     <Card className="border-border/60 shadow-xs rounded-2xl overflow-hidden">
       <CardHeader className="bg-muted/20 border-b border-border/60 pb-3">
@@ -87,8 +107,8 @@ export function CustomerSelectorCard({
                         ? "بحث عن اسم أو رقم..."
                         : "Search customer name or phone..."
                     }
-                    value={customerSearch}
-                    onChange={(e) => setCustomerSearch(e.target.value)}
+                    value={localSearch}
+                    onChange={(e) => setLocalSearch(e.target.value)} // 👈 كتابة سريعة في الـ State المحلي
                     className="h-8 pl-8 text-xs rounded-lg"
                   />
                 </div>
@@ -186,4 +206,4 @@ export function CustomerSelectorCard({
       </CardContent>
     </Card>
   );
-}
+});

@@ -24,6 +24,13 @@ interface CashBoxChartProps {
   cashBoxId: number;
 }
 
+const formatLocalYMD = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
@@ -38,8 +45,8 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
     from.setDate(to.getDate() - dayCount);
 
     return {
-      dateFrom: from.toISOString().split("T")[0],
-      dateTo: to.toISOString().split("T")[0],
+      dateFrom: formatLocalYMD(from),
+      dateTo: formatLocalYMD(to),
     };
   }, [period]);
 
@@ -55,15 +62,22 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
       { date: string; income: number; expense: number; rawDate: string }
     > = {};
 
-    const start = new Date(dateFrom);
-    const end = new Date(dateTo);
+    const [sYear, sMonth, sDay] = dateFrom.split("-").map(Number);
+    const [eYear, eMonth, eDay] = dateTo.split("-").map(Number);
 
-    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      const rawDate = d.toISOString().split("T")[0];
-      const formattedDate = d.toLocaleDateString(isArabic ? "ar-EG" : "en-US", {
-        day: "numeric",
-        month: "short",
-      });
+    const start = new Date(sYear, sMonth - 1, sDay);
+    const end = new Date(eYear, eMonth - 1, eDay);
+
+    const curr = new Date(start);
+    while (curr <= end) {
+      const rawDate = formatLocalYMD(curr);
+      const formattedDate = curr.toLocaleDateString(
+        isArabic ? "ar-EG" : "en-US",
+        {
+          day: "numeric",
+          month: "short",
+        },
+      );
 
       groups[rawDate] = {
         date: formattedDate,
@@ -71,10 +85,13 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
         expense: 0,
         rawDate: rawDate,
       };
+
+      curr.setDate(curr.getDate() + 1);
     }
 
     transactions.forEach((tx) => {
-      const rawDate = tx.transaction_time.split("T")[0];
+      const txDateObj = new Date(tx.transaction_time);
+      const rawDate = formatLocalYMD(txDateObj);
 
       if (groups[rawDate]) {
         const amount = Number(tx.amount) || 0;
@@ -125,7 +142,7 @@ export default function CashBoxChart({ cashBoxId }: CashBoxChartProps) {
             value={period}
             onValueChange={(value: "month" | "week") => setPeriod(value)}
           >
-            <SelectTrigger className="h-9 text-xs   text-foreground w-full">
+            <SelectTrigger className="h-9 text-xs text-foreground w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-muted/50 border border-border text-foreground z-50 shadow-xl">
