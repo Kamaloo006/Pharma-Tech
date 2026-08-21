@@ -79,7 +79,7 @@ function DashboardMainHome() {
   const { user } = useAuth();
 
   if (user?.role === "pharmacist") {
-    return <Navigate to="/dashboard/inventory" replace />;
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return <Dashboard />;

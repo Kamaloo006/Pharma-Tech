@@ -72,7 +72,7 @@ export function useCreatePurchaseInvoice() {
 
   // CashBox Status
   const { cashBox, isLoading: isCheckingCashBox } = useCashBox();
-  const isCashBoxConfigured = !isCheckingCashBox && !!cashBox;
+  const isCashBoxConfigured =  !!cashBox;
 
   // Filtered Products List
   const filteredProducts = useMemo(() => {

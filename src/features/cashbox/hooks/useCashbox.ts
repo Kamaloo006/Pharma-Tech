@@ -14,7 +14,6 @@ export const CASH_BOX_QUERY_KEYS = {
 export function useCashBox() {
   const queryClient = useQueryClient();
 
-  
   const cashBoxQuery = useQuery<CashBox | null>({
     queryKey: CASH_BOX_QUERY_KEYS.details(),
     queryFn: async () => {
@@ -30,7 +29,6 @@ export function useCashBox() {
     staleTime: 5 * 60 * 1000,
   });
 
-  
   const statsQuery = useQuery<CashBoxStats>({
     queryKey: CASH_BOX_QUERY_KEYS.statistics(),
     queryFn: async () => {
@@ -40,7 +38,6 @@ export function useCashBox() {
     enabled: !!cashBoxQuery.data, 
   });
 
-  
   const createCashBoxMutation = useMutation({
     mutationFn: async (openingBalance: number) => {
       const response = await api.post("cash-boxes", {
@@ -49,17 +46,29 @@ export function useCashBox() {
       return response.data;
     },
     onSuccess: () => {
-      
       queryClient.invalidateQueries({ queryKey: CASH_BOX_QUERY_KEYS.all });
     }
   });
+
+  // 🛠️ تعديل دالة الإنشـاء لتطابق التوقع وتمرير الأخطاء بشكل صحيح
+  const handleCreateCashBox = async (openingBalance: number) => {
+    try {
+      await createCashBoxMutation.mutateAsync(openingBalance);
+      return { success: true };
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message;
+      return { success: false, error: errorMessage };
+    }
+  };
 
   return {
     cashBox: cashBoxQuery.data ?? null,
     statistics: statsQuery.data ?? null,
     isLoading: cashBoxQuery.isLoading || (!!cashBoxQuery.data && statsQuery.isLoading),
     isSubmitting: createCashBoxMutation.isPending,
-    createCashBox: (openingBalance: number) => createCashBoxMutation.mutateAsync(openingBalance),
+    createCashBox: handleCreateCashBox, // <-- تم التحديث هنا
   };
 }
 
