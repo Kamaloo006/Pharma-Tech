@@ -45,6 +45,7 @@ const CompleteProfile = () => {
       pharmacy_name: "",
       city_id: "",
       address: "",
+      role: "pharmacy_owner",
     });
   }, [form, user]);
 

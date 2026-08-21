@@ -15,7 +15,7 @@ export const Unauthorized = ({
 
   return (
     <div className="min-h-[80vh] mt-20 w-full flex items-center justify-center p-4">
-      <div className="max-w-md w-full text-center space-y-6 p-8 ">
+      <div className="max-w-md w-full text-center space-y-6 p-8">
         <img
           src="403.png"
           className="relative mx-auto animate-[bounce_4s_infinite]"

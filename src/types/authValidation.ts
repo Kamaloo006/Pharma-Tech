@@ -104,6 +104,7 @@ export const registerSchema = z.object({
 });
 
 export const completeProfileSchema = z.object({
+  role: z.literal("pharmacy_owner"),
   first_name: z
     .string({
       error: err("validation.firstNameRequired"),
