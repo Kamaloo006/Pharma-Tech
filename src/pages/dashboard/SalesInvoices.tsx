@@ -43,6 +43,7 @@ import {
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { sanitizeDateRange } from "@/utils/dateRange";
 
 const initialFilters: SalesInvoiceFilters = {
   page: 1,
@@ -96,12 +97,32 @@ export default function SalesInvoicesPage() {
   });
 
   const handleDraftChange = (key: keyof SalesInvoiceFilters, value: any) => {
-    setDraftFilters((prev) => ({ ...prev, [key]: value }));
+    setDraftFilters((prev) => {
+      if (key === "date_from") {
+        return {
+          ...prev,
+          date_from: value,
+          date_to: prev.date_to && prev.date_to <= value ? "" : prev.date_to,
+        };
+      }
+
+      if (key === "date_to") {
+        return {
+          ...prev,
+          date_to: prev.date_from && value <= prev.date_from ? "" : value,
+        };
+      }
+
+      return { ...prev, [key]: value };
+    });
   };
 
   const handleApplyFilters = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    setAppliedFilters({ ...draftFilters, page: 1 });
+    setAppliedFilters({
+      ...sanitizeDateRange(draftFilters, "date_from", "date_to"),
+      page: 1,
+    });
   };
 
   const handleResetFilters = () => {

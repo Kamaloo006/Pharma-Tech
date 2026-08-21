@@ -31,6 +31,7 @@ interface InvoiceFiltersFormProps {
   suppliers: Supplier[];
   isArabic: boolean;
   fromDateValue?: string;
+  toDateValue?: string;
 }
 
 export function InvoiceFiltersForm({
@@ -46,6 +47,7 @@ export function InvoiceFiltersForm({
   isLoadingSuppliers,
   suppliers,
   fromDateValue,
+  toDateValue,
 }: InvoiceFiltersFormProps) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
@@ -238,7 +240,11 @@ export function InvoiceFiltersForm({
                 <Input
                   type="date"
                   value={field.value || ""}
-                  onChange={field.onChange}
+                  onChange={(e) => {
+                    const nextFromDate = e.target.value;
+                    field.onChange(nextFromDate);
+                  }}
+                  max={toDateValue || undefined}
                   className="h-9 text-xs font-semibold rounded-xl bg-muted text-foreground border-input"
                 />
               )}
@@ -255,7 +261,15 @@ export function InvoiceFiltersForm({
               render={({ field }) => (
                 <Input
                   type="date"
-                  onChange={field.onChange}
+                  value={field.value || ""}
+                  onChange={(e) => {
+                    const nextToDate = e.target.value;
+                    if (fromDateValue && nextToDate <= fromDateValue) {
+                      field.onChange("");
+                      return;
+                    }
+                    field.onChange(nextToDate);
+                  }}
                   min={fromDateValue || ""}
                   className="h-9 text-xs font-semibold rounded-xl bg-muted text-foreground border-input"
                 />
